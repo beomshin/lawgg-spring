@@ -1,0 +1,28 @@
+server:
+  port: 19001
+  shutdown: graceful
+  servlet:
+    context-path: /lawgg-spring
+
+spring:
+  profiles:
+    active: local
+    include:
+      - core
+      - gateway
+      - dao
+    group:
+      local:
+        - console-logging # 콘솔 로깅만 사용
+      test:
+        - console-logging
+        - file-logging # 파일 로깅 사용
+      prod:
+        - console-logging
+        - file-logging # 파일 로깅 사용
+  application:
+    name: lg-web
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB

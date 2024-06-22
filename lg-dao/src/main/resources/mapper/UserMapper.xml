@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kr.lg.mapper.UserMapper">
+
+    <select id="findUserBoards"  resultType="com.kr.lg.model.web.mapper.UBoardMapper">
+        SELECT *
+
+        FROM
+            (
+                SELECT boardId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 0 as `type`, status
+                FROM BoardTb
+                WHERE userId = #{userId} and status = 1
+                    <if test="keyword != null and keyword.length > 0">
+                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
+                    </if>
+
+                UNION ALL
+
+                SELECT trialId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 1 as `type`, status
+                FROM TrialTb
+                WHERE userId = #{userId} and (status = 1 or status = 3 or status = 4)
+                    <if test="keyword != null and keyword.length > 0">
+                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
+                    </if>
+            ) A
+        ORDER BY writeDt DESC
+        LIMIT #{limit}
+        OFFSET #{offset};
+    </select>
+
+    <select id="findUserBoardsCount" resultType="int">
+        SELECT COUNT(*)
+        FROM
+            (
+                SELECT boardId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 0 as `type`
+                FROM BoardTb
+                WHERE userId = #{userId} and status = 1
+                    <if test="keyword != null and keyword.length > 0">
+                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
+                    </if>
+
+                UNION ALL
+
+                SELECT trialId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 1 as `type`
+                FROM TrialTb
+                WHERE userId = #{userId} and (status = 1 or status = 3 or status = 4)
+                    <if test="keyword != null and keyword.length > 0">
+                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
+                    </if>
+
+            ) A
+    </select>
+
+
+</mapper>
