@@ -11,7 +11,7 @@
 ## 프로젝트 실행
 
 - 디비 접근 가능 상태 처리 (AWS 방화벽 설정)
-- querydsl 사용을 위한 qclass 생성
+- querydsl 사용을 위한 qclass 생성 
 
 ## 빌드 및 배포 방법
 
