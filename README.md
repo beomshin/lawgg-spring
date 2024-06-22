@@ -1,5 +1,5 @@
 ## 프로젝트 구성
-- lg-core
+- lg-core 
     - 프로젝트 core 모듈
 - lg-dao
     - 프로젝트 dao 모듈
