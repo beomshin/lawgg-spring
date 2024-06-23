@@ -1,7 +1,7 @@
 package com.kr.lg.web.common.layer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.entities.MainTrialTb;
+import com.kr.lg.db.entities.MainTrialTb;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

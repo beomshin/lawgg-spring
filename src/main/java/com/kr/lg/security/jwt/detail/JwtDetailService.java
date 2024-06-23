@@ -1,6 +1,6 @@
 package com.kr.lg.security.jwt.detail;
 
-import com.kr.lg.repositories.RootUserRepository;
+import com.kr.lg.db.repositories.RootUserRepository;
 import com.kr.lg.model.common.UserAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

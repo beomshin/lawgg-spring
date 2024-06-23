@@ -1,6 +1,6 @@
 package com.kr.lg.query;
 
-import com.kr.lg.builder.BoardBuilder;
+import com.kr.lg.db.builder.BoardBuilder;
 import com.kr.lg.web.common.layer.BoardLayer;
 import com.kr.lg.enums.entity.element.DepthEnum;
 import com.kr.lg.enums.entity.element.StatusEnum;
@@ -15,10 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import static com.kr.lg.entities.QBoardTb.boardTb;
-import static com.kr.lg.entities.QUserTb.userTb;
-import static com.kr.lg.entities.QBoardCommentTb.boardCommentTb;
-import static com.kr.lg.entities.QBoardAttachTb.boardAttachTb;
+import static com.kr.lg.db.entities.QBoardTb.boardTb;
+import static com.kr.lg.db.entities.QUserTb.userTb;
+import static com.kr.lg.db.entities.QBoardCommentTb.boardCommentTb;
+import static com.kr.lg.db.entities.QBoardAttachTb.boardAttachTb;
 
 @Component
 @RequiredArgsConstructor

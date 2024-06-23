@@ -1,6 +1,6 @@
 package com.kr.lg.model.common;
 
-import com.kr.lg.entities.UserTb;
+import com.kr.lg.db.entities.UserTb;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,7 +1,7 @@
 package com.kr.lg.query;
 
 import com.kr.lg.enums.entity.element.SnsEnum;
-import com.kr.lg.entities.AlertTb;
+import com.kr.lg.db.entities.AlertTb;
 import com.kr.lg.web.common.layer.UserLayer;
 import com.kr.lg.web.querydsl.AlertQ;
 import com.kr.lg.web.querydsl.QAlertQ;
@@ -16,10 +16,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import static com.kr.lg.entities.QUserTb.userTb;
-import static com.kr.lg.entities.QLawFirmTb.lawFirmTb;
-import static com.kr.lg.entities.QTierTb.tierTb;
-import static com.kr.lg.entities.QAlertTb.alertTb;
+import static com.kr.lg.db.entities.QUserTb.userTb;
+import static com.kr.lg.db.entities.QLawFirmTb.lawFirmTb;
+import static com.kr.lg.db.entities.QTierTb.tierTb;
+import static com.kr.lg.db.entities.QAlertTb.alertTb;
 
 @Component
 @RequiredArgsConstructor

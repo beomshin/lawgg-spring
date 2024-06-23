@@ -1,6 +1,6 @@
 package com.kr.lg.controller.common;
 
-import com.kr.lg.common.service.file.FileService;
+import com.kr.lg.service.file.FileService;
 import com.kr.lg.web.common.global.GlobalFile;
 import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.web.net.request.common.FileRequest;

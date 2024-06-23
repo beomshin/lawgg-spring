@@ -1,11 +1,11 @@
 
 package com.kr.lg.service.message.impl;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.dao.MessageDao;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.db.dao.MessageDao;
 import com.kr.lg.enums.entity.element.ReadEnum;
 import com.kr.lg.web.querydsl.MessageQ;
-import com.kr.lg.repositories.MessageRepository;
+import com.kr.lg.db.repositories.MessageRepository;
 import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.utils.MessageUtils;

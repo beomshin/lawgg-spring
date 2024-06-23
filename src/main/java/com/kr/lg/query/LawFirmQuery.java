@@ -1,7 +1,7 @@
 package com.kr.lg.query;
 
 import com.kr.lg.enums.entity.element.*;
-import com.kr.lg.builder.LawFirmBuilder;
+import com.kr.lg.db.builder.LawFirmBuilder;
 import com.kr.lg.web.querydsl.QLawFirmQ;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
@@ -14,10 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import static com.kr.lg.entities.QLawFirmTb.lawFirmTb;
-import static com.kr.lg.entities.QLawFirmApplyTb.lawFirmApplyTb;
-import static com.kr.lg.entities.QTrialTb.trialTb;
-import static com.kr.lg.entities.QUserTb.userTb;
+import static com.kr.lg.db.entities.QLawFirmTb.lawFirmTb;
+import static com.kr.lg.db.entities.QLawFirmApplyTb.lawFirmApplyTb;
+import static com.kr.lg.db.entities.QTrialTb.trialTb;
+import static com.kr.lg.db.entities.QUserTb.userTb;
 
 @Component
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package com.kr.lg.web.net.response.home;
 
-import com.kr.lg.entities.TrialTb;
+import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.web.common.root.DefaultResponse;
 import lombok.*;
 

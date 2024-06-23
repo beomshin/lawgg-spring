@@ -1,7 +1,7 @@
 package com.kr.lg.query;
 
 import com.kr.lg.enums.entity.element.DelEnum;
-import com.kr.lg.builder.MessageBuilder;
+import com.kr.lg.db.builder.MessageBuilder;
 import com.kr.lg.web.querydsl.MessageQ;
 import com.kr.lg.web.querydsl.QMessageQ;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import static com.kr.lg.entities.QMessageTb.messageTb;
-import static com.kr.lg.entities.QUserTb.userTb;
+import static com.kr.lg.db.entities.QMessageTb.messageTb;
+import static com.kr.lg.db.entities.QUserTb.userTb;
 
 @Component
 @RequiredArgsConstructor

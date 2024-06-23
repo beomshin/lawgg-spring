@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import static com.kr.lg.entities.QBoardCommentTb.boardCommentTb;
+import static com.kr.lg.db.entities.QBoardCommentTb.boardCommentTb;
 
 @Component
 @RequiredArgsConstructor

@@ -2,13 +2,13 @@ package com.kr.lg.service.auth.impl;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.crypto.AESCrypt;
 import com.kr.lg.crypto.KeyManager;
-import com.kr.lg.entities.UserTb;
+import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.entity.element.AuthEnum;
 import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.repositories.UserRepository;
+import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.service.auth.AuthService;
 import com.kr.lg.jwt.JwtService;

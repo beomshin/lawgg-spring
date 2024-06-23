@@ -1,6 +1,6 @@
 package com.kr.lg.controller.auth;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.common.global.GlobalCode;

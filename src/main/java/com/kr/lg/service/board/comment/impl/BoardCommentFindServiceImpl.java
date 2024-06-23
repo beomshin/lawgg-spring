@@ -1,9 +1,9 @@
 package com.kr.lg.service.board.comment.impl;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.dao.BoardCommentDao;
-import com.kr.lg.mapper.BoardCommentTbMapper;
+import com.kr.lg.db.dao.BoardCommentDao;
+import com.kr.lg.db.mapper.BoardCommentTbMapper;
 import com.kr.lg.web.net.response.board.comment.*;
 import com.kr.lg.web.querydsl.BoardQ;
 import com.kr.lg.web.common.layer.BoardLayer;

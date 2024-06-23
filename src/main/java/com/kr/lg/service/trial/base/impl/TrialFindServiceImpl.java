@@ -1,15 +1,15 @@
 package com.kr.lg.service.trial.base.impl;
 
-import com.kr.lg.dao.TrialDao;
-import com.kr.lg.entities.TrialVoteTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.dao.TrialDao;
+import com.kr.lg.db.entities.TrialVoteTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.PrecedentEnum;
 import com.kr.lg.web.querydsl.TrialQ;
-import com.kr.lg.repositories.TrialRecommendRepository;
-import com.kr.lg.repositories.TrialRepository;
-import com.kr.lg.repositories.TrialVoteRepository;
+import com.kr.lg.db.repositories.TrialRecommendRepository;
+import com.kr.lg.db.repositories.TrialRepository;
+import com.kr.lg.db.repositories.TrialVoteRepository;
 import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.mapper.TrialVoteTbMapper;
+import com.kr.lg.db.mapper.TrialVoteTbMapper;
 import com.kr.lg.web.common.layer.TrialLayer;
 import com.kr.lg.web.net.response.trial.base.FindALTResponse;
 import com.kr.lg.web.net.response.trial.base.FindADTResponse;

@@ -1,8 +1,8 @@
 package com.kr.lg.service.trial.base.impl;
 
-import com.kr.lg.entities.TrialTb;
-import com.kr.lg.entities.TrialVoteTb;
-import com.kr.lg.repositories.TrialVoteRepository;
+import com.kr.lg.db.entities.TrialTb;
+import com.kr.lg.db.entities.TrialVoteTb;
+import com.kr.lg.db.repositories.TrialVoteRepository;
 import com.kr.lg.web.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialVoteService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.kr.lg.web.common.layer;
 
-import com.kr.lg.entities.UserTb;
+import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.web.net.request.message.FindRMLRequest;
 import com.kr.lg.web.net.request.message.FindSMLRequest;
 import com.kr.lg.web.net.request.message.ReplyMRequest;

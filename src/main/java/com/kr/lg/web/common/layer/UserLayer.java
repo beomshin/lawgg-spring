@@ -1,6 +1,6 @@
 package com.kr.lg.web.common.layer;
 
-import com.kr.lg.entities.UserTb;
+import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.web.net.request.user.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

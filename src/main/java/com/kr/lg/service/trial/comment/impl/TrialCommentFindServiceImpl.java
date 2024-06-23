@@ -1,8 +1,8 @@
 package com.kr.lg.service.trial.comment.impl;
 
 import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.dao.TrialCommentDao;
-import com.kr.lg.mapper.TrialCommentTbMapper;
+import com.kr.lg.db.dao.TrialCommentDao;
+import com.kr.lg.db.mapper.TrialCommentTbMapper;
 import com.kr.lg.web.net.response.trial.comment.*;
 import com.kr.lg.web.querydsl.TrialQ;
 import com.kr.lg.web.common.layer.TrialLayer;

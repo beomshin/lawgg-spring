@@ -1,16 +1,16 @@
 package com.kr.lg.service.trial.base.impl;
 
-import com.kr.lg.dao.TrialDao;
-import com.kr.lg.entities.TrialAttachTb;
-import com.kr.lg.entities.TrialTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.dao.TrialDao;
+import com.kr.lg.db.entities.TrialAttachTb;
+import com.kr.lg.db.entities.TrialTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.StatusEnum;
 import com.kr.lg.web.common.listener.AlertVideoEvent;
 import com.kr.lg.web.common.listener.TrialCNTEvent;
-import com.kr.lg.repositories.TrialAttachRepository;
-import com.kr.lg.repositories.TrialRepository;
+import com.kr.lg.db.repositories.TrialAttachRepository;
+import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.web.common.global.GlobalFile;
-import com.kr.lg.common.service.file.FileService;
+import com.kr.lg.service.file.FileService;
 import com.kr.lg.web.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialEnrollService;
 import lombok.RequiredArgsConstructor;

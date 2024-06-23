@@ -1,8 +1,8 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.web.common.listener.CommnetCNTEvent;
-import com.kr.lg.repositories.UserRepository;
-import com.kr.lg.entities.UserTb;
+import com.kr.lg.db.repositories.UserRepository;
+import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

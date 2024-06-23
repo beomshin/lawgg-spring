@@ -1,10 +1,10 @@
 package com.kr.lg.service.board.base.impl;
 
-import com.kr.lg.entities.BoardRecommendTb;
-import com.kr.lg.entities.BoardTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.BoardRecommendTb;
+import com.kr.lg.db.entities.BoardTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.listener.BoardREvent;
-import com.kr.lg.repositories.BoardRecommendRepository;
+import com.kr.lg.db.repositories.BoardRecommendRepository;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.web.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardRecommendService;

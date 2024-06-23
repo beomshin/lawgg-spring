@@ -1,7 +1,7 @@
 package com.kr.lg.service.board.base.impl;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.dao.BoardDao;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.db.dao.BoardDao;
 import com.kr.lg.web.common.listener.BoardCNTEvent;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.web.common.layer.BoardLayer;

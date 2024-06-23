@@ -1,8 +1,8 @@
 package com.kr.lg.web.common.layer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kr.lg.entities.LawFirmTb;
-import com.kr.lg.entities.UserTb;
+import com.kr.lg.db.entities.LawFirmTb;
+import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.common.element.TrialSubjectEnum;
 import com.kr.lg.enums.common.element.TrialTopicEnum;
 import com.kr.lg.enums.entity.element.DepthEnum;

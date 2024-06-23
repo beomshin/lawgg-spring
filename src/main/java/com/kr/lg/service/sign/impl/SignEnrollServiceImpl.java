@@ -1,11 +1,11 @@
 package com.kr.lg.service.sign.impl;
 
-import com.kr.lg.entities.TierTb;
-import com.kr.lg.entities.UserTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.TierTb;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.AuthEnum;
-import com.kr.lg.repositories.TierRepository;
-import com.kr.lg.repositories.UserRepository;
+import com.kr.lg.db.repositories.TierRepository;
+import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.web.common.layer.SignLayer;
 import com.kr.lg.service.sign.SignEnrollService;

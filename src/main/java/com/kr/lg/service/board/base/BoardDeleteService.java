@@ -1,6 +1,6 @@
 package com.kr.lg.service.board.base;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.layer.BoardLayer;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 import com.kr.lg.web.net.response.home.HomeMainTrialResponse;
 import org.springframework.stereotype.Service;
 
-import com.kr.lg.entities.TrialTb;
+import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.enums.entity.element.MainPostTypeEnum;
 import com.kr.lg.web.common.layer.MainBLayer;
 import com.kr.lg.web.common.layer.MainTLayer;
 import com.kr.lg.web.net.response.home.HomeResponse;
-import com.kr.lg.repositories.MainBoardRepository;
-import com.kr.lg.repositories.MainTrialRepository;
-import com.kr.lg.repositories.TrialRepository;
+import com.kr.lg.db.repositories.MainBoardRepository;
+import com.kr.lg.db.repositories.MainTrialRepository;
+import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.service.home.HomeService;
 
 import lombok.RequiredArgsConstructor;

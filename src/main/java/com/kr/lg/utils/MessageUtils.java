@@ -1,7 +1,7 @@
 package com.kr.lg.utils;
 
-import com.kr.lg.entities.UserTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.global.GlobalCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
 package com.kr.lg.service.lawfirm.impl;
 
-import com.kr.lg.entities.LawFirmTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.LawFirmTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.Status2Enum;
-import com.kr.lg.repositories.LawFirmRepository;
+import com.kr.lg.db.repositories.LawFirmRepository;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.utils.LawFirmUtils;
 import com.kr.lg.web.common.layer.LawFLayer;

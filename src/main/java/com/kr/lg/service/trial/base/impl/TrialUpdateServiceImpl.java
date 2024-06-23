@@ -1,13 +1,13 @@
 package com.kr.lg.service.trial.base.impl;
 
-import com.kr.lg.entities.TrialAttachTb;
-import com.kr.lg.entities.TrialTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.TrialAttachTb;
+import com.kr.lg.db.entities.TrialTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.EndingEnum;
 import com.kr.lg.enums.entity.element.LiveEnum;
 import com.kr.lg.web.common.listener.AlertTLEvent;
-import com.kr.lg.repositories.TrialAttachRepository;
-import com.kr.lg.repositories.TrialRepository;
+import com.kr.lg.db.repositories.TrialAttachRepository;
+import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.utils.TrialUtils;
 import com.kr.lg.web.common.layer.TrialLayer;

@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 
-import static com.kr.lg.entities.QTrialCommentTb.trialCommentTb;
+import static com.kr.lg.db.entities.QTrialCommentTb.trialCommentTb;
 
 @Repository
 @RequiredArgsConstructor

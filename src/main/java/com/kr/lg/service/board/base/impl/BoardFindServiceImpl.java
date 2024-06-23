@@ -1,10 +1,10 @@
 package com.kr.lg.service.board.base.impl;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.dao.BoardDao;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.db.dao.BoardDao;
 import com.kr.lg.web.net.response.board.base.*;
 import com.kr.lg.web.querydsl.BoardQ;
-import com.kr.lg.repositories.BoardRepository;
+import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.web.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardFindService;

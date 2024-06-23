@@ -3,7 +3,7 @@ package com.kr.lg.web.querydsl;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.enums.entity.element.*;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;

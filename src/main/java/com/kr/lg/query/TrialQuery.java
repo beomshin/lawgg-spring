@@ -2,7 +2,7 @@ package com.kr.lg.query;
 
 import com.kr.lg.enums.entity.element.DepthEnum;
 import com.kr.lg.enums.entity.element.StatusEnum;
-import com.kr.lg.builder.TrialBuilder;
+import com.kr.lg.db.builder.TrialBuilder;
 import com.kr.lg.web.querydsl.QTrialQ;
 import com.kr.lg.web.querydsl.TrialQ;
 import com.querydsl.core.types.OrderSpecifier;
@@ -15,10 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import static com.kr.lg.entities.QTrialAttachTb.trialAttachTb;
-import static com.kr.lg.entities.QTrialCommentTb.trialCommentTb;
-import static com.kr.lg.entities.QTrialTb.trialTb;
-import static com.kr.lg.entities.QUserTb.userTb;
+import static com.kr.lg.db.entities.QTrialAttachTb.trialAttachTb;
+import static com.kr.lg.db.entities.QTrialCommentTb.trialCommentTb;
+import static com.kr.lg.db.entities.QTrialTb.trialTb;
+import static com.kr.lg.db.entities.QUserTb.userTb;
 
 
 @Repository

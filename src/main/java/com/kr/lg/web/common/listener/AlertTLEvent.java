@@ -1,6 +1,6 @@
 package com.kr.lg.web.common.listener;
 
-import com.kr.lg.entities.TrialTb;
+import com.kr.lg.db.entities.TrialTb;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

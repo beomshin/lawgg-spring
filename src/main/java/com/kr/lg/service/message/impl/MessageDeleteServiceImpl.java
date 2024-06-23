@@ -1,9 +1,9 @@
 package com.kr.lg.service.message.impl;
 
-import com.kr.lg.entities.MessageTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.MessageTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.DelEnum;
-import com.kr.lg.repositories.MessageRepository;
+import com.kr.lg.db.repositories.MessageRepository;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.utils.MessageUtils;
 import com.kr.lg.web.common.layer.MainLayer;

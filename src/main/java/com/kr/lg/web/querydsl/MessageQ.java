@@ -2,8 +2,8 @@ package com.kr.lg.web.querydsl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kr.lg.entities.UserTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.entity.element.DelEnum;
 import com.kr.lg.enums.entity.element.ReadEnum;
 import com.kr.lg.web.common.global.GlobalCode;

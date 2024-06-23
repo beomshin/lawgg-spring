@@ -1,7 +1,7 @@
 package com.kr.lg.service.board.comment.impl;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.repositories.BoardCommentRepository;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.db.repositories.BoardCommentRepository;
 import com.kr.lg.web.common.layer.BoardLayer;
 import com.kr.lg.service.board.comment.BoardCommentReportService;
 import lombok.RequiredArgsConstructor;

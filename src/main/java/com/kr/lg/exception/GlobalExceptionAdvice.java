@@ -2,7 +2,6 @@ package com.kr.lg.exception;
 
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.common.exception.LgException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
