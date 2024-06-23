@@ -1,7 +1,7 @@
 package com.kr.lg.db.dao;
 
-import com.kr.lg.web.querydsl.LawFirmQ;
-import com.kr.lg.web.common.layer.LawFLayer;
+import com.kr.lg.model.querydsl.LawFirmQ;
+import com.kr.lg.model.common.layer.LawFLayer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -2,12 +2,12 @@ package com.kr.lg.service.sign.impl;
 
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.entity.element.AuthEnum;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.common.enums.entity.element.AuthEnum;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.web.common.layer.SignLayer;
+import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.model.common.layer.SignLayer;
 import com.kr.lg.service.sign.SignEnrollService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

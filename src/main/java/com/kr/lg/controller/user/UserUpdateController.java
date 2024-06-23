@@ -1,14 +1,14 @@
 package com.kr.lg.controller.user;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.net.request.user.UpdateUARequest;
-import com.kr.lg.web.common.layer.UserLayer;
-import com.kr.lg.web.net.request.user.UpdateIURequest;
-import com.kr.lg.web.net.request.user.UpdatePURequest;
-import com.kr.lg.web.net.request.user.UpdateUPRequest;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.net.request.user.UpdateUARequest;
+import com.kr.lg.model.common.layer.UserLayer;
+import com.kr.lg.model.net.request.user.UpdateIURequest;
+import com.kr.lg.model.net.request.user.UpdatePURequest;
+import com.kr.lg.model.net.request.user.UpdateUPRequest;
 import com.kr.lg.service.user.UserUpdateService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

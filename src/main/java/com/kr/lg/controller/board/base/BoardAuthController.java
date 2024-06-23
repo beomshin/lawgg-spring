@@ -1,12 +1,12 @@
 package com.kr.lg.controller.board.base;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.BoardLayer;
-import com.kr.lg.web.net.request.board.base.LoginABRequest;
-import com.kr.lg.web.net.request.board.base.LoginUBRequest;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.BoardLayer;
+import com.kr.lg.model.net.request.board.base.LoginABRequest;
+import com.kr.lg.model.net.request.board.base.LoginUBRequest;
 import com.kr.lg.service.board.base.BoardAuthService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

@@ -1,8 +1,8 @@
 package com.kr.lg.controller.sign;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.SignLayer;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.SignLayer;
 import com.kr.lg.service.sign.SignCheckService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

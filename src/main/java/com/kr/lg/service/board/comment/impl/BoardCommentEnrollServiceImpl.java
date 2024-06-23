@@ -2,12 +2,12 @@ package com.kr.lg.service.board.comment.impl;
 
 import com.kr.lg.db.entities.BoardCommentTb;
 import com.kr.lg.db.entities.BoardTb;
-import com.kr.lg.web.common.listener.AlertBCEvent;
-import com.kr.lg.web.common.listener.AlertBEvent;
-import com.kr.lg.web.common.listener.BoardCEvent;
-import com.kr.lg.web.common.listener.CommnetCNTEvent;
+import com.kr.lg.model.common.listener.AlertBCEvent;
+import com.kr.lg.model.common.listener.AlertBEvent;
+import com.kr.lg.model.common.listener.BoardCEvent;
+import com.kr.lg.model.common.listener.CommnetCNTEvent;
 import com.kr.lg.db.repositories.BoardCommentRepository;
-import com.kr.lg.web.common.layer.BoardLayer;
+import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.comment.BoardCommentEnrollService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

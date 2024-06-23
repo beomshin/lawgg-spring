@@ -1,11 +1,11 @@
 package com.kr.lg.service.trial.comment.impl;
 
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.model.common.root.DefaultResponse;
 import com.kr.lg.db.dao.TrialCommentDao;
 import com.kr.lg.db.mapper.TrialCommentTbMapper;
-import com.kr.lg.web.net.response.trial.comment.*;
-import com.kr.lg.web.querydsl.TrialQ;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.net.response.trial.comment.*;
+import com.kr.lg.model.querydsl.TrialQ;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.comment.TrialCommentFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

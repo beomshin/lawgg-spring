@@ -1,8 +1,8 @@
 package com.kr.lg.db.dao;
 
-import com.kr.lg.web.querydsl.AlertQ;
-import com.kr.lg.web.querydsl.UserQ;
-import com.kr.lg.web.common.layer.UserLayer;
+import com.kr.lg.model.querydsl.AlertQ;
+import com.kr.lg.model.querydsl.UserQ;
+import com.kr.lg.model.common.layer.UserLayer;
 import com.kr.lg.db.entities.AlertTb;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

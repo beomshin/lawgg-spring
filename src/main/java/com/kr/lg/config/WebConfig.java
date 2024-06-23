@@ -1,6 +1,6 @@
 package com.kr.lg.config;
 
-import com.kr.lg.convert.*;
+import com.kr.lg.common.convert.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

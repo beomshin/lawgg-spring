@@ -1,9 +1,9 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.web.common.listener.TrialCEvent;
-import com.kr.lg.web.common.listener.TrialCNTEvent;
-import com.kr.lg.web.common.listener.TrialCTEvent;
-import com.kr.lg.web.common.listener.TrialREvent;
+import com.kr.lg.model.common.listener.TrialCEvent;
+import com.kr.lg.model.common.listener.TrialCNTEvent;
+import com.kr.lg.model.common.listener.TrialCTEvent;
+import com.kr.lg.model.common.listener.TrialREvent;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.TrialTb;

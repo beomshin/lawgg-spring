@@ -1,6 +1,6 @@
 package com.kr.lg.service.sign;
 
-import com.kr.lg.web.common.layer.SignLayer;
+import com.kr.lg.model.common.layer.SignLayer;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)

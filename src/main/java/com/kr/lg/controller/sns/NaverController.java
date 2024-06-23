@@ -1,9 +1,9 @@
 package com.kr.lg.controller.sns;
 
-import com.kr.lg.web.common.sns.lg.LgLoginDto;
-import com.kr.lg.web.common.sns.naver.NaverLoginDto;
-import com.kr.lg.web.common.sns.naver.NaverLoginRequestDto;
-import com.kr.lg.web.common.sns.naver.NaverProp;
+import com.kr.lg.model.common.sns.lg.LgLoginDto;
+import com.kr.lg.model.common.sns.naver.NaverLoginDto;
+import com.kr.lg.model.common.sns.naver.NaverLoginRequestDto;
+import com.kr.lg.model.common.sns.naver.NaverProp;
 import com.kr.lg.service.sns.LgService;
 import com.kr.lg.service.sns.NaverService;
 import lombok.RequiredArgsConstructor;

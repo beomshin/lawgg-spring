@@ -1,20 +1,20 @@
 package com.kr.lg.db.dao.impl;
 
-import com.kr.lg.web.common.listener.TrialCTEvent;
+import com.kr.lg.model.common.listener.TrialCTEvent;
 import com.kr.lg.db.dao.TrialDao;
 import com.kr.lg.db.entities.TrialAttachTb;
 import com.kr.lg.db.entities.TrialCommentTb;
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.entity.element.DepthEnum;
-import com.kr.lg.web.querydsl.TrialQ;
-import com.kr.lg.web.common.layer.TrialLayer;
-import com.kr.lg.query.TrialQuery;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.common.enums.entity.element.DepthEnum;
+import com.kr.lg.model.querydsl.TrialQ;
+import com.kr.lg.model.common.layer.TrialLayer;
+import com.kr.lg.db.query.TrialQuery;
 import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.model.common.global.GlobalCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

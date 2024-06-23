@@ -1,7 +1,7 @@
 package com.kr.lg.service.sns;
 
-import com.kr.lg.web.common.sns.google.GoogleLoginDto;
-import com.kr.lg.web.common.sns.google.GoogleLoginRequestDto;
+import com.kr.lg.model.common.sns.google.GoogleLoginDto;
+import com.kr.lg.model.common.sns.google.GoogleLoginRequestDto;
 
 public interface GoogleService {
 

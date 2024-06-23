@@ -1,19 +1,19 @@
 
 package com.kr.lg.service.message.impl;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.common.exception.LgException;
 import com.kr.lg.db.dao.MessageDao;
-import com.kr.lg.enums.entity.element.ReadEnum;
-import com.kr.lg.web.querydsl.MessageQ;
+import com.kr.lg.common.enums.entity.element.ReadEnum;
+import com.kr.lg.model.querydsl.MessageQ;
 import com.kr.lg.db.repositories.MessageRepository;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.utils.MessageUtils;
-import com.kr.lg.web.common.layer.MainLayer;
-import com.kr.lg.web.net.response.message.FindRMResponse;
-import com.kr.lg.web.net.response.message.FindSMResponse;
-import com.kr.lg.web.net.response.message.ReceiveMLResponse;
-import com.kr.lg.web.net.response.message.SendMLResponse;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.common.utils.MessageUtils;
+import com.kr.lg.model.common.layer.MainLayer;
+import com.kr.lg.model.net.response.message.FindRMResponse;
+import com.kr.lg.model.net.response.message.FindSMResponse;
+import com.kr.lg.model.net.response.message.ReceiveMLResponse;
+import com.kr.lg.model.net.response.message.SendMLResponse;
 import com.kr.lg.service.message.MessageReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

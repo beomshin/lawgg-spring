@@ -2,11 +2,11 @@ package com.kr.lg.service.trial.base.impl;
 
 import com.kr.lg.db.entities.TrialRecommendTb;
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.listener.TrialREvent;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.listener.TrialREvent;
 import com.kr.lg.db.repositories.TrialRecommendRepository;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialRecommendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

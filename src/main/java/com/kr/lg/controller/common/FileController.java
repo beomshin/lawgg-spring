@@ -1,10 +1,10 @@
 package com.kr.lg.controller.common;
 
 import com.kr.lg.service.file.FileService;
-import com.kr.lg.web.common.global.GlobalFile;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.net.request.common.FileRequest;
-import com.kr.lg.web.net.response.common.FileResponse;
+import com.kr.lg.model.common.global.GlobalFile;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.net.request.common.FileRequest;
+import com.kr.lg.model.net.response.common.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

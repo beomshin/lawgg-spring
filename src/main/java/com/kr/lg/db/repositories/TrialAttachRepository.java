@@ -1,6 +1,6 @@
 package com.kr.lg.db.repositories;
 
-import com.kr.lg.enums.entity.element.StatusEnum;
+import com.kr.lg.common.enums.entity.element.StatusEnum;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,13 +1,13 @@
 package com.kr.lg.controller.trial.comment;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.utils.ClientUtils;
-import com.kr.lg.web.common.layer.TrialLayer;
-import com.kr.lg.web.net.request.trial.comment.ReportCTRequest;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.common.utils.ClientUtils;
+import com.kr.lg.model.common.layer.TrialLayer;
+import com.kr.lg.model.net.request.trial.comment.ReportCTRequest;
 import com.kr.lg.service.trial.comment.TrialCommentReportService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

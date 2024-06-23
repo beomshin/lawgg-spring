@@ -1,8 +1,8 @@
 package com.kr.lg.service.message;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.MainLayer;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.MainLayer;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)

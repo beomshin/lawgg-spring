@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kr.lg.db.mapper.TrialCommentTbMapper">
 
-    <select id="findAnonymousAllCommentTrial"  resultType="com.kr.lg.web.querydsl.TrialQ">
+    <select id="findAnonymousAllCommentTrial"  resultType="com.kr.lg.model.querydsl.TrialQ">
         SELECT A.*
         FROM (
                  SELECT
@@ -40,7 +40,7 @@
         order by order_num asc
     </select>
 
-    <select id="findUserAllCommentTrial"  resultType="com.kr.lg.web.querydsl.TrialQ">
+    <select id="findUserAllCommentTrial"  resultType="com.kr.lg.model.querydsl.TrialQ">
         SELECT A.*
         FROM (SELECT tc.trialCommentId,
                      tc.parentId,

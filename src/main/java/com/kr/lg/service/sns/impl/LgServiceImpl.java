@@ -2,12 +2,12 @@ package com.kr.lg.service.sns.impl;
 
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.enums.entity.element.SnsEnum;
+import com.kr.lg.common.enums.entity.element.SnsEnum;
 import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.jwt.JwtService;
-import com.kr.lg.web.common.sns.lg.LgLoginDto;
+import com.kr.lg.web.jwt.JwtService;
+import com.kr.lg.model.common.sns.lg.LgLoginDto;
 import com.kr.lg.service.sns.LgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

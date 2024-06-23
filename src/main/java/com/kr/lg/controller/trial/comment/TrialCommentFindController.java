@@ -1,15 +1,15 @@
 package com.kr.lg.controller.trial.comment;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.entity.element.DepthEnum;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.common.enums.entity.element.DepthEnum;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.TrialLayer;
-import com.kr.lg.web.net.request.trial.comment.FindACCTRequest;
-import com.kr.lg.web.net.request.trial.comment.FindAPCTrialRequest;
-import com.kr.lg.web.net.request.trial.comment.FindUCCTRequest;
-import com.kr.lg.web.net.request.trial.comment.FindUPCTRequest;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.TrialLayer;
+import com.kr.lg.model.net.request.trial.comment.FindACCTRequest;
+import com.kr.lg.model.net.request.trial.comment.FindAPCTrialRequest;
+import com.kr.lg.model.net.request.trial.comment.FindUCCTRequest;
+import com.kr.lg.model.net.request.trial.comment.FindUPCTRequest;
 import com.kr.lg.service.trial.comment.TrialCommentFindService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

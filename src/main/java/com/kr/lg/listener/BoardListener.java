@@ -1,9 +1,9 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.web.common.listener.BoardCEvent;
-import com.kr.lg.web.common.listener.BoardCNTEvent;
-import com.kr.lg.web.common.listener.BoardCTEvent;
-import com.kr.lg.web.common.listener.BoardREvent;
+import com.kr.lg.model.common.listener.BoardCEvent;
+import com.kr.lg.model.common.listener.BoardCNTEvent;
+import com.kr.lg.model.common.listener.BoardCTEvent;
+import com.kr.lg.model.common.listener.BoardREvent;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.BoardTb;

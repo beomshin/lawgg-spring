@@ -1,6 +1,6 @@
 package com.kr.lg.service.mail;
 
-import com.kr.lg.utils.SmtpUtils;
+import com.kr.lg.common.utils.SmtpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.springframework.core.io.ResourceLoader;

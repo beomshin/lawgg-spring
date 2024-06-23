@@ -1,7 +1,7 @@
 package com.kr.lg.service.trial.comment;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.layer.TrialLayer;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)

@@ -1,7 +1,7 @@
 package com.kr.lg.db.builder;
 
-import com.kr.lg.enums.common.element.TrialSubjectEnum;
-import com.kr.lg.enums.common.element.TrialTopicEnum;
+import com.kr.lg.common.enums.common.element.TrialSubjectEnum;
+import com.kr.lg.common.enums.common.element.TrialTopicEnum;
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;

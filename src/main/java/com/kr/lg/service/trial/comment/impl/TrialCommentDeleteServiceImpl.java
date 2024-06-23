@@ -1,14 +1,14 @@
 package com.kr.lg.service.trial.comment.impl;
 
 import com.kr.lg.db.entities.TrialCommentTb;
-import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.entity.element.StatusEnum;
-import com.kr.lg.web.common.listener.CommnetCNTEvent;
-import com.kr.lg.web.common.listener.TrialCEvent;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.common.enums.entity.element.StatusEnum;
+import com.kr.lg.model.common.listener.CommnetCNTEvent;
+import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.db.repositories.TrialCommentRepository;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.utils.TrialUtils;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.common.utils.TrialUtils;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.comment.TrialCommentDeleteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -58,7 +58,7 @@ public class DBConfig {
         hikariConfig.setJdbcUrl(url);
         hikariConfig.setUsername(username);
         hikariConfig.setPassword(password);
-        hikariConfig.setPoolName("hikari-lg");
+        hikariConfig.setPoolName("hikari-lawgg-spring");
         hikariConfig.setConnectionTestQuery("SELECT 1 FROM DUAL");
         hikariConfig.setConnectionInitSql("SELECT NOW() FROM DUAL");
         hikariConfig.setMaximumPoolSize(20);

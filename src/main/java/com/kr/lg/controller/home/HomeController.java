@@ -1,7 +1,7 @@
 package com.kr.lg.controller.home;
 
-import com.kr.lg.web.net.response.home.HomeMainTrialResponse;
-import com.kr.lg.web.net.response.home.HomeResponse;
+import com.kr.lg.model.net.response.home.HomeMainTrialResponse;
+import com.kr.lg.model.net.response.home.HomeResponse;
 import com.kr.lg.service.home.HomeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

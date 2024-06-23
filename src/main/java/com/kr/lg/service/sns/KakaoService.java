@@ -1,7 +1,7 @@
 package com.kr.lg.service.sns;
 
-import com.kr.lg.web.common.sns.kakao.KakaoLoginDto;
-import com.kr.lg.web.common.sns.kakao.KakaoLoginRequestDto;
+import com.kr.lg.model.common.sns.kakao.KakaoLoginDto;
+import com.kr.lg.model.common.sns.kakao.KakaoLoginRequestDto;
 
 public interface KakaoService {
 

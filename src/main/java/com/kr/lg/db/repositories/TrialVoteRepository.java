@@ -3,7 +3,7 @@ package com.kr.lg.db.repositories;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.TrialVoteTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.enums.entity.element.PrecedentEnum;
+import com.kr.lg.common.enums.entity.element.PrecedentEnum;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

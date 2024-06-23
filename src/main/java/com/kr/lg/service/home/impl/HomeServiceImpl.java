@@ -3,14 +3,14 @@ package com.kr.lg.service.home.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kr.lg.web.net.response.home.HomeMainTrialResponse;
+import com.kr.lg.model.net.response.home.HomeMainTrialResponse;
 import org.springframework.stereotype.Service;
 
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.enums.entity.element.MainPostTypeEnum;
-import com.kr.lg.web.common.layer.MainBLayer;
-import com.kr.lg.web.common.layer.MainTLayer;
-import com.kr.lg.web.net.response.home.HomeResponse;
+import com.kr.lg.common.enums.entity.element.MainPostTypeEnum;
+import com.kr.lg.model.common.layer.MainBLayer;
+import com.kr.lg.model.common.layer.MainTLayer;
+import com.kr.lg.model.net.response.home.HomeResponse;
 import com.kr.lg.db.repositories.MainBoardRepository;
 import com.kr.lg.db.repositories.MainTrialRepository;
 import com.kr.lg.db.repositories.TrialRepository;

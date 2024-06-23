@@ -1,9 +1,9 @@
 package com.kr.lg.controller.sign;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.SignLayer;
-import com.kr.lg.web.net.request.sign.SendERequest;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.SignLayer;
+import com.kr.lg.model.net.request.sign.SendERequest;
 import com.kr.lg.service.sign.SignEmailService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

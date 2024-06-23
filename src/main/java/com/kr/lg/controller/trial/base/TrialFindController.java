@@ -1,14 +1,14 @@
 package com.kr.lg.controller.trial.base;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.utils.ClientUtils;
-import com.kr.lg.web.common.layer.TrialLayer;
-import com.kr.lg.web.net.request.trial.base.FindATLRequest;
-import com.kr.lg.web.net.request.trial.base.FindLFTLRequest;
-import com.kr.lg.web.net.request.trial.base.FindUTLRequest;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.common.utils.ClientUtils;
+import com.kr.lg.model.common.layer.TrialLayer;
+import com.kr.lg.model.net.request.trial.base.FindATLRequest;
+import com.kr.lg.model.net.request.trial.base.FindLFTLRequest;
+import com.kr.lg.model.net.request.trial.base.FindUTLRequest;
 import com.kr.lg.service.trial.base.TrialFindService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

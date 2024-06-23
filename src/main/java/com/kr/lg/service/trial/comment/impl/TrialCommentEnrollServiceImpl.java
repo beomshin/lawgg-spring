@@ -2,12 +2,12 @@ package com.kr.lg.service.trial.comment.impl;
 
 import com.kr.lg.db.entities.TrialCommentTb;
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.web.common.listener.AlertTCEvent;
-import com.kr.lg.web.common.listener.AlertTEvent;
-import com.kr.lg.web.common.listener.CommnetCNTEvent;
-import com.kr.lg.web.common.listener.TrialCEvent;
+import com.kr.lg.model.common.listener.AlertTCEvent;
+import com.kr.lg.model.common.listener.AlertTEvent;
+import com.kr.lg.model.common.listener.CommnetCNTEvent;
+import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.db.repositories.TrialCommentRepository;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.comment.TrialCommentEnrollService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

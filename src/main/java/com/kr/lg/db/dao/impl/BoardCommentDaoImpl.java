@@ -1,9 +1,9 @@
 package com.kr.lg.db.dao.impl;
 
-import com.kr.lg.web.querydsl.BoardQ;
-import com.kr.lg.web.common.layer.BoardLayer;
+import com.kr.lg.model.querydsl.BoardQ;
+import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.db.dao.BoardCommentDao;
-import com.kr.lg.query.BoardCommentQuery;
+import com.kr.lg.db.query.BoardCommentQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

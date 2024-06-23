@@ -1,7 +1,7 @@
 package com.kr.lg.service.lawfirm;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.layer.LawFLayer;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.layer.LawFLayer;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)

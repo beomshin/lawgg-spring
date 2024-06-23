@@ -1,6 +1,6 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.web.common.listener.CommnetCNTEvent;
+import com.kr.lg.model.common.listener.CommnetCNTEvent;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;

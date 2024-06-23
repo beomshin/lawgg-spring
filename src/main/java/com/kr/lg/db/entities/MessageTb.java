@@ -1,13 +1,13 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.enums.entity.converters.DelEnumConverter;
-import com.kr.lg.enums.entity.converters.EmojiConverter;
-import com.kr.lg.enums.entity.converters.ReadEnumConverter;
-import com.kr.lg.enums.entity.converters.ReplyEnumConverter;
-import com.kr.lg.enums.entity.element.DelEnum;
-import com.kr.lg.enums.entity.element.ReadEnum;
-import com.kr.lg.enums.entity.element.ReplyEnum;
+import com.kr.lg.common.enums.entity.converters.DelEnumConverter;
+import com.kr.lg.common.enums.entity.converters.EmojiConverter;
+import com.kr.lg.common.enums.entity.converters.ReadEnumConverter;
+import com.kr.lg.common.enums.entity.converters.ReplyEnumConverter;
+import com.kr.lg.common.enums.entity.element.DelEnum;
+import com.kr.lg.common.enums.entity.element.ReadEnum;
+import com.kr.lg.common.enums.entity.element.ReplyEnum;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

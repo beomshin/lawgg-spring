@@ -1,8 +1,8 @@
 package com.kr.lg.service.user;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.UserLayer;
+import com.kr.lg.common.exception.LgException;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.UserLayer;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;

@@ -1,13 +1,13 @@
 package com.kr.lg.controller.lawfirm;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.LawFLayer;
-import com.kr.lg.web.net.request.lawfirm.FindALFLRequest;
-import com.kr.lg.web.net.request.lawfirm.FindAMLFLRequest;
-import com.kr.lg.web.net.request.lawfirm.FindUMLFLRequest;
+import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.model.common.layer.LawFLayer;
+import com.kr.lg.model.net.request.lawfirm.FindALFLRequest;
+import com.kr.lg.model.net.request.lawfirm.FindAMLFLRequest;
+import com.kr.lg.model.net.request.lawfirm.FindUMLFLRequest;
 import com.kr.lg.service.lawfirm.LawFirmReadService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

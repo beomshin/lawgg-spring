@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kr.lg.db.mapper.BoardCommentTbMapper">
 
-    <select id="findAnonymousAllCommentBoard"  resultType="com.kr.lg.web.querydsl.BoardQ">
+    <select id="findAnonymousAllCommentBoard"  resultType="com.kr.lg.model.querydsl.BoardQ">
         SELECT A.*
         FROM (
                  SELECT
@@ -40,7 +40,7 @@
         order by order_num asc
     </select>
 
-    <select id="findUserAllCommentBoard"  resultType="com.kr.lg.web.querydsl.BoardQ">
+    <select id="findUserAllCommentBoard"  resultType="com.kr.lg.model.querydsl.BoardQ">
         SELECT A.*
         FROM (
                  SELECT

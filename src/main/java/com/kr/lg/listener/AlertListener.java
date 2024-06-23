@@ -1,10 +1,10 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.db.entities.*;
-import com.kr.lg.enums.entity.element.AlertEnum;
-import com.kr.lg.enums.entity.element.ReadEnum;
+import com.kr.lg.common.enums.entity.element.AlertEnum;
+import com.kr.lg.common.enums.entity.element.ReadEnum;
 import com.kr.lg.db.repositories.*;
-import com.kr.lg.web.common.listener.*;
+import com.kr.lg.model.common.listener.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
