@@ -85,6 +85,14 @@ install
 maven install
 ```
 
+Qclass 생성
+```angular2html
+generate Soruces andUpdate Folders
+realod project
+```
+
+※ java 17과 java 8의 querydls 경로가 다르므로 jdk에 맞게 설정 필수
+
 <br>
 
 jvm option

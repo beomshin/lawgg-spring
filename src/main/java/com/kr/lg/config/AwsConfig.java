@@ -1,4 +1,4 @@
-package com.kr.lg.config.aws;
+package com.kr.lg.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

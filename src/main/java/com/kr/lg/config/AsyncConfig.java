@@ -1,4 +1,4 @@
-package com.kr.lg.config.async;
+package com.kr.lg.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
