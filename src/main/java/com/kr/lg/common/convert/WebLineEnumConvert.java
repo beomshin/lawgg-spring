@@ -1,6 +1,6 @@
 package com.kr.lg.common.convert;
 
-import com.kr.lg.common.enums.entity.element.LineEnum;
+import com.kr.lg.common.enums.LineEnum;
 import org.springframework.core.convert.converter.Converter;
 
 public class WebLineEnumConvert implements Converter<Integer, LineEnum> {

@@ -3,7 +3,7 @@ package com.kr.lg.common.utils;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.common.global.GlobalCode;
-import com.kr.lg.common.enums.entity.element.WriterEnum;
+import com.kr.lg.common.enums.WriterEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

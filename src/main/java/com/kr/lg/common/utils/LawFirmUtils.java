@@ -6,7 +6,7 @@ import com.kr.lg.common.exception.LgException;
 import com.kr.lg.model.common.global.GlobalFile;
 import com.kr.lg.service.file.FileService;
 import com.kr.lg.model.common.global.GlobalCode;
-import com.kr.lg.common.enums.entity.element.AuthEnum;
+import com.kr.lg.common.enums.AuthEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

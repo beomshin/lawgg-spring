@@ -1,8 +1,8 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.db.entities.*;
-import com.kr.lg.common.enums.entity.element.AlertEnum;
-import com.kr.lg.common.enums.entity.element.ReadEnum;
+import com.kr.lg.common.enums.AlertEnum;
+import com.kr.lg.common.enums.ReadEnum;
 import com.kr.lg.db.repositories.*;
 import com.kr.lg.model.common.listener.*;
 import lombok.RequiredArgsConstructor;

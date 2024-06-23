@@ -2,7 +2,7 @@ package com.kr.lg.model.common.layer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kr.lg.db.entities.MainBoardTb;
-import com.kr.lg.common.enums.entity.element.LineEnum;
+import com.kr.lg.common.enums.LineEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

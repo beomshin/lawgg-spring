@@ -2,8 +2,8 @@ package com.kr.lg.service.board.base.impl;
 
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.PostEnum;
-import com.kr.lg.common.enums.entity.element.StatusEnum;
+import com.kr.lg.common.enums.PostEnum;
+import com.kr.lg.common.enums.StatusEnum;
 import com.kr.lg.model.common.listener.BoardCNTEvent;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.model.common.global.GlobalCode;

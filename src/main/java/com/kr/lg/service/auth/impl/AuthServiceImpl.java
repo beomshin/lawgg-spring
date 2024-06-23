@@ -6,7 +6,7 @@ import com.kr.lg.common.exception.LgException;
 import com.kr.lg.common.crypto.AESCrypt;
 import com.kr.lg.common.crypto.KeyManager;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.entity.element.AuthEnum;
+import com.kr.lg.common.enums.AuthEnum;
 import com.kr.lg.model.common.global.GlobalCode;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.model.common.root.DefaultResponse;

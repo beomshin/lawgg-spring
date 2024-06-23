@@ -3,7 +3,7 @@ package com.kr.lg.service.trial.base.impl;
 import com.kr.lg.db.dao.TrialDao;
 import com.kr.lg.db.entities.TrialVoteTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.PrecedentEnum;
+import com.kr.lg.common.enums.PrecedentEnum;
 import com.kr.lg.model.querydsl.TrialQ;
 import com.kr.lg.db.repositories.TrialRecommendRepository;
 import com.kr.lg.db.repositories.TrialRepository;

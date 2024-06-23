@@ -2,7 +2,7 @@ package com.kr.lg.service.board.comment.impl;
 
 import com.kr.lg.db.entities.BoardCommentTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.StatusEnum;
+import com.kr.lg.common.enums.StatusEnum;
 import com.kr.lg.model.common.listener.BoardCEvent;
 import com.kr.lg.model.common.listener.CommnetCNTEvent;
 import com.kr.lg.db.repositories.BoardCommentRepository;

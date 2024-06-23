@@ -1,7 +1,7 @@
 package com.kr.lg.model.common.layer;
 
 
-import com.kr.lg.common.enums.entity.element.SnsEnum;
+import com.kr.lg.common.enums.SnsEnum;
 import com.kr.lg.model.net.request.sign.SendERequest;
 import com.kr.lg.model.net.request.sign.SignURequest;
 import lombok.*;

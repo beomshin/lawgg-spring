@@ -4,9 +4,9 @@ import com.kr.lg.db.dao.LawFirmDao;
 import com.kr.lg.db.entities.LawFirmApplyTb;
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.common.element.AcceptEnum;
+import com.kr.lg.common.enums.AcceptEnum;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.ApplyStatusEnum;
+import com.kr.lg.common.enums.ApplyStatusEnum;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.db.repositories.LawFirmRepository;
 import com.kr.lg.db.repositories.UserRepository;
@@ -55,15 +55,15 @@ public class LawFirmCreateServiceImpl implements LawFirmCreateService {
         if (lawFirmApplyTb.getStatus().equals(ApplyStatusEnum.END_STATUS)) throw new LgException(GlobalCode.ALREADY_END_APPLY); // 종료된 지원서
 
         UserTb userTb =lawFirmApplyTb.getUserTb();
-        lawFirmApplyRepository.confirm(com.kr.lg.common.enums.entity.element.AcceptEnum.NON_ACCEPT, ApplyStatusEnum.END_STATUS, new Timestamp(System.currentTimeMillis()), lawFirmApplyTb.getLawFirmAppyId());
+        lawFirmApplyRepository.confirm(AcceptEnum.NON_ACCEPT, ApplyStatusEnum.END_STATUS, new Timestamp(System.currentTimeMillis()), lawFirmApplyTb.getLawFirmAppyId());
 
         if (userTb.getLawFirmId() != null) { // 로펌을 이미 가입한 경우
             return false;
         }else if (AcceptEnum.ACCEPT.equals(LawFLayer.getAccept())) { // 로펌 가입 승인
             userRepository.updateLawFirm(userTb.getUserId(), lawFirmApplyTb.getLawFirmTb(), new Timestamp(System.currentTimeMillis()));
-            lawFirmApplyRepository.accept(com.kr.lg.common.enums.entity.element.AcceptEnum.ACCEPT, lawFirmApplyTb.getLawFirmAppyId());
+            lawFirmApplyRepository.accept(AcceptEnum.ACCEPT, lawFirmApplyTb.getLawFirmAppyId());
         } else if (AcceptEnum.NON_ACCEPT.equals(LawFLayer.getAccept())){ // 로펌 가입 거절
-            lawFirmApplyRepository.refuse(com.kr.lg.common.enums.entity.element.AcceptEnum.NON_ACCEPT, lawFirmApplyTb.getLawFirmAppyId());
+            lawFirmApplyRepository.refuse(AcceptEnum.NON_ACCEPT, lawFirmApplyTb.getLawFirmAppyId());
         }
 
         return true;

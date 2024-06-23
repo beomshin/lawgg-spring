@@ -2,7 +2,7 @@ package com.kr.lg.service.sns.impl;
 
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.entity.element.SnsEnum;
+import com.kr.lg.common.enums.SnsEnum;
 import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;

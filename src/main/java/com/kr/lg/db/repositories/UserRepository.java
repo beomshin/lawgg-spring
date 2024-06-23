@@ -2,8 +2,8 @@ package com.kr.lg.db.repositories;
 
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.entity.element.AuthEnum;
-import com.kr.lg.common.enums.entity.element.SnsEnum;
+import com.kr.lg.common.enums.AuthEnum;
+import com.kr.lg.common.enums.SnsEnum;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

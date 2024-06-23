@@ -1,8 +1,8 @@
 package com.kr.lg.db.repositories;
 
-import com.kr.lg.common.enums.entity.element.DelEnum;
-import com.kr.lg.common.enums.entity.element.ReadEnum;
-import com.kr.lg.common.enums.entity.element.ReplyEnum;
+import com.kr.lg.common.enums.DelEnum;
+import com.kr.lg.common.enums.ReadEnum;
+import com.kr.lg.common.enums.ReplyEnum;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

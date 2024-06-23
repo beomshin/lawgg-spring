@@ -2,7 +2,7 @@ package com.kr.lg.service.lawfirm.impl;
 
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.Status2Enum;
+import com.kr.lg.common.enums.Status2Enum;
 import com.kr.lg.db.repositories.LawFirmRepository;
 import com.kr.lg.model.common.global.GlobalCode;
 import com.kr.lg.common.utils.LawFirmUtils;

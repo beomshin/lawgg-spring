@@ -7,7 +7,7 @@ import com.kr.lg.model.net.response.home.HomeMainTrialResponse;
 import org.springframework.stereotype.Service;
 
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.common.enums.entity.element.MainPostTypeEnum;
+import com.kr.lg.common.enums.MainPostTypeEnum;
 import com.kr.lg.model.common.layer.MainBLayer;
 import com.kr.lg.model.common.layer.MainTLayer;
 import com.kr.lg.model.net.response.home.HomeResponse;

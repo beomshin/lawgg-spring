@@ -3,7 +3,7 @@ package com.kr.lg.model.common.sns.lg;
 import com.kr.lg.model.common.sns.google.GoogleLoginDto;
 import com.kr.lg.model.common.sns.kakao.KakaoLoginDto;
 import com.kr.lg.model.common.sns.naver.NaverLoginDto;
-import com.kr.lg.common.enums.entity.element.SnsEnum;
+import com.kr.lg.common.enums.SnsEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

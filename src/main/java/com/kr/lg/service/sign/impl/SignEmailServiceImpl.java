@@ -3,7 +3,7 @@ package com.kr.lg.service.sign.impl;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.MailTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.VerificationEnum;
+import com.kr.lg.common.enums.VerificationEnum;
 import com.kr.lg.db.repositories.MailRepository;
 import com.kr.lg.model.common.root.DefaultResponse;
 import com.kr.lg.service.mail.MailService;

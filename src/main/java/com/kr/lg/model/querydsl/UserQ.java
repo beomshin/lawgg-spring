@@ -2,7 +2,7 @@ package com.kr.lg.model.querydsl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kr.lg.common.enums.entity.element.*;
+import com.kr.lg.common.enums.*;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;

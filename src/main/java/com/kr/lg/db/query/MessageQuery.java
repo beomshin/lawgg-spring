@@ -1,6 +1,6 @@
 package com.kr.lg.db.query;
 
-import com.kr.lg.common.enums.entity.element.DelEnum;
+import com.kr.lg.common.enums.DelEnum;
 import com.kr.lg.db.builder.MessageBuilder;
 import com.kr.lg.model.querydsl.MessageQ;
 import com.kr.lg.model.querydsl.QMessageQ;

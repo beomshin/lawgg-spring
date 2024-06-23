@@ -2,7 +2,7 @@ package com.kr.lg.service.trial.comment.impl;
 
 import com.kr.lg.db.entities.TrialCommentTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.StatusEnum;
+import com.kr.lg.common.enums.StatusEnum;
 import com.kr.lg.model.common.listener.CommnetCNTEvent;
 import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.db.repositories.TrialCommentRepository;

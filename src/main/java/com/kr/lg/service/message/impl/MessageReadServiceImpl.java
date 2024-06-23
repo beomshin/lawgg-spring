@@ -3,7 +3,7 @@ package com.kr.lg.service.message.impl;
 
 import com.kr.lg.common.exception.LgException;
 import com.kr.lg.db.dao.MessageDao;
-import com.kr.lg.common.enums.entity.element.ReadEnum;
+import com.kr.lg.common.enums.ReadEnum;
 import com.kr.lg.model.querydsl.MessageQ;
 import com.kr.lg.db.repositories.MessageRepository;
 import com.kr.lg.model.common.root.DefaultResponse;

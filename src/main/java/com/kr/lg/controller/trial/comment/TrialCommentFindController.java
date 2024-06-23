@@ -1,7 +1,7 @@
 package com.kr.lg.controller.trial.comment;
 
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.DepthEnum;
+import com.kr.lg.common.enums.DepthEnum;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.model.common.root.DefaultResponse;

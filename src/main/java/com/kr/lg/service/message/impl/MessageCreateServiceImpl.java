@@ -3,7 +3,7 @@ package com.kr.lg.service.message.impl;
 import com.kr.lg.db.entities.MessageTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.ReplyEnum;
+import com.kr.lg.common.enums.ReplyEnum;
 import com.kr.lg.db.repositories.MessageRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.model.common.global.GlobalCode;

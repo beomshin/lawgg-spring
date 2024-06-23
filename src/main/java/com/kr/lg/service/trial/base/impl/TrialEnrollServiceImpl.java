@@ -4,7 +4,7 @@ import com.kr.lg.db.dao.TrialDao;
 import com.kr.lg.db.entities.TrialAttachTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.StatusEnum;
+import com.kr.lg.common.enums.StatusEnum;
 import com.kr.lg.model.common.listener.AlertVideoEvent;
 import com.kr.lg.model.common.listener.TrialCNTEvent;
 import com.kr.lg.db.repositories.TrialAttachRepository;

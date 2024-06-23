@@ -6,7 +6,7 @@ import com.kr.lg.db.entities.TrialAttachTb;
 import com.kr.lg.db.entities.TrialCommentTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.entity.element.DepthEnum;
+import com.kr.lg.common.enums.DepthEnum;
 import com.kr.lg.model.querydsl.TrialQ;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.db.query.TrialQuery;
