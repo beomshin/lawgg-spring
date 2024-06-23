@@ -5,9 +5,10 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.kr.lg</groupId>
-        <artifactId>lg-server</artifactId>
-        <version>0.0.1</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.15</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.kr.lg</groupId>
