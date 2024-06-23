@@ -2,7 +2,7 @@ FROM openjdk:8-alpine
 
 WORKDIR /
 
-ARG JAR_FILE_PATH=/lg-web/target/lg-web-0.0.1.jar
+ARG JAR_FILE_PATH=/target/lawgg-spring-0.0.1.jar
 ARG DATASOURCE_KEY
 ARG DATASOURCE_URL
 ARG DATASOURCE_USERNAME

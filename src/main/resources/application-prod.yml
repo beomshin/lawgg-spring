@@ -1,0 +1,76 @@
+lg:
+  redirect:
+    url:
+      home: https://cground.store/lawgg
+      login: https://cground.store/lawgg/login
+  logout:
+    url: https://cground.store/lawgg/
+
+portone:
+  rest:
+    key: ENC(ZZ02Cc5d0J859mcQUIViypAVpREP72m+hAPDia/3Gynu9+y3zOAfjFat+fxRZZjrLIe32Da4ceViVWeJUbVLzA==)
+    secret: ENC(GTUQ/3h3/tK4Qa/KskCOtZiJNdpX0/7Yon4gccyavWeCqe/uSfmSD8AfUpwtXLzqvny4i/HcPi0nXEJlYQecwn5OKo7x9ttKBIiHQ96GIBChCsmEMzb6jTP5z5dAZ/87umy/Z7JYaXb/kECzeq4xazPbT3k9Mdj+Tb6RHGptN24=)
+  url:
+    token: https://api.iamport.kr/
+    certificate: https://api.iamport.kr/certifications/
+
+token:
+  access-expired-time: 3600
+  refresh-expired-time: 604800
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  mail:
+    google:
+      host: smtp.gmail.com
+      username: ENC(Xr4rkO+eirBw3WtwLkCqCumPO4EXrq5uXSb5S8P36IDIkAgYCZD3nNSZ/gPmsgqb6I5pTirWxbwArUm2P3swjw==)
+      password: ENC(oUJZvRndHDE4JslXIJkaMMml/85S/f5aNjvh1KmgdT8MtKHCpcxOS0NH1zfT1UsunTn1Ul6tn3jPXIJAYmuluQ==)
+      port: 587
+  redis:
+    host: chzh85991.cafe24.com
+    port: 23699
+    password: redis12!@
+  config:
+    activate:
+      on-profile: prod
+
+google:
+  auth:
+    url: https://oauth2.googleapis.com
+    scope: profile,email,openid
+  login:
+    url: https://accounts.google.com
+  redirect:
+    uri: http://cground.store/lawgg-spring/api/public/google/login/redirect
+  client:
+    id: ENC(QabZPzwFQTu5S7Agv+jJyldTB4u5HDrP+tV25ajHWkKt8uaEL7N4zj4YqPefb0r+oAnk9vCFyRjBf0JZ6LHnFUGrrfd1N3zoAfeFxDSu6pA=)
+  secret: ENC(KEPMb6NhLiZr+JjJ2qqJkzv8DlRrdOVv7cpYf8lE/wegVlfgYFvwDBy+y8s2dQGq0G72ruPI0hYmK8DsRytGyy3U4siR16sQZVVbq/HYJgM=)
+
+naver:
+  auth:
+    url: https://openapi.naver.com
+  login:
+    url: https://nid.naver.com
+  redirect:
+    uri: http://cground.store/lawgg-spring/api/public/naver/login/redirect
+  client:
+    id: ENC(dDIGXFoIlq0tDwtnzy2NRxszNGZ+bX9Oat+L1qLsiJfQCs24rEkZltUQdcO9DQGvLpL6rJVy3Ux4/Bks89syxw==)
+  secret: ENC(+6vs2ewUgYyvFcAlvG8y2eskG6Xq3VfyaV+SzBsvy+TkrwL/125v84LI8LpZQ7yY)
+
+kakao:
+  auth:
+    url: https://kapi.kakao.com
+  login:
+    url: https://kauth.kakao.com
+  redirect:
+    login:
+      uri: http://cground.store/lawgg-spring/api/public/kakao/login/redirect
+    logout:
+      uri: http://cground.store/lawgg-spring/api/public/kakao/logout/redirect
+  client:
+    id: ENC(B25W24lylSyzENGt7DZuZ4bf02ZoJjPONHwGyjd4BA2rF1A4a3/ZFnJQ5fIFj746LmYwsrk3q0+sMdi+a+jRm48uGFIk6o74beu+ebK/leg=)
+  secret: ENC(XGwdt4ki0xT+JEDN0W6goFMY/PqnNcU/hw6XzGIYYywLVL/FAHvkDpAeoo9zS6hPO9RSUrSp2jY0anUYbriKGBtCJgasu7HYgtlNrd+86Zc=)

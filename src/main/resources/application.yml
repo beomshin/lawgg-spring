@@ -1,0 +1,67 @@
+server:
+  port: 19001
+  shutdown: graceful
+  servlet:
+    context-path: /lawgg-spring
+
+spring:
+  profiles:
+    active: local
+    include:
+      - core
+      - gateway
+      - dao
+    group:
+      local:
+        - console-logging # 콘솔 로깅만 사용
+      test:
+        - console-logging
+        - file-logging # 파일 로깅 사용
+      prod:
+        - console-logging
+        - file-logging # 파일 로깅 사용
+  application:
+    name: lawgg-spring
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  datasource:
+    driver-class-name:
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    open-in-view: false
+    show-sql: true
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+  web:
+    resources:
+      static-locations: classpath:/static/
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+mybatis:
+  type-aliases-package: com.kr.lg.mapper
+  mapper-locations: classpath:mapper/*.xml
+
+file:
+  size:
+    image: 3145728 # 3 * 1024 * 1024
+    video: 104857600 # 100 * 1024 * 1024
+    replay: 52428800 # 50 * 1024 * 1024
+
+aws:
+  s3:
+    region: ENC(EIB2g/U4jVzHosi9QUosPlU+tFP6H/lcluc/kMGFXPPTM+XFr9ap+XZ2X80R/cDD)
+    access-key: ENC(Q8A57jwYD1bYbHjlCk4vEPYL46/dDiys1YwLa1y6mjMCNOhcKFOcFkJ6w8YsT+zx4GacUhpJXcRuFBgObw4SyA==)
+    secret-key: ENC(ICpaLWfg2Snb4PNQ31gIUMAdT8zlSgOKnT5gJ0jXnCUPPIpJfXex2wOBQw/cN/C/BpPBrx8JLMgNoWkULQIaENyfnyzAXSZrgIOyqPBip4E=)
+    buket: ENC(sfiYuacgnGosgyqbK+t1It57iGZ0KPdPyGP32qjHxIhQ2uegFzP4Qbelz7SF9ZCg)
+    host: ENC(BVVl7wcbGFzwYtfrpqD0ZY2C1RLFJD1V1toKZqd9mYcahNy4PL0n4hrXkwVP9j4D04l2bEOyqQBeSRxGBZAlRCS7gk5BPf2DaodI5sFlWAq3FtA/FhvcayQ20l+bAott)

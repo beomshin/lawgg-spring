@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kr.lg.mapper.TrialVoteTbMapper">
+
+    <select id="findVotePercent"  resultType="com.kr.lg.web.querydsl.TrialQ">
+        SELECT
+            COUNT(if(precedent=0, 1, NULL))  as 'plaintiffCount',
+            COUNT(if(precedent=1, 1, NULL)) as 'defendantCount'
+        FROM TrialVoteTb WHERE trialId = #{trialId}
+    </select>
+
+
+
+</mapper>
