@@ -5,7 +5,7 @@ import com.kr.lg.db.entities.ReportTb;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.db.repositories.ReportRepository;
-import com.kr.lg.web.common.layer.BoardLayer;
+import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

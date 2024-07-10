@@ -1,6 +1,6 @@
 package com.kr.lg.service.user.impl;
 
-import com.kr.lg.crypto.HashNMacUtil;
+import com.kr.lg.common.crypto.HashNMacUtil;
 import com.kr.lg.db.dao.UserDao;
 import com.kr.lg.db.entities.AlertTb;
 import com.kr.lg.db.entities.UserTb;
@@ -11,8 +11,8 @@ import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.service.file.FileService;
 import com.kr.lg.web.common.global.GlobalFile;
 import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.web.common.layer.UserLayer;
-import com.kr.lg.web.net.response.user.UpdateUPResponse;
+import com.kr.lg.model.common.layer.UserLayer;
+import com.kr.lg.model.net.response.user.UpdateUPResponse;
 import com.kr.lg.service.user.UserUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

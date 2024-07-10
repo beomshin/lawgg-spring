@@ -1,9 +1,9 @@
 package com.kr.lg.controller.sns;
 
-import com.kr.lg.web.common.sns.google.GoogleProp;
-import com.kr.lg.web.common.sns.google.GoogleLoginDto;
-import com.kr.lg.web.common.sns.google.GoogleLoginRequestDto;
-import com.kr.lg.web.common.sns.lg.LgLoginDto;
+import com.kr.lg.model.common.sns.google.GoogleProp;
+import com.kr.lg.model.common.sns.google.GoogleLoginDto;
+import com.kr.lg.model.common.sns.google.GoogleLoginRequestDto;
+import com.kr.lg.model.common.sns.lg.LgLoginDto;
 import com.kr.lg.service.sns.GoogleService;
 import com.kr.lg.service.sns.LgService;
 import lombok.RequiredArgsConstructor;

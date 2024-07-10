@@ -2,14 +2,14 @@ package com.kr.lg.service.lawfirm.impl;
 
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.entity.element.ApplyStatusEnum;
-import com.kr.lg.enums.entity.element.Status2Enum;
+import com.kr.lg.enums.ApplyStatusEnum;
+import com.kr.lg.enums.Status2Enum;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.db.repositories.LawFirmRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.utils.LawFirmUtils;
-import com.kr.lg.web.common.layer.LawFLayer;
+import com.kr.lg.common.utils.LawFirmUtils;
+import com.kr.lg.model.common.layer.LawFLayer;
 import com.kr.lg.service.lawfirm.LawFirmDeleteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
 package com.kr.lg.controller.sns;
 
-import com.kr.lg.web.common.sns.kakao.KakaoLoginDto;
-import com.kr.lg.web.common.sns.kakao.KakaoLoginRequestDto;
-import com.kr.lg.web.common.sns.kakao.KakaoProp;
-import com.kr.lg.web.common.sns.lg.LgLoginDto;
+import com.kr.lg.model.common.sns.kakao.KakaoLoginDto;
+import com.kr.lg.model.common.sns.kakao.KakaoLoginRequestDto;
+import com.kr.lg.model.common.sns.kakao.KakaoProp;
+import com.kr.lg.model.common.sns.lg.LgLoginDto;
 import com.kr.lg.service.sns.KakaoService;
 import com.kr.lg.service.sns.LgService;
 import lombok.RequiredArgsConstructor;

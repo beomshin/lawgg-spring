@@ -1,9 +1,9 @@
 package com.kr.lg.db.dao.impl;
 
-import com.kr.lg.web.common.layer.LawFLayer;
-import com.kr.lg.web.querydsl.LawFirmQ;
+import com.kr.lg.model.common.layer.LawFLayer;
+import com.kr.lg.model.querydsl.LawFirmQ;
 import com.kr.lg.db.dao.LawFirmDao;
-import com.kr.lg.query.LawFirmQuery;
+import com.kr.lg.db.query.LawFirmQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

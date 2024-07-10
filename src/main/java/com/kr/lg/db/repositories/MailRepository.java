@@ -1,7 +1,7 @@
 package com.kr.lg.db.repositories;
 
 import com.kr.lg.db.entities.MailTb;
-import com.kr.lg.enums.entity.element.VerificationEnum;
+import com.kr.lg.enums.VerificationEnum;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

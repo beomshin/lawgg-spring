@@ -4,7 +4,7 @@ import com.kr.lg.db.entities.ReportTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.repositories.ReportRepository;
 import com.kr.lg.db.repositories.TrialRepository;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

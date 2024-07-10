@@ -2,10 +2,10 @@ package com.kr.lg.db.dao.impl;
 
 import com.kr.lg.db.dao.UserDao;
 import com.kr.lg.db.entities.AlertTb;
-import com.kr.lg.web.querydsl.AlertQ;
-import com.kr.lg.web.common.layer.UserLayer;
-import com.kr.lg.web.querydsl.UserQ;
-import com.kr.lg.query.UserQuery;
+import com.kr.lg.model.querydsl.AlertQ;
+import com.kr.lg.model.common.layer.UserLayer;
+import com.kr.lg.model.querydsl.UserQ;
+import com.kr.lg.db.query.UserQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

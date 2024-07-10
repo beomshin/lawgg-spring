@@ -1,15 +1,15 @@
 package com.kr.lg.controller.board.comment;
 
 import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.entity.element.DepthEnum;
+import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.BoardLayer;
-import com.kr.lg.web.net.request.board.comment.FindACCBRequest;
-import com.kr.lg.web.net.request.board.comment.FindAPCBRequest;
-import com.kr.lg.web.net.request.board.comment.FindUCCBRequest;
-import com.kr.lg.web.net.request.board.comment.FindUPCBRequest;
+import com.kr.lg.model.common.layer.BoardLayer;
+import com.kr.lg.model.net.request.board.comment.FindACCBRequest;
+import com.kr.lg.model.net.request.board.comment.FindAPCBRequest;
+import com.kr.lg.model.net.request.board.comment.FindUCCBRequest;
+import com.kr.lg.model.net.request.board.comment.FindUPCBRequest;
 import com.kr.lg.service.board.comment.BoardCommentFindService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

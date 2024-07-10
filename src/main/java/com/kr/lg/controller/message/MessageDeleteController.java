@@ -4,7 +4,7 @@ import com.kr.lg.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.common.root.DefaultResponse;
-import com.kr.lg.web.common.layer.MainLayer;
+import com.kr.lg.model.common.layer.MainLayer;
 import com.kr.lg.service.message.MessageDeleteService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

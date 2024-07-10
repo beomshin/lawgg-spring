@@ -1,10 +1,10 @@
 package com.kr.lg.db.builder;
 
-import com.kr.lg.enums.common.element.BoardTopicEnum;
-import com.kr.lg.enums.common.element.BoardTypeEnum;
-import com.kr.lg.enums.entity.element.LineEnum;
-import com.kr.lg.enums.entity.element.PostEnum;
-import com.kr.lg.enums.entity.element.StatusEnum;
+import com.kr.lg.enums.BoardTopicEnum;
+import com.kr.lg.enums.BoardTypeEnum;
+import com.kr.lg.enums.LineEnum;
+import com.kr.lg.enums.PostEnum;
+import com.kr.lg.enums.StatusEnum;
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;

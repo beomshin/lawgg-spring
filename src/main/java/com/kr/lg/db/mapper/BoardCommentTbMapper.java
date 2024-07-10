@@ -1,6 +1,6 @@
 package com.kr.lg.db.mapper;
 
-import com.kr.lg.web.querydsl.BoardQ;
+import com.kr.lg.model.querydsl.BoardQ;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

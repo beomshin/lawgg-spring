@@ -1,6 +1,7 @@
 package com.kr.lg.web.common.root;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kr.lg.model.common.root.RootResponse;
 import com.kr.lg.web.common.global.GlobalCode;
 import lombok.NoArgsConstructor;
 

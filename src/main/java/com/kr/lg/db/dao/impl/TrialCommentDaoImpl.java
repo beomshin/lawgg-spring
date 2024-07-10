@@ -1,9 +1,9 @@
 package com.kr.lg.db.dao.impl;
 
-import com.kr.lg.web.querydsl.TrialQ;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.querydsl.TrialQ;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.db.dao.TrialCommentDao;
-import com.kr.lg.query.TrialCommentQuery;
+import com.kr.lg.db.query.TrialCommentQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kr.lg.db.mapper.TrialVoteTbMapper">
 
-    <select id="findVotePercent"  resultType="com.kr.lg.web.querydsl.TrialQ">
+    <select id="findVotePercent"  resultType="com.kr.lg.model.querydsl.TrialQ">
         SELECT
             COUNT(if(precedent=0, 1, NULL))  as 'plaintiffCount',
             COUNT(if(precedent=1, 1, NULL)) as 'defendantCount'

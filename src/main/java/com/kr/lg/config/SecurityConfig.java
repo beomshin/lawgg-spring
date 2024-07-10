@@ -1,6 +1,6 @@
 package com.kr.lg.config;
 
-import com.kr.lg.filters.security.LoginAuthenticationFilter;
+import com.kr.lg.web.filters.security.LoginAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

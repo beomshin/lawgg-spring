@@ -1,7 +1,7 @@
 package com.kr.lg.db.dao;
 
-import com.kr.lg.web.querydsl.TrialQ;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.querydsl.TrialQ;
+import com.kr.lg.model.common.layer.TrialLayer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -3,7 +3,7 @@ package com.kr.lg.service.trial.base.impl;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.TrialVoteTb;
 import com.kr.lg.db.repositories.TrialVoteRepository;
-import com.kr.lg.web.common.layer.TrialLayer;
+import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialVoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

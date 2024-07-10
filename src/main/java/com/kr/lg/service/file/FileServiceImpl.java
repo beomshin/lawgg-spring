@@ -2,9 +2,9 @@ package com.kr.lg.service.file;
 
 import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.utils.AwsS3Utils;
+import com.kr.lg.common.utils.AwsS3Utils;
 import com.kr.lg.web.common.global.GlobalFile;
-import com.kr.lg.utils.FileUtils;
+import com.kr.lg.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
