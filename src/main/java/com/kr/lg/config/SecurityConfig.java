@@ -27,6 +27,14 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String[] SwaggerPatterns = { // swagger 페이지 인증 처리 미적용 패턴
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v3/api-docs",
+            "/webjars/**"
+    };
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationProvider logAuthenticationProvider) {
         List<AuthenticationProvider> authenticationProviders = Collections.singletonList(logAuthenticationProvider);
@@ -65,6 +73,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
                 .antMatchers("/api/public/**").permitAll()
+                .antMatchers(SwaggerPatterns).permitAll()
                 .anyRequest().hasRole("USER");
 
         http.addFilter(new LoginAuthenticationFilter(authenticationManager, loginSuccessHandler, loginFailHandler, "/api/public/login"));

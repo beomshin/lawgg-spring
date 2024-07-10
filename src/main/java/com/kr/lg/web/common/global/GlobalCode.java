@@ -82,4 +82,8 @@ public enum GlobalCode {
     private final String code;
     private final String msg;
 
+    public static boolean isSuccess(GlobalCode code) {
+        return SUCCESS.equals(code);
+    }
+
 }
