@@ -1,9 +1,9 @@
 package com.kr.lg.service.board.comment.impl;
 
 import com.kr.lg.db.entities.BoardCommentTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.BoardCommentRepository;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.common.utils.BoardUtils;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.comment.BoardCommentUpdateService;

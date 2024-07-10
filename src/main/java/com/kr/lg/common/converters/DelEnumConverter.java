@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.DelEnum;
+import com.kr.lg.enums.DelEnum;
 
 public class DelEnumConverter extends AbstractEnumAttributeConverter<DelEnum> {
 

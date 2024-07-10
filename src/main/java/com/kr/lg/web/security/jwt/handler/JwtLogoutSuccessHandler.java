@@ -1,7 +1,7 @@
 package com.kr.lg.web.security.jwt.handler;
 
 
-import com.kr.lg.common.enums.SnsEnum;
+import com.kr.lg.enums.SnsEnum;
 import com.kr.lg.web.jwt.JwtService;
 //import com.kr.lg.modules.snsService.model.google.GoogleProp;
 //import com.kr.lg.modules.snsService.model.kakao.KakaoProp;

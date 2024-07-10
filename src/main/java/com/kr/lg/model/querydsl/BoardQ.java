@@ -2,9 +2,9 @@ package com.kr.lg.model.querydsl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kr.lg.common.enums.*;
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.enums.*;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.querydsl.core.annotations.QueryProjection;
 import com.vdurmont.emoji.EmojiParser;
 import lombok.Data;

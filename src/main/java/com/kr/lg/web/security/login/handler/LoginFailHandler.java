@@ -1,9 +1,9 @@
 package com.kr.lg.web.security.login.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.model.common.global.GlobalCode;
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.common.root.DefaultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;

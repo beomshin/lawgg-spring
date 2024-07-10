@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.MainPostTypeEnum;
+import com.kr.lg.enums.entity.element.MainPostTypeEnum;
 
 public class MainPostTypeEnumConverter extends AbstractEnumAttributeConverter<MainPostTypeEnum> {
 

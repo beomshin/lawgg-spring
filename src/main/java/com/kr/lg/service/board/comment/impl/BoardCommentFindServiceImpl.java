@@ -1,7 +1,7 @@
 package com.kr.lg.service.board.comment.impl;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.db.dao.BoardCommentDao;
 import com.kr.lg.db.mapper.BoardCommentTbMapper;
 import com.kr.lg.model.net.response.board.comment.*;

@@ -1,6 +1,6 @@
 package com.kr.lg.model.net.request.board.comment;
 
-import com.kr.lg.common.enums.DepthEnum;
+import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

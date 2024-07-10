@@ -1,7 +1,7 @@
 package com.kr.lg.model.common.layer;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.AcceptEnum;
+import com.kr.lg.enums.AcceptEnum;
 import com.kr.lg.model.net.request.lawfirm.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

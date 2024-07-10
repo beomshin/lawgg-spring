@@ -1,7 +1,7 @@
 package com.kr.lg.db.query;
 
-import com.kr.lg.common.enums.DepthEnum;
-import com.kr.lg.common.enums.StatusEnum;
+import com.kr.lg.enums.DepthEnum;
+import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.querydsl.QTrialQ;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQuery;

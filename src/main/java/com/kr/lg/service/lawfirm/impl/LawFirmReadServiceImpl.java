@@ -2,12 +2,12 @@ package com.kr.lg.service.lawfirm.impl;
 
 import com.kr.lg.db.dao.LawFirmDao;
 import com.kr.lg.db.entities.LawFirmTb;
-import com.kr.lg.common.enums.ApplyStatusEnum;
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.Status2Enum;
+import com.kr.lg.enums.ApplyStatusEnum;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.enums.Status2Enum;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
-import com.kr.lg.model.common.root.DefaultResponse;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.model.common.layer.LawFLayer;
 import com.kr.lg.model.net.response.lawfirm.*;
 import com.kr.lg.model.querydsl.LawFirmQ;

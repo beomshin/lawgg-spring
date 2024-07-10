@@ -1,6 +1,6 @@
 package com.kr.lg.model.net.response.user;
 
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.web.common.root.DefaultResponse;
 import lombok.*;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.kr.lg.model.net.response.trial.comment;
 
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.model.querydsl.TrialQ;
 import com.vdurmont.emoji.EmojiParser;
 import lombok.*;

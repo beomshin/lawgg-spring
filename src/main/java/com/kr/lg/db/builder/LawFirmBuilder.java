@@ -1,8 +1,8 @@
 package com.kr.lg.db.builder;
 
-import com.kr.lg.common.enums.ApplyTypeEnum;
-import com.kr.lg.common.enums.LawFirmTypeEnum;
-import com.kr.lg.common.enums.LawFirmUserTypeEnum;
+import com.kr.lg.enums.ApplyTypeEnum;
+import com.kr.lg.enums.LawFirmTypeEnum;
+import com.kr.lg.enums.LawFirmUserTypeEnum;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Component;
 

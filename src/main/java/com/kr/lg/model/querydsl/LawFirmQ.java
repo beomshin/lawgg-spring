@@ -2,10 +2,10 @@ package com.kr.lg.model.querydsl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kr.lg.common.enums.LineEnum;
-import com.kr.lg.common.enums.Status2Enum;
-import com.kr.lg.common.enums.Status3Enum;
-import com.kr.lg.common.enums.WriterEnum;
+import com.kr.lg.enums.LineEnum;
+import com.kr.lg.enums.Status2Enum;
+import com.kr.lg.enums.Status3Enum;
+import com.kr.lg.enums.WriterEnum;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;

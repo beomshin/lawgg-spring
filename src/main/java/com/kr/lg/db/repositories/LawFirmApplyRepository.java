@@ -1,7 +1,7 @@
 package com.kr.lg.db.repositories;
 
-import com.kr.lg.common.enums.AcceptEnum;
-import com.kr.lg.common.enums.ApplyStatusEnum;
+import com.kr.lg.enums.AcceptEnum;
+import com.kr.lg.enums.ApplyStatusEnum;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package com.kr.lg.web.jwt;
 
 import com.kr.lg.common.crypto.KeyManager;
-import com.kr.lg.common.enums.SnsEnum;
+import com.kr.lg.enums.SnsEnum;
 import com.kr.lg.web.provider.common.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

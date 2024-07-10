@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.PostEnum;
+import com.kr.lg.enums.PostEnum;
 
 public class PostEnumConverter extends AbstractEnumAttributeConverter<PostEnum> {
 

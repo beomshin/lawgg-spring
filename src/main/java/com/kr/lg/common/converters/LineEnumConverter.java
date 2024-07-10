@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.LineEnum;
+import com.kr.lg.enums.LineEnum;
 
 public class LineEnumConverter extends AbstractEnumAttributeConverter<LineEnum> {
 

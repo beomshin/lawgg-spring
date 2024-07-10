@@ -1,10 +1,10 @@
 package com.kr.lg.service.user.impl;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.dao.UserDao;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.model.common.root.DefaultResponse;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.db.mapper.UserMapper;
 import com.kr.lg.model.querydsl.AlertQ;
 import com.kr.lg.model.mapper.UBoardMapper;

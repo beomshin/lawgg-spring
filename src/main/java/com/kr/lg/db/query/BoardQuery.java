@@ -2,8 +2,8 @@ package com.kr.lg.db.query;
 
 import com.kr.lg.db.builder.BoardBuilder;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.common.enums.DepthEnum;
-import com.kr.lg.common.enums.StatusEnum;
+import com.kr.lg.enums.DepthEnum;
+import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.querydsl.QBoardQ;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;

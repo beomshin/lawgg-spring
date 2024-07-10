@@ -1,8 +1,8 @@
 package com.kr.lg.model.querydsl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.enums.AlertEnum;
-import com.kr.lg.common.enums.ReadEnum;
+import com.kr.lg.enums.AlertEnum;
+import com.kr.lg.enums.ReadEnum;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

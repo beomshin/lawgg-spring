@@ -1,6 +1,6 @@
 package com.kr.lg.model.net.response.board.comment;
 
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.model.querydsl.BoardQ;
 import lombok.*;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.ReadEnum;
+import com.kr.lg.enums.ReadEnum;
 
 public class ReadEnumConverter extends AbstractEnumAttributeConverter<ReadEnum> {
 

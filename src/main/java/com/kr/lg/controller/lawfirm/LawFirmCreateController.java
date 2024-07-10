@@ -1,10 +1,10 @@
 package com.kr.lg.controller.lawfirm;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.model.common.root.DefaultResponse;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.model.common.layer.LawFLayer;
 import com.kr.lg.model.net.request.lawfirm.ApplyLFRequest;
 import com.kr.lg.model.net.request.lawfirm.ConfirmLFRequest;

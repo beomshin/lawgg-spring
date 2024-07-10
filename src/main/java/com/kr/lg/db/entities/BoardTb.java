@@ -2,10 +2,10 @@ package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kr.lg.common.converters.*;
-import com.kr.lg.common.enums.LineEnum;
-import com.kr.lg.common.enums.PostEnum;
-import com.kr.lg.common.enums.StatusEnum;
-import com.kr.lg.common.enums.WriterEnum;
+import com.kr.lg.enums.LineEnum;
+import com.kr.lg.enums.PostEnum;
+import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.enums.WriterEnum;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

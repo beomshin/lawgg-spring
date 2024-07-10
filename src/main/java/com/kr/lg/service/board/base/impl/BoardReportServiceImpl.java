@@ -2,7 +2,7 @@ package com.kr.lg.service.board.base.impl;
 
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.ReportTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.db.repositories.ReportRepository;
 import com.kr.lg.model.common.layer.BoardLayer;

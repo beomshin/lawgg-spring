@@ -1,8 +1,8 @@
 package com.kr.lg.web.filters.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kr.lg.model.common.root.DefaultResponse;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.web.jwt.JwtService;
 import com.kr.lg.web.security.jwt.detail.JwtDetailService;
 import io.jsonwebtoken.ExpiredJwtException;

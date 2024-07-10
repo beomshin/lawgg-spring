@@ -1,7 +1,7 @@
 package com.kr.lg.model.common.listener;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.DepthEnum;
+import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.model.common.layer.BoardLayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

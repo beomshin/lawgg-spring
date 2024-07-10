@@ -2,12 +2,12 @@ package com.kr.lg.service.sign.impl;
 
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.MailTb;
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.VerificationEnum;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.enums.VerificationEnum;
 import com.kr.lg.db.repositories.MailRepository;
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.service.mail.MailService;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.model.common.layer.SignLayer;
 import com.kr.lg.model.net.response.sign.SignSEResponse;
 import com.kr.lg.service.sign.SignEmailService;

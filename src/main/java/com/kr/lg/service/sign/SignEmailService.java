@@ -1,7 +1,7 @@
 package com.kr.lg.service.sign;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.model.common.layer.SignLayer;
 import org.springframework.transaction.annotation.Transactional;
 

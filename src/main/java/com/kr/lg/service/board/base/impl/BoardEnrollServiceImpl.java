@@ -1,9 +1,9 @@
 package com.kr.lg.service.board.base.impl;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.dao.BoardDao;
 import com.kr.lg.model.common.listener.BoardCNTEvent;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardEnrollService;
 import lombok.RequiredArgsConstructor;

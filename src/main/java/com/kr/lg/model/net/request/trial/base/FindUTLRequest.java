@@ -1,7 +1,7 @@
 package com.kr.lg.model.net.request.trial.base;
 
-import com.kr.lg.common.enums.TrialSubjectEnum;
-import com.kr.lg.common.enums.TrialTopicEnum;
+import com.kr.lg.enums.TrialSubjectEnum;
+import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

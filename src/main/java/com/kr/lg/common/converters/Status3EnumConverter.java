@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.Status3Enum;
+import com.kr.lg.enums.Status3Enum;
 
 public class Status3EnumConverter extends AbstractEnumAttributeConverter<Status3Enum> {
 

@@ -3,7 +3,7 @@ package com.kr.lg.db.repositories;
 
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.common.enums.StatusEnum;
+import com.kr.lg.enums.StatusEnum;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

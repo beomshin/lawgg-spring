@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.AcceptEnum;
+import com.kr.lg.enums.AcceptEnum;
 
 public class AcceptConverter extends AbstractEnumAttributeConverter<AcceptEnum> {
 

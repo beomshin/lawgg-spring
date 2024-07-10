@@ -2,7 +2,7 @@ package com.kr.lg.db.dao;
 
 import com.kr.lg.model.querydsl.BoardQ;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.entities.BoardTb;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

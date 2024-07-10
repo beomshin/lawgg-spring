@@ -1,10 +1,10 @@
 package com.kr.lg.web.security.login.detail;
 
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.Status3Enum;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.enums.Status3Enum;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.db.repositories.RootUserRepository;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

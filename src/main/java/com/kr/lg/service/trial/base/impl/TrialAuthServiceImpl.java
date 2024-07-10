@@ -1,7 +1,7 @@
 package com.kr.lg.service.trial.base.impl;
 
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.common.utils.TrialUtils;
 import com.kr.lg.model.common.layer.TrialLayer;

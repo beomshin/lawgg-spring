@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.AlertEnum;
+import com.kr.lg.enums.AlertEnum;
 
 public class AlertEnumConverter extends AbstractEnumAttributeConverter<AlertEnum> {
 

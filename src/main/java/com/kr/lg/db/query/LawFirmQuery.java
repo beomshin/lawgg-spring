@@ -1,7 +1,7 @@
 package com.kr.lg.db.query;
 
-import com.kr.lg.common.enums.*;
 import com.kr.lg.db.builder.LawFirmBuilder;
+import com.kr.lg.enums.*;
 import com.kr.lg.model.querydsl.QLawFirmQ;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;

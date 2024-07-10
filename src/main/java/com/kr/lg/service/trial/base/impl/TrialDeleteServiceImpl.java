@@ -1,8 +1,8 @@
 package com.kr.lg.service.trial.base.impl;
 
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.common.exception.LgException;
-import com.kr.lg.common.enums.StatusEnum;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.common.listener.TrialCNTEvent;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.common.utils.TrialUtils;

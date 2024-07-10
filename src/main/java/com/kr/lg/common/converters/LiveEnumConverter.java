@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.LiveEnum;
+import com.kr.lg.enums.LiveEnum;
 
 public class LiveEnumConverter extends AbstractEnumAttributeConverter<LiveEnum> {
 

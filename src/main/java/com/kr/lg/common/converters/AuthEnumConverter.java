@@ -1,7 +1,7 @@
 package com.kr.lg.common.converters;
 
 
-import com.kr.lg.common.enums.AuthEnum;
+import com.kr.lg.enums.AuthEnum;
 
 public class AuthEnumConverter extends AbstractEnumAttributeConverter<AuthEnum> {
 

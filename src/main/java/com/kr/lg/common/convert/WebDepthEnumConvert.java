@@ -1,6 +1,6 @@
 package com.kr.lg.common.convert;
 
-import com.kr.lg.common.enums.DepthEnum;
+import com.kr.lg.enums.DepthEnum;
 import org.springframework.core.convert.converter.Converter;
 
 public class WebDepthEnumConvert implements Converter<Integer, DepthEnum> {

@@ -1,11 +1,11 @@
 package com.kr.lg.controller.board.base;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.model.common.root.DefaultResponse;
+import com.kr.lg.web.common.root.DefaultResponse;
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.model.common.global.GlobalCode;
+import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.model.net.request.board.base.EnrollABRequest;
 import com.kr.lg.model.net.request.board.base.EnrollLFBRequest;

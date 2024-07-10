@@ -1,6 +1,6 @@
 package com.kr.lg.common.converters;
 
-import com.kr.lg.common.enums.LegacyEnum;
+import com.kr.lg.enums.LegacyEnum;
 import com.kr.lg.common.utils.EnumValueConvertUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

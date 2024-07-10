@@ -1,6 +1,6 @@
 package com.kr.lg.service.trial.comment.impl;
 
-import com.kr.lg.common.exception.LgException;
+import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.comment.TrialCommentReportService;
