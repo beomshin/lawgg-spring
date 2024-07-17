@@ -19,11 +19,11 @@ public class MainController {
 
     @ApiOperation(value = "메인 페이지 정보 조회", notes = "메인 페이지 정보를 조회합니다.")
     @GetMapping("/api/public/v1/find/main")
-    public ResponseEntity<?> lgMain() {
+    public ResponseEntity<?> findMain() {
         AbstractSpec spec = MainResponse.builder()
-                .boards(mainService.getMainBoards()) // 포지션 게시판 리스트
-                .trials(mainService.getMainTrials()) // 트라이얼 리스트
-                .hotTrial(mainService.getHotTrial()) // HOT 트라이얼
+                .boards(mainService.getMainPostBoards()) // 포지션 게시판 리스트
+                .trials(mainService.getMainPostTrials()) // 트라이얼 리스트
+                .hotTrial(mainService.getHotPostTrial()) // HOT 트라이얼
                 .build();
 
         return ResponseEntity.ok(spec);

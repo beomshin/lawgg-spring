@@ -1,5 +1,7 @@
 package com.kr.lg.web.provider.common;
 
+import com.kr.lg.module.auth.excpetion.AuthException;
+import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,22 +23,32 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public boolean  validateJwtToken(String key, String token) {
+    public boolean validateJwtToken(String key, String token) {
         try {
             Jwts.parser().setSigningKey(key).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            log.error("[토큰 인증 실패 에러] ==================> ");
+            log.error("[토큰 인증 실패 에러] ==================> [{}]", e.getMessage());
             return false;
         }
     }
 
-    public Date getExpiredTime(String key, String accessToken) {
-        return this.getClaims(key, accessToken).getExpiration();
+    public Date getExpiredTime(String key, String accessToken) throws AuthException {
+        try {
+            return this.getClaims(key, accessToken).getExpiration();
+        } catch (Exception e) {
+            log.error("", e);
+            throw new AuthException(AuthResultCode.FAIL_FIND_TOKEN_INFO);
+        }
     }
 
-    public String getSubject(String key, String token) {
-        return this.getClaims(key, token).getSubject();
+    public String getSubject(String key, String token) throws AuthException {
+        try {
+            return this.getClaims(key, token).getSubject();
+        } catch (Exception e) {
+            log.error("", e);
+            throw new AuthException(AuthResultCode.FAIL_FIND_TOKEN_INFO);
+        }
     }
 
     public String getType(String key, String token) {

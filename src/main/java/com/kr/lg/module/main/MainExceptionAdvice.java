@@ -1,6 +1,5 @@
 package com.kr.lg.module.main;
 
-import com.kr.lg.exception.LgException;
 import com.kr.lg.web.common.global.GlobalCode;
 import com.kr.lg.web.common.root.DefaultResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +17,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class MainExceptionAdvice {
 
-    // 커스텀 Exception
-    @ExceptionHandler(value = LgException.class)
-    public ResponseEntity<DefaultResponse> handle(LgException e) { // MainExceptionAdvice
-        log.error("[MainExceptionAdvice] 오류 발생", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DefaultResponse(e.getCode()));
-    }
 
     // @Validate 실패시
     @ExceptionHandler

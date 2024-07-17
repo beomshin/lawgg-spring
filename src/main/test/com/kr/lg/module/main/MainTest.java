@@ -51,7 +51,7 @@ public class MainTest {
     @DisplayName("메인 페이지 정보 조회 RuntimeException 테스트")
     public void test2() throws Exception {
 
-        when(mainService.getMainBoards()).thenThrow(new RuntimeException());
+        when(mainService.getMainPostBoards()).thenThrow(new RuntimeException());
 
         mockMvc.perform(get("/api/public/v1/find/main"))
                 .andExpect(status().isInternalServerError())

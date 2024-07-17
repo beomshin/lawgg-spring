@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
-public class MainTextBoardDto implements MainText {
+public class MainPostBoardDto implements MainPost {
 
     private Long id; // 식별자
 
@@ -33,7 +33,7 @@ public class MainTextBoardDto implements MainText {
 
     private int lineType; // 라인 타입
 
-    public MainTextBoardDto(MainBoardTb mainBoardTb) {
+    public MainPostBoardDto(MainBoardTb mainBoardTb) {
         this.id = mainBoardTb.getBoardId();
         this.title = mainBoardTb.getTitle();
         this.content = mainBoardTb.getContent();
