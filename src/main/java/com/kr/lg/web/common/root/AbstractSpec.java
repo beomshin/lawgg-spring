@@ -12,16 +12,14 @@ public abstract class AbstractSpec {
 
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final Date time = new Date(); // 날짜
-    public String resultCode;
-    public String resultMsg;
-    public Boolean success;
+    public String resultCode = GlobalCode.SUCCESS.getCode(); // 응답 코드
+    public String resultMsg = GlobalCode.SUCCESS.getMsg();; // 응답 메세지
+    public boolean success = true; // API 성공 여부
 
-    protected abstract void setError(GlobalCode code);
-
-    protected AbstractSpec(GlobalCode code) {
-        this.resultCode = code.getCode();
-        this.resultMsg = code.getMsg();
-        this.success = GlobalCode.isSuccess(code);
+    public AbstractSpec(String code, String msg, boolean success) {
+        this.resultMsg = code;
+        this.resultCode = msg;
+        this.success = success;
     }
 
 }

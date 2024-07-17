@@ -1,7 +1,7 @@
 package com.kr.lg.module.config;
 
-import com.kr.lg.filters.common.DefaultHttpLoggingFilter;
-import com.kr.lg.filters.common.DefaultMDCLoggingFilter;
+import com.kr.lg.web.filters.common.DefaultHttpLoggingFilter;
+import com.kr.lg.web.filters.common.DefaultMDCLoggingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

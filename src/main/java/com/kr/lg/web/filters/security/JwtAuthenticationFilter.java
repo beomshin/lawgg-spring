@@ -1,8 +1,10 @@
 package com.kr.lg.web.filters.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.module.auth.excpetion.AuthException;
+import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.common.root.ErrorResponse;
 import com.kr.lg.web.jwt.JwtService;
 import com.kr.lg.web.security.jwt.detail.JwtDetailService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -39,9 +41,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwtToken = jwtService.parseJwt(request);
-            if (jwtToken != null && jwtService.validateToken(jwtToken)) this.validateJWT(jwtToken);
+            if (jwtToken != null && jwtService.validate(jwtToken)) this.validateJWT(jwtToken);
             filterChain.doFilter(request, response);
-        }  catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException | SignatureException e) {
+        } catch (AuthException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException |
+                 SignatureException e) {
             log.error("[토큰 생성 에러] ===============> ");
             this.generateFailResponseBody(response, e, GlobalCode.FAIL_GENERATE_TOKEN);
         } catch (ExpiredJwtException e) {
@@ -50,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    private void validateJWT(String token) {
+    private void validateJWT(String token) throws AuthException {
         log.debug("[JwtAuthenticationFilter] JWT 인증 검사 =================>");
         UserDetails userDetails = jwtDetailService.loadUserByUsername(jwtService.getUserId(token));
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -61,7 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.error("{}", e.getMessage());
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        objectMapper.writeValue(response.getOutputStream(), new DefaultResponse(code));
+        objectMapper.writeValue(response.getOutputStream(), new ErrorResponse(code));
     }
 
 }

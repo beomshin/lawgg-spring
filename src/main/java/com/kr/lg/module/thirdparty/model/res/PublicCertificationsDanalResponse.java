@@ -1,4 +1,4 @@
-package com.kr.lg.model.net.response.auth;
+package com.kr.lg.module.thirdparty.model.res;
 
 import com.kr.lg.web.common.root.DefaultResponse;
 import lombok.*;

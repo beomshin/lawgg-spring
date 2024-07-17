@@ -21,8 +21,7 @@ public class CookieProvider {
     }
 
     public ResponseCookie removeRefreshTokenCookie() {
-        return ResponseCookie.from("refresh-token", null)
-                .build();
+        return ResponseCookie.from("refresh-token", null).build();
     }
 
     public Cookie of(ResponseCookie responseCookie) {

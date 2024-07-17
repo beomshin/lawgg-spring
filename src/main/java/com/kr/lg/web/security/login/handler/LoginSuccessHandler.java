@@ -2,6 +2,7 @@ package com.kr.lg.web.security.login.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kr.lg.model.net.response.common.LoginResponse;
+import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.web.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String userId = authentication.getName();
         List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-        String accessToken = jwtService.generateAccessToken(userId, request.getRequestURI(), roles);
-        Date expiredTime = jwtService.getExpiredTime(accessToken);
+        String accessToken = jwtService.createJwtToken(userId, request.getRequestURI(), roles);
+        Date expiredTime = null;
+        try {
+            expiredTime = jwtService.getExpiredTime(accessToken);
+        } catch (AuthException e) {
+            throw new RuntimeException(e);
+        }
         String refreshToken = jwtService.generateRefreshToken(userId, request.getRequestURI(), roles);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

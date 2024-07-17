@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class HotTrialDtoText implements MainText {
+public class HotPostTrialDto implements MainPost {
 
     private Long id; // 식별자
 
@@ -22,7 +22,7 @@ public class HotTrialDtoText implements MainText {
 
     private String playVideo; // 비디오 URL
 
-    public HotTrialDtoText(TrialTb trialTb) {
+    public HotPostTrialDto(TrialTb trialTb) {
         this.id = trialTb.getTrialId();
         this.title = trialTb.getTitle();
         this.content = trialTb.getContent();

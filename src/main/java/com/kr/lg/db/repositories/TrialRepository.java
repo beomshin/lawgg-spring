@@ -5,7 +5,6 @@ import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.EndingEnum;
 import com.kr.lg.enums.LiveEnum;
-import com.kr.lg.enums.entity.element.MainPostTypeEnum;
 import com.kr.lg.enums.PrecedentEnum;
 import com.kr.lg.enums.StatusEnum;
 import org.springframework.data.jpa.repository.Lock;
@@ -23,7 +22,7 @@ public interface TrialRepository extends RootTrialRepository {
     TrialTb findByTrialIdAndUserTb(Long trialId, UserTb userTb);
 
     @Query(value = "SELECT * FROM TrialTb b ORDER BY b.mainPostType desc, b.view desc LIMIT 1", nativeQuery = true)
-    TrialTb findByMainPostType(MainPostTypeEnum mainPostType);
+    TrialTb findByMainPostType();
 
     long countByTrialIdAndUserTb(Long trialId, UserTb userTb);
 

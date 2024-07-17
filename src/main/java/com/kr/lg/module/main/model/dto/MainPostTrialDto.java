@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MainTextTrialDto implements MainText {
+public class MainPostTrialDto implements MainPost {
 
     private Long id; // 관리자 식별자
 
@@ -27,7 +27,7 @@ public class MainTextTrialDto implements MainText {
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp writeDt; // 수정일
 
-    public MainTextTrialDto(MainTrialTb mainTrialTb) {
+    public MainPostTrialDto(MainTrialTb mainTrialTb) {
         this.id = mainTrialTb.getTrialId();
         this.title = mainTrialTb.getTitle();
         this.content = mainTrialTb.getContent();
