@@ -6,7 +6,6 @@ import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.model.net.request.board.base.FindABLRequest;
 import com.kr.lg.model.net.request.board.base.FindLFBLRequest;
 import com.kr.lg.model.net.request.board.base.FindUBLRequest;
 import com.kr.lg.service.board.base.BoardFindService;
@@ -25,17 +24,17 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class BoardFindController {
+public class OldBoardFindController {
     private final BoardFindService boardFindService;
 
-    @GetMapping("/api/public/board/find/all/list")
-    @ApiOperation(value = "포지션 게시판 전체 조회", notes = "포지션 게시판 전체를 조회합니다.")
-    public ResponseEntity<DefaultResponse> findAllListBoard(
-            @Validated FindABLRequest requestDto
-    ) throws LgException {
-        DefaultResponse body = boardFindService.findAllListBoard(new BoardLayer(requestDto));
-        return ResponseEntity.ok(body);
-    }
+//    @GetMapping("/api/public/board/find/all/list")
+//    @ApiOperation(value = "포지션 게시판 전체 조회", notes = "포지션 게시판 전체를 조회합니다.")
+//    public ResponseEntity<DefaultResponse> findAllListBoard(
+//            @Validated FindBoardRequest requestDto
+//    ) throws LgException {
+//        DefaultResponse body = boardFindService.findAllListBoard(new BoardLayer(requestDto));
+//        return ResponseEntity.ok(body);
+//    }
 
     @GetMapping("/api/board/find/user/list")
     @ApiOperation(value = "회원 포지션 게시판 조회", notes = "회원 포지션 게시판을 조회합니다.")

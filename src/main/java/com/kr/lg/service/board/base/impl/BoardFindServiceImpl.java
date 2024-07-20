@@ -23,11 +23,11 @@ public class BoardFindServiceImpl implements BoardFindService {
     private final BoardRepository boardRepository;
 
 
-    @Override
-    public DefaultResponse findAllListBoard(BoardLayer boardLayer) {
-        Page<BoardQ> boards = boardDao.findAllBoardList(boardLayer, PageRequest.of(boardLayer.getPage(), boardLayer.getPageNum())); // 게시판 리스트 조회
-        return new FindBLResponse(boards);
-    }
+//    @Override
+//    public DefaultResponse findAllListBoard(BoardLayer boardLayer) {
+//        Page<BoardQ> boards = boardDao.findAllBoardList(boardLayer, PageRequest.of(boardLayer.getPage(), boardLayer.getPageNum())); // 게시판 리스트 조회
+//        return new FindBoardResponse(boards);
+//    }
 
     @Override
     public DefaultResponse findUserListBoard(BoardLayer boardLayer) {

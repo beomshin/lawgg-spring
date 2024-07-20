@@ -9,6 +9,7 @@ import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
+import com.kr.lg.module.board.model.req.FindBoardRequest;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.common.root.RootRequest;
 import com.kr.lg.model.net.request.board.base.*;
@@ -224,7 +225,7 @@ public class BoardLayer {
         this.ip = ip;
     }
 
-    public BoardLayer(FindABLRequest requestDto) {
+    public BoardLayer(FindBoardRequest requestDto) {
         this.page = requestDto.getPage();
         this.type = LineEnum.of(requestDto.getType());
         this.pageNum = requestDto.getPageNum();

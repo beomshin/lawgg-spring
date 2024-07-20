@@ -27,14 +27,16 @@ public class BoardBuilder {
 
     public BooleanExpression eqLineType(LineEnum lineType) {
         if (LineEnum.ALL.equals(lineType)) return null;
-        return boardTb.lineType.eq(lineType).or(boardTb.postType.in(PostEnum.NOTICE_TYPE, PostEnum.EVENT_TYPE));
+        return boardTb.lineType.eq(lineType)
+                .or(boardTb.postType.in(PostEnum.NOTICE_TYPE, PostEnum.EVENT_TYPE));
     } // 라인 타입 조회
 
     public BooleanExpression eqSubject(BoardTypeEnum subject, String keyword) {
         if (subject == null || keyword == null) return null;
         keyword = "%".concat(keyword).concat("%");
         switch (subject) {
-            case ALL_TYPE: return boardTb.title.like(keyword).or(boardTb.content.like(keyword)).or(boardTb.writer.like(keyword));
+            case ALL_TYPE: return boardTb.title.like(keyword)
+                    .or(boardTb.content.like(keyword)).or(boardTb.writer.like(keyword));
             case TITLE_TYPE: return boardTb.title.like(keyword);
             case CONTENT_TYPE: return boardTb.content.like(keyword);
             case WRITER_TYPE: return boardTb.writer.like(keyword);

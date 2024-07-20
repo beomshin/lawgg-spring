@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface BoardFindService {
 
 
-    DefaultResponse findAllListBoard(BoardLayer boardLayer) throws LgException;
+//    DefaultResponse findAllListBoard(BoardLayer boardLayer) throws LgException;
     DefaultResponse findUserListBoard(BoardLayer boardLayer) throws LgException;
     DefaultResponse findLawFirmListBoard(BoardLayer boardLayer) throws LgException;
     DefaultResponse findAnonymousDetailBoard(BoardLayer boardLayer) throws LgException;
