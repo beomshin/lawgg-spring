@@ -6,7 +6,7 @@ import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.common.listener.CommnetCNTEvent;
 import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.db.repositories.TrialCommentRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.TrialUtils;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.comment.TrialCommentDeleteService;

@@ -3,14 +3,13 @@ package com.kr.lg.module.auth;
 import com.kr.lg.LgWasApplication;
 import com.kr.lg.module.auth.service.AuthService;
 import com.kr.lg.module.config.MockMvcConfig;
-import com.kr.lg.web.jwt.JwtService;
-import com.kr.lg.web.provider.common.JwtTokenProvider;
+import com.kr.lg.service.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +20,6 @@ import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,7 +35,8 @@ public class AuthTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private final String COOKIE_ID = "_lg_4SD343"; // 리프레쉬 토큰 쿠키 아이디
+    @Value("${cookies.auth.refresh}")
+    private String COOKIE_ID;
 
     @SpyBean
     private AuthService authService;

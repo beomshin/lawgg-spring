@@ -28,6 +28,7 @@ public class JasyptConfig {
      */
     @Bean("jasyptStringEncryptor")
     public StringEncryptor stringEncryptor(){
+        log.info("▶ [Jasypt] properties 복호화 Bean 등록");
 
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();

@@ -19,7 +19,7 @@ public class AsyncConfig extends AsyncConfigurerSupport {
 
     @Override
     public Executor getAsyncExecutor() {
-        log.info("[Async Executor] 설정: corePoolSize [{}], maxPoolSize [{}], queueCapacity [{}]", corePoolSize, maxPoolSize, queueCapacity);
+        log.info("▶ [Async Executor] 설정: corePoolSize [{}], maxPoolSize [{}], queueCapacity [{}]", corePoolSize, maxPoolSize, queueCapacity);
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);

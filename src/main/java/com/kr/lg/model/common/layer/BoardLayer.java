@@ -9,7 +9,7 @@ import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
-import com.kr.lg.web.common.global.GlobalFile;
+import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.common.root.RootRequest;
 import com.kr.lg.model.net.request.board.base.*;
 import com.kr.lg.model.net.request.board.comment.*;

@@ -10,7 +10,7 @@ import com.kr.lg.enums.ApplyStatusEnum;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.db.repositories.LawFirmRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.AwsS3Utils;
 import com.kr.lg.common.utils.LawFirmUtils;
 import com.kr.lg.model.common.layer.LawFLayer;

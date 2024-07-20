@@ -8,7 +8,7 @@ import com.kr.lg.model.querydsl.TrialQ;
 import com.kr.lg.db.repositories.TrialRecommendRepository;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.TrialVoteRepository;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.db.mapper.TrialVoteTbMapper;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.model.net.response.trial.base.FindALTResponse;

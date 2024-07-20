@@ -6,7 +6,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.DelEnum;
 import com.kr.lg.enums.ReadEnum;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;

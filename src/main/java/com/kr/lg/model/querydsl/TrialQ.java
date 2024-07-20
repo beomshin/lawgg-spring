@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.enums.*;
 import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -6,7 +6,7 @@ import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.ReplyEnum;
 import com.kr.lg.db.repositories.MessageRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.MessageUtils;
 import com.kr.lg.model.common.layer.MainLayer;
 import com.kr.lg.service.message.MessageCreateService;

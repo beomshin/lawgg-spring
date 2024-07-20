@@ -3,7 +3,7 @@ package com.kr.lg.controller.trial.base;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.net.request.trial.base.UpdateETRequest;
 import com.kr.lg.model.net.request.trial.base.UpdateLTRequest;
 import com.kr.lg.model.common.layer.TrialLayer;

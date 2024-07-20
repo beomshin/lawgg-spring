@@ -2,7 +2,6 @@ package com.kr.lg.module.thirdparty.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kr.lg.common.crypto.AESCrypt;
-import com.kr.lg.common.crypto.KeyManager;
 import com.kr.lg.common.utils.RestPortOne;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.UserRepository;
@@ -10,7 +9,7 @@ import com.kr.lg.enums.AuthEnum;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.model.net.request.auth.DanalCRequest;
 import com.kr.lg.module.thirdparty.service.ThirdPartyService;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +32,9 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     @Value("${portone.rest.secret}")
     private String portoneSecret;
 
+    @Value("${aes.key}")
+    private String aesKey;
+
     @Override
     @Transactional
     public Boolean certificationsDanal(DanalCRequest request, UserTb userTb) throws LgException {
@@ -53,6 +55,6 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
             log.error("{}", request.getError_msg());
             throw new LgException(GlobalCode.FAIL_CERTIFICATION);
         }
-        return AESCrypt.encrypt(new ObjectMapper().writeValueAsString(restPortOne.getPersonalInfo(request.getImp_uid())), KeyManager.aesKey);
+        return AESCrypt.encrypt(new ObjectMapper().writeValueAsString(restPortOne.getPersonalInfo(request.getImp_uid())), aesKey);
     }
 }

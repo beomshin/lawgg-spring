@@ -9,7 +9,7 @@ import com.kr.lg.model.common.listener.AlertVideoEvent;
 import com.kr.lg.model.common.listener.TrialCNTEvent;
 import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialRepository;
-import com.kr.lg.web.common.global.GlobalFile;
+import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.service.file.FileService;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialEnrollService;

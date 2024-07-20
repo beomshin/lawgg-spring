@@ -2,7 +2,7 @@ package com.kr.lg.common.utils;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

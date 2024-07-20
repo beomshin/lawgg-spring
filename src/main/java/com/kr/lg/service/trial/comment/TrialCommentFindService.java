@@ -1,7 +1,7 @@
 package com.kr.lg.service.trial.comment;
 
 import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.common.layer.TrialLayer;
 import org.springframework.transaction.annotation.Transactional;
 

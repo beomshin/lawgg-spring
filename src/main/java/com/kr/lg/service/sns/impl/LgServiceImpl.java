@@ -6,7 +6,7 @@ import com.kr.lg.enums.SnsEnum;
 import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.web.jwt.JwtService;
+import com.kr.lg.service.jwt.JwtService;
 import com.kr.lg.model.common.sns.lg.LgLoginDto;
 import com.kr.lg.service.sns.LgService;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ public class LgServiceImpl implements LgService {
             userId = userTb1.getUserId();
         }
 
-        String refreshToken = jwtService.generateRefreshToken(String.valueOf(userId), "/", Arrays.asList("ROLE_USER"));
+        String refreshToken = jwtService.createRefreshToken(String.valueOf(userId), "/", Arrays.asList("ROLE_USER"));
 
         Map<String, Object> params = new HashMap<>();
         params.put("token", refreshToken);

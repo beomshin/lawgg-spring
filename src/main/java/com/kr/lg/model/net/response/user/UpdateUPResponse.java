@@ -1,6 +1,6 @@
 package com.kr.lg.model.net.response.user;
 
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import lombok.*;
 
 @Getter

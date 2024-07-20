@@ -3,7 +3,7 @@ package com.kr.lg.service.board.base.impl;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.BoardUtils;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardAuthService;

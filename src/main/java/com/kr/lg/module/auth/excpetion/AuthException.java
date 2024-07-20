@@ -1,7 +1,6 @@
 package com.kr.lg.module.auth.excpetion;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthException extends Exception {
 
-	private AuthResultCode code;
+	private AuthResultCode resultCode;
 
-	public AuthException(AuthResultCode code) {
-		super(code.getMsg());
-		this.code = code;
+	public AuthException(AuthResultCode resultCode) {
+		super(resultCode.getMsg());
+		this.resultCode = resultCode;
 	}
 
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public enum AuthResultCode {
 
+    NOT_EXIST_JWT_TOKEN("2000", "토큰 누락"),
     FAIL_VALIDATE_JWT_TOKEN("2001", "토큰 유효성 검사 실패"),
     FAIL_FIND_USER_INFO("2002", "유저 정보 조회 실패"),
     FAIL_FIND_TOKEN_INFO("2003", "토큰 정보 조회 실패")
