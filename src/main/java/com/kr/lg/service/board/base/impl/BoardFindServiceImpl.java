@@ -5,7 +5,6 @@ import com.kr.lg.db.dao.BoardDao;
 import com.kr.lg.model.net.response.board.base.*;
 import com.kr.lg.model.querydsl.BoardQ;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.kr.lg.module.board.model.res.FindBoardResponse;
 import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardFindService;
@@ -24,11 +23,11 @@ public class BoardFindServiceImpl implements BoardFindService {
     private final BoardRepository boardRepository;
 
 
-    @Override
-    public DefaultResponse findAllListBoard(BoardLayer boardLayer) {
-        Page<BoardQ> boards = boardDao.findAllBoardList(boardLayer, PageRequest.of(boardLayer.getPage(), boardLayer.getPageNum())); // 게시판 리스트 조회
-        return new FindBoardResponse(boards);
-    }
+//    @Override
+//    public DefaultResponse findAllListBoard(BoardLayer boardLayer) {
+//        Page<BoardQ> boards = boardDao.findAllBoardList(boardLayer, PageRequest.of(boardLayer.getPage(), boardLayer.getPageNum())); // 게시판 리스트 조회
+//        return new FindBoardResponse(boards);
+//    }
 
     @Override
     public DefaultResponse findUserListBoard(BoardLayer boardLayer) {

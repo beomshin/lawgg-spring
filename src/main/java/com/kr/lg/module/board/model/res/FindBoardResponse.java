@@ -1,30 +1,20 @@
 package com.kr.lg.module.board.model.res;
 
-import com.kr.lg.web.dto.root.DefaultResponse;
-import com.kr.lg.model.querydsl.BoardQ;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import lombok.*;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Getter
-@Setter
 @ToString(callSuper = true)
+@Builder
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@NoArgsConstructor
-public class FindBoardResponse extends DefaultResponse { // FindBoardListResponse
+public class FindBoardResponse extends AbstractSpec {
 
-    private List list;
-    private Long totalElements;
-    private Integer totalPage;
-    private Integer curPage;
-
-
-    public FindBoardResponse(Page<?> boards) {
-        this.list = boards.getContent();
-        this.totalElements = boards.getTotalElements();
-        this.totalPage = boards.getTotalPages();
-        this.curPage = boards.getNumber();
-    }
+    private List<?> list; // 게시판 리스트
+    private Long totalElements; // 게시판 총개수
+    private Integer totalPage; // 게시판 페이지 개수
+    private Integer curPage; // 현재 페이지 번호
 
 }
