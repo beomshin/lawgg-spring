@@ -50,5 +50,40 @@
         OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
     </select>
 
+    <select id="findBoardsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+        SELECT COUNT(*) AS 'count'
+        FROM BoardTb bt
+        LEFT JOIN UserTb ut ON(bt.userId = ut.userId)
+        <where>
+            AND bt.status = 1
+
+            <!-- 라인타입 -->
+            <if test="type != null and type != 5">
+                AND (bt.linetype = #{type} OR bt.postType in ('99', '98'))
+            </if>
+
+            <!-- 조회타입 -->
+            <if test="subject != null and keyword != null">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="subject == 0">
+                        AND (bt.title LIKE '%' || #{keyword} || '%' OR bt.content LIKE '%' || #{keyword} || '%' OR bt.writer LIKE '%' || #{keyword} || '%')
+                    </when>
+                    <!-- 제목 키워드 조회 -->
+                    <when test="subject == 1">
+                        AND bt.title LIKE '%' || #{keyword} || '%'
+                    </when>
+                    <!-- 본문 키워드 조회 -->
+                    <when test="subject == 2">
+                        AND bt.content LIKE '%' || #{keyword} || '%'
+                    </when>
+                    <!-- 작성자 키워드 조회 -->
+                    <when test="subject == 3">
+                        AND bt.writer LIKE '%' || #{keyword} || '%'
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
 
 </mapper>

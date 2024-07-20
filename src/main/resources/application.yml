@@ -37,6 +37,12 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     open-in-view: false
     show-sql: true
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+  web:
+    resources:
+      static-locations: classpath:/static/
   data:
     redis:
       repositories:

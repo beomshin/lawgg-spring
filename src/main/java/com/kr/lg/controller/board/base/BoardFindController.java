@@ -6,7 +6,7 @@ import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.model.net.request.board.base.FindABLRequest;
+import com.kr.lg.module.board.model.req.FindBoardRequest;
 import com.kr.lg.model.net.request.board.base.FindLFBLRequest;
 import com.kr.lg.model.net.request.board.base.FindUBLRequest;
 import com.kr.lg.service.board.base.BoardFindService;
@@ -31,7 +31,7 @@ public class BoardFindController {
     @GetMapping("/api/public/board/find/all/list")
     @ApiOperation(value = "포지션 게시판 전체 조회", notes = "포지션 게시판 전체를 조회합니다.")
     public ResponseEntity<DefaultResponse> findAllListBoard(
-            @Validated FindABLRequest requestDto
+            @Validated FindBoardRequest requestDto
     ) throws LgException {
         DefaultResponse body = boardFindService.findAllListBoard(new BoardLayer(requestDto));
         return ResponseEntity.ok(body);

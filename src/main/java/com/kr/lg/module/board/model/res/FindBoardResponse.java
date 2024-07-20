@@ -1,4 +1,4 @@
-package com.kr.lg.model.net.response.board.base;
+package com.kr.lg.module.board.model.res;
 
 import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.querydsl.BoardQ;
@@ -12,7 +12,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class FindBLResponse extends DefaultResponse { // FindBoardListResponse
+public class FindBoardResponse extends DefaultResponse { // FindBoardListResponse
 
     private List list;
     private Long totalElements;
@@ -20,10 +20,11 @@ public class FindBLResponse extends DefaultResponse { // FindBoardListResponse
     private Integer curPage;
 
 
-    public FindBLResponse(Page<BoardQ> boards) {
+    public FindBoardResponse(Page<?> boards) {
         this.list = boards.getContent();
         this.totalElements = boards.getTotalElements();
         this.totalPage = boards.getTotalPages();
         this.curPage = boards.getNumber();
     }
+
 }

@@ -68,7 +68,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * @throws AuthException
      */
     private void isValid(String token, String uri) throws AuthException {
-        if (uri.contains("/public")) return; // public 접근으로 간주
+        log.info("{}", uri);
+        if (uri.contains("/public") || uri.contains("swagger") || uri.contains("api-docs")) {
+            return; // public 접근으로 간주
+        }
 
         if (StringUtils.isBlank(token)) {
             log.error("▶ [인증 토큰] 토큰 누락 실패");
