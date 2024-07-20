@@ -3,7 +3,7 @@ package com.kr.lg.model.common.sns.lg;
 import com.kr.lg.model.common.sns.google.GoogleLoginDto;
 import com.kr.lg.model.common.sns.kakao.KakaoLoginDto;
 import com.kr.lg.model.common.sns.naver.NaverLoginDto;
-import com.kr.lg.enums.SnsEnum;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class LgLoginDto {
     private String snsId;
     private String name;
     private String email;
-    private SnsEnum snsType;
+    private SnsType snsType;
     private String profile;
     private String loginId;
 
@@ -27,7 +27,7 @@ public class LgLoginDto {
         this.name = googleLoginDto.getName();
         this.email = googleLoginDto.getEmail();
         this.profile = googleLoginDto.getPicture();
-        this.snsType = SnsEnum.GOOGLE_SNS_TYPE;
+        this.snsType = SnsType.GOOGLE_SNS_TYPE;
     }
 
     public LgLoginDto(KakaoLoginDto kakaoLoginDto) {
@@ -36,7 +36,7 @@ public class LgLoginDto {
         this.name = kakaoLoginDto.getProperties().getNickname();
         this.email = kakaoLoginDto.getKakaoAccount().getEmail();
         this.profile = kakaoLoginDto.getKakaoAccount().getProfile().getProfileImageUrl();
-        this.snsType = SnsEnum.KAKAO_SNS_TYPE;
+        this.snsType = SnsType.KAKAO_SNS_TYPE;
     }
 
     public LgLoginDto(NaverLoginDto naverLoginDto) {
@@ -45,6 +45,6 @@ public class LgLoginDto {
         this.name = naverLoginDto.getName();
         this.email = naverLoginDto.getEmail();
         this.profile = naverLoginDto.getProfileImage();
-        this.snsType = SnsEnum.NAVER_SNS_TYPE;
+        this.snsType = SnsType.NAVER_SNS_TYPE;
     }
 }

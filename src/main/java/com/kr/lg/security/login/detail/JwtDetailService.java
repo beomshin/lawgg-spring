@@ -2,6 +2,8 @@ package com.kr.lg.security.login.detail;
 
 import com.kr.lg.db.repositories.RootUserRepository;
 import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.module.auth.excpetion.AuthException;
+import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,7 @@ public class JwtDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         // ToDo 캐시 적용 여부 확인
         log.debug("▶ [JwtDetailService] 토큰 유저 정보 조회 : userId [{}] =============>", userId);
-        return new UserAdapter(userRepository.findByUserId(Long.parseLong(userId)).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저 입니다.")));
+        return new UserAdapter(userRepository.findByUserId(Long.parseLong(userId))
+                .orElseThrow(() -> new UsernameNotFoundException("로그인 아이디 미존재", new AuthException(AuthResultCode.NOT_EXIST_USER))));
     }
 }

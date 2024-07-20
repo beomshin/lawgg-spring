@@ -1,7 +1,7 @@
 package com.kr.lg.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kr.lg.model.net.request.common.LoginRequest;
+import com.kr.lg.security.dto.LoginRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -20,10 +20,10 @@ import java.io.IOException;
 public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     public LoginAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationSuccessHandler authenticationSuccessHandler, AuthenticationFailureHandler authenticationFailureHandler, String filterProcessesUrl) {
-        super(authenticationManager);
-        this.setAuthenticationSuccessHandler(authenticationSuccessHandler);
-        this.setAuthenticationFailureHandler(authenticationFailureHandler);
-        this.setFilterProcessesUrl(filterProcessesUrl);
+        super(authenticationManager); // spring security authentication manager 등록 (manager 가 provider 실행함)
+        this.setAuthenticationSuccessHandler(authenticationSuccessHandler); // 성공 핸들러
+        this.setAuthenticationFailureHandler(authenticationFailureHandler); // 실패 핸들러
+        this.setFilterProcessesUrl(filterProcessesUrl); // path 설정
     }
 
     @Override
@@ -31,13 +31,12 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
         try {
 
-            log.debug("[LoginAuthenticationFilter] 1. 로그인 정보 NULL 체크 ====================>");
+            log.info("▶ [Spring Security 로그인][LoginAuthenticationFilter] 1. 로그인 정보 데이터 누락 체크");
             LoginRequest credential = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
-            if (credential.isRequestBlank()) throw new AuthenticationServiceException("로그인 정보가 누락되었습니다.");
+            if (credential == null || credential.isRequestBlank()) throw new AuthenticationServiceException("로그인 정보가 누락되었습니다.");
             return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(credential.getLoginId(), credential.getPassword()));
-
         } catch (IOException e) {
-            log.error("{}", e.getMessage());
+            log.error("▶ [Spring Security 로그인][LoginAuthenticationFilter] IoException", e);
             throw new RuntimeException(e);
         }
     }

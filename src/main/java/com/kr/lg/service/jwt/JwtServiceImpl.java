@@ -1,6 +1,6 @@
 package com.kr.lg.service.jwt;
 
-import com.kr.lg.enums.SnsEnum;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.common.provider.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
@@ -42,7 +42,7 @@ public class JwtServiceImpl implements JwtService {
     public String createJwtToken(String subject, String uri, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(subject);
         claims.put("roles", roles);
-        claims.put("type", SnsEnum.LG_SNS_TYPE.getCode());
+        claims.put("type", SnsType.LG_SNS_TYPE.getCode());
         return jwtTokenProvider.createJwtToken(jwtKey, claims, uri, new Date(System.currentTimeMillis() + (ACCESS_EXPIRED_TIME * 1000)));
     }
 
@@ -57,7 +57,7 @@ public class JwtServiceImpl implements JwtService {
     public String createRefreshToken(String subject, String uri, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(subject);
         claims.put("roles", roles);
-        claims.put("type", SnsEnum.LG_SNS_TYPE.getCode());
+        claims.put("type", SnsType.LG_SNS_TYPE.getCode());
         return jwtTokenProvider.createJwtToken(jwtKey, claims, uri, new Date(System.currentTimeMillis() + (REFRESH_EXPIRED_TIME * 1000)));
     }
 

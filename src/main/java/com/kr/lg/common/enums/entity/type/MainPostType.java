@@ -1,22 +1,20 @@
-package com.kr.lg.enums;
+package com.kr.lg.common.enums.entity.type;
 
+import com.kr.lg.enums.LegacyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Status3Enum implements LegacyEnum {
+public enum MainPostType implements LegacyEnum {
 
-    NORMAL_STATUS(1),
-    REPORT_STATUS(2),
-
-    DELETE_STATUS(9)
-
+    NORMAL_TYPE(0),
+    MAIN_POST_TYPE(1),
     ;
 
     int code;
 
-    public static Status3Enum of(Integer code) {
+    public static MainPostType of(Integer code) {
         if (code == null) {
             return null;
         }

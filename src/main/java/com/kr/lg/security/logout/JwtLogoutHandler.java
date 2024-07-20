@@ -20,7 +20,7 @@ public class JwtLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        log.debug("[JwtLogoutHandler] 로그아웃 요청 (시큐리티 컨텍스 클리어) ============>");
+        log.info("▶ [Spring Security 로그인][JwtLogoutHandler] 로그아웃 핸들러 실행");
         SecurityContext context = SecurityContextHolder.getContext();
         SecurityContextHolder.clearContext();
         context.setAuthentication(null);

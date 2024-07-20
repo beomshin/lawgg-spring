@@ -2,6 +2,8 @@ package com.kr.lg.model.querydsl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kr.lg.common.enums.entity.type.SnsType;
+import com.kr.lg.common.enums.entity.status.UserStatus;
 import com.kr.lg.enums.*;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
@@ -46,9 +48,9 @@ public class UserQ {
             , String profile
             , String nickName
             , DelEnum delFlag
-            , Status3Enum status
+            , UserStatus status
             , Timestamp regDt
-            , SnsEnum snsEnum
+            , SnsType snsType
     ) {
         this.loginId = loginId;
         this.profile = profile;
@@ -56,7 +58,7 @@ public class UserQ {
         this.delFlag = delFlag.getCode();
         this.status = status.getCode();
         this.regDt = regDt;
-        this.snsType = snsEnum.getCode();
+        this.snsType = snsType.getCode();
     }
 
     @QueryProjection
@@ -77,7 +79,7 @@ public class UserQ {
             Timestamp regDt,
             String phone,
             AuthEnum authFlag,
-            SnsEnum snsType,
+            SnsType snsType,
             JudgeEnum judgeFlag,
             String gender,
             String birth,

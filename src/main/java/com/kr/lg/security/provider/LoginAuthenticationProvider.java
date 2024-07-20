@@ -20,15 +20,29 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
     private final BCryptPasswordEncoder encoder;
     private final UserDetailService userDetailService;
 
+    /**
+     * Spring Security Manager 가 실제로 실행하는 로그인 검증 구현체
+     *
+     * 성공시 성공 핸들러 (AuthenticationSuccessHandler)
+     * Exception 발생으로 실패 핸들러 (AuthenticationSuccessHandler)
+     *
+     * @param authentication the authentication request object.
+     * @return
+     * @throws AuthenticationException
+     */
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        log.debug("[LoginAuthenticationProvider] 2. 로그인 Provider 진입 ==============> ");
 
+        log.info("▶ [Spring Security 로그인][LoginAuthenticationProvider] 2. 로그인 Provider 진입");
         UserDetails userDetails = userDetailService.loadUserByUsername(authentication.getName());
+
+        log.info("▶ [Spring Security 로그인][LoginAuthenticationProvider] 4. 패스워드 검증 시작");
         String rawPassword = authentication.getCredentials().toString(); // 요청 비밀번호
         String oriPassword = userDetails.getPassword(); // 원본 비밀번호
-
-        if (!encoder.matches(rawPassword, oriPassword)) throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        if (!encoder.matches(rawPassword, oriPassword)) {
+            throw new BadCredentialsException("비밀번호 불일치");
+        }
 
         return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
     }

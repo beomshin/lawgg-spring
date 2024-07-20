@@ -3,6 +3,10 @@ package com.kr.lg.db.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kr.lg.common.converters.*;
 import com.kr.lg.common.enums.convert.crypt.DataBaseAESCryptConverter;
+import com.kr.lg.common.enums.convert.status.UserStatusConverter;
+import com.kr.lg.common.enums.convert.type.SnsTypeConverter;
+import com.kr.lg.common.enums.entity.type.SnsType;
+import com.kr.lg.common.enums.entity.status.UserStatus;
 import com.kr.lg.enums.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -99,8 +103,8 @@ public class UserTb { // 관리자 테이블
     private Long commentCount;
 
     @Column(name = "snsType")
-    @Convert(converter = SnsEnumConverter.class)
-    private SnsEnum snsType;
+    @Convert(converter = SnsTypeConverter.class)
+    private SnsType snsType;
 
     @Column(name = "personalPeriod")
     private Integer personalPeriod;
@@ -118,8 +122,8 @@ public class UserTb { // 관리자 테이블
     private JudgeEnum judgeFlag;
 
     @Column(name = "status")
-    @Convert(converter = Status3EnumConverter.class)
-    private Status3Enum status;
+    @Convert(converter = UserStatusConverter.class)
+    private UserStatus status;
 
     @Column(name = "authDt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

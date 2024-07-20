@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.Status2Enum;
-import com.kr.lg.enums.Status3Enum;
+import com.kr.lg.common.enums.entity.status.UserStatus;
 import com.kr.lg.enums.WriterEnum;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
@@ -162,7 +162,7 @@ public class LawFirmQ {
             String name,
             String  profile,
             Timestamp regDt,
-            Status3Enum status
+            UserStatus status
     ) {
         this.lawFirmApplyId = lawFirmApplyId;
         this.name = name;
@@ -177,7 +177,7 @@ public class LawFirmQ {
             Timestamp regDt,
             String name,
             String profile,
-            Status3Enum status,
+            UserStatus status,
             Integer level
     ) {
         this.userId = userId;

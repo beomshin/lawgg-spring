@@ -1,7 +1,7 @@
 package com.kr.lg.model.common.layer;
 
 
-import com.kr.lg.enums.SnsEnum;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.model.net.request.sign.SendERequest;
 import com.kr.lg.model.net.request.sign.SignURequest;
 import lombok.*;
@@ -24,7 +24,7 @@ public class SignLayer {
     private String txId;
     private String code;
     private String name;
-    private SnsEnum snsType;
+    private SnsType snsType;
 
 
     public SignLayer(SignURequest request) {
@@ -32,7 +32,7 @@ public class SignLayer {
         this.password = request.getPassword();
         this.nickName = request.getNickName();
         this.personalPeriod = request.getPersonalPeriod();
-        this.snsType = SnsEnum.LG_SNS_TYPE;
+        this.snsType = SnsType.LG_SNS_TYPE;
     }
 
     public SignLayer(SendERequest requestDto) {

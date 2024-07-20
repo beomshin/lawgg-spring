@@ -1,11 +1,12 @@
-package com.kr.lg.enums;
+package com.kr.lg.common.enums.entity.type;
 
+import com.kr.lg.enums.LegacyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum SnsEnum implements LegacyEnum {
+public enum SnsType implements LegacyEnum {
 
     LG_SNS_TYPE(0),
     GOOGLE_SNS_TYPE(1),
@@ -15,7 +16,7 @@ public enum SnsEnum implements LegacyEnum {
 
     int code;
 
-    public static SnsEnum of(Integer code) {
+    public static SnsType of(Integer code) {
         if (code == null) {
             return null;
         }
