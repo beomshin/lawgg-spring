@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kr.lg.module.board.mapper.BoardFindMapper">
+
+    <select id="findBoards" parameterType="com.kr.lg.web.dto.mapper.board.BoardParam" resultType="com.kr.lg.module.board.model.dto.BoardEntry">
+        SELECT bt.boardId, bt.postType, bt.title, bt.writer, bt.writeDt, bt.view, bt.recommendCount, bt.commentCount, bt.writerType, bt.lineType, ut.profile
+        FROM BoardTb bt
+        LEFT JOIN UserTb ut ON(bt.userId = ut.userId)
+        <where>
+            AND bt.status = 1
+
+            <!-- 라인타입 -->
+            <if test="data.type != null and data.type != 5">
+                AND (bt.linetype = #{data.type} OR bt.postType in ('99', '98'))
+            </if>
+
+            <!-- 조회타입 -->
+            <if test="data.subject != null and data.keyword != null">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="data.subject == 0">
+                        AND (bt.title LIKE '%' || #{data.keyword} || '%' OR bt.content LIKE '%' || #{data.keyword} || '%' OR bt.writer LIKE '%' || #{data.keyword} || '%')
+                    </when>
+                    <!-- 제목 키워드 조회 -->
+                    <when test="data.subject == 1">
+                        AND bt.title LIKE '%' || #{data.keyword} || '%'
+                    </when>
+                    <!-- 본문 키워드 조회 -->
+                    <when test="data.subject == 2">
+                        AND bt.content LIKE '%' || #{data.keyword} || '%'
+                    </when>
+                    <!-- 작성자 키워드 조회 -->
+                    <when test="data.subject == 3">
+                        AND bt.writer LIKE '%' || #{data.keyword} || '%'
+                    </when>
+                </choose>
+            </if>
+        </where>
+
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+
+</mapper>

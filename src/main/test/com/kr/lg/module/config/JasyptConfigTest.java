@@ -20,5 +20,6 @@ class JasyptConfigTest {
         config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator"); // IV 생성기
         config.setStringOutputType("base64"); // 인코딩 방식
         encryptor.setConfig(config);
+
     }
 }
