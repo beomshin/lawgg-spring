@@ -9,7 +9,7 @@ import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.common.listener.BoardCTEvent;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.model.querydsl.BoardQ;
 import com.kr.lg.db.query.BoardQuery;
 import com.kr.lg.db.repositories.BoardAttachRepository;

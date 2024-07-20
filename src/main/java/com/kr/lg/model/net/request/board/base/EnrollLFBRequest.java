@@ -1,6 +1,6 @@
 package com.kr.lg.model.net.request.board.base;
 
-import com.kr.lg.web.common.global.GlobalFile;
+import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

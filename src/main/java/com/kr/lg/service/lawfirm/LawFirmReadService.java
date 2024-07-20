@@ -1,7 +1,7 @@
 package com.kr.lg.service.lawfirm;
 
 import com.kr.lg.exception.LgException;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.common.layer.LawFLayer;
 import org.springframework.transaction.annotation.Transactional;
 

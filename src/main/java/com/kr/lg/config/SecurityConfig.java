@@ -1,6 +1,6 @@
 package com.kr.lg.config;
 
-import com.kr.lg.web.filters.security.LoginAuthenticationFilter;
+import com.kr.lg.security.filter.LoginAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +35,12 @@ public class SecurityConfig {
             "/webjars/**"
     };
 
+    private static final String LOGIN_PATH = "/api/public/login"; // 로그인 path
+
+    private static final String LOGOUT_PATH = "/api/public/logout"; // 로그아웃 path (미사용)
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationProvider logAuthenticationProvider) {
+    public AuthenticationManager authenticationManager(AuthenticationProvider logAuthenticationProvider) { // security manager 등록
         List<AuthenticationProvider> authenticationProviders = Collections.singletonList(logAuthenticationProvider);
         return new ProviderManager(authenticationProviders);
     }
@@ -66,19 +70,18 @@ public class SecurityConfig {
         http.cors().configurationSource(corsConfigurationSource);
 
         http.logout()
-                .logoutUrl("/api/public/logout")
-                .addLogoutHandler(jwtLogoutHandler)
-                .logoutSuccessHandler(jwtLogoutSuccessHandler)
-                .deleteCookies("refresh-token");
+                .logoutUrl(LOGOUT_PATH)
+                .addLogoutHandler(jwtLogoutHandler) // 로그아웃 핸들러
+                .logoutSuccessHandler(jwtLogoutSuccessHandler) // 로그아웃 성공 핸들러
+                .deleteCookies("refresh-token"); // 리프레쉬 토큰 쿠키 삭제
 
         http.authorizeHttpRequests()
-                .antMatchers("/api/public/**").permitAll()
-                .antMatchers(SwaggerPatterns).permitAll()
-                .anyRequest().hasRole("USER");
+                .antMatchers("/api/public/**").permitAll() // public path 허용
+                .antMatchers(SwaggerPatterns).permitAll() // swagger path 허용
+                .anyRequest().hasRole("USER"); // 이외 USER ROLE 확인 처리
 
-        http.addFilter(new LoginAuthenticationFilter(authenticationManager, loginSuccessHandler, loginFailHandler, "/api/public/login"));
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
+        http.addFilter(new LoginAuthenticationFilter(authenticationManager, loginSuccessHandler, loginFailHandler, LOGIN_PATH)); // 로그인 필터 등록
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // before 필터 등록으로 JWT 검사 실행
 
         return http.build();
     }

@@ -5,7 +5,7 @@ import com.kr.lg.db.dao.BoardDao;
 import com.kr.lg.model.net.response.board.base.*;
 import com.kr.lg.model.querydsl.BoardQ;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.base.BoardFindService;
 import lombok.RequiredArgsConstructor;

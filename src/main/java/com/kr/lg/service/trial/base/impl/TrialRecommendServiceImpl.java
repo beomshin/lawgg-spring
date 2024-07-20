@@ -5,7 +5,7 @@ import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.model.common.listener.TrialREvent;
 import com.kr.lg.db.repositories.TrialRecommendRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialRecommendService;
 import lombok.RequiredArgsConstructor;

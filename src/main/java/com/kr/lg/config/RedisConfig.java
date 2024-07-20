@@ -21,16 +21,15 @@ public class RedisConfig {
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
-        log.info("[레디스] 계정 정보 : host [{}], port [{}]", host, port);
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setPort(port);
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
-        return lettuceConnectionFactory;
+        return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
+        log.info("▶ [레디스] 레디스 템플릿 Bean 등록");
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new StringRedisSerializer());

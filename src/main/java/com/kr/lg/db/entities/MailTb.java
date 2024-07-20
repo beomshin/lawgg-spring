@@ -1,7 +1,7 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.AESCryptConverter;
+import com.kr.lg.common.enums.convert.crypt.DataBaseAESCryptConverter;
 import com.kr.lg.common.converters.VerificationEnumConverter;
 import com.kr.lg.enums.VerificationEnum;
 import lombok.*;
@@ -39,7 +39,7 @@ public class MailTb {
     private String txId;
 
     @Column(name = "receiver")
-    @Convert(converter = AESCryptConverter.class)
+    @Convert(converter = DataBaseAESCryptConverter.class)
     private String receiver;
 
     @Column(name = "code")

@@ -37,12 +37,6 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     open-in-view: false
     show-sql: true
-  thymeleaf:
-    prefix: classpath:/static/
-    suffix: .html
-  web:
-    resources:
-      static-locations: classpath:/static/
   data:
     redis:
       repositories:
@@ -65,3 +59,42 @@ aws:
     secret-key: ENC(ICpaLWfg2Snb4PNQ31gIUMAdT8zlSgOKnT5gJ0jXnCUPPIpJfXex2wOBQw/cN/C/BpPBrx8JLMgNoWkULQIaENyfnyzAXSZrgIOyqPBip4E=)
     buket: ENC(sfiYuacgnGosgyqbK+t1It57iGZ0KPdPyGP32qjHxIhQ2uegFzP4Qbelz7SF9ZCg)
     host: ENC(BVVl7wcbGFzwYtfrpqD0ZY2C1RLFJD1V1toKZqd9mYcahNy4PL0n4hrXkwVP9j4D04l2bEOyqQBeSRxGBZAlRCS7gk5BPf2DaodI5sFlWAq3FtA/FhvcayQ20l+bAott)
+
+cookies: # 쿠키 저장 아이디 관리
+  auth:
+    access: _lg_1GAC2134 # 인증토큰 저장
+    refresh: _lg_4SD343 # 리프레쉬 토큰 저장
+  account:
+    save: _lg_745TDA2 # 아이디 저장 여부 저장
+    auto: _lg_9023ASD2 # 자동 로그인 여부 저장
+
+token: # 토큰 유효 시간 설정
+  access-expired-time: 3600
+  refresh-expired-time: 604800
+
+google: # 구글 로그인 API 정보
+  auth:
+    url: https://oauth2.googleapis.com
+    scope: profile,email,openid
+  login:
+    url: https://accounts.google.com
+
+naver: # 네이버 로그인 API 정보
+  auth:
+    url: https://openapi.naver.com
+  login:
+    url: https://nid.naver.com
+
+kakao: # 카카오 로그인 API 정보
+  auth:
+    url: https://kapi.kakao.com
+  login:
+    url: https://kauth.kakao.com
+
+portone: # 포트윈 API 정보
+  rest:
+    key: ENC(ZZ02Cc5d0J859mcQUIViypAVpREP72m+hAPDia/3Gynu9+y3zOAfjFat+fxRZZjrLIe32Da4ceViVWeJUbVLzA==)
+    secret: ENC(GTUQ/3h3/tK4Qa/KskCOtZiJNdpX0/7Yon4gccyavWeCqe/uSfmSD8AfUpwtXLzqvny4i/HcPi0nXEJlYQecwn5OKo7x9ttKBIiHQ96GIBChCsmEMzb6jTP5z5dAZ/87umy/Z7JYaXb/kECzeq4xazPbT3k9Mdj+Tb6RHGptN24=)
+  url:
+    token: https://api.iamport.kr/
+    certificate: https://api.iamport.kr/certifications/

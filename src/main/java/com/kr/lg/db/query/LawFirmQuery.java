@@ -1,5 +1,6 @@
 package com.kr.lg.db.query;
 
+import com.kr.lg.common.enums.entity.status.UserStatus;
 import com.kr.lg.db.builder.LawFirmBuilder;
 import com.kr.lg.enums.*;
 import com.kr.lg.model.querydsl.QLawFirmQ;
@@ -64,7 +65,7 @@ public class LawFirmQuery {
         return jpaQueryFactory.select(userTb.count()).from(userTb)
                 .where(
                         userTb.lawFirmId.lawFirmId.eq(lawFirmTb.lawFirmId),
-                        userTb.status.eq(Status3Enum.NORMAL_STATUS)
+                        userTb.status.eq(UserStatus.NORMAL)
                 );
     }
 

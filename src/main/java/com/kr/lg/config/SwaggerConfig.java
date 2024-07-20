@@ -1,5 +1,6 @@
 package com.kr.lg.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -12,11 +13,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.ArrayList;
 
 @Configuration
+@Slf4j
 public class SwaggerConfig {
 
     @Bean
     public Docket apiV1() {
 
+        log.info("▶ [스웨거] v1 버전 등록");
         String version  = "v1";
         String title = "로우지지 API " +  version;
 
@@ -32,6 +35,7 @@ public class SwaggerConfig {
     @Bean
     public Docket apiV2() {
 
+        log.info("▶ [스웨거] v2 버전 등록");
         String version  = "v2";
         String title = "로우지지 API " +  version;
 

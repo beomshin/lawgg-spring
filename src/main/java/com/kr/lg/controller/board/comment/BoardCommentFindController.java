@@ -4,7 +4,7 @@ import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.model.net.request.board.comment.FindACCBRequest;
 import com.kr.lg.model.net.request.board.comment.FindAPCBRequest;

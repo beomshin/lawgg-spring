@@ -1,8 +1,8 @@
 package com.kr.lg.module.auth;
 
 import com.kr.lg.module.auth.excpetion.AuthException;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.web.common.root.ErrorResponse;
+import com.kr.lg.web.dto.global.GlobalCode;
+import com.kr.lg.web.dto.root.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class AuthExceptionAdvice {
     @ExceptionHandler(value = AuthException.class)
     public ResponseEntity<?> handle(AuthException e) {
         log.error("[AuthException] 오류 발생", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getCode()));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getResultCode()));
     }
 
     // @Validate 실패시

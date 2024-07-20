@@ -24,6 +24,7 @@ public class AwsConfig {
 
     @Bean
     public AmazonS3Client amazonS3Client() {
+        log.info("▶ [AWS S3] AWS S3 클라이언트 Bean 등록");
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         return (AmazonS3Client) AmazonS3ClientBuilder.standard()
                 .withRegion(region)

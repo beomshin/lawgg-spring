@@ -3,7 +3,7 @@ package com.kr.lg.db.repositories;
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.AuthEnum;
-import com.kr.lg.enums.SnsEnum;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +16,7 @@ public interface UserRepository extends RootUserRepository {
     Optional<UserTb> findByLoginId(String loginId);
     Optional<UserTb> findByNickName(String nickName);
     Optional<UserTb> findByLoginIdAndCi(String loginId, String ci);
-    Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsEnum snsType);
+    Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
 
     @Transactional
     @Modifying

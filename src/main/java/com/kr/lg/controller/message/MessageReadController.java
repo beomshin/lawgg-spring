@@ -3,7 +3,7 @@ package com.kr.lg.controller.message;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.common.layer.MainLayer;
 import com.kr.lg.model.net.request.message.FindRMLRequest;
 import com.kr.lg.model.net.request.message.FindSMLRequest;

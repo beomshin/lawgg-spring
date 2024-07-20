@@ -8,7 +8,7 @@ import com.kr.lg.enums.LiveEnum;
 import com.kr.lg.model.common.listener.AlertTLEvent;
 import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.TrialUtils;
 import com.kr.lg.model.common.layer.TrialLayer;
 import com.kr.lg.service.trial.base.TrialUpdateService;

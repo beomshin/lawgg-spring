@@ -1,8 +1,7 @@
 package com.kr.lg.module.main.model.res;
 
 import com.kr.lg.module.main.model.dto.MainPost;
-import com.kr.lg.web.common.global.GlobalCode;
-import com.kr.lg.web.common.root.AbstractSpec;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import lombok.*;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.kr.lg.db.query;
 
-import com.kr.lg.enums.SnsEnum;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.db.entities.AlertTb;
 import com.kr.lg.model.common.layer.UserLayer;
 import com.kr.lg.model.querydsl.AlertQ;
@@ -43,7 +43,7 @@ public class UserQuery {
                 .from(userTb)
                 .where(
                         userTb.ci.eq(requestDto.getCi()),
-                        userTb.snsType.eq(SnsEnum.LG_SNS_TYPE)
+                        userTb.snsType.eq(SnsType.LG_SNS_TYPE)
                 );
     }
 

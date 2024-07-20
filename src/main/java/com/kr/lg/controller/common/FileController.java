@@ -1,8 +1,8 @@
 package com.kr.lg.controller.common;
 
 import com.kr.lg.service.file.FileService;
-import com.kr.lg.web.common.global.GlobalFile;
-import com.kr.lg.web.common.root.DefaultResponse;
+import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.net.request.common.FileRequest;
 import com.kr.lg.model.net.response.common.FileResponse;
 import lombok.RequiredArgsConstructor;

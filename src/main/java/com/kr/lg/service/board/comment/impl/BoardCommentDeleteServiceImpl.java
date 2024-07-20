@@ -6,7 +6,7 @@ import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.common.listener.BoardCEvent;
 import com.kr.lg.model.common.listener.CommnetCNTEvent;
 import com.kr.lg.db.repositories.BoardCommentRepository;
-import com.kr.lg.web.common.global.GlobalCode;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.BoardUtils;
 import com.kr.lg.model.common.layer.BoardLayer;
 import com.kr.lg.service.board.comment.BoardCommentDeleteService;

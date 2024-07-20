@@ -18,7 +18,7 @@ public class CorsConfig {
     @Bean(name = "corsConfigurationSource")
     @Profile("!prod")
     public CorsConfigurationSource corsConfigurationSource_local() {
-        log.info("[로컬 CORS] allowedOrigins : [*]");
+        log.info("▶ [CORS] CORS 개발 Bean 등록");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
@@ -32,7 +32,7 @@ public class CorsConfig {
     @Bean(name = "corsConfigurationSource")
     @Profile("prod")
     public CorsConfigurationSource corsConfigurationSource_prod() {
-        log.info("[운영 CORS] allowedOrigins : [https://formdang-api.com/lawgg/*]");
+        log.info("▶ [CORS] CORS 운영 Bean 등록");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");

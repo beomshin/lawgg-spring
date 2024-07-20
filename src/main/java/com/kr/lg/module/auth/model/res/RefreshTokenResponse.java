@@ -1,7 +1,7 @@
 package com.kr.lg.module.auth.model.res;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.web.common.root.AbstractSpec;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import lombok.*;
 
 import java.util.Date;

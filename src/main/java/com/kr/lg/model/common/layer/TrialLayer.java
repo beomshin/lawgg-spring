@@ -7,7 +7,7 @@ import com.kr.lg.enums.TrialSubjectEnum;
 import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.PrecedentEnum;
-import com.kr.lg.web.common.global.GlobalFile;
+import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.net.request.trial.base.*;
 import com.kr.lg.model.net.request.trial.comment.*;
 import lombok.*;

@@ -2,11 +2,11 @@ package com.kr.lg.service.sns.impl;
 
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.enums.SnsEnum;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.web.jwt.JwtService;
+import com.kr.lg.service.jwt.JwtService;
 import com.kr.lg.model.common.sns.lg.LgLoginDto;
 import com.kr.lg.service.sns.LgService;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ public class LgServiceImpl implements LgService {
             userId = userTb1.getUserId();
         }
 
-        String refreshToken = jwtService.generateRefreshToken(String.valueOf(userId), "/", Arrays.asList("ROLE_USER"));
+        String refreshToken = jwtService.createRefreshToken(String.valueOf(userId), "/", Arrays.asList("ROLE_USER"));
 
         Map<String, Object> params = new HashMap<>();
         params.put("token", refreshToken);
@@ -69,8 +69,8 @@ public class LgServiceImpl implements LgService {
     }
 
 
-    public String uniqueNickName(SnsEnum snsEnum) {
-        switch (snsEnum) {
+    public String uniqueNickName(SnsType snsType) {
+        switch (snsType) {
             case GOOGLE_SNS_TYPE: return "GLawgg" + new Random().nextInt(9000);
             case KAKAO_SNS_TYPE: return "KLawgg" + new Random().nextInt(9000);
             case NAVER_SNS_TYPE: return "NLawgg" + new Random().nextInt(9000);
@@ -78,7 +78,7 @@ public class LgServiceImpl implements LgService {
         }
     }
 
-    public String getLoginId(SnsEnum snsType) {
+    public String getLoginId(SnsType snsType) {
         String prefix = "";
         switch (snsType) {
             case GOOGLE_SNS_TYPE: prefix += "G_"; break;
