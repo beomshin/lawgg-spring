@@ -116,80 +116,80 @@ public class BoardQuery {
                 );
     }
 
-    public JPAQuery<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable) { // 게시판 검색
-        return jpaQueryFactory.select(
-                        new QBoardQ(
-                                boardTb.boardId,
-                                boardTb.postType,
-                                boardTb.title,
-                                boardTb.writer,
-                                boardTb.writeDt,
-                                boardTb.view,
-                                boardTb.recommendCount,
-                                boardTb.commentCount,
-                                boardTb.writerType,
-                                boardTb.lineType,
-                                userTb.profile
-                        ))
-                .from(boardTb)
-                .leftJoin(userTb).on(boardTb.userTb.userId.eq(userTb.userId))
-                .where(
-                        boardBuilder.eqLineType(requestDto.getType()) // 라인 타입
-                        , boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword()) // 검색 조건
-                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
-                        , boardTb.userTb.userId.eq(requestDto.getUserTb().getUserId())
-                )
-                .orderBy(boardBuilder.orderTopic(requestDto.getTopic()).stream().toArray(OrderSpecifier[]::new)) // 정렬조건
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .groupBy(boardTb.boardId);
-    }
+//    public JPAQuery<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable) { // 게시판 검색
+//        return jpaQueryFactory.select(
+//                        new QBoardQ(
+//                                boardTb.boardId,
+//                                boardTb.postType,
+//                                boardTb.title,
+//                                boardTb.writer,
+//                                boardTb.writeDt,
+//                                boardTb.view,
+//                                boardTb.recommendCount,
+//                                boardTb.commentCount,
+//                                boardTb.writerType,
+//                                boardTb.lineType,
+//                                userTb.profile
+//                        ))
+//                .from(boardTb)
+//                .leftJoin(userTb).on(boardTb.userTb.userId.eq(userTb.userId))
+//                .where(
+//                        boardBuilder.eqLineType(requestDto.getType()) // 라인 타입
+//                        , boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword()) // 검색 조건
+//                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
+//                        , boardTb.userTb.userId.eq(requestDto.getUserTb().getUserId())
+//                )
+//                .orderBy(boardBuilder.orderTopic(requestDto.getTopic()).stream().toArray(OrderSpecifier[]::new)) // 정렬조건
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .groupBy(boardTb.boardId);
+//    }
 
-    public JPAQuery<Long> findUserBoardListCount(BoardLayer requestDto) { // 게시판 총 개수 조회
-        return jpaQueryFactory
-                .select(boardTb.count()).from(boardTb)
-                .where(
-                        boardBuilder.eqLineType(requestDto.getType())
-                        , boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword())
-                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
-                        , boardTb.userTb.userId.eq(requestDto.getUserTb().getUserId())
-                );
-    }
+//    public JPAQuery<Long> findUserBoardListCount(BoardLayer requestDto) { // 게시판 총 개수 조회
+//        return jpaQueryFactory
+//                .select(boardTb.count()).from(boardTb)
+//                .where(
+//                        boardBuilder.eqLineType(requestDto.getType())
+//                        , boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword())
+//                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
+//                        , boardTb.userTb.userId.eq(requestDto.getUserTb().getUserId())
+//                );
+//    }
 
 
-    public JPAQuery<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable) { // 게시판 검색
-        return jpaQueryFactory.select(
-                        new QBoardQ(
-                                boardTb.boardId,
-                                boardTb.postType,
-                                boardTb.title,
-                                boardTb.writer,
-                                boardTb.writeDt,
-                                boardTb.view,
-                                boardTb.recommendCount,
-                                boardTb.commentCount,
-                                boardTb.writerType,
-                                boardTb.lineType,
-                                userTb.profile
-                        ))
-                .from(boardTb)
-                .leftJoin(userTb).on(boardTb.userTb.userId.eq(userTb.userId))
-                .where(boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword()) // 검색 조건
-                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
-                        , boardTb.lawFirmTb.lawFirmId.eq(requestDto.getId())
-                )
-                .orderBy(boardBuilder.orderTopic(requestDto.getTopic()).stream().toArray(OrderSpecifier[]::new)) // 정렬조건
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .groupBy(boardTb.boardId);
-    }
-
-    public JPAQuery<Long> findLawFirmBoardListCount(BoardLayer requestDto) { // 게시판 총 개수 조회
-        return jpaQueryFactory
-                .select(boardTb.count()).from(boardTb)
-                .where(boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword())
-                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
-                        , boardTb.lawFirmTb.lawFirmId.eq(requestDto.getId())
-                );
-    }
+//    public JPAQuery<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable) { // 게시판 검색
+//        return jpaQueryFactory.select(
+//                        new QBoardQ(
+//                                boardTb.boardId,
+//                                boardTb.postType,
+//                                boardTb.title,
+//                                boardTb.writer,
+//                                boardTb.writeDt,
+//                                boardTb.view,
+//                                boardTb.recommendCount,
+//                                boardTb.commentCount,
+//                                boardTb.writerType,
+//                                boardTb.lineType,
+//                                userTb.profile
+//                        ))
+//                .from(boardTb)
+//                .leftJoin(userTb).on(boardTb.userTb.userId.eq(userTb.userId))
+//                .where(boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword()) // 검색 조건
+//                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
+//                        , boardTb.lawFirmTb.lawFirmId.eq(requestDto.getId())
+//                )
+//                .orderBy(boardBuilder.orderTopic(requestDto.getTopic()).stream().toArray(OrderSpecifier[]::new)) // 정렬조건
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .groupBy(boardTb.boardId);
+//    }
+//
+//    public JPAQuery<Long> findLawFirmBoardListCount(BoardLayer requestDto) { // 게시판 총 개수 조회
+//        return jpaQueryFactory
+//                .select(boardTb.count()).from(boardTb)
+//                .where(boardBuilder.eqSubject(requestDto.getSubject(), requestDto.getKeyword())
+//                        , boardBuilder.eqStatus(StatusEnum.NORMAL_STATUS)
+//                        , boardTb.lawFirmTb.lawFirmId.eq(requestDto.getId())
+//                );
+//    }
 }

@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 public interface BoardDao {
 
 //    Page<BoardQ> findAllBoardList(BoardLayer requestDto, Pageable pageable);
-    Page<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable);
-    Page<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable);
+//    Page<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable);
+//    Page<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable);
     BoardQ findBoardDetail(BoardLayer requestDto) throws LgException;
     @Transactional
     BoardTb saveBoard(BoardLayer requestDto);

@@ -6,12 +6,12 @@ import com.kr.lg.model.common.layer.BoardLayer;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
-public interface BoardFindService {
+public interface OldBoardFindService {
 
 
 //    DefaultResponse findAllListBoard(BoardLayer boardLayer) throws LgException;
-    DefaultResponse findUserListBoard(BoardLayer boardLayer) throws LgException;
-    DefaultResponse findLawFirmListBoard(BoardLayer boardLayer) throws LgException;
+//    DefaultResponse findUserListBoard(BoardLayer boardLayer) throws LgException;
+//    DefaultResponse findLawFirmListBoard(BoardLayer boardLayer) throws LgException;
     DefaultResponse findAnonymousDetailBoard(BoardLayer boardLayer) throws LgException;
     DefaultResponse findUserDetailBoard(BoardLayer boardLayer) throws LgException;
 

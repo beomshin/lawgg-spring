@@ -47,19 +47,19 @@ public class BoardDaoImpl implements BoardDao {
 //        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
 //    }
 
-    @Override
-    public Page<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable) {
-        JPAQuery<BoardQ> content = boardQuery.findUserBoardList(requestDto, pageable); // 게시판 content
-        JPAQuery<Long> count = boardQuery.findUserBoardListCount(requestDto); // 게시판 카운터
-        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
-    }
+//    @Override
+//    public Page<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable) {
+//        JPAQuery<BoardQ> content = boardQuery.findUserBoardList(requestDto, pageable); // 게시판 content
+//        JPAQuery<Long> count = boardQuery.findUserBoardListCount(requestDto); // 게시판 카운터
+//        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
+//    }
 
-    @Override
-    public Page<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable) {
-        JPAQuery<BoardQ> content = boardQuery.findLawFirmBoardList(requestDto, pageable); // 게시판 content
-        JPAQuery<Long> count = boardQuery.findLawFirmBoardListCount(requestDto); // 게시판 카운터
-        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
-    }
+//    @Override
+//    public Page<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable) {
+//        JPAQuery<BoardQ> content = boardQuery.findLawFirmBoardList(requestDto, pageable); // 게시판 content
+//        JPAQuery<Long> count = boardQuery.findLawFirmBoardListCount(requestDto); // 게시판 카운터
+//        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
+//    }
 
     @Override
     public BoardQ findBoardDetail(BoardLayer requestDto) throws LgException {

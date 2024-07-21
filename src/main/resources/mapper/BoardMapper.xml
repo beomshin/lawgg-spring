@@ -5,7 +5,8 @@
 
 <mapper namespace="com.kr.lg.module.board.mapper.BoardFindMapper">
 
-    <select id="findBoards" parameterType="com.kr.lg.web.dto.mapper.board.BoardParam" resultType="com.kr.lg.module.board.model.dto.BoardEntry">
+    <!-- 포지셔 게시판 조회 쿼리 -->
+    <select id="findBoards" parameterType="com.kr.lg.module.board.mapper.board.BoardParam" resultType="com.kr.lg.module.board.model.dto.BoardEntry">
         SELECT bt.boardId, bt.postType, bt.title, bt.writer, bt.writeDt, bt.view, bt.recommendCount, bt.commentCount, bt.writerType, bt.lineType, ut.profile
         FROM BoardTb bt
         LEFT JOIN UserTb ut ON(bt.userId = ut.userId)
@@ -18,7 +19,7 @@
             </if>
 
             <!-- 검색조건 타입 -->
-            <if test="data.subject != null and data.keyword != null">
+            <if test="data.subject != null and data.keyword != null and data.keyword.length() > 0">
                 <choose>
                     <!-- 전체 키워드 조회 -->
                     <when test="data.subject == 0">
@@ -38,6 +39,16 @@
                     </when>
                 </choose>
             </if>
+
+            <!-- 나의 포지션 게시판 -->
+            <if test="data.userId != null">
+                AND bt.userId = #{data.userId}
+            </if>
+
+            <!-- 로펌 게시판 -->
+            <if test="data.lawFirmId != null">
+                AND bt.lawFirmId = #{data.lawFirmId}
+            </if>
         </where>
 
         <if test="pageable.sort != null and !pageable.sort.isEmpty()">
@@ -50,6 +61,7 @@
         OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
     </select>
 
+    <!-- 포지셔 게시판 총 개수 조회 쿼리 -->
     <select id="findBoardsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
         SELECT COUNT(*) AS 'count'
         FROM BoardTb bt
@@ -63,7 +75,7 @@
             </if>
 
             <!-- 검색조건 타입 -->
-            <if test="subject != null and keyword != null">
+            <if test="subject != null and keyword != null and keyword.length() > 0">
                 <choose>
                     <!-- 전체 키워드 조회 -->
                     <when test="subject == 0">
@@ -82,6 +94,16 @@
                         AND bt.writer LIKE '%' || #{keyword} || '%'
                     </when>
                 </choose>
+            </if>
+
+            <!-- 나의 포지션 게시판 -->
+            <if test="userId != null">
+                AND bt.userId = #{userId}
+            </if>
+
+            <!-- 로펌 게시판 -->
+            <if test="lawFirmId != null">
+                AND bt.lawFirmId = #{lawFirmId}
             </if>
         </where>
     </select>

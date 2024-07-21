@@ -9,6 +9,8 @@ import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
+import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
+import com.kr.lg.module.board.model.req.FindMyBoardRequest;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.common.root.RootRequest;
 import com.kr.lg.model.net.request.board.base.*;
@@ -224,7 +226,7 @@ public class BoardLayer {
         this.ip = ip;
     }
 
-    public BoardLayer(FindUBLRequest requestDto, UserTb userTb) {
+    public BoardLayer(FindMyBoardRequest requestDto, UserTb userTb) {
         this.page = requestDto.getPage();
         this.type = LineEnum.of(requestDto.getType());
         this.pageNum = requestDto.getPageNum();
@@ -274,7 +276,7 @@ public class BoardLayer {
         return PostEnum.NORMAL_TYPE;
     }
 
-    public BoardLayer(FindLFBLRequest requestDto) {
+    public BoardLayer(FindLawFirmBoardRequest requestDto) {
         this.id = requestDto.getId();
         this.page = requestDto.getPage();
         this.pageNum = requestDto.getPageNum();

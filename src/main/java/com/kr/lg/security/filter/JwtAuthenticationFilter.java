@@ -45,6 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         try {
+            log.info("▶ [토큰 인증 시작]");
             this.isValid(jwtService.parseJwt(request), request.getRequestURI()); // jwt 인증
             filterChain.doFilter(request, response);
         } catch (AuthException e) {
@@ -68,7 +69,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * @throws AuthException
      */
     private void isValid(String token, String uri) throws AuthException {
-        log.info("{}", uri);
         if (uri.contains("/public") || uri.contains("swagger") || uri.contains("api-docs")) {
             return; // public 접근으로 간주
         }

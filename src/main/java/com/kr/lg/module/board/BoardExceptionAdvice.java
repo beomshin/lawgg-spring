@@ -1,6 +1,5 @@
 package com.kr.lg.module.board;
 
-import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.root.ErrorResponse;
