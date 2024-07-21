@@ -1,19 +1,18 @@
-package com.kr.lg.model.net.request.board.base;
+package com.kr.lg.module.board.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "로펌 포지션 게시판 리스트 조회 요청 바디")
-public class FindLFBLRequest implements RootRequest { // FindLawFirmBoardListRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "로펌 포지션 게시판 조회 Body")
+public class FindLawFirmBoardRequest {
 
     @ApiModelProperty(value = "로펌 아이디", required = true)
     @NotNull(message = "로펌 아이디가 입력되어있지않습니다.")

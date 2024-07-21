@@ -1,6 +1,5 @@
 package com.kr.lg.module.board;
 
-import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.root.ErrorResponse;
@@ -29,21 +28,21 @@ public class BoardExceptionAdvice {
     // @Validate 실패시
     @ExceptionHandler
     public ResponseEntity<?> handle(MethodArgumentNotValidException e) {
-        log.error("[MethodArgumentNotValidException]", e);
+        log.error("[MethodArgumentNotValidException]: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(GlobalCode.PARAMETER_ERROR));
     }
 
     // 쿼리 파라미터의 유효성이 실패할경우의 예외에 대한 처리 코드
     @ExceptionHandler
     public ResponseEntity<?> handle(BindException e) {
-        log.error("[BindException]", e);
+        log.error("[BindException]: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(GlobalCode.PARAMETER_ERROR));
     }
 
     // @RequestBody 어노테이션이 붙은 매개변수에 대해 HTTP 요청의 본문이 없거나 잘못된 형식으로 인식되었을 때 나타나는 에러
     @ExceptionHandler
     public ResponseEntity<?> handle(HttpMessageNotReadableException e) {
-        log.error("[HttpMessageNotReadableException]", e);
+        log.error("[HttpMessageNotReadableException]: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(GlobalCode.PARAMETER_ERROR));
     }
 
