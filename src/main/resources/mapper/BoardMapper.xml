@@ -6,8 +6,8 @@
 <mapper namespace="com.kr.lg.module.board.mapper.BoardFindMapper">
 
     <!-- 포지셔 게시판 조회 쿼리 -->
-    <select id="findBoards" parameterType="com.kr.lg.module.board.mapper.board.BoardParam" resultType="com.kr.lg.module.board.model.dto.BoardEntry">
-        SELECT bt.boardId, bt.postType, bt.title, bt.writer, bt.writeDt, bt.view, bt.recommendCount, bt.commentCount, bt.writerType, bt.lineType, ut.profile
+    <select id="findBoards" parameterType="com.kr.lg.web.dto.mapper.BoardParam" resultType="com.kr.lg.module.board.model.dto.BoardEntry">
+        SELECT bt.boardId, bt.postType, bt.title, bt.writer, bt.writeDt, bt.view, bt.recommendCount, bt.commentCount, bt.writerType, bt.lineType, ut.profile, bt.status
         FROM BoardTb bt
         LEFT JOIN UserTb ut ON(bt.userId = ut.userId)
         <where>
@@ -105,6 +105,21 @@
             <if test="lawFirmId != null">
                 AND bt.lawFirmId = #{lawFirmId}
             </if>
+        </where>
+    </select>
+
+    <!-- 포지션 게시판 상세 조회 쿼리 -->
+    <select id="findBoard" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.board.model.dto.BoardEntry">
+        SELECT bt.boardId, bt.postType, bt.title, bt.writer, bt.writeDt, bt.view, bt.recommendCount, bt.commentCount, bt.writerType, bt.lineType, bt.status, bt.content, ut.profile,
+        (SELECT boardCommentId FROM BoardCommentTb bct WHERE bct.boardId = bt.boardId AND depth = '0') AS 'boardCommentId'
+        <!-- 작성자 플래그 -->
+        <if test="userId != null">
+            , IF(bt.userId IS NOT NULL AND bt.userId = #{userId}, 1, 0) as 'created'
+        </if>
+        FROM BoardTb bt
+        LEFT JOIN UserTb ut ON(bt.userId = ut.userId)
+        <where>
+            AND bt.boardId = #{boardId}
         </where>
     </select>
 

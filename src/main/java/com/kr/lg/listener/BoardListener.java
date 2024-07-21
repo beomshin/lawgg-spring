@@ -2,7 +2,7 @@ package com.kr.lg.listener;
 
 import com.kr.lg.model.common.listener.BoardCEvent;
 import com.kr.lg.model.common.listener.BoardCNTEvent;
-import com.kr.lg.model.common.listener.BoardCTEvent;
+import com.kr.lg.module.board.model.dto.BoardCountEventDto;
 import com.kr.lg.model.common.listener.BoardREvent;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.db.repositories.UserRepository;
@@ -31,8 +31,8 @@ public class BoardListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void increaseCount(BoardCTEvent BoardCTEvent) { // 조회수 증가
-            boardRepository.viewBoard(BoardCTEvent.getBoardId()); // 조회수 증가
+    public void increaseCount(BoardCountEventDto BoardCountEventDto) { // 조회수 증가
+            boardRepository.viewBoard(BoardCountEventDto.getBoardId()); // 조회수 증가
 //        }
     }
 

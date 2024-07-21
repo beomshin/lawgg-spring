@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 public interface BoardService {
 
     Page<BoardEntry> findBoards(FindBoardRequest request) throws BoardException;
-    Page<BoardEntry> findUserBoards(FindMyBoardRequest request, UserTb userTb) throws BoardException;
+    Page<BoardEntry> findMyBoards(FindMyBoardRequest request, UserTb userTb) throws BoardException;
     Page<BoardEntry> findLawFirmBoards(FindLawFirmBoardRequest request) throws BoardException;
+    BoardEntry findBoard(long boardId) throws BoardException;
+    BoardEntry findBoard(long boardId, UserTb userTb) throws BoardException;
 }

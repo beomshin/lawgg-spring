@@ -4,29 +4,18 @@ import com.kr.lg.db.dao.BoardDao;
 import com.kr.lg.db.entities.BoardAttachTb;
 import com.kr.lg.db.entities.BoardCommentTb;
 import com.kr.lg.db.entities.BoardTb;
-import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.StatusEnum;
-import com.kr.lg.model.common.listener.BoardCTEvent;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.web.dto.global.GlobalCode;
-import com.kr.lg.model.querydsl.BoardQ;
-import com.kr.lg.db.query.BoardQuery;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardCommentRepository;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.vdurmont.emoji.EmojiParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -34,11 +23,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BoardDaoImpl implements BoardDao {
 
-    private final BoardQuery boardQuery;
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
     private final BoardAttachRepository boardAttachRepository;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
 //    @Override
 //    public Page<BoardQ> findAllBoardList(BoardLayer requestDto, Pageable pageable) {
@@ -61,14 +48,14 @@ public class BoardDaoImpl implements BoardDao {
 //        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
 //    }
 
-    @Override
-    public BoardQ findBoardDetail(BoardLayer requestDto) throws LgException {
-        BoardQ board = Optional.ofNullable(boardQuery.findBoardDetail(requestDto).fetchOne()).orElseThrow(() -> new LgException(GlobalCode.NOT_EXIST_BOARD)); // board 정보 조회
-        board.neUse(); // 정지 || 삭제 게시판 체크
-        applicationEventPublisher.publishEvent(new BoardCTEvent(requestDto.getId(), requestDto.getIp())); // 조회수 증가 이벤트
-        board.setFiles(boardQuery.findBoardFiles(requestDto).fetch()); // file 세팅
-        return board;
-    }
+//    @Override
+//    public BoardQ findBoardDetail(BoardLayer requestDto) throws LgException {
+//        BoardQ board = Optional.ofNullable(boardQuery.findBoardDetail(requestDto).fetchOne()).orElseThrow(() -> new LgException(GlobalCode.NOT_EXIST_BOARD)); // board 정보 조회
+//        board.neUse(); // 정지 || 삭제 게시판 체크
+//        applicationEventPublisher.publishEvent(new BoardCTEvent(requestDto.getId(), requestDto.getIp())); // 조회수 증가 이벤트
+//        board.setFiles(boardQuery.findBoardFiles(requestDto).fetch()); // file 세팅
+//        return board;
+//    }
 
     @Override
     public BoardTb saveBoard(BoardLayer requestDto) {
@@ -90,7 +77,7 @@ public class BoardDaoImpl implements BoardDao {
                 .build()); // 루트 댓글 저장
         List<BoardAttachTb> boardAttachTbs = requestDto.getFiles().stream().filter(it -> it != null)
                 .map(it -> BoardAttachTb.builder()
-                        .boardId(boardTb)
+                        .boardTb(boardTb)
                         .path(it.getPath())
                         .oriName(it.getOriName())
                         .newName(it.getNewName())
@@ -106,7 +93,7 @@ public class BoardDaoImpl implements BoardDao {
         int result = boardRepository.updateBoard(requestDto.getId(), EmojiParser.parseToAliases(requestDto.getTitle()), requestDto.getContent()); // 게시판 업데이트
         List<BoardAttachTb> boardAttachTbs = requestDto.getFiles().stream().filter(it -> it != null)
                 .map(it -> BoardAttachTb.builder()
-                        .boardId(BoardTb.builder().boardId(requestDto.getId()).build())
+                        .boardTb(BoardTb.builder().boardId(requestDto.getId()).build())
                         .path(it.getPath())
                         .oriName(it.getOriName())
                         .newName(it.getNewName())

@@ -2,11 +2,12 @@ package com.kr.lg.module.mapper;
 
 import com.kr.lg.LgWasApplication;
 import com.kr.lg.module.board.mapper.BoardFindMapper;
+import com.kr.lg.module.board.model.board.FindBoardParamData;
 import com.kr.lg.module.board.model.dto.BoardEntry;
 import com.kr.lg.module.board.sort.BoardSort;
 import com.kr.lg.web.dto.mapper.MapperParam;
-import com.kr.lg.module.board.mapper.board.BoardParam;
-import com.kr.lg.module.board.mapper.board.FindBoardMapperParam;
+import com.kr.lg.web.dto.mapper.BoardParam;
+import com.kr.lg.module.board.model.board.FindBoardsParamData;
 import com.kr.lg.module.config.MockMvcConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +39,7 @@ public class MapperTest {
     @DisplayName("매퍼 테스트")
     public void test() {
         PageRequest pageRequest  = PageRequest.of(1, 10 , BoardSort.notificationSortWithDesc().and(BoardSort.dateTimeWithDesc()));
-        BoardParam<MapperParam> param = new BoardParam<>( FindBoardMapperParam.builder()
+        BoardParam<MapperParam> param = new BoardParam<>( FindBoardsParamData.builder()
                 .type(5)
                 .subject(0)
                 .keyword(null)
@@ -48,5 +49,17 @@ public class MapperTest {
 
         log.info("{}", boards);
         log.info("{}", boards.size());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("매퍼 테스트2")
+    public void test2() {
+
+        FindBoardParamData param = FindBoardParamData.builder().boardId(5273L).userId(119L).build();
+
+        BoardEntry board= boardFindMapper.findBoard(param);
+
+        log.info("{}", board);
     }
 }

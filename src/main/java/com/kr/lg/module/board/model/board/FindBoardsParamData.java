@@ -1,4 +1,4 @@
-package com.kr.lg.module.board.mapper.board;
+package com.kr.lg.module.board.model.board;
 
 import com.kr.lg.web.dto.mapper.MapperParam;
 import lombok.*;
@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FindBoardMapperParam implements MapperParam {
+public class FindBoardsParamData implements MapperParam {
 
     private Integer type; // 라인 타입
     private Integer subject; // 조회 타입

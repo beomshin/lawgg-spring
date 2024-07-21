@@ -5,7 +5,8 @@ import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.board.mapper.BoardFindMapper;
 import com.kr.lg.module.board.model.dto.BoardEntry;
 import com.kr.lg.module.board.service.BoardFindService;
-import com.kr.lg.module.board.mapper.board.BoardParam;
+import com.kr.lg.web.dto.mapper.BoardParam;
+import com.kr.lg.web.dto.mapper.MapperParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -27,6 +29,16 @@ public class BoardFindServiceImpl implements BoardFindService {
             List<BoardEntry> content = boardFindMapper.findBoards(param); // board 조회
             long count = boardFindMapper.findBoardsCnt(param.getData()); // board 개수 조회
             return new PageImpl<>(content, param.getPageable(), count); // pageable 생성
+        } catch (RuntimeException e) {
+            log.error("", e);
+            throw new BoardException(BoardResultCode.FAIL_FIND_BOARD);
+        }
+    }
+
+    @Override
+    public Optional<BoardEntry> findBoard(MapperParam param) throws BoardException {
+        try {
+            return Optional.ofNullable(boardFindMapper.findBoard(param));
         } catch (RuntimeException e) {
             log.error("", e);
             throw new BoardException(BoardResultCode.FAIL_FIND_BOARD);

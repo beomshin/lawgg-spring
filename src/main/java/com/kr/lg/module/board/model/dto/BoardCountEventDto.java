@@ -1,4 +1,4 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.board.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Getter
-public class BoardCTEvent { // BoardCreateEvent
+public class BoardCountEventDto { // BoardCreateEvent
 
 
     private Long boardId;

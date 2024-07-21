@@ -35,7 +35,7 @@ public class BoardAttachTb {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
-    private BoardTb boardId;
+    private BoardTb boardTb;
 
     @Column(name = "path")
     private String path;
