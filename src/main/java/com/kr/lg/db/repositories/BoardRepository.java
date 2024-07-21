@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.LockModeType;
 
 public interface BoardRepository extends RootBoardRepository {
+
+    @Modifying
+    @Query(value = "UPDATE BoardTb SET view = view + 1  WHERE boardId = :boardId")
+    void increaseCount(@Param("boardId") Long boardId); // 조회수 증가 ToDo 레디스 처리 (동시성)
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE BoardTb SET status = :status WHERE boardId = :boardId")
@@ -27,12 +32,6 @@ public interface BoardRepository extends RootBoardRepository {
     @Modifying
     @Query(value = "UPDATE BoardTb SET report = report + 1  WHERE boardId = :boardId")
     int reportBoard(@Param("boardId") Long boardId);
-
-    @Modifying
-    @Query(value = "UPDATE BoardTb SET view = view + 1  WHERE boardId = :boardId")
-    int viewBoard(@Param("boardId") Long boardId);
-
-    long countByBoardIdAndUserTb(Long boardId, UserTb userTb);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT b FROM BoardTb b where b.boardId = :boardId")

@@ -15,8 +15,8 @@ public interface BoardDao {
 //    Page<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable);
 //    Page<BoardQ> findLawFirmBoardList(BoardLayer requestDto, Pageable pageable);
 //    BoardQ findBoardDetail(BoardLayer requestDto) throws LgException;
-    @Transactional
-    BoardTb saveBoard(BoardLayer requestDto);
+//    @Transactional
+//    BoardTb saveBoard(BoardLayer requestDto);
     @Transactional
     int updateBoard(BoardLayer requestDto);
 }

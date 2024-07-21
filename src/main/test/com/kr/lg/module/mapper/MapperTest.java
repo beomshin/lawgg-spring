@@ -2,12 +2,12 @@ package com.kr.lg.module.mapper;
 
 import com.kr.lg.LgWasApplication;
 import com.kr.lg.module.board.mapper.BoardFindMapper;
-import com.kr.lg.module.board.model.board.FindBoardParamData;
-import com.kr.lg.module.board.model.dto.BoardEntry;
+import com.kr.lg.module.board.model.mapper.FindBoardParamData;
+import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.sort.BoardSort;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.BoardParam;
-import com.kr.lg.module.board.model.board.FindBoardsParamData;
+import com.kr.lg.module.board.model.mapper.FindBoardsParamData;
 import com.kr.lg.module.config.MockMvcConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;

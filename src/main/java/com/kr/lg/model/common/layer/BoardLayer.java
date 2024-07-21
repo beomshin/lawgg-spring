@@ -9,8 +9,7 @@ import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
-import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
-import com.kr.lg.module.board.model.req.FindMyBoardRequest;
+import com.kr.lg.module.board.model.req.*;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.common.root.RootRequest;
 import com.kr.lg.model.net.request.board.base.*;
@@ -182,7 +181,7 @@ public class BoardLayer {
         this.userTb = userTb;
     }
 
-    public BoardLayer(EnrollABRequest request, String ip) {
+    public BoardLayer(EnrollBoardWithNotLoginRequest request, String ip) {
         this.loginId = request.getId();
         this.password = request.getPassword();
         this.title = request.getTitle();
@@ -195,7 +194,7 @@ public class BoardLayer {
         this.ip = ip;
     }
 
-    public BoardLayer(EnrollUBRequest request, UserTb userTb, String ip) {
+    public BoardLayer(EnrollBoardWithLoginRequest request, UserTb userTb, String ip) {
         this.loginId = userTb.getLoginId();
         this.title = request.getTitle();
         this.content = request.getContent();
@@ -211,7 +210,7 @@ public class BoardLayer {
         }
     }
 
-    public BoardLayer(EnrollLFBRequest request, UserTb userTb, String ip) {
+    public BoardLayer(EnrollBoardWithLawFirmLoginRequest request, UserTb userTb, String ip) {
         this.id = request.getId();
         this.loginId = userTb.getLoginId();
         this.title = request.getTitle();

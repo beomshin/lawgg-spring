@@ -1,4 +1,4 @@
-package com.kr.lg.module.board.model.board;
+package com.kr.lg.module.board.model.mapper;
 
 import com.kr.lg.web.dto.mapper.MapperParam;
 import lombok.*;

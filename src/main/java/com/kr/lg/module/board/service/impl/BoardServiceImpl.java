@@ -1,30 +1,43 @@
 package com.kr.lg.module.board.service.impl;
 
+import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.enums.BoardTopicEnum;
+import com.kr.lg.enums.LineEnum;
+import com.kr.lg.enums.PostEnum;
+import com.kr.lg.enums.WriterEnum;
+import com.kr.lg.exception.LgException;
+import com.kr.lg.module.board.model.dto.BoardEnrollDto;
+import com.kr.lg.module.board.model.req.EnrollBoardWithNotLoginRequest;
+import com.kr.lg.module.board.model.req.EnrollBoardWithLawFirmLoginRequest;
+import com.kr.lg.module.board.model.req.EnrollBoardWithLoginRequest;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.board.mapper.BoardCommentMapper;
-import com.kr.lg.module.board.model.board.FindBoardParamData;
-import com.kr.lg.module.board.model.dto.BoardAttachEntry;
-import com.kr.lg.module.board.model.dto.BoardCommentEntry;
-import com.kr.lg.module.board.model.dto.BoardEntry;
+import com.kr.lg.module.board.model.mapper.FindBoardParamData;
+import com.kr.lg.module.board.model.entry.BoardAttachEntry;
+import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.model.req.FindBoardRequest;
 import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
 import com.kr.lg.module.board.model.req.FindMyBoardRequest;
+import com.kr.lg.module.board.service.BoardEnrollService;
 import com.kr.lg.module.board.service.BoardFindService;
 import com.kr.lg.module.board.service.BoardService;
 import com.kr.lg.module.board.sort.BoardSort;
+import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.BoardParam;
-import com.kr.lg.module.board.model.board.FindBoardsParamData;
+import com.kr.lg.module.board.model.mapper.FindBoardsParamData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,6 +48,7 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardFindService boardFindService;
+    private final BoardEnrollService boardEnrollService;
     private final BoardAttachRepository boardAttachRepository;
     private final BoardCommentMapper boardCommentMapper;
 
@@ -131,6 +145,106 @@ public class BoardServiceImpl implements BoardService {
         BoardEntry board = this.findBoard(param);
         board.setComments(boardCommentMapper.findBoardCommentsWithLogin(board.getBoardCommentId()));
         return board;
+    }
+
+    /**
+     * 비로그인 유저 포지션 게시판 등록
+     * @param request
+     * @param ip
+     * @throws BoardException
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void enrollBoardWithNotLogin(EnrollBoardWithNotLoginRequest request, String ip) throws BoardException {
+        boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
+
+        BoardEnrollDto board = BoardEnrollDto.builder()
+                .password(request.getPassword())
+                .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
+                .title(request.getTitle())
+                .content(request.getContent())
+                .writer(request.getId())
+                .lineType(LineEnum.of(request.getLineType()))
+                .writerType(WriterEnum.ANONYMOUS_TYPE)
+                .ip(ip)
+                .files(request.getFiles())
+                .build();
+
+        BoardTb boardTb = boardEnrollService.enrollBoard(board);
+        if (isEnrollFile) {
+            board.setBoardTb(boardTb);
+            boardEnrollService.enrollBoardFiles(board);
+        }
+    }
+
+    /**
+     * 로그인 유저 포지션 게시판 등록
+     * @param request
+     * @param ip
+     * @param userTb
+     * @throws BoardException
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void enrollBoardWithLogin(EnrollBoardWithLoginRequest request, String ip, UserTb userTb) throws BoardException {
+        if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
+        boolean isEnrollLawFirm = request.getIsLawFirm() != null && request.getIsLawFirm() == 1;
+        boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
+
+        BoardEnrollDto board = BoardEnrollDto.builder()
+                .userTb(userTb)
+                .lawFirmTb(isEnrollLawFirm ? userTb.getLawFirmId() : null)
+                .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
+                .title(request.getTitle())
+                .content(request.getContent())
+                .writer(userTb.getNickName())
+                .lineType(LineEnum.of(request.getLineType()))
+                .writerType(WriterEnum.MEMBER_TYPE)
+                .ip(ip)
+                .files(request.getFiles())
+                .build();
+
+        BoardTb boardTb = boardEnrollService.enrollBoard(board);
+        if (isEnrollFile) {
+            board.setBoardTb(boardTb);
+            boardEnrollService.enrollBoardFiles(board);
+        }
+    }
+
+    /**
+     * 로펌 포지션 게시판 등록
+     * @param request
+     * @param ip
+     * @param userTb
+     * @throws BoardException
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException {
+        if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
+        else if (userTb.getLawFirmId() == null) throw new BoardException(BoardResultCode.NOT_EXIST_LAW_FIRM); // 로펌 필수
+        else if (!Objects.equals(userTb.getLawFirmId().getLawFirmId(), request.getId())) throw new BoardException(BoardResultCode.UN_MATCHED_LAW_FIRM_USER);
+        boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
+
+        BoardEnrollDto board = BoardEnrollDto.builder()
+                .userTb(userTb)
+                .lawFirmTb(userTb.getLawFirmId())
+                .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
+                .title(request.getTitle())
+                .content(request.getContent())
+                .writer(userTb.getNickName())
+                .lineType(LineEnum.of(request.getLineType()))
+                .writerType(WriterEnum.LAW_FIRM_TYPE)
+                .ip(ip)
+                .files(request.getFiles())
+                .build();
+
+        BoardTb boardTb = boardEnrollService.enrollBoard(board);
+        if (isEnrollFile) {
+            board.setBoardTb(boardTb);
+            boardEnrollService.enrollBoardFiles(board);
+        }
+
     }
 
     /**
