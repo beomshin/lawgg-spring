@@ -1,6 +1,6 @@
 package com.kr.lg.module.board.model.res;
 
-import com.kr.lg.module.board.model.dto.BoardEntry;
+import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.web.dto.root.AbstractSpec;
 import lombok.*;
 

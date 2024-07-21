@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kr.lg.module.board.mapper.BoardCommentMapper">
 
-    <select id="findBoardCommentsWithNotLogin" parameterType="long" resultType="com.kr.lg.module.board.model.dto.BoardCommentEntry">
+    <select id="findBoardCommentsWithNotLogin" parameterType="long" resultType="com.kr.lg.module.board.model.entry.BoardCommentEntry">
         SELECT A.*
         FROM (
             SELECT bc.boardCommentId, bc.parentId, bc.`order`, bc.depth, bc.writer, bc.content, bc.status, bc.regDt, 0 AS 'created', IF(bc.userId IS NULL, 1, 0) AS 'anonymous',
@@ -23,7 +23,7 @@
         order by order_num asc
     </select>
 
-    <select id="findBoardCommentsWithLogin" parameterType="long" resultType="com.kr.lg.module.board.model.dto.BoardCommentEntry">
+    <select id="findBoardCommentsWithLogin" parameterType="long" resultType="com.kr.lg.module.board.model.entry.BoardCommentEntry">
         SELECT A.*
         FROM (
             SELECT bc.boardCommentId, bc.parentId, bc.`order`, bc.depth, bc.writer, bc.content, bc.status, bc.regDt, IF(bc.userId = #{userId}, 1, 0) as 'created', IF(bc.userId IS NULL, 1, 0) AS 'anonymous',

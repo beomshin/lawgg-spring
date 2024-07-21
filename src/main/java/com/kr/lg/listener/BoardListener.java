@@ -25,15 +25,11 @@ public class BoardListener {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
-    @Value("${spring.profiles.active}")
-    private String active;
-
     @TransactionalEventListener
     @Async
     @Transactional
-    public void increaseCount(BoardCountEventDto BoardCountEventDto) { // 조회수 증가
-            boardRepository.viewBoard(BoardCountEventDto.getBoardId()); // 조회수 증가
-//        }
+    public synchronized void increaseCount(BoardCountEventDto BoardCountEventDto) {
+            boardRepository.increaseCount(BoardCountEventDto.getBoardId()); // 조회수 증가
     }
 
     @TransactionalEventListener

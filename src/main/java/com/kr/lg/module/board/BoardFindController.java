@@ -5,7 +5,7 @@ import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.module.board.model.dto.BoardCountEventDto;
 import com.kr.lg.module.board.exception.BoardException;
-import com.kr.lg.module.board.model.dto.BoardEntry;
+import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.model.req.FindBoardRequest;
 import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
 import com.kr.lg.module.board.model.req.FindMyBoardRequest;

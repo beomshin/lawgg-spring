@@ -1,4 +1,4 @@
-package com.kr.lg.module.board.model.dto;
+package com.kr.lg.module.board.model.entry;
 
 import com.kr.lg.db.entities.BoardAttachTb;
 import lombok.*;

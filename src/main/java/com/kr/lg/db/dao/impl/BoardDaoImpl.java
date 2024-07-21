@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class BoardDaoImpl implements BoardDao {
 
     private final BoardRepository boardRepository;
-    private final BoardCommentRepository boardCommentRepository;
+//    private final BoardCommentRepository boardCommentRepository;
     private final BoardAttachRepository boardAttachRepository;
 
 //    @Override
@@ -57,36 +57,36 @@ public class BoardDaoImpl implements BoardDao {
 //        return board;
 //    }
 
-    @Override
-    public BoardTb saveBoard(BoardLayer requestDto) {
-        BoardTb boardTb = boardRepository.save(BoardTb.builder()
-                .userTb(requestDto.getUserTb())
-                .lawFirmTb(requestDto.getLawFirmTb())
-                .postType(requestDto.getPostType())
-                .password(requestDto.getPassword())
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
-                .writer(requestDto.getWriter())
-                .writerType(requestDto.getWriterType())
-                .lineType(requestDto.getLineType())
-                .ip(requestDto.getIp())
-                .build()); // 게시판 저장
-        boardCommentRepository.save(BoardCommentTb.builder()
-                .boardTb(boardTb)
-                .depth(DepthEnum.ROOT_COMMENT)
-                .build()); // 루트 댓글 저장
-        List<BoardAttachTb> boardAttachTbs = requestDto.getFiles().stream().filter(it -> it != null)
-                .map(it -> BoardAttachTb.builder()
-                        .boardTb(boardTb)
-                        .path(it.getPath())
-                        .oriName(it.getOriName())
-                        .newName(it.getNewName())
-                        .size(it.getSize())
-                        .status(StatusEnum.NORMAL_STATUS)
-                        .build()).collect(Collectors.toList());
-        boardAttachRepository.saveAll(boardAttachTbs);
-        return boardTb;
-    }
+//    @Override
+//    public BoardTb saveBoard(BoardLayer requestDto) {
+//        BoardTb boardTb = boardRepository.save(BoardTb.builder()
+//                .userTb(requestDto.getUserTb())
+//                .lawFirmTb(requestDto.getLawFirmTb())
+//                .postType(requestDto.getPostType())
+//                .password(requestDto.getPassword())
+//                .title(requestDto.getTitle())
+//                .content(requestDto.getContent())
+//                .writer(requestDto.getWriter())
+//                .writerType(requestDto.getWriterType())
+//                .lineType(requestDto.getLineType())
+//                .ip(requestDto.getIp())
+//                .build()); // 게시판 저장
+//        boardCommentRepository.save(BoardCommentTb.builder()
+//                .boardTb(boardTb)
+//                .depth(DepthEnum.ROOT_COMMENT)
+//                .build()); // 루트 댓글 저장
+//        List<BoardAttachTb> boardAttachTbs = requestDto.getFiles().stream().filter(it -> it != null)
+//                .map(it -> BoardAttachTb.builder()
+//                        .boardTb(boardTb)
+//                        .path(it.getPath())
+//                        .oriName(it.getOriName())
+//                        .newName(it.getNewName())
+//                        .size(it.getSize())
+//                        .status(StatusEnum.NORMAL_STATUS)
+//                        .build()).collect(Collectors.toList());
+//        boardAttachRepository.saveAll(boardAttachTbs);
+//        return boardTb;
+//    }
 
     @Override
     public int updateBoard(BoardLayer requestDto) {

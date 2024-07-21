@@ -1,6 +1,6 @@
 package com.kr.lg.module.board.mapper;
 
-import com.kr.lg.module.board.model.dto.BoardCommentEntry;
+import com.kr.lg.module.board.model.entry.BoardCommentEntry;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
