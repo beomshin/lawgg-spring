@@ -17,7 +17,7 @@
                 AND (bt.linetype = #{data.type} OR bt.postType in ('99', '98'))
             </if>
 
-            <!-- 조회타입 -->
+            <!-- 검색조건 타입 -->
             <if test="data.subject != null and data.keyword != null">
                 <choose>
                     <!-- 전체 키워드 조회 -->
@@ -62,7 +62,7 @@
                 AND (bt.linetype = #{type} OR bt.postType in ('99', '98'))
             </if>
 
-            <!-- 조회타입 -->
+            <!-- 검색조건 타입 -->
             <if test="subject != null and keyword != null">
                 <choose>
                     <!-- 전체 키워드 조회 -->

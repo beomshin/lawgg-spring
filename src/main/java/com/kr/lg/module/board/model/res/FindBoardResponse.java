@@ -13,8 +13,11 @@ import java.util.List;
 public class FindBoardResponse extends AbstractSpec {
 
     private List<?> list; // 게시판 리스트
+
     private Long totalElements; // 게시판 총개수
+
     private Integer totalPage; // 게시판 페이지 개수
+
     private Integer curPage; // 현재 페이지 번호
 
 }

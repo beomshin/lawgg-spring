@@ -40,12 +40,12 @@ public class BoardDaoImpl implements BoardDao {
     private final BoardAttachRepository boardAttachRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @Override
-    public Page<BoardQ> findAllBoardList(BoardLayer requestDto, Pageable pageable) {
-        JPAQuery<BoardQ> content = boardQuery.findAllBoardList(requestDto, pageable); // 게시판 content
-        JPAQuery<Long> count = boardQuery.findAllBoardListCount(requestDto); // 게시판 카운터
-        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
-    }
+//    @Override
+//    public Page<BoardQ> findAllBoardList(BoardLayer requestDto, Pageable pageable) {
+//        JPAQuery<BoardQ> content = boardQuery.findAllBoardList(requestDto, pageable); // 게시판 content
+//        JPAQuery<Long> count = boardQuery.findAllBoardListCount(requestDto); // 게시판 카운터
+//        return PageableExecutionUtils.getPage(content.fetch(), pageable, count::fetchOne);
+//    }
 
     @Override
     public Page<BoardQ> findUserBoardList(BoardLayer requestDto, Pageable pageable) {
