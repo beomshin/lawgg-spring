@@ -90,12 +90,6 @@ public class BoardLayer {
         this.ip = ip;
     }
 
-    public BoardLayer(ReportBRequest requestDto, String ip) {
-        this.id = requestDto.getId();
-        this.content = requestDto.getContent();
-        this.ip = ip;
-    }
-
     public BoardLayer(ReportCBRequest requestDto, String ip) {
         this.id = requestDto.getId();
         this.ip = ip;

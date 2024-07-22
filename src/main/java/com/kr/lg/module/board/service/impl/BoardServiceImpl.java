@@ -5,6 +5,8 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.enums.*;
+import com.kr.lg.module.board.model.req.ReportBoardRequest;
+import com.kr.lg.module.board.model.dto.BoardReportDto;
 import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
 import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
@@ -51,6 +53,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardEnrollService boardEnrollService;
     private final BoardUpdateService boardUpdateService;
     private final BoardDeleteService boardDeleteService;
+    private final BoardReportService boardReportService;
     private final BoardAttachRepository boardAttachRepository;
     private final BoardRepository boardRepository;
     private final BoardCommentMapper boardCommentMapper;
@@ -318,6 +321,17 @@ public class BoardServiceImpl implements BoardService {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
 
         }
+    }
+
+    @Override
+    @Transactional
+    public void reportBoard(ReportBoardRequest request, String ip) throws BoardException {
+        BoardReportDto reportDto = BoardReportDto.builder()
+                .ip(ip)
+                .content(request.getContent())
+                .boardTb(BoardTb.builder().boardId(request.getId()).build())
+                .build();
+        boardReportService.reportBoard(reportDto);
     }
 
     /**

@@ -16,9 +16,9 @@ import java.util.Optional;
 
 public interface BoardRepository extends RootBoardRepository {
 
-    Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterEnum writerEnum);
+    Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterEnum writerEnum); // 게시판 조회
 
-    Optional<BoardTb> findByBoardIdAndWriterTypeAndStatus(long boardId, WriterEnum writerEnum, StatusEnum statusEnum);
+    Optional<BoardTb> findByBoardIdAndWriterTypeAndStatus(long boardId, WriterEnum writerEnum, StatusEnum statusEnum); // 정상 게시판 조회
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET view = view + 1  WHERE boardId = :boardId")
@@ -29,8 +29,8 @@ public interface BoardRepository extends RootBoardRepository {
     void updateBoard(@Param("boardId") Long boardId, @Param("title") String title, @Param("content") String content); // 포지션 게시판 업데이트
 
     @Modifying
-    @Query(value = "UPDATE BoardTb SET status = :status WHERE boardId = :boardId")
-    int updateBoardStatus(@Param("boardId") Long boardId, @Param("status") StatusEnum status);
+    @Query(value = "UPDATE BoardTb SET status = 2 WHERE boardId = :boardId")
+    void deleteBoard(@Param("boardId") Long boardId); // 포지션 게시판 삭제
 
     @Transactional
     @Modifying

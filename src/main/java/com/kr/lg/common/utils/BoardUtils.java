@@ -21,13 +21,6 @@ public class BoardUtils {
         else if (!writerType.equals(WriterEnum.ANONYMOUS_TYPE)) throw new LgException(GlobalCode.FAIL_ACCESS);
     }
 
-    public void isRightUserPassword(UserTb loginUser, UserTb writerUser, CharSequence rawPassword, WriterEnum writerType) throws LgException {
-        if (writerUser == null) throw new LgException(GlobalCode.NOT_EXIST_USER);
-        else if (!loginUser.getUserId().equals(writerUser.getUserId())) throw new LgException(GlobalCode.FAIL_ACCESS); // 게시판 생성 유저가 아닌경우
-        else if (!encoder.matches(rawPassword, loginUser.getPassword())) throw new LgException(GlobalCode.UN_MATCH_PASSWORD); // 비밀번호 불일치
-        else if (!writerType.equals(WriterEnum.MEMBER_TYPE)) throw new LgException(GlobalCode.FAIL_ACCESS);
-    }
-
     public void isRightUserNonePassword(UserTb loginUser, UserTb writerUser, WriterEnum writerType) throws LgException {
         if (writerUser == null) throw new LgException(GlobalCode.NOT_EXIST_USER);
         else if (!loginUser.getUserId().equals(writerUser.getUserId())) throw new LgException(GlobalCode.FAIL_ACCESS); // 게시판 생성 유저가 아닌경우

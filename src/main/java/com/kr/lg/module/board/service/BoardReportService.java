@@ -1,11 +1,11 @@
 package com.kr.lg.module.board.service;
 
 import com.kr.lg.module.board.exception.BoardException;
+import com.kr.lg.module.board.model.dto.BoardReportDto;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
-public interface BoardDeleteService {
+public interface BoardReportService {
 
-    void deleteBoard(long boardId) throws BoardException;
-
+    void reportBoard(BoardReportDto boardReportDto) throws BoardException;
 }

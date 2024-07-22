@@ -20,6 +20,7 @@ public enum BoardResultCode {
     UN_MATCHED_USER("3010", "미매칭 유저 수정"),
     FAIL_UPDATE_BOARD("3011", "게시판 수정 실패"),
     FAIL_DELETE_BOARD("3012", "게시판 삭제 실패"),
+    FAIL_REPORT_BOARD("3013", "게시판 신고 실패"),
     ;
 
     private final String code;

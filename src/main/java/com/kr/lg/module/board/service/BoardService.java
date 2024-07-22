@@ -1,6 +1,7 @@
 package com.kr.lg.module.board.service;
 
 import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.module.board.model.req.ReportBoardRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
 import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
@@ -29,5 +30,6 @@ public interface BoardService {
     void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException;
     void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException;
     void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException;
+    void reportBoard(ReportBoardRequest request, String ip) throws BoardException;
 
 }
