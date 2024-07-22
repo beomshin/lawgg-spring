@@ -3,12 +3,15 @@ package com.kr.lg.module.board.service.impl;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
+import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.enums.BoardTopicEnum;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
-import com.kr.lg.exception.LgException;
+import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
+import com.kr.lg.module.board.model.req.UpdateBoardWithLoginRequest;
 import com.kr.lg.module.board.model.dto.BoardEnrollDto;
+import com.kr.lg.module.board.model.dto.BoardUpdateDto;
 import com.kr.lg.module.board.model.req.EnrollBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.EnrollBoardWithLawFirmLoginRequest;
 import com.kr.lg.module.board.model.req.EnrollBoardWithLoginRequest;
@@ -24,14 +27,15 @@ import com.kr.lg.module.board.model.req.FindMyBoardRequest;
 import com.kr.lg.module.board.service.BoardEnrollService;
 import com.kr.lg.module.board.service.BoardFindService;
 import com.kr.lg.module.board.service.BoardService;
+import com.kr.lg.module.board.service.BoardUpdateService;
 import com.kr.lg.module.board.sort.BoardSort;
-import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.BoardParam;
 import com.kr.lg.module.board.model.mapper.FindBoardsParamData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,8 +53,11 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardFindService boardFindService;
     private final BoardEnrollService boardEnrollService;
+    private final BoardUpdateService boardUpdateService;
     private final BoardAttachRepository boardAttachRepository;
+    private final BoardRepository boardRepository;
     private final BoardCommentMapper boardCommentMapper;
+    private final BCryptPasswordEncoder encoder;
 
     /**
      * 포지션 게시판 조회 리스트
@@ -167,13 +174,12 @@ public class BoardServiceImpl implements BoardService {
                 .lineType(LineEnum.of(request.getLineType()))
                 .writerType(WriterEnum.ANONYMOUS_TYPE)
                 .ip(ip)
-                .files(request.getFiles())
                 .build();
 
+        log.info("▶ [포지션 게시판] 포지션 게시판 등록(비로그인)");
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
         if (isEnrollFile) {
-            board.setBoardTb(boardTb);
-            boardEnrollService.enrollBoardFiles(board);
+            boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
         }
     }
 
@@ -201,13 +207,12 @@ public class BoardServiceImpl implements BoardService {
                 .lineType(LineEnum.of(request.getLineType()))
                 .writerType(WriterEnum.MEMBER_TYPE)
                 .ip(ip)
-                .files(request.getFiles())
                 .build();
 
+        log.info("▶ [포지션 게시판] 포지션 게시판 등록(로그인)");
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
         if (isEnrollFile) {
-            board.setBoardTb(boardTb);
-            boardEnrollService.enrollBoardFiles(board);
+            boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
         }
     }
 
@@ -236,15 +241,60 @@ public class BoardServiceImpl implements BoardService {
                 .lineType(LineEnum.of(request.getLineType()))
                 .writerType(WriterEnum.LAW_FIRM_TYPE)
                 .ip(ip)
-                .files(request.getFiles())
                 .build();
 
+        log.info("▶ [포지션 게시판] 포지션 게시판 등록(로펌)");
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
         if (isEnrollFile) {
-            board.setBoardTb(boardTb);
-            boardEnrollService.enrollBoardFiles(board);
+            boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
         }
 
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.ANONYMOUS_TYPE);
+        if (boardTb.isPresent()) {
+            if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
+            boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
+
+            log.info("▶ [포지션 게시판] 포지션 게시판 수정(비로그인)");
+            boardUpdateService.updateBoard(BoardUpdateDto.builder()
+                            .boardId(boardTb.get().getBoardId())
+                            .title(request.getTitle())
+                            .content(request.getContent())
+                    .build());
+            if (isEnrollFile) {
+                boardEnrollService.enrollBoardFiles(boardTb.get(), request.getAddFiles());
+            }
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.MEMBER_TYPE);
+        if (boardTb.isPresent()) {
+            if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
+            boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
+
+            log.info("▶ [포지션 게시판] 포지션 게시판 수정(로그인)");
+            boardUpdateService.updateBoard(BoardUpdateDto.builder()
+                    .boardId(boardTb.get().getBoardId())
+                    .title(request.getTitle())
+                    .content(request.getContent())
+                    .build());
+            if (isEnrollFile) {
+                boardEnrollService.enrollBoardFiles(boardTb.get(), request.getAddFiles());
+            }
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+
+        }
     }
 
     /**
@@ -277,4 +327,5 @@ public class BoardServiceImpl implements BoardService {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
         }
     }
+
 }

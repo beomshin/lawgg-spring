@@ -4,6 +4,7 @@ package com.kr.lg.db.repositories;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.enums.WriterEnum;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,8 +12,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.LockModeType;
+import java.util.Optional;
 
 public interface BoardRepository extends RootBoardRepository {
+
+    Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterEnum writerEnum);
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET view = view + 1  WHERE boardId = :boardId")
@@ -23,10 +27,9 @@ public interface BoardRepository extends RootBoardRepository {
     @Query(value = "UPDATE BoardTb SET status = :status WHERE boardId = :boardId")
     int updateBoardStatus(@Param("boardId") Long boardId, @Param("status") StatusEnum status);
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE BoardTb SET title = :title, content = :content  WHERE boardId = :boardId")
-    int updateBoard(@Param("boardId") Long boardId, @Param("title") String title, @Param("content") String content);
+    void updateBoard(@Param("boardId") Long boardId, @Param("title") String title, @Param("content") String content);
 
     @Transactional
     @Modifying

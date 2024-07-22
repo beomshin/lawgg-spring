@@ -164,7 +164,7 @@ public class BoardLayer {
         this.userTb = userTb;
     }
 
-    public BoardLayer(UpdateABRequest request) {
+    public BoardLayer(UpdateBoardWithNotLoginRequest request) {
         this.id = request.getId();
         this.password = request.getPassword();
         this.title = request.getTitle();
@@ -172,7 +172,7 @@ public class BoardLayer {
         this.files = request.getAddFiles();
     }
 
-    public BoardLayer(UpdateUBRequest request, UserTb userTb) {
+    public BoardLayer(UpdateBoardWithLoginRequest request, UserTb userTb) {
         this.id = request.getId();
         this.password = request.getPassword();
         this.title = request.getTitle();

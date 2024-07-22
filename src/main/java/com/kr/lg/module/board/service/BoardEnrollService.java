@@ -10,5 +10,5 @@ public interface BoardEnrollService {
 
     BoardTb enrollBoard(BoardEnrollDto enrollDto) throws BoardException;
 
-    void enrollBoardFiles(BoardEnrollDto enrollDto) throws BoardException;
+    <T> void enrollBoardFiles(BoardTb boardTb, List<T> files) throws BoardException;
 }

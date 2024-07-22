@@ -1,7 +1,7 @@
-package com.kr.lg.model.net.request.board.base;
+package com.kr.lg.module.board.model.req;
 
 import com.kr.lg.web.dto.global.GlobalFile;
-import com.kr.lg.model.common.root.RootRequest;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -9,11 +9,13 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "익명 포지션 게시판 수정 요청 바디")
-public class UpdateABRequest implements RootRequest { // UpdateAnonymousBoardRequestDto
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "비로그인 포지션 게시판 수정 Body")
+public class UpdateBoardWithNotLoginRequest extends AbstractSpec {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")
