@@ -1,7 +1,7 @@
 package com.kr.lg.controller.lawfirm;
 
 import com.kr.lg.exception.LgException;
-import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.web.dto.global.GlobalCode;

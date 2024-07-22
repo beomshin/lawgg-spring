@@ -62,16 +62,17 @@ public class BoardEnrollServiceImpl implements BoardEnrollService {
     }
 
     @Override
-    @Transactional
-    public void enrollBoardFiles(BoardEnrollDto enrollDto) throws BoardException {
+    public <T> void enrollBoardFiles(BoardTb boardTb, List<T> files) throws BoardException {
         try {
-            List<BoardAttachTb> boardAttach = enrollDto.getFiles().stream().filter(Objects::nonNull)
+            List<BoardAttachTb> boardAttach = files.stream()
+                    .filter(Objects::nonNull)
+                    .filter(it -> it instanceof GlobalFile)
                     .map(it -> BoardAttachTb.builder()
-                            .boardTb(enrollDto.getBoardTb())
-                            .path(it.getPath())
-                            .oriName(it.getOriName())
-                            .newName(it.getNewName())
-                            .size(it.getSize())
+                            .boardTb(boardTb)
+                            .path(((GlobalFile)it).getPath())
+                            .oriName(((GlobalFile)it).getOriName())
+                            .newName(((GlobalFile)it).getNewName())
+                            .size(((GlobalFile)it).getSize())
                             .status(StatusEnum.NORMAL_STATUS)
                             .build()).collect(Collectors.toList());
             boardAttachRepository.saveAll(boardAttach);

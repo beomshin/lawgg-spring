@@ -1,4 +1,4 @@
-package com.kr.lg.model.annotation;
+package com.kr.lg.web.dto.annotation;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
