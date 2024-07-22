@@ -28,7 +28,7 @@ public class BoardDeleteController {
     private final BoardService boardService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @PostMapping("/api/public/board/delete/anonymous")
+    @PostMapping("/api/public/v1/delete/board")
     @ApiOperation(value = "비로그인 포지션 게시판 삭제", notes = "비로그인 포지션 게시판 삭제를 합니다.")
     public ResponseEntity<?> deleteBoardWithNotLogin(
             @RequestBody @Valid DeleteBoardWithNotLoginRequest request
@@ -37,7 +37,7 @@ public class BoardDeleteController {
         return ResponseEntity.ok(new SuccessResponse());
     }
 
-    @PostMapping("/api/board/delete/user")
+    @PostMapping("/api/v1/delete/board")
     @ApiOperation(value = "로그인 포지션 게시판 삭제", notes = "로그인 포지션 게시판 삭제를 합니다.")
     public ResponseEntity<?> deleteBoardWithLogin(
             @RequestBody @Valid DeleteBoardWithLoginRequest request,
