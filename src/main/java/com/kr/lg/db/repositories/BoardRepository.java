@@ -18,18 +18,19 @@ public interface BoardRepository extends RootBoardRepository {
 
     Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterEnum writerEnum);
 
+    Optional<BoardTb> findByBoardIdAndWriterTypeAndStatus(long boardId, WriterEnum writerEnum, StatusEnum statusEnum);
+
     @Modifying
     @Query(value = "UPDATE BoardTb SET view = view + 1  WHERE boardId = :boardId")
     void increaseCount(@Param("boardId") Long boardId); // 조회수 증가 ToDo 레디스 처리 (동시성)
 
-    @Transactional
+    @Modifying
+    @Query(value = "UPDATE BoardTb SET title = :title, content = :content  WHERE boardId = :boardId")
+    void updateBoard(@Param("boardId") Long boardId, @Param("title") String title, @Param("content") String content); // 포지션 게시판 업데이트
+
     @Modifying
     @Query(value = "UPDATE BoardTb SET status = :status WHERE boardId = :boardId")
     int updateBoardStatus(@Param("boardId") Long boardId, @Param("status") StatusEnum status);
-
-    @Modifying
-    @Query(value = "UPDATE BoardTb SET title = :title, content = :content  WHERE boardId = :boardId")
-    void updateBoard(@Param("boardId") Long boardId, @Param("title") String title, @Param("content") String content);
 
     @Transactional
     @Modifying

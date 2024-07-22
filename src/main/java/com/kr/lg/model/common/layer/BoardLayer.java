@@ -129,17 +129,6 @@ public class BoardLayer {
         this.userTb = userTb;
     }
 
-    public BoardLayer(DeleteUBRequest boardRequestDto, UserTb userTb) {
-        this.id = boardRequestDto.getId();
-        this.password = boardRequestDto.getPassword();
-        this.userTb = userTb;
-    }
-
-    public BoardLayer(DeleteABRequest boardRequestDto) {
-        this.id = boardRequestDto.getId();
-        this.password = boardRequestDto.getPassword();
-    }
-
     public BoardLayer(DeleteACBRequest request)  {
         this.id = request.getId();
         this.password = request.getPassword();
@@ -170,69 +159,6 @@ public class BoardLayer {
         this.title = request.getTitle();
         this.content = request.getContent();
         this.files = request.getAddFiles();
-    }
-
-    public BoardLayer(UpdateBoardWithLoginRequest request, UserTb userTb) {
-        this.id = request.getId();
-        this.password = request.getPassword();
-        this.title = request.getTitle();
-        this.content = request.getContent();
-        this.files = request.getAddFiles();
-        this.userTb = userTb;
-    }
-
-    public BoardLayer(EnrollBoardWithNotLoginRequest request, String ip) {
-        this.loginId = request.getId();
-        this.password = request.getPassword();
-        this.title = request.getTitle();
-        this.content = request.getContent();
-        this.writer = request.getId();
-        this.lineType = LineEnum.of(request.getLineType());
-        this.files = request.getFiles();
-        this.writerType = WriterEnum.ANONYMOUS_TYPE;
-        this.postType = findPostType();
-        this.ip = ip;
-    }
-
-    public BoardLayer(EnrollBoardWithLoginRequest request, UserTb userTb, String ip) {
-        this.loginId = userTb.getLoginId();
-        this.title = request.getTitle();
-        this.content = request.getContent();
-        this.writer = userTb.getNickName();
-        this.lineType = LineEnum.of(request.getLineType());
-        this.files = request.getFiles();
-        this.userTb = userTb;
-        this.writerType = WriterEnum.MEMBER_TYPE;
-        this.postType = findPostType();
-        this.ip = ip;
-        if (request.getIsLawFirm() != null && request.getIsLawFirm() == 1) {
-            this.lawFirmTb = userTb.getLawFirmId();
-        }
-    }
-
-    public BoardLayer(EnrollBoardWithLawFirmLoginRequest request, UserTb userTb, String ip) {
-        this.id = request.getId();
-        this.loginId = userTb.getLoginId();
-        this.title = request.getTitle();
-        this.content = request.getContent();
-        this.writer = userTb.getNickName();
-        this.lineType = LineEnum.of(request.getLineType());
-        this.files = request.getFiles();
-        this.userTb = userTb;
-        this.lawFirmTb = userTb.getLawFirmId();
-        this.writerType = WriterEnum.LAW_FIRM_TYPE;
-        this.postType = findPostType();
-        this.ip = ip;
-    }
-
-    public BoardLayer(FindMyBoardRequest requestDto, UserTb userTb) {
-        this.page = requestDto.getPage();
-        this.type = LineEnum.of(requestDto.getType());
-        this.pageNum = requestDto.getPageNum();
-        this.topic = BoardTopicEnum.of(requestDto.getTopic());
-        this.subject = BoardTypeEnum.of(requestDto.getSubject());
-        this.keyword = requestDto.getKeyword();
-        this.userTb = userTb;
     }
 
     public BoardLayer(EnrollUCBRequest request, UserTb userTb, String ip) {
@@ -273,15 +199,6 @@ public class BoardLayer {
             return PostEnum.IMAGE_TYPE;
         }
         return PostEnum.NORMAL_TYPE;
-    }
-
-    public BoardLayer(FindLawFirmBoardRequest requestDto) {
-        this.id = requestDto.getId();
-        this.page = requestDto.getPage();
-        this.pageNum = requestDto.getPageNum();
-        this.topic = BoardTopicEnum.of(requestDto.getTopic());
-        this.subject = BoardTypeEnum.of(requestDto.getSubject());
-        this.keyword = requestDto.getKeyword();
     }
 
 

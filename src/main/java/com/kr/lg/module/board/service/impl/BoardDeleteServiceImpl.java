@@ -1,4 +1,4 @@
-package com.kr.lg.service.board.base.impl;
+package com.kr.lg.module.board.service.impl;
 
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.exception.LgException;
@@ -6,14 +6,17 @@ import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.model.common.listener.BoardCNTEvent;
 import com.kr.lg.db.repositories.BoardRepository;
+import com.kr.lg.module.board.exception.BoardException;
+import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.BoardUtils;
 import com.kr.lg.model.common.layer.BoardLayer;
-import com.kr.lg.service.board.base.BoardDeleteService;
+import com.kr.lg.module.board.service.BoardDeleteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +49,16 @@ public class BoardDeleteServiceImpl implements BoardDeleteService {
             applicationEventPublisher.publishEvent(new BoardCNTEvent(boardLayer.getUserTb(), -1));
         }
         return result;
+    }
+
+    @Override
+    @Transactional
+    public void deleteBoard(long boardId) throws BoardException {
+        try {
+            boardRepository.updateBoardStatus(boardId, StatusEnum.DELETE_STATUS);
+        } catch (Exception e) {
+            throw new BoardException(BoardResultCode.FAIL_DELETE_BOARD);
+        }
     }
 
 }

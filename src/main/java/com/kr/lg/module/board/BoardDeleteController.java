@@ -1,11 +1,12 @@
 package com.kr.lg.module.board;
 
-import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.model.common.listener.BoardCNTEvent;
 import com.kr.lg.module.board.exception.BoardException;
+import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
+import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
 import com.kr.lg.module.board.service.BoardService;
-import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.UpdateBoardWithLoginRequest;
+import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.web.dto.root.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -22,28 +23,30 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class BoardUpdateController {
+public class BoardDeleteController {
 
     private final BoardService boardService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @PostMapping("/api/public/v1/update/board")
-    @ApiOperation(value = "비로그인 포지션 게시판 수정", notes = "비로그인 포지션 게시판 수정을 합니다.")
-    public ResponseEntity<?> updateBoardWithNotLogin(
-            @RequestBody @Valid UpdateBoardWithNotLoginRequest request
+    @PostMapping("/api/public/board/delete/anonymous")
+    @ApiOperation(value = "비로그인 포지션 게시판 삭제", notes = "비로그인 포지션 게시판 삭제를 합니다.")
+    public ResponseEntity<?> deleteBoardWithNotLogin(
+            @RequestBody @Valid DeleteBoardWithNotLoginRequest request
     ) throws BoardException {
-        boardService.updateBoardWithNotLogin(request);
+        boardService.deleteBoardWithNotLogin(request);
         return ResponseEntity.ok(new SuccessResponse());
     }
 
-    @PostMapping("/api/v1/update/board")
-    @ApiOperation(value = "로그인 포지션 게시판 수정", notes = "로그인 포지션 게시판 수정을 합니다.")
-    public ResponseEntity<?> updateBoardWithLogin(
-            @RequestBody @Valid UpdateBoardWithLoginRequest request,
+    @PostMapping("/api/board/delete/user")
+    @ApiOperation(value = "로그인 포지션 게시판 삭제", notes = "로그인 포지션 게시판 삭제를 합니다.")
+    public ResponseEntity<?> deleteBoardWithLogin(
+            @RequestBody @Valid DeleteBoardWithLoginRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
-        boardService.updateBoardWithLogin(request, userAdapter.getUserTb());
+        boardService.deleteBoardWithLogin(request, userAdapter.getUserTb());
+        applicationEventPublisher.publishEvent(new BoardCNTEvent(userAdapter.getUserTb(), -1));
         return ResponseEntity.ok(new SuccessResponse());
     }
+
 
 }

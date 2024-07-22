@@ -4,10 +4,9 @@ import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.kr.lg.enums.BoardTopicEnum;
-import com.kr.lg.enums.LineEnum;
-import com.kr.lg.enums.PostEnum;
-import com.kr.lg.enums.WriterEnum;
+import com.kr.lg.enums.*;
+import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
+import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
 import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.UpdateBoardWithLoginRequest;
 import com.kr.lg.module.board.model.dto.BoardEnrollDto;
@@ -24,10 +23,7 @@ import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.model.req.FindBoardRequest;
 import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
 import com.kr.lg.module.board.model.req.FindMyBoardRequest;
-import com.kr.lg.module.board.service.BoardEnrollService;
-import com.kr.lg.module.board.service.BoardFindService;
-import com.kr.lg.module.board.service.BoardService;
-import com.kr.lg.module.board.service.BoardUpdateService;
+import com.kr.lg.module.board.service.*;
 import com.kr.lg.module.board.sort.BoardSort;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.BoardParam;
@@ -54,6 +50,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardFindService boardFindService;
     private final BoardEnrollService boardEnrollService;
     private final BoardUpdateService boardUpdateService;
+    private final BoardDeleteService boardDeleteService;
     private final BoardAttachRepository boardAttachRepository;
     private final BoardRepository boardRepository;
     private final BoardCommentMapper boardCommentMapper;
@@ -291,6 +288,32 @@ public class BoardServiceImpl implements BoardService {
             if (isEnrollFile) {
                 boardEnrollService.enrollBoardFiles(boardTb.get(), request.getAddFiles());
             }
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+
+        }
+    }
+
+    @Override
+    public void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.ANONYMOUS_TYPE, StatusEnum.NORMAL_STATUS);
+        if (boardTb.isPresent()) {
+            if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
+            boardDeleteService.deleteBoard(boardTb.get().getBoardId());
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+
+        }
+    }
+
+    @Override
+    public void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.MEMBER_TYPE, StatusEnum.NORMAL_STATUS);
+        if (boardTb.isPresent()) {
+            boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostEnum.BEST_TYPE) || boardTb.get().getPostType().equals(PostEnum.RECOMMEND); // 베스트 or 추천 게시판 플래그
+            if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER); // 작성자 체크
+            else if (isBestOrRecommendBoard && !encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD); // 베스트 or 추천 게시판은 패스워드 검증
+            boardDeleteService.deleteBoard(boardTb.get().getBoardId());
         } else {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
 

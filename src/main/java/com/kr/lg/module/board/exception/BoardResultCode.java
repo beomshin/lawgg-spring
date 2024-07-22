@@ -18,7 +18,8 @@ public enum BoardResultCode {
     UN_MATCHED_LAW_FIRM_USER("3008", "미매칭 로펌 등록"),
     UN_MATCH_PASSWORD("3009", "비밀번호가 불일치"),
     UN_MATCHED_USER("3010", "미매칭 유저 수정"),
-    FAIL_UPDATE_BOARD("3011", "게시판 등록 실패"),
+    FAIL_UPDATE_BOARD("3011", "게시판 수정 실패"),
+    FAIL_DELETE_BOARD("3012", "게시판 삭제 실패"),
     ;
 
     private final String code;
