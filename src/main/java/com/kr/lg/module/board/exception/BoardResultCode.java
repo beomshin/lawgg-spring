@@ -21,6 +21,11 @@ public enum BoardResultCode {
     FAIL_UPDATE_BOARD("3011", "게시판 수정 실패"),
     FAIL_DELETE_BOARD("3012", "게시판 삭제 실패"),
     FAIL_REPORT_BOARD("3013", "게시판 신고 실패"),
+    FAIL_RECOMMEND_BOARD("3014", "게시판 추천 실패"),
+    ALREADY_RECOMMEND_BOARD("3015", "중복 추천 방지"),
+
+
+
     ;
 
     private final String code;

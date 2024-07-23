@@ -3,7 +3,7 @@ package com.kr.lg.module.board;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.model.common.listener.BoardCNTEvent;
+import com.kr.lg.module.board.model.dto.BoardCreateCountEvent;
 import com.kr.lg.module.board.model.req.EnrollBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.EnrollBoardWithLawFirmLoginRequest;
 import com.kr.lg.module.board.model.req.EnrollBoardWithLoginRequest;
@@ -50,7 +50,7 @@ public class BoardEnrollController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         boardService.enrollBoardWithLogin(request, ClientUtils.getRemoteIP(httpServletRequest), userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardCNTEvent(userAdapter.getUserTb(), 1));
+        applicationEventPublisher.publishEvent(new BoardCreateCountEvent(userAdapter.getUserTb(), 1));
         return ResponseEntity.ok().body(new SuccessResponse());
     }
 
@@ -62,7 +62,7 @@ public class BoardEnrollController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         boardService.enrollBoardWithLawFirmLogin(request, ClientUtils.getRemoteIP(httpServletRequest), userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardCNTEvent(userAdapter.getUserTb(), 1));
+        applicationEventPublisher.publishEvent(new BoardCreateCountEvent(userAdapter.getUserTb(), 1));
         return ResponseEntity.ok().body(new SuccessResponse());
     }
 }

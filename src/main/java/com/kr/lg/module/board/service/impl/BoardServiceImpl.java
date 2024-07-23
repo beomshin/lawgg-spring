@@ -1,30 +1,22 @@
 package com.kr.lg.module.board.service.impl;
 
+import com.kr.lg.db.entities.BoardRecommendTb;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
+import com.kr.lg.db.repositories.BoardRecommendRepository;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.enums.*;
-import com.kr.lg.module.board.model.req.ReportBoardRequest;
+import com.kr.lg.module.board.model.req.*;
 import com.kr.lg.module.board.model.dto.BoardReportDto;
-import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
-import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.UpdateBoardWithLoginRequest;
 import com.kr.lg.module.board.model.dto.BoardEnrollDto;
 import com.kr.lg.module.board.model.dto.BoardUpdateDto;
-import com.kr.lg.module.board.model.req.EnrollBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.EnrollBoardWithLawFirmLoginRequest;
-import com.kr.lg.module.board.model.req.EnrollBoardWithLoginRequest;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.board.mapper.BoardCommentMapper;
 import com.kr.lg.module.board.model.mapper.FindBoardParamData;
 import com.kr.lg.module.board.model.entry.BoardAttachEntry;
 import com.kr.lg.module.board.model.entry.BoardEntry;
-import com.kr.lg.module.board.model.req.FindBoardRequest;
-import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
-import com.kr.lg.module.board.model.req.FindMyBoardRequest;
 import com.kr.lg.module.board.service.*;
 import com.kr.lg.module.board.sort.BoardSort;
 import com.kr.lg.web.dto.mapper.MapperParam;
@@ -54,9 +46,13 @@ public class BoardServiceImpl implements BoardService {
     private final BoardUpdateService boardUpdateService;
     private final BoardDeleteService boardDeleteService;
     private final BoardReportService boardReportService;
+    private final BoardRecommendService boardRecommendService;
+
     private final BoardAttachRepository boardAttachRepository;
+    private final BoardRecommendRepository boardRecommendRepository;
     private final BoardRepository boardRepository;
     private final BoardCommentMapper boardCommentMapper;
+
     private final BCryptPasswordEncoder encoder;
 
     /**
@@ -251,6 +247,11 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
+    /**
+     * 비로그인 포지션 게시판 수정
+     * @param request
+     * @throws BoardException
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException {
@@ -274,6 +275,12 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    /**
+     * 로그인 포지션 게시판 수정
+     * @param request
+     * @param userTb
+     * @throws BoardException
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException {
@@ -297,11 +304,17 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    /**
+     * 비로그인 포지션 게시판 삭제
+     * @param request
+     * @throws BoardException
+     */
     @Override
     public void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException {
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.ANONYMOUS_TYPE, StatusEnum.NORMAL_STATUS);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
+            log.info("▶ [포지션 게시판] 포지션 게시판 삭제(비로그인)");
             boardDeleteService.deleteBoard(boardTb.get().getBoardId());
         } else {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
@@ -309,6 +322,12 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    /**
+     * 로그인 포지션 게시판 삭제
+     * @param request
+     * @param userTb
+     * @throws BoardException
+     */
     @Override
     public void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException {
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.MEMBER_TYPE, StatusEnum.NORMAL_STATUS);
@@ -316,6 +335,7 @@ public class BoardServiceImpl implements BoardService {
             boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostEnum.BEST_TYPE) || boardTb.get().getPostType().equals(PostEnum.RECOMMEND); // 베스트 or 추천 게시판 플래그
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER); // 작성자 체크
             else if (isBestOrRecommendBoard && !encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD); // 베스트 or 추천 게시판은 패스워드 검증
+            log.info("▶ [포지션 게시판] 포지션 게시판 삭제(로그인)");
             boardDeleteService.deleteBoard(boardTb.get().getBoardId());
         } else {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
@@ -323,15 +343,83 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    /**
+     * 포지션 게시판 신고
+     * @param request
+     * @param ip
+     * @throws BoardException
+     */
     @Override
     @Transactional
     public void reportBoard(ReportBoardRequest request, String ip) throws BoardException {
+        log.info("▶ [포지션 게시판] 포지션 게시판 신고");
         BoardReportDto reportDto = BoardReportDto.builder()
                 .ip(ip)
                 .content(request.getContent())
                 .boardTb(BoardTb.builder().boardId(request.getId()).build())
                 .build();
         boardReportService.reportBoard(reportDto);
+    }
+
+    /**
+     * 포지션 게시판 추천
+     * @param request
+     * @param userTb
+     * @throws BoardException
+     */
+    @Override
+    public void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException {
+        Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getId(), userTb.getUserId()); // 나의 추천 내역 조회
+        if (boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_RECOMMEND_BOARD); // 중복 추천 방어코드
+        log.info("▶ [포지션 게시판] 포지션 게시판 추천");
+        boardRecommendService.recommendBoard(BoardTb.builder().boardId(request.getId()).build(), userTb); // 게시판 추천
+    }
+
+    /**
+     * 포지션 게시판 추천 삭제
+     * @param request
+     * @param userTb
+     * @throws BoardException
+     */
+    @Override
+    public void deleteRecommendBoard(DeleteRecommendBoardRequest request, UserTb userTb) throws BoardException {
+        log.info("▶ [포지션 게시판] 포지션 게시판 추천 삭제");
+        boardRecommendService.deleteRecommendBoard(request.getId(), userTb.getUserId()); // 게시판 추천 취소
+    }
+
+    /**
+     * 비로그인 게시판 로그인
+     * @param request
+     * @throws BoardException
+     */
+    @Override
+    public void loginBoardWithNotLogin(LoginBoardWithNotLoginRequest request) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.ANONYMOUS_TYPE);
+        if (boardTb.isPresent()) {
+            if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
+            log.info("▶ [포지션 게시판] 비로그인 포지션 게시판 로그인");
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+        }
+
+    }
+
+    /**
+     * 로그인 게시판 로그인
+     * @param request
+     * @param userTb
+     * @throws BoardException
+     */
+    @Override
+    public void loginBoardWithLogin(LoginBoardWithLoginRequest request, UserTb userTb) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.MEMBER_TYPE);
+        if (boardTb.isPresent()) {
+            if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
+            log.info("▶ [포지션 게시판] 로그인 포지션 게시판 로그인");
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+        }
+
     }
 
     /**

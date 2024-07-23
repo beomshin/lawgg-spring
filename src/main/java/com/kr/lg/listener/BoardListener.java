@@ -1,16 +1,15 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.model.common.listener.BoardCEvent;
-import com.kr.lg.model.common.listener.BoardCNTEvent;
+import com.kr.lg.module.board.model.dto.BoardCreateCountEvent;
 import com.kr.lg.module.board.model.dto.BoardCountEventDto;
-import com.kr.lg.model.common.listener.BoardREvent;
+import com.kr.lg.module.board.model.dto.BoardRecommendEventDto;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,17 +42,17 @@ public class BoardListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void updateBoardCount(BoardCNTEvent BoardCNTEvent) {
-        log.debug("[updateBoardCount]");
-        UserTb userTb = BoardCNTEvent.getUserTb();
-        userRepository.updateBoardCount(userTb.getUserId(), Long.valueOf(BoardCNTEvent.getNum()));
+    public void updateBoardCount(BoardCreateCountEvent BoardCreateCountEvent) {
+        log.info("[]");
+        UserTb userTb = BoardCreateCountEvent.getUserTb();
+        userRepository.updateBoardCount(userTb.getUserId(), Long.valueOf(BoardCreateCountEvent.getNum()));
     }
 
     @TransactionalEventListener
     @Async
     @Transactional
-    public void  updateBoardRecommendCount(BoardREvent BoardREvent) {
-        BoardTb boardTb = boardRepository.findLockBoard(BoardREvent.getBoardId());
-        boardRepository.updateRecommendCount(boardTb.getBoardId(), Long.valueOf(BoardREvent.getNum()));
+    public void  updateBoardRecommendCount(BoardRecommendEventDto BoardRecommendEventDto) {
+        BoardTb boardTb = boardRepository.findLockBoard(BoardRecommendEventDto.getBoardId());
+        boardRepository.updateRecommendCount(boardTb.getBoardId(), Long.valueOf(BoardRecommendEventDto.getNum()));
     }
 }

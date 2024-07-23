@@ -12,7 +12,6 @@ import com.kr.lg.enums.WriterEnum;
 import com.kr.lg.module.board.model.req.*;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.common.root.RootRequest;
-import com.kr.lg.model.net.request.board.base.*;
 import com.kr.lg.model.net.request.board.comment.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -56,9 +55,9 @@ public class BoardLayer {
     private Long boardCommentId;
 
     public BoardLayer(RootRequest request) {
-        if (request instanceof LoginABRequest) {
-            this.id = ((LoginABRequest) request).getId();
-            this.password = ((LoginABRequest) request).getPassword() ;
+        if (request instanceof LoginBoardWithNotLoginRequest) {
+            this.id = ((LoginBoardWithNotLoginRequest) request).getId();
+            this.password = ((LoginBoardWithNotLoginRequest) request).getPassword() ;
         }
     }
 
@@ -71,24 +70,6 @@ public class BoardLayer {
         this.password = password;
     }
 
-    public BoardLayer(Long id, FindAPCBRequest requestDto, DepthEnum depth) {
-        this.id = id;
-        this.page = requestDto.getPage();
-        this.pageNum = requestDto.getPageNum();
-        this.depth = depth;
-    }
-
-    public BoardLayer(Long id, FindACCBRequest requestDto, DepthEnum depth) {
-        this.id = id;
-        this.page = requestDto.getPage();
-        this.pageNum = requestDto.getPageNum();
-        this.depth = depth;
-    }
-
-    public BoardLayer(Long id, String ip) {
-        this.id = id;
-        this.ip = ip;
-    }
 
     public BoardLayer(ReportCBRequest requestDto, String ip) {
         this.id = requestDto.getId();
@@ -181,7 +162,7 @@ public class BoardLayer {
         this.boardCommentId = request.getBoardCommentId();
     }
 
-    public BoardLayer(LoginUBRequest requestDto, UserTb userTb) {
+    public BoardLayer(LoginBoardWithLoginRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.password = requestDto.getPassword();
         this.userTb = userTb;

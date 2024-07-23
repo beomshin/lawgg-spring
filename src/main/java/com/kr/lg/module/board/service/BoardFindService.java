@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 public interface BoardFindService {
-
     Page<BoardEntry> findBoards(BoardParam<?> param) throws BoardException;
     Optional<BoardEntry> findBoard(MapperParam param) throws BoardException;
 }

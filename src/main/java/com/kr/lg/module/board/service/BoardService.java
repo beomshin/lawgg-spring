@@ -1,19 +1,9 @@
 package com.kr.lg.module.board.service;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.module.board.model.req.ReportBoardRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
-import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.UpdateBoardWithLoginRequest;
-import com.kr.lg.module.board.model.req.EnrollBoardWithNotLoginRequest;
-import com.kr.lg.module.board.model.req.EnrollBoardWithLawFirmLoginRequest;
-import com.kr.lg.module.board.model.req.EnrollBoardWithLoginRequest;
+import com.kr.lg.module.board.model.req.*;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.entry.BoardEntry;
-import com.kr.lg.module.board.model.req.FindBoardRequest;
-import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
-import com.kr.lg.module.board.model.req.FindMyBoardRequest;
 import org.springframework.data.domain.Page;
 
 public interface BoardService {
@@ -31,5 +21,9 @@ public interface BoardService {
     void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException;
     void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException;
     void reportBoard(ReportBoardRequest request, String ip) throws BoardException;
+    void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException;
+    void deleteRecommendBoard(DeleteRecommendBoardRequest request, UserTb userTb) throws BoardException;
+    void loginBoardWithNotLogin(LoginBoardWithNotLoginRequest request) throws BoardException;
+    void loginBoardWithLogin(LoginBoardWithLoginRequest request, UserTb userTb) throws BoardException;
 
 }
