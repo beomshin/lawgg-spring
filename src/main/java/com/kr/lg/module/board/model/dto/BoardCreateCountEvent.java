@@ -1,4 +1,4 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.board.model.dto;
 
 import com.kr.lg.db.entities.UserTb;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class BoardCNTEvent { // BoardCountEvent
+public class BoardCreateCountEvent { // BoardCountEvent
 
     private UserTb userTb;
     private Integer num;

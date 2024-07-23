@@ -1,7 +1,7 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.model.common.listener.BoardCNTEvent;
+import com.kr.lg.module.board.model.dto.BoardCreateCountEvent;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
@@ -44,7 +44,7 @@ public class BoardDeleteController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         boardService.deleteBoardWithLogin(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardCNTEvent(userAdapter.getUserTb(), -1));
+        applicationEventPublisher.publishEvent(new BoardCreateCountEvent(userAdapter.getUserTb(), -1));
         return ResponseEntity.ok(new SuccessResponse());
     }
 

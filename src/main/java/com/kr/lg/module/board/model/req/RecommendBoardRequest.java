@@ -1,17 +1,19 @@
-package com.kr.lg.model.net.request.board.base;
+package com.kr.lg.module.board.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "포지션 게시판 추천 삭제 요청 바디")
-public class DeleteRBRequest implements RootRequest { // DeleteRecommendBoardRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "포지션 게시판 추천 요청 Body")
+public class RecommendBoardRequest extends AbstractSpec {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")

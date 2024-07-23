@@ -47,9 +47,4 @@ public class BoardRecommendTb {
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp modDt; // 수정일
 
-
-    public BoardRecommendTb(Long boardId, UserTb userTb) {
-        this.boardTb = BoardTb.builder().boardId(boardId).build();
-        this.userTb = userTb;
-    }
 }
