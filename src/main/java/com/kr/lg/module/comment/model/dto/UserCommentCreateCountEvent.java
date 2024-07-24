@@ -1,4 +1,4 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.comment.model.dto;
 
 import com.kr.lg.db.entities.UserTb;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CommnetCNTEvent { // CommentCountEvent
+public class UserCommentCreateCountEvent { // CommentCountEvent
 
     private UserTb userTb;
     private Integer num;

@@ -1,11 +1,11 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.comment.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class BoardCEvent { // BoardCommentEvent
+public class BoardCommentCreateCountEvent { // BoardCommentEvent
 
     private Long boardId;
     private int num;

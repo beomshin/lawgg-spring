@@ -136,49 +136,10 @@ public class BoardLayer {
         this.files = request.getAddFiles();
     }
 
-    public BoardLayer(EnrollUCBRequest request, UserTb userTb, String ip) {
-        this.id = request.getId();
-        this.parentId = request.getParentId();
-        this.loginId = userTb.getLoginId();
-        this.writer = userTb.getNickName();
-        this.content = request.getContent();
-        this.depth = request.getDepth();
-        this.userTb = userTb;
-        this.emoticon = request.getEmoticon();
-        this.ip = ip;
-        this.boardCommentId = request.getBoardCommentId();
-    }
-
-    public BoardLayer(EnrollACBRequest request, String ip) {
-        this.id = request.getId();
-        this.parentId = request.getParentId();
-        this.loginId = request.getLoginId();
-        this.password = request.getPassword();
-        this.writer = request.getLoginId();
-        this.content = request.getContent();
-        this.depth = request.getDepth();
-        this.emoticon = request.getEmoticon();
-        this.ip = ip;
-        this.boardCommentId = request.getBoardCommentId();
-    }
-
     public BoardLayer(LoginBoardWithLoginRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.password = requestDto.getPassword();
         this.userTb = userTb;
     }
 
-
-    private PostEnum findPostType() { // postType 처리 (2023-04-06 기준 일반, 이미지 타입)
-        if (this.files != null && this.files.size() > 0 ) {
-            return PostEnum.IMAGE_TYPE;
-        }
-        return PostEnum.NORMAL_TYPE;
-    }
-
-
-    public String getAlertTitle() {
-        if (this.userTb == null) return "비회원 유저가 댓글을 달았습니다.";
-        return new StringBuffer().append(this.userTb.getNickName()).append(" 유저가 댓글을 달았습니다.").toString();
-    }
 }

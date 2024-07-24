@@ -1,18 +1,21 @@
-package com.kr.lg.model.net.request.board.comment;
+package com.kr.lg.module.comment.model.req;
 
 import com.kr.lg.enums.DepthEnum;
-import com.kr.lg.model.common.root.RootRequest;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "포지션 게시판 회원 댓글 등록 요청 바디")
-public class EnrollUCBRequest implements RootRequest { // EnrollUserCommentBoardRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "비로그인 포지션 게시판 댓글 등록 요청 Body")
+public class EnrollBoardCommentNotWithLoginRequest extends AbstractSpec {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")
@@ -20,6 +23,14 @@ public class EnrollUCBRequest implements RootRequest { // EnrollUserCommentBoard
 
     @ApiModelProperty(value = "부모 댓글 아이디(게시판 댓글)")
     private Long parentId;
+
+    @ApiModelProperty(value = "등록 아이디", required = true)
+    @NotBlank(message = "아이디 값이 입력되어있지않습니다.")
+    private String loginId;
+
+    @ApiModelProperty(value = "패스워드", required = true)
+    @NotBlank(message = "패스워드 값이 입력되어있지않습니다.")
+    private String password;
 
     @ApiModelProperty(value = "내용", required = true)
     @NotNull(message = "내용이 입력되어있지않습니다.")

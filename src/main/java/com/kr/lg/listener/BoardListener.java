@@ -1,6 +1,6 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.model.common.listener.BoardCEvent;
+import com.kr.lg.module.comment.model.dto.BoardCommentCreateCountEvent;
 import com.kr.lg.module.board.model.dto.BoardCreateCountEvent;
 import com.kr.lg.module.board.model.dto.BoardCountEventDto;
 import com.kr.lg.module.board.model.dto.BoardRecommendEventDto;
@@ -34,9 +34,9 @@ public class BoardListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void  updateBoardCommentCount(BoardCEvent BoardCEvent) {
-        BoardTb boardTb = boardRepository.findLockBoard(BoardCEvent.getBoardId());
-        boardRepository.updateCommentCount(boardTb.getBoardId(), Long.valueOf(BoardCEvent.getNum()));
+    public void  updateBoardCommentCount(BoardCommentCreateCountEvent BoardCommentCreateCountEvent) {
+        BoardTb boardTb = boardRepository.findLockBoard(BoardCommentCreateCountEvent.getBoardId());
+        boardRepository.updateCommentCount(boardTb.getBoardId(), Long.valueOf(BoardCommentCreateCountEvent.getNum()));
     }
 
     @TransactionalEventListener
