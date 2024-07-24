@@ -4,7 +4,7 @@ import com.kr.lg.db.entities.TrialCommentTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.model.common.listener.AlertTCEvent;
 import com.kr.lg.model.common.listener.AlertTEvent;
-import com.kr.lg.model.common.listener.CommnetCNTEvent;
+import com.kr.lg.module.comment.model.dto.UserCommentCreateCountEvent;
 import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.model.common.layer.TrialLayer;
@@ -37,7 +37,7 @@ public class TrialCommentEnrollServiceImpl implements TrialCommentEnrollService 
                 .emoticon(requestDto.getEmoticon())
                 .build());
         applicationEventPublisher.publishEvent(new TrialCEvent(requestDto.getId(), 1)); // 트라이얼 답글 개수 증가
-        applicationEventPublisher.publishEvent(new CommnetCNTEvent(requestDto.getUserTb(), 1)); // 댓글 개수 증가
+        applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(requestDto.getUserTb(), 1)); // 댓글 개수 증가
         switch (requestDto.getDepth()) {
             case PARENT_COMMENT: applicationEventPublisher.publishEvent(new AlertTEvent(requestDto)); break;
             case CHILDREN_COMMENT: applicationEventPublisher.publishEvent(new AlertTCEvent(requestDto)); break;

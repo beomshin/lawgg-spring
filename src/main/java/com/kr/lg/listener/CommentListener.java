@@ -1,6 +1,6 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.model.common.listener.CommnetCNTEvent;
+import com.kr.lg.module.comment.model.dto.UserCommentCreateCountEvent;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,9 @@ public class CommentListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void  updateBoardCommentCount(CommnetCNTEvent CommnetCNTEvent) {
+    public void  updateBoardCommentCount(UserCommentCreateCountEvent UserCommentCreateCountEvent) {
         log.debug("[updateBoardCommentCount]");
-        UserTb userTb = CommnetCNTEvent.getUserTb();
-        userRepository.updateCommentCount(userTb.getUserId(), Long.valueOf(CommnetCNTEvent.getNum()));
+        UserTb userTb = UserCommentCreateCountEvent.getUserTb();
+        userRepository.updateCommentCount(userTb.getUserId(), Long.valueOf(UserCommentCreateCountEvent.getNum()));
     }
 }

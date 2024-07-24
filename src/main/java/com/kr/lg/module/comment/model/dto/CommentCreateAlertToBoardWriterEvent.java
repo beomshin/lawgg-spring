@@ -1,7 +1,6 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.comment.model.dto;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.model.common.layer.BoardLayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -9,18 +8,18 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Getter
-public class AlertBEvent { // AlertBoardEvent
+public class CommentCreateAlertToBoardWriterEvent { // AlertBoardEvent
 
     private Long boardId;
     private String content;
     private String title;
     private UserTb userTb;
 
-    public AlertBEvent(BoardLayer boardLayer) {
-        this.boardId = boardLayer.getId();
-        this.content = boardLayer.getContent();
-        this.title = boardLayer.getAlertTitle();
-        this.userTb = boardLayer.getUserTb();
+    public CommentCreateAlertToBoardWriterEvent(CommentEnrollDto commentEnrollDto) {
+        this.boardId = commentEnrollDto.getId();
+        this.content = commentEnrollDto.getContent();
+        this.title = commentEnrollDto.getAlertTitle();
+        this.userTb = commentEnrollDto.getUserTb();
     }
 
     public boolean isPost(UserTb writer) {

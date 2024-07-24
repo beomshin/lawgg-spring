@@ -5,6 +5,8 @@ import com.kr.lg.enums.AlertEnum;
 import com.kr.lg.enums.ReadEnum;
 import com.kr.lg.db.repositories.*;
 import com.kr.lg.model.common.listener.*;
+import com.kr.lg.module.comment.model.dto.CommentCreateAlertToWriterEvent;
+import com.kr.lg.module.comment.model.dto.CommentCreateAlertToBoardWriterEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -29,17 +31,17 @@ public class AlertListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void enrollBoardAlert(AlertBEvent AlertBEvent) {
-        Optional<BoardTb> boardTb = boardRepository.findById(AlertBEvent.getBoardId());
+    public void enrollBoardAlert(CommentCreateAlertToBoardWriterEvent CommentCreateAlertToBoardWriterEvent) {
+        Optional<BoardTb> boardTb = boardRepository.findById(CommentCreateAlertToBoardWriterEvent.getBoardId());
         if (boardTb.isPresent()) {
             UserTb writer = boardTb.get().getUserTb();
-            if (AlertBEvent.isPost(writer)) {
+            if (writer != null && CommentCreateAlertToBoardWriterEvent.isPost(writer)) {
                 alertRepository.save(
                         AlertTb.builder()
                                 .boardTb(boardTb.get())
                                 .userTb(writer)
-                                .title(AlertBEvent.getTitle())
-                                .content(AlertBEvent.getContent())
+                                .title(CommentCreateAlertToBoardWriterEvent.getTitle())
+                                .content(CommentCreateAlertToBoardWriterEvent.getContent())
                                 .type(AlertEnum.BOARD_ALERT_TYPE)
                                 .readFlag(ReadEnum.NON_READ_FLAG)
                                 .build()
@@ -51,17 +53,17 @@ public class AlertListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void enrollBoardCommentAlert(AlertBCEvent AlertBCEvent) {
-        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(AlertBCEvent.getParentId());
+    public void enrollBoardCommentAlert(CommentCreateAlertToWriterEvent CommentCreateAlertToWriterEvent) {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(CommentCreateAlertToWriterEvent.getParentId());
         if (boardCommentTb.isPresent() && boardCommentTb.get().getUserTb() != null) {
             UserTb writer = boardCommentTb.get().getUserTb();
-            if (AlertBCEvent.isPost(writer)){
+            if (CommentCreateAlertToWriterEvent.isPost(writer)){
                 alertRepository.save(
                         AlertTb.builder()
                                 .boardTb(boardCommentTb.get().getBoardTb())
                                 .userTb(writer)
-                                .title(AlertBCEvent.getTitle())
-                                .content(AlertBCEvent.getContent())
+                                .title(CommentCreateAlertToWriterEvent.getTitle())
+                                .content(CommentCreateAlertToWriterEvent.getContent())
                                 .type(AlertEnum.BOARD_ALERT_TYPE)
                                 .readFlag(ReadEnum.NON_READ_FLAG)
                                 .build()

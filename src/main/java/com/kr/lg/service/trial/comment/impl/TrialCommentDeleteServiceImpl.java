@@ -3,7 +3,7 @@ package com.kr.lg.service.trial.comment.impl;
 import com.kr.lg.db.entities.TrialCommentTb;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.StatusEnum;
-import com.kr.lg.model.common.listener.CommnetCNTEvent;
+import com.kr.lg.module.comment.model.dto.UserCommentCreateCountEvent;
 import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.web.dto.global.GlobalCode;
@@ -31,7 +31,7 @@ public class TrialCommentDeleteServiceImpl implements TrialCommentDeleteService 
         if (trialCommentTb.getStatus().equals(StatusEnum.DELETE_STATUS)) throw new LgException(GlobalCode.ALREADY_DELETE_TRIAL_COMMENT);
         trialUtils.isWriterUser(trialCommentTb.getUserTb(), requestDto.getUserTb());
         applicationEventPublisher.publishEvent(new TrialCEvent(trialCommentTb.getTrialTb().getTrialId(), -1)); // 트라이얼 답글 개수 감수
-        applicationEventPublisher.publishEvent(new CommnetCNTEvent(requestDto.getUserTb(), -1)); // 댓글 개수 감소
+        applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(requestDto.getUserTb(), -1)); // 댓글 개수 감소
         trialCommentRepository.updateStatus(trialCommentTb.getTrialCommentId(), StatusEnum.DELETE_STATUS);
     }
 
