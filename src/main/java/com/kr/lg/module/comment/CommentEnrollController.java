@@ -13,12 +13,12 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +31,7 @@ public class CommentEnrollController {
     @ApiOperation(value = "비로그인 포지션 게시판 댓글 등록", notes = "비로그인 포지션 게시판 댓글을 등록합니다.")
     public ResponseEntity<?> enrollBoardCommentNotWithLogin(
             HttpServletRequest servletRequest,
-            @Validated @RequestBody EnrollBoardCommentNotWithLoginRequest request
+            @Valid @RequestBody EnrollBoardCommentNotWithLoginRequest request
     ) throws CommentException {
         commentService.enrollBoardCommentNotWithLogin(request, ClientUtils.getRemoteIP(servletRequest));
         return ResponseEntity.ok(new SuccessResponse());
@@ -41,7 +41,7 @@ public class CommentEnrollController {
     @ApiOperation(value = "로그인 포지션 게시판 댓글 등록", notes = "로그인 포지션 게시판 댓글을 등록합니다.")
     public ResponseEntity<?> enrollBoardCommentWithLogin(
             HttpServletRequest servletRequest,
-            @Validated @RequestBody EnrollBoardCommentWithLoginRequest request,
+            @Valid @RequestBody EnrollBoardCommentWithLoginRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws CommentException {
         commentService.enrollBoardCommentWithLogin(request, userAdapter.getUserTb(), ClientUtils.getRemoteIP(servletRequest));
