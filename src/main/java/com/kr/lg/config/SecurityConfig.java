@@ -37,7 +37,7 @@ public class SecurityConfig {
 
     private static final String LOGIN_PATH = "/api/public/login"; // 로그인 path
 
-    private static final String LOGOUT_PATH = "/api/public/logout"; // 로그아웃 path (미사용)
+    private static final String LOGOUT_PATH = "/api/public/logout"; // 로그아웃 path (미사용 기능)
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationProvider logAuthenticationProvider) { // security manager 등록

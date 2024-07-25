@@ -1,17 +1,32 @@
 package com.kr.lg.module.comment.service.impl;
 
+import com.kr.lg.db.entities.BoardCommentTb;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.db.repositories.BoardCommentRepository;
+import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.module.board.model.req.DeleteBoardCommentNotWithLoginRequest;
+import com.kr.lg.module.board.model.req.DeleteBoardCommentWithLoginRequest;
+import com.kr.lg.module.comment.model.req.ReportBoardCommentRequest;
+import com.kr.lg.module.comment.model.req.UpdateBoardCommentNotWithLoginRequest;
+import com.kr.lg.module.comment.model.req.UpdateBoardCommentWithLoginRequest;
+import com.kr.lg.module.comment.exception.CommentResultCode;
 import com.kr.lg.module.comment.model.dto.*;
 import com.kr.lg.module.comment.model.req.EnrollBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.comment.model.req.EnrollBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentException;
+import com.kr.lg.module.comment.service.CommentDeleteService;
 import com.kr.lg.module.comment.service.CommentEnrollService;
 import com.kr.lg.module.comment.service.CommentService;
+import com.kr.lg.module.comment.service.CommentUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -19,7 +34,12 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentEnrollService commentEnrollService;
+    private final CommentUpdateService commentUpdateService;
+    private final CommentDeleteService commentDeleteService;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final BoardCommentRepository boardCommentRepository;;
+
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public void enrollBoardCommentNotWithLogin(EnrollBoardCommentNotWithLoginRequest request, String ip) throws CommentException {
@@ -65,6 +85,76 @@ public class CommentServiceImpl implements CommentService {
         switch (enrollDto.getDepth()) {
             case PARENT_COMMENT:  applicationEventPublisher.publishEvent(new CommentCreateAlertToBoardWriterEvent(enrollDto)); break; // 게시판 작성자 알림
             case CHILDREN_COMMENT: applicationEventPublisher.publishEvent(new CommentCreateAlertToWriterEvent(enrollDto)); break; // 게시판 댓글 작성자 알림
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateBoardCommentNotWithLogin(UpdateBoardCommentNotWithLoginRequest request) throws CommentException {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
+        if (boardCommentTb.isPresent()) {
+            if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
+            commentUpdateService.updateBoardComment(CommentUpdateDto.builder()
+                            .boardCommentId(request.getId())
+                            .content(request.getContent())
+                    .build());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateBoardCommentWithLogin(UpdateBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
+        if (boardCommentTb.isPresent()) {
+            if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
+            else if (!userTb.getUserId().equals(boardCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);
+            commentUpdateService.updateBoardComment(CommentUpdateDto.builder()
+                    .boardCommentId(request.getId())
+                    .content(request.getContent())
+                    .build());
+        } else {
+            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD_COMMENT);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void reportBoardComment(ReportBoardCommentRequest request) throws CommentException {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
+        if (boardCommentTb.isPresent()) {
+            commentUpdateService.reportBoardComment(request.getId());
+        } else {
+            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD_COMMENT);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteBoardCommentNotWithLogin(DeleteBoardCommentNotWithLoginRequest request) throws CommentException {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
+        if (boardCommentTb.isPresent()) {
+            if (boardCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
+            else if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
+            commentDeleteService.deleteBoardComment(request.getId());
+            applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(boardCommentTb.get().getBoardTb().getBoardId(), -1));
+
+        } else {
+            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD_COMMENT);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteBoardCommentWithLogin(DeleteBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
+        if (boardCommentTb.isPresent()) {
+            if (boardCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
+            else if (!userTb.getUserId().equals(boardCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);
+            commentDeleteService.deleteBoardComment(request.getId());
+            applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(boardCommentTb.get().getBoardTb().getBoardId(), -1));
+            applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(userTb, -1)); // 댓글 개수 감소
+        } else {
+            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD_COMMENT);
         }
     }
 }

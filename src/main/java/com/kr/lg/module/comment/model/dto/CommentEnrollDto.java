@@ -13,18 +13,18 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentEnrollDto {
 
-    private UserTb userTb;
-    private BoardTb boardTb;
-    private long parentId;
-    private DepthEnum depth;
-    private long id;
-    private Long boardCommentId;
-    private String loginId;
-    private String password;
-    private String writer;
-    private String content;
-    private String emoticon;
-    private String ip;
+    private UserTb userTb; // 유저 테이블
+    private BoardTb boardTb; // 게시판 테이블
+    private long parentId; // 부모 식별자
+    private DepthEnum depth; // 댓글 레벨
+    private long id; // 게시판 식별자
+    private Long boardCommentId; // 댓글 식별자
+    private String loginId; // 로그인 아이디
+    private String password; // 패스워드
+    private String writer; // 작성자
+    private String content; // 내용
+    private String emoticon; // 이모지
+    private String ip; // ip
 
     public String getAlertTitle() {
         if (this.userTb == null) return "비회원 유저가 댓글을 달았습니다.";

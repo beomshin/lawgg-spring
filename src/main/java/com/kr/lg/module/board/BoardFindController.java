@@ -57,7 +57,7 @@ public class BoardFindController {
     public ResponseEntity<?> findMyBoards(
             @Valid FindMyBoardRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws BoardException { // 현재는 미사용
+    ) throws BoardException { // 미사용 기능
         Page<BoardEntry> boards = boardService.findMyBoards(request, userAdapter.getUserTb());
 
         AbstractSpec spec = FindMyBoardsResponse.builder()
