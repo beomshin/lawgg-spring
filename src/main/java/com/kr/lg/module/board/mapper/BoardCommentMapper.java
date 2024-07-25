@@ -10,5 +10,5 @@ public interface BoardCommentMapper {
 
     List<BoardCommentEntry> findBoardCommentsWithNotLogin(long rootId);
 
-    List<BoardCommentEntry> findBoardCommentsWithLogin(long rootId);
+    List<BoardCommentEntry> findBoardCommentsWithLogin(long rootId, long userId);
 }

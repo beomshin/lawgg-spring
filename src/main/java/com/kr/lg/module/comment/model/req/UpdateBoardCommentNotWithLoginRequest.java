@@ -1,6 +1,6 @@
-package com.kr.lg.model.net.request.board.comment;
+package com.kr.lg.module.comment.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -8,14 +8,16 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "포지션 게시판 회원 댓글 수정 요청 바디")
-public class UpdateUCBRequest implements RootRequest { // UpdateUserCommentBoardRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "비로그인 포지션 게시판 댓글 수정 요청 Body")
+public class UpdateBoardCommentNotWithLoginRequest extends AbstractSpec {
 
-    @ApiModelProperty(value = "댓글 아이디", required = true)
-    @NotNull(message = "댓글 아이디가 입력되어있지않습니다.")
+    @ApiModelProperty(value = "댓글아이디", required = true)
+    @NotNull(message = "댓글아이디가 입력되어있지않습니다.")
     private Long id;
 
     @ApiModelProperty(value = "패스워드", required = true)

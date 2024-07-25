@@ -146,7 +146,7 @@ public class BoardServiceImpl implements BoardService {
                 .userId(userTb.getUserId())
                 .build();
         BoardEntry board = this.findBoard(param);
-        board.setComments(boardCommentMapper.findBoardCommentsWithLogin(board.getBoardCommentId()));
+        board.setComments(boardCommentMapper.findBoardCommentsWithLogin(board.getBoardCommentId(), userTb.getUserId()));
         return board;
     }
 
