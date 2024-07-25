@@ -43,6 +43,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void enrollBoardCommentNotWithLogin(EnrollBoardCommentNotWithLoginRequest request, String ip) throws CommentException {
+        log.info("▶ [댓글] enrollBoardCommentNotWithLogin 메소드 실행");
+
         CommentEnrollDto enrollDto = CommentEnrollDto.builder()
                 .id(request.getId())
                 .boardTb(BoardTb.builder().boardId(request.getId()).build())
@@ -66,6 +68,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void enrollBoardCommentWithLogin(EnrollBoardCommentWithLoginRequest request, UserTb userTb, String ip) throws CommentException {
+        log.info("▶ [댓글] enrollBoardCommentWithLogin 메소드 실행");
+
         CommentEnrollDto enrollDto = CommentEnrollDto.builder()
                 .id(request.getId())
                 .boardTb(BoardTb.builder().boardId(request.getId()).build())
@@ -91,6 +95,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void updateBoardCommentNotWithLogin(UpdateBoardCommentNotWithLoginRequest request) throws CommentException {
+        log.info("▶ [댓글] updateBoardCommentNotWithLogin 메소드 실행");
+
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
@@ -104,6 +110,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void updateBoardCommentWithLogin(UpdateBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
+        log.info("▶ [댓글] updateBoardCommentWithLogin 메소드 실행");
+
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
@@ -120,6 +128,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void reportBoardComment(ReportBoardCommentRequest request) throws CommentException {
+        log.info("▶ [댓글] reportBoardComment 메소드 실행");
+
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
             commentUpdateService.reportBoardComment(request.getId());
@@ -131,6 +141,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteBoardCommentNotWithLogin(DeleteBoardCommentNotWithLoginRequest request) throws CommentException {
+        log.info("▶ [댓글] deleteBoardCommentNotWithLogin 메소드 실행");
+
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
             if (boardCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
@@ -146,6 +158,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteBoardCommentWithLogin(DeleteBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
+        log.info("▶ [댓글] deleteBoardCommentWithLogin 메소드 실행");
+
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
             if (boardCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);

@@ -20,7 +20,8 @@ public class BoardDeleteServiceImpl implements BoardDeleteService {
     @Transactional
     public void deleteBoard(long boardId) throws BoardException {
         try {
-            boardRepository.deleteBoard(boardId);
+            log.info("▶ [포지션 게시판] 포지션 게시판 삭제");
+            boardRepository.deleteBoard(boardId); // 게시판 삭제
         } catch (Exception e) {
             throw new BoardException(BoardResultCode.FAIL_DELETE_BOARD);
         }

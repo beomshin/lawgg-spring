@@ -26,6 +26,7 @@ public class CommentEnrollServiceImpl implements CommentEnrollService {
     @Transactional
     public void enrollBoardComment(CommentEnrollDto commentEnrollDto) throws CommentException {
         try {
+            log.info("▶ [포지션 게시판] 댓글 등록");
             BoardCommentTb boardCommentTb = BoardCommentTb.builder()
                     .userTb(commentEnrollDto.getUserTb())
                     .boardTb(commentEnrollDto.getBoardTb())

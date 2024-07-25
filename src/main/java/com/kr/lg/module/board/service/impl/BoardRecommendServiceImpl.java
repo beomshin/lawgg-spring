@@ -23,6 +23,7 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
     @Transactional
     public void recommendBoard(BoardTb boardTb, UserTb userTb) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 추천");
             BoardRecommendTb boardRecommendTb = BoardRecommendTb.builder()
                     .boardTb(boardTb)
                     .userTb(userTb)
@@ -37,6 +38,7 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
     @Transactional
     public void deleteRecommendBoard(long boardId, long userId) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 추천 삭제");
             boardRecommendRepository.deleteRecommendBoard(boardId, userId);
         } catch (Exception e) {
             throw new BoardException(BoardResultCode.DELETE_BOARD);

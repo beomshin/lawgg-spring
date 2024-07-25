@@ -22,6 +22,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
     @Transactional
     public void updateBoard(BoardUpdateDto boardUpdateDto) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 업데이트");
             boardRepository.updateBoard(boardUpdateDto.getBoardId(), EmojiParser.parseToAliases(boardUpdateDto.getTitle()), boardUpdateDto.getContent()); // 게시판 업데이트
         } catch (Exception e) {
             throw new BoardException(BoardResultCode.FAIL_UPDATE_BOARD);

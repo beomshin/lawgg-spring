@@ -26,6 +26,7 @@ public class BoardFindServiceImpl implements BoardFindService {
     @Override
     public Page<BoardEntry> findBoards(BoardParam<?> param) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 조회");
             List<BoardEntry> content = boardFindMapper.findBoards(param); // board 조회
             long count = boardFindMapper.findBoardsCnt(param.getData()); // board 개수 조회
             return new PageImpl<>(content, param.getPageable(), count); // pageable 생성
@@ -38,6 +39,7 @@ public class BoardFindServiceImpl implements BoardFindService {
     @Override
     public Optional<BoardEntry> findBoard(MapperParam param) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 상세 조회");
             return Optional.ofNullable(boardFindMapper.findBoard(param));
         } catch (RuntimeException e) {
             log.error("", e);

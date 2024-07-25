@@ -38,6 +38,8 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     @Override
     @Transactional
     public Boolean certificationsDanal(DanalCRequest request, UserTb userTb) throws LgException {
+        log.info("▶ [Third Party] certificationsDanal 메소드 실행");
+
         if (!request.getSuccess()) {
             log.error("{}", request.getError_msg());
             return false;
@@ -51,6 +53,8 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     @Override
     @Transactional
     public String certificationsDanal(DanalCRequest request) throws Exception {
+        log.info("▶ [Third Party] certificationsDanal 메소드 실행");
+
         if (!request.getSuccess()) {
             log.error("{}", request.getError_msg());
             throw new LgException(GlobalCode.FAIL_CERTIFICATION);
