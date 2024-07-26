@@ -23,6 +23,7 @@ public class BoardDeleteServiceImpl implements BoardDeleteService {
             log.info("▶ [포지션 게시판] 포지션 게시판 삭제");
             boardRepository.deleteBoard(boardId); // 게시판 삭제
         } catch (Exception e) {
+            log.error("", e);
             throw new BoardException(BoardResultCode.FAIL_DELETE_BOARD);
         }
     }

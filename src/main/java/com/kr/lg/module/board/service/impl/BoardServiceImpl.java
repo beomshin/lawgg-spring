@@ -13,7 +13,7 @@ import com.kr.lg.module.board.model.dto.BoardEnrollDto;
 import com.kr.lg.module.board.model.dto.BoardUpdateDto;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
-import com.kr.lg.module.board.mapper.BoardCommentMapper;
+import com.kr.lg.module.comment.mapper.CommentMapper;
 import com.kr.lg.module.board.model.mapper.FindBoardParamData;
 import com.kr.lg.module.board.model.entry.BoardAttachEntry;
 import com.kr.lg.module.board.model.entry.BoardEntry;
@@ -51,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardAttachRepository boardAttachRepository;
     private final BoardRecommendRepository boardRecommendRepository;
     private final BoardRepository boardRepository;
-    private final BoardCommentMapper boardCommentMapper;
+    private final CommentMapper commentMapper;
 
     private final BCryptPasswordEncoder encoder;
 
@@ -127,7 +127,7 @@ public class BoardServiceImpl implements BoardService {
                 .boardId(boardId)
                 .build();
         BoardEntry board = this.findBoard(param);
-        board.setComments(boardCommentMapper.findBoardCommentsWithNotLogin(board.getBoardCommentId()));
+        board.setComments(commentMapper.findBoardCommentsWithNotLogin(board.getBoardCommentId()));
         return board;
     }
 
@@ -146,7 +146,7 @@ public class BoardServiceImpl implements BoardService {
                 .userId(userTb.getUserId())
                 .build();
         BoardEntry board = this.findBoard(param);
-        board.setComments(boardCommentMapper.findBoardCommentsWithLogin(board.getBoardCommentId(), userTb.getUserId()));
+        board.setComments(commentMapper.findBoardCommentsWithLogin(board.getBoardCommentId(), userTb.getUserId()));
         return board;
     }
 

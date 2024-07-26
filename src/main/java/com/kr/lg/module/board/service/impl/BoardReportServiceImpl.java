@@ -32,6 +32,7 @@ public class BoardReportServiceImpl implements BoardReportService {
             reportRepository.save(reportTb);
             boardRepository.reportBoard(boardReportDto.getBoardTb().getBoardId());
         } catch (Exception e) {
+            log.error("", e);
             throw new BoardException(BoardResultCode.FAIL_REPORT_BOARD);
         }
     }

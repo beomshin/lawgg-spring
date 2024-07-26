@@ -1,7 +1,6 @@
 package com.kr.lg.module.board.model.req;
 
 import com.kr.lg.web.dto.global.GlobalFile;
-import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "비로그인 포지션 게시판 등록 요청 Body")
-public class EnrollBoardWithNotLoginRequest extends AbstractSpec {
+public class EnrollBoardWithNotLoginRequest {
 
     @ApiModelProperty(value = "아이디;", required = true)
     @NotBlank(message = "아이디 값이 입력되어있지않습니다.")

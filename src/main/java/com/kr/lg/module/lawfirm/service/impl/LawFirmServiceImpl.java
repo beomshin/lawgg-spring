@@ -4,15 +4,32 @@ import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.enums.ApplyStatusEnum;
+import com.kr.lg.enums.Status2Enum;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
 import com.kr.lg.module.lawfirm.model.dto.LawFirmEnrollDto;
+import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
+import com.kr.lg.module.lawfirm.model.mapper.FindLawFirmParamData;
 import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
+import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
+import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
+import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
+import com.kr.lg.module.lawfirm.service.LawFirmDeleteService;
 import com.kr.lg.module.lawfirm.service.LawFirmEnrollService;
+import com.kr.lg.module.lawfirm.service.LawFirmFindService;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
+import com.kr.lg.module.lawfirm.sort.LawFirmSort;
+import com.kr.lg.web.dto.mapper.LawFirmParam;
+import com.kr.lg.web.dto.mapper.MapperParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -20,6 +37,8 @@ import org.springframework.stereotype.Service;
 public class LawFirmServiceImpl implements LawFirmService {
 
     private final LawFirmEnrollService lawFirmEnrollService;
+    private final LawFirmDeleteService lawFirmDeleteService;
+    private final LawFirmFindService lawFirmFindService;
     private final LawFirmApplyRepository lawFirmApplyRepository;
 
     @Override
@@ -36,6 +55,69 @@ public class LawFirmServiceImpl implements LawFirmService {
                 .introduction(request.getIntroduction())
                 .build();
         lawFirmEnrollService.saveLawFirmApply(enrollDto); // 로펌 신청
+    }
+
+    @Override
+    @Transactional
+    public void quitLawFirm(QuitLawFirmRequest request, UserTb userTb) throws LawFirmException {
+        log.info("▶ [로펌] quitLawFirm 메소드 실행");
+
+        if (userTb.getLawFirmId() == null || !Objects.equals(userTb.getLawFirmId().getLawFirmId(), request.getId())) {
+            throw new LawFirmException(LawFirmResultCode.FAIL_QUIT_LAW_FIRM);
+        }
+        lawFirmDeleteService.quitLawFirm(userTb.getUserId());
+    }
+
+    @Override
+    @Transactional
+    public void cancelApplyLawFirm(CancelApplyLawFirmRequest request, UserTb userTb) throws LawFirmException {
+        log.info("▶ [로펌] cancelApplyLawFirm 메소드 실행");
+
+        lawFirmDeleteService.cancelApplyLawFirm(request.getId(), userTb.getUserId());
+    }
+
+    @Override
+    public Page<LawFirmEntry> findLawFirms(FindLawFirmsRequest request) throws LawFirmException {
+        log.info("▶ [로펌] findLawFirms 메소드 실행");
+
+        Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), LawFirmSort.idDesc());
+        MapperParam param = FindLawFirmParamData.builder()
+                .keyword(request.getKeyword())
+                .subject(request.getSubject())
+                .build();
+        return lawFirmFindService.findLawFirms(new LawFirmParam<>(param, pageable));
+    }
+
+    @Override
+    public LawFirmEntry findLawFirmWithNotLogin(long id) throws LawFirmException {
+        log.info("▶ [로펌] findLawFirmWithNotLogin 메소드 실행");
+
+        FindLawFirmParamData param = FindLawFirmParamData.builder()
+                .lawFirmId(id)
+                .build();
+        return lawFirmFindService.findLawFirm(param);
+    }
+
+    @Override
+    public LawFirmEntry findLawFirmWithLogin(long id, UserTb userTb) throws LawFirmException {
+        log.info("▶ [로펌] findLawFirmWithLogin 메소드 실행");
+
+        FindLawFirmParamData param = FindLawFirmParamData.builder()
+                .lawFirmId(id)
+                .build();
+        LawFirmEntry entry = lawFirmFindService.findLawFirm(param);
+        int result = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(id, userTb.getUserId(), ApplyStatusEnum.APPLY_STATUS);
+        entry.setApplyFlag(result > 0 ? 1 : 0); // 지원 여부
+        LawFirmTb lawFirmTb = userTb.getLawFirmId();
+        if (lawFirmTb != null && lawFirmTb.getStatus() == Status2Enum.NORMAL_STATUS) { // 로그인 유저 가입 로펌이 있는 경우
+            entry.setMyLawFirmId(lawFirmTb.getLawFirmId()); // 내로펌가기 (id 제공)
+            entry.setIsSignLawFirmFlag(1); // 다른 로펌 가입여부 (0: 미가입, 1:가입)
+            entry.setIsMyLawFirmFlag(lawFirmTb.getLawFirmId() == id ? 1 : 0); // 조회 로펌이 로그인 유저 가입 로펌과 동일 확인
+        } else {
+            entry.setIsSignLawFirmFlag(0); // 기본값 0 설정
+            entry.setIsMyLawFirmFlag(0); // 기본값 0 설정
+        }
+        return entry;
     }
 
 }

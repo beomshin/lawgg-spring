@@ -41,6 +41,7 @@ public class CommentEnrollServiceImpl implements CommentEnrollService {
                     .build();
             boardCommentRepository.save(boardCommentTb);
         } catch (Exception e) {
+            log.error("", e);
             throw new CommentException(CommentResultCode.FAIL_ENROLL_COMMENT);
         }
     }

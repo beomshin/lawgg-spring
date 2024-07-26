@@ -30,6 +30,7 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
                     .build();
             boardRecommendRepository.save(boardRecommendTb); // 추천
         } catch (Exception e) {
+            log.error("", e);
             throw new BoardException(BoardResultCode.FAIL_RECOMMEND_BOARD);
         }
     }
@@ -41,6 +42,7 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
             log.info("▶ [포지션 게시판] 포지션 게시판 추천 삭제");
             boardRecommendRepository.deleteRecommendBoard(boardId, userId);
         } catch (Exception e) {
+            log.error("", e);
             throw new BoardException(BoardResultCode.DELETE_BOARD);
         }
     }

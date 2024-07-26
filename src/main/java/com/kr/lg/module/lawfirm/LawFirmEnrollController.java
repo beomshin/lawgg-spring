@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -25,7 +27,7 @@ public class LawFirmEnrollController {
     @PostMapping("/api/v1/apply/law-firm")
     @ApiOperation(value = "로펌 신청하기", notes = "로펌 신청합니다.")
     public ResponseEntity<?> applyLawFirm(
-            @RequestBody ApplyLawFirmRequest request,
+            @RequestBody @Valid ApplyLawFirmRequest request,
             @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws LawFirmException {
         lawFirmService.applyLawFirm(request, userAdapter.getUserTb());

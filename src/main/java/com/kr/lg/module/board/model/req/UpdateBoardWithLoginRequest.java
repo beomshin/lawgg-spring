@@ -1,7 +1,6 @@
 package com.kr.lg.module.board.model.req;
 
 import com.kr.lg.web.dto.global.GlobalFile;
-import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "로그인 포지션 게시판 수정 Body")
-public class UpdateBoardWithLoginRequest extends AbstractSpec {
+public class UpdateBoardWithLoginRequest {
 
     @ApiModelProperty(value = "게시판 아이디", required = true, example = "boardId")
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")

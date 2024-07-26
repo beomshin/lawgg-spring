@@ -2,7 +2,7 @@ package com.kr.lg.module.thirdparty.service;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.exception.LgException;
-import com.kr.lg.model.net.request.auth.DanalCRequest;
+import com.kr.lg.module.thirdparty.model.req.DanalCRequest;
 
 public interface ThirdPartyService {
 

@@ -58,6 +58,7 @@ public class BoardEnrollServiceImpl implements BoardEnrollService {
             boardCommentRepository.save(commentTb); // 게시글 루트 댓글 save
             return boardTb;
         } catch (Exception e) {
+            log.error("", e);
             throw new BoardException(BoardResultCode.FAIL_ENROLL_BOARD);
         }
     }
