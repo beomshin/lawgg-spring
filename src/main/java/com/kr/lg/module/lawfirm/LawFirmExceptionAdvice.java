@@ -1,6 +1,7 @@
-package com.kr.lg.module.comment;
+package com.kr.lg.module.lawfirm;
 
 import com.kr.lg.module.comment.exception.CommentException;
+import com.kr.lg.module.lawfirm.exception.LawFirmException;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.root.ErrorResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +14,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackages = "com.kr.lg.module.comment")
+@RestControllerAdvice(basePackages = "com.kr.lg.module.lawfirm")
 @RequiredArgsConstructor
 @Slf4j
-public class CommentExceptionAdvice {
+public class LawFirmExceptionAdvice {
 
-    // 커스텀 CommentException
-    @ExceptionHandler(value = CommentException.class)
-    public ResponseEntity<?> handle(CommentException e) {
-        log.error("[CommentException] 오류 발생", e);
+    // 커스텀 LawFirmException
+    @ExceptionHandler(value = LawFirmException.class)
+    public ResponseEntity<?> handle(LawFirmException e) {
+        log.error("[LawFirmException] 오류 발생", e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getResultCode()));
     }
 

@@ -1,17 +1,19 @@
-package com.kr.lg.model.net.request.lawfirm;
+package com.kr.lg.module.lawfirm.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "로펌 신청 요청 바디")
-public class ApplyLFRequest implements RootRequest { // ApplyLawFirmRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "로펌 신청 요청 Body")
+public class ApplyLawFirmRequest extends AbstractSpec {
 
     @ApiModelProperty(value = "로펌 아이디", required = true)
     @NotNull(message = "로펌 아이디가 입력되어있지않습니다.")

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 인증 컨트롤러 exception
+ * 댓글 컨트롤러 exception
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
