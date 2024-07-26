@@ -31,6 +31,7 @@ public class LawFirmEnrollServiceImpl implements LawFirmEnrollService {
                     .build();
             lawFirmApplyRepository.save(applyTb); // 로펌 신청
         } catch (Exception e) {
+            log.error("", e);
             throw new LawFirmException(LawFirmResultCode.FAIL_APPLY_LAW_FIRM);
         }
     }

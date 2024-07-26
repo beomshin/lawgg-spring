@@ -26,6 +26,7 @@ public class CommentDeleteServiceImpl implements CommentDeleteService {
             log.info("▶ [포지션 게시판] 댓글 삭제");
             boardCommentRepository.updateBoardCommentStatus(boardCommentId, StatusEnum.DELETE_STATUS);
         } catch (Exception e) {
+            log.error("", e);
             throw new CommentException(CommentResultCode.FAIL_DELETE_COMMENT);
         }
     }

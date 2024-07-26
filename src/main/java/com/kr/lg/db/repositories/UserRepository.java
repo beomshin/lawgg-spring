@@ -18,15 +18,9 @@ public interface UserRepository extends RootUserRepository {
     Optional<UserTb> findByLoginIdAndCi(String loginId, String ci);
     Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE UserTb SET lawFirmId = null, lawFirmEnrollDt = null  WHERE userId = :userId")
-    int deleteLawFirm(@Param("userId") Long userId);
-
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE UserTb SET lawFirmId = :lawFirmId, lawFirmEnrollDt = :lawFirmEnrollDt  WHERE userId = :userId")
-    int updateLawFirm(@Param("userId") Long userId, @Param("lawFirmId")LawFirmTb lawFirmId, @Param("lawFirmEnrollDt") Timestamp lawFirmEnrollDt);
+    void deleteLawFirm(@Param("userId") Long userId);
 
     @Transactional
     @Modifying

@@ -8,11 +8,17 @@ import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
 import com.kr.lg.module.lawfirm.model.dto.LawFirmEnrollDto;
 import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
+import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
+import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
+import com.kr.lg.module.lawfirm.service.LawFirmDeleteService;
 import com.kr.lg.module.lawfirm.service.LawFirmEnrollService;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -20,6 +26,7 @@ import org.springframework.stereotype.Service;
 public class LawFirmServiceImpl implements LawFirmService {
 
     private final LawFirmEnrollService lawFirmEnrollService;
+    private final LawFirmDeleteService lawFirmDeleteService;
     private final LawFirmApplyRepository lawFirmApplyRepository;
 
     @Override
@@ -36,6 +43,25 @@ public class LawFirmServiceImpl implements LawFirmService {
                 .introduction(request.getIntroduction())
                 .build();
         lawFirmEnrollService.saveLawFirmApply(enrollDto); // 로펌 신청
+    }
+
+    @Override
+    @Transactional
+    public void quitLawFirm(QuitLawFirmRequest request, UserTb userTb) throws LawFirmException {
+        log.info("▶ [로펌] quitLawFirm 메소드 실행");
+
+        if (userTb.getLawFirmId() == null || !Objects.equals(userTb.getLawFirmId().getLawFirmId(), request.getId())) {
+            throw new LawFirmException(LawFirmResultCode.FAIL_QUIT_LAW_FIRM);
+        }
+        lawFirmDeleteService.quitLawFirm(userTb.getUserId());
+    }
+
+    @Override
+    @Transactional
+    public void cancelApplyLawFirm(CancelApplyLawFirmRequest request, UserTb userTb) throws LawFirmException {
+        log.info("▶ [로펌] cancelApplyLawFirm 메소드 실행");
+
+        lawFirmDeleteService.cancelApplyLawFirm(request.getId(), userTb.getUserId());
     }
 
 }

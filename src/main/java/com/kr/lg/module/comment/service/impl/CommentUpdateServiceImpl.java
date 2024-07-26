@@ -24,6 +24,7 @@ public class CommentUpdateServiceImpl implements CommentUpdateService {
             log.info("▶ [포지션 게시판] 댓글 수정");
             boardCommentRepository.updateBoardComment(commentUpdateDto.getBoardCommentId(), commentUpdateDto.getContent());
         } catch (Exception e) {
+            log.error("", e);
             throw new CommentException(CommentResultCode.FAIL_UPDATE_COMMENT);
         }
     }

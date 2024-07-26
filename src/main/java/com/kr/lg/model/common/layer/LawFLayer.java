@@ -4,6 +4,8 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.AcceptEnum;
 import com.kr.lg.model.net.request.lawfirm.*;
 import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
+import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
+import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -85,7 +87,7 @@ public class LawFLayer {
         this.userTb = userTb;
     }
 
-    public LawFLayer(QuitLFRequest requestDto, UserTb userTb) {
+    public LawFLayer(QuitLawFirmRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.userTb = userTb;
     }
@@ -117,7 +119,7 @@ public class LawFLayer {
         this.userTb = userTb;
     }
 
-    public LawFLayer(CancelLFURequest requestDto, UserTb userTb) {
+    public LawFLayer(CancelApplyLawFirmRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.userTb = userTb;
     }
