@@ -1,6 +1,5 @@
 package com.kr.lg.module.lawfirm;
 
-import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.root.ErrorResponse;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
+import com.kr.lg.module.comment.model.entry.BoardCommentEntry;
 import lombok.*;
 
 import java.sql.Timestamp;

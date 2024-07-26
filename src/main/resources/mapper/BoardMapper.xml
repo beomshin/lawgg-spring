@@ -23,19 +23,19 @@
                 <choose>
                     <!-- 전체 키워드 조회 -->
                     <when test="data.subject == 0">
-                        AND (bt.title LIKE '%' || #{data.keyword} || '%' OR bt.content LIKE '%' || #{data.keyword} || '%' OR bt.writer LIKE '%' || #{data.keyword} || '%')
+                        AND (bt.title LIKE CONCAT('%', #{data.keyword}, '%') OR bt.content LIKE CONCAT('%', #{data.keyword}, '%') OR bt.writer LIKE CONCAT('%', #{data.keyword}, '%'))
                     </when>
                     <!-- 제목 키워드 조회 -->
                     <when test="data.subject == 1">
-                        AND bt.title LIKE '%' || #{data.keyword} || '%'
+                        AND bt.title LIKE CONCAT('%', #{data.keyword}, '%')
                     </when>
                     <!-- 본문 키워드 조회 -->
                     <when test="data.subject == 2">
-                        AND bt.content LIKE '%' || #{data.keyword} || '%'
+                        AND bt.content LIKE CONCAT('%', #{data.keyword}, '%')
                     </when>
                     <!-- 작성자 키워드 조회 -->
                     <when test="data.subject == 3">
-                        AND bt.writer LIKE '%' || #{data.keyword} || '%'
+                        AND bt.writer LIKE CONCAT('%', #{data.keyword}, '%')
                     </when>
                 </choose>
             </if>
@@ -79,19 +79,19 @@
                 <choose>
                     <!-- 전체 키워드 조회 -->
                     <when test="subject == 0">
-                        AND (bt.title LIKE '%' || #{keyword} || '%' OR bt.content LIKE '%' || #{keyword} || '%' OR bt.writer LIKE '%' || #{keyword} || '%')
+                        AND (bt.title LIKE CONCAT('%', #{keyword}, '%') OR bt.content LIKE CONCAT('%', #{keyword}, '%') OR bt.writer LIKE CONCAT('%', #{keyword}, '%'))
                     </when>
                     <!-- 제목 키워드 조회 -->
                     <when test="subject == 1">
-                        AND bt.title LIKE '%' || #{keyword} || '%'
+                        AND bt.title LIKE CONCAT('%', #{keyword}, '%')
                     </when>
                     <!-- 본문 키워드 조회 -->
                     <when test="subject == 2">
-                        AND bt.content LIKE '%' || #{keyword} || '%'
+                        AND bt.content LIKE CONCAT('%', #{keyword}, '%')
                     </when>
                     <!-- 작성자 키워드 조회 -->
                     <when test="subject == 3">
-                        AND bt.writer LIKE '%' || #{keyword} || '%'
+                        AND bt.writer LIKE CONCAT('%', #{keyword}, '%')
                     </when>
                 </choose>
             </if>

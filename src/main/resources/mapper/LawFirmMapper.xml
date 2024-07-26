@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kr.lg.module.lawfirm.mapper.LawFirmMapper">
+
+    <!-- 로펌 리스트 조회 쿼리 -->
+    <select id="findLawFirms" parameterType="com.kr.lg.web.dto.mapper.LawFirmParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmEntry">
+        SELECT lft.lawFirmId, lft.name, lft.profile, lft.background, lft.status, ut.nickName,
+               (SELECT COUNT(*) FROM UserTb ut2 WHERE ut2.lawFirmId = lft.lawFirmId AND ut2.status = 1) AS 'userCnt'
+        FROM LawFirmTb lft
+        LEFT JOIN UserTb ut ON(ut.userId = lft.userId)
+        <where>
+            AND lft.status = 1
+
+            <!-- 검색조건 타입 -->
+            <if test="data.subject != null and data.keyword != null and data.keyword.length() > 0">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="data.subject == 0">
+                        AND (lft.name LIKE CONCAT('%', #{data.keyword}, '%') OR ut.nickName LIKE CONCAT('%', #{data.keyword}, '%'))
+                    </when>
+                    <!-- 로펌 제목 조회 -->
+                    <when test="data.subject == 1">
+                        AND lft.name LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                    <!-- 로펌 대표명 조회 -->
+                    <when test="data.subject == 2">
+                        AND LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+    <!-- 로펌 리스트 총 개수 조회 쿼리 -->
+    <select id="findLawFirmsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+        SELECT COUNT(*) AS 'count'
+        FROM LawFirmTb lft
+        LEFT JOIN UserTb ut ON(ut.userId = lft.userId)
+        <where>
+            AND lft.status = 1
+
+            <!-- 검색조건 타입 -->
+            <if test="subject != null and keyword != null and keyword.length() > 0">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="subject == 0">
+                        AND (lft.name LIKE CONCAT('%', #{keyword}, '%') OR ut.nickName LIKE CONCAT('%', #{keyword}, '%'))
+                    </when>
+                    <!-- 로펌 제목 조회 -->
+                    <when test="subject == 1">
+                        AND lft.name LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <!-- 로펌 대표명 조회 -->
+                    <when test="subject == 2">
+                        AND ut.nickName LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+    <!-- 로펌 상세 조회 쿼리 -->
+    <select id="findLawFirm" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmEntry">
+        SELECT A.*,
+               (SELECT (COUNT(*)/ IF(A.trialTotalCount=0, 1, A.trialTotalCount))*100
+                FROM TrialTb tt3
+                WHERE tt3.lawFirmId = #{lawFirmId}
+                    AND tt3.status = '1'
+                    AND tt3.liveType = '1'
+                    AND tt3.endingType = '1'
+                ) as "winRate"
+        FROM
+            (
+                SELECT lft.lawFirmId, lft.name, lft.introduction, lft.profile, lft.status,
+                       (SELECT COUNT(*) FROM TrialTb tt WHERE tt.lawFirmId = #{lawFirmId} AND tt.status = '1' AND tt.liveType = '1') AS "trialTotalCount",
+                       (SELECT COUNT(*) FROM TrialTb tt2 WHERE tt2.lawFirmId = #{lawFirmId} AND tt2.status = '1')AS "trialCount"
+                FROM LawFirmTb lft
+                LEFT JOIN UserTb ut ON(ut.userId = lft.userId)
+                <where>
+                    lft.lawFirmId = #{lawFirmId}
+                    AND lft.status  = '1'
+                </where>
+            ) A
+    </select>
+
+</mapper>

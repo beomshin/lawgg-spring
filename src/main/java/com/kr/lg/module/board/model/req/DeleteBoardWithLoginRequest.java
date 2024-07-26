@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "로그인 포지션 게시판 삭제 요청 Body")
-public class DeleteBoardWithLoginRequest extends AbstractSpec {
+public class DeleteBoardWithLoginRequest {
 
     @ApiModelProperty(value = "게시판 아이디")
     @NotNull(message = "게시판 아이디가 누락 되었습니다.")

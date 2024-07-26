@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class FindLawFirmBoardsResponse extends AbstractSpec { // FindLawFirmListBoardResponse
+public class FindLawFirmBoardsResponse extends AbstractSpec {
 
     private List<?> list;
     private Long totalElements;

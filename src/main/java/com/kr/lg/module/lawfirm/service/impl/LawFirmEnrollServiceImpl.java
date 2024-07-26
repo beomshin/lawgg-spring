@@ -1,10 +1,8 @@
 package com.kr.lg.module.lawfirm.service.impl;
 
 import com.kr.lg.db.entities.LawFirmApplyTb;
-import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
-import com.kr.lg.model.common.layer.LawFLayer;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
 import com.kr.lg.module.lawfirm.model.dto.LawFirmEnrollDto;
 import com.kr.lg.module.lawfirm.service.LawFirmEnrollService;

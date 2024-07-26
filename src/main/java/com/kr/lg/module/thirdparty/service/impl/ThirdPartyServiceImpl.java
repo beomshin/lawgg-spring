@@ -7,7 +7,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.enums.AuthEnum;
 import com.kr.lg.exception.LgException;
-import com.kr.lg.model.net.request.auth.DanalCRequest;
+import com.kr.lg.module.thirdparty.model.req.DanalCRequest;
 import com.kr.lg.module.thirdparty.service.ThirdPartyService;
 import com.kr.lg.web.dto.global.GlobalCode;
 import lombok.RequiredArgsConstructor;
