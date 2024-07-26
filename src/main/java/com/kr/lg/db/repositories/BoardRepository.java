@@ -2,14 +2,12 @@ package com.kr.lg.db.repositories;
 
 
 import com.kr.lg.db.entities.BoardTb;
-import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.enums.WriterEnum;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.LockModeType;
 import java.util.Optional;
@@ -32,10 +30,9 @@ public interface BoardRepository extends RootBoardRepository {
     @Query(value = "UPDATE BoardTb SET status = 2 WHERE boardId = :boardId")
     void deleteBoard(@Param("boardId") Long boardId); // 포지션 게시판 삭제
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE BoardTb SET report = report + 1  WHERE boardId = :boardId")
-    int reportBoard(@Param("boardId") Long boardId);
+    void reportBoard(@Param("boardId") Long boardId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT b FROM BoardTb b where b.boardId = :boardId")
@@ -43,9 +40,9 @@ public interface BoardRepository extends RootBoardRepository {
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET commentCount = commentCount + :count  WHERE boardId = :boardId")
-    int updateCommentCount(@Param("boardId") Long boardId, Long count);
+    void updateCommentCount(@Param("boardId") Long boardId, Long count);
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET recommendCount = recommendCount + :count WHERE boardId = :boardId")
-    int updateRecommendCount(@Param("boardId") Long boardId, Long count);
+    void updateRecommendCount(@Param("boardId") Long boardId, Long count);
 }

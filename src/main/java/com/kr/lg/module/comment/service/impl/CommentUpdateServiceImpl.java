@@ -21,6 +21,7 @@ public class CommentUpdateServiceImpl implements CommentUpdateService {
     @Transactional
     public void updateBoardComment(CommentUpdateDto commentUpdateDto) throws CommentException {
         try {
+            log.info("▶ [포지션 게시판] 댓글 수정");
             boardCommentRepository.updateBoardComment(commentUpdateDto.getBoardCommentId(), commentUpdateDto.getContent());
         } catch (Exception e) {
             throw new CommentException(CommentResultCode.FAIL_UPDATE_COMMENT);
@@ -31,6 +32,7 @@ public class CommentUpdateServiceImpl implements CommentUpdateService {
     @Transactional
     public void reportBoardComment(long boardCommentId) throws CommentException {
         try {
+            log.info("▶ [포지션 게시판] 댓글 신고");
             boardCommentRepository.reportBoardComment(boardCommentId); // 신고
         } catch (Exception e) {
             throw new CommentException(CommentResultCode.FAIL_REPORT_COMMENT);

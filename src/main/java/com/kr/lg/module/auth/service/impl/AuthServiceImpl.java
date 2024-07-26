@@ -25,6 +25,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String reissue(String refreshToken) throws AuthException {
+        log.info("▶ [인증 토큰] reissue 메소드 실행");
+
         log.info("▶ [인증 토큰] 토큰 재발급 메소드 실행");
 
         // 1. refresh token 검증
@@ -44,6 +46,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Date getExpiredTime(String token) throws AuthException {
+        log.info("▶ [인증 토큰] getExpiredTime 메소드 실행");
+
         log.info("▶ [인증 토큰] 토큰 만료일 조회");
         return jwtService.getExpiredTime(token);
     }

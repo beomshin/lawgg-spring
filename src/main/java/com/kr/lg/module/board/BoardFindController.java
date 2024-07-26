@@ -88,12 +88,12 @@ public class BoardFindController {
     }
 
     @GetMapping("/api/public/v1/find/board/{id}")
-    @ApiOperation(value = "포지션 게시판 상세 조회(비회원)", notes = "포지션 게시판 상세(비회원) 조회 조회합니다.")
+    @ApiOperation(value = "비로그인 포지션 게시판 상세 조회", notes = "포지션 게시판 상세 조회 조회합니다.")
     public ResponseEntity<?> findBoardIdWithNotLogin(
             HttpServletRequest request,
             @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long id
     ) throws BoardException {
-        BoardEntry boardEntry = boardService.findBoard(id);
+        BoardEntry boardEntry = boardService.findBoardIdWithNotLogin(id);
         applicationEventPublisher.publishEvent(new BoardCountEventDto(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
         AbstractSpec spec = FindBoardResponse.builder()
                 .board(boardEntry)
@@ -103,13 +103,13 @@ public class BoardFindController {
 
 
     @GetMapping("/api/v1/find/board/{id}")
-    @ApiOperation(value = "포지션 게시판 상세 조회(회원)", notes = "포지션 게시판 상세(회원) 조회 조회합니다.")
+    @ApiOperation(value = "로그인 포지션 게시판 상세 조회", notes = "포지션 게시판 상세 조회 조회합니다.")
     public ResponseEntity<?> findBoardIdWithLogin(
             HttpServletRequest request,
             @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long id,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
-        BoardEntry boardEntry = boardService.findBoard(id, userAdapter.getUserTb());
+        BoardEntry boardEntry = boardService.findBoardIdWithLogin(id, userAdapter.getUserTb());
         applicationEventPublisher.publishEvent(new BoardCountEventDto(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
         AbstractSpec spec = FindBoardResponse.builder()
                 .board(boardEntry)

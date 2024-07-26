@@ -37,6 +37,7 @@ public class BoardEnrollServiceImpl implements BoardEnrollService {
     @Transactional
     public BoardTb enrollBoard(BoardEnrollDto enrollDto) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 등록");
             BoardTb boardTb = BoardTb.builder() // 게시글 엔티티 생성
                     .userTb(enrollDto.getUserTb())
                     .lawFirmTb(enrollDto.getLawFirmTb())
@@ -64,6 +65,7 @@ public class BoardEnrollServiceImpl implements BoardEnrollService {
     @Override
     public <T> void enrollBoardFiles(BoardTb boardTb, List<T> files) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 파일 등록");
             List<BoardAttachTb> boardAttach = files.stream()
                     .filter(Objects::nonNull)
                     .filter(it -> it instanceof GlobalFile)

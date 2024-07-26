@@ -23,6 +23,7 @@ public class BoardReportServiceImpl implements BoardReportService {
     @Override
     public void reportBoard(BoardReportDto boardReportDto) throws BoardException {
         try {
+            log.info("▶ [포지션 게시판] 포지션 게시판 신고");
             ReportTb reportTb = ReportTb.builder()
                     .ip(boardReportDto.getIp())
                     .content(boardReportDto.getContent())

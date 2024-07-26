@@ -3,6 +3,7 @@ package com.kr.lg.model.common.layer;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.AcceptEnum;
 import com.kr.lg.model.net.request.lawfirm.*;
+import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,7 +68,7 @@ public class LawFLayer {
     }
 
 
-    public LawFLayer(ApplyLFRequest request, UserTb userTb)  {
+    public LawFLayer(ApplyLawFirmRequest request, UserTb userTb)  {
         this.id = request.getId();
         this.title = request.getTitle();
         this.introduction = request.getIntroduction();

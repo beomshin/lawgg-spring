@@ -29,18 +29,24 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public List<MainPost> getMainPostBoards() {
+        log.info("▶ [메인 페에지] getMainPostBoards 메소드 실행");
+
         log.info("▶ [메인 페에지] 포지션 게시판 리스트 조회");
         return mainBoardRepository.findAll().stream().map(MainPostBoardDto::new).collect(Collectors.toList());
     }
 
     @Override
     public List<MainPost> getMainPostTrials() {
+        log.info("▶ [메인 페에지] getMainPostTrials 메소드 실행");
+
         log.info("▶ [메인 페에지] 트라이얼 리스트 조회");
         return mainTrialRepository.findAll().stream().map(MainPostTrialDto::new).collect(Collectors.toList());
     }
 
     @Override
     public MainPost getHotPostTrial() {
+        log.info("▶ [메인 페에지] getHotPostTrial 메소드 실행");
+
         log.info("▶ [메인 페에지] HOT 트라이얼 조회");
         TrialTb trialTb = trialRepository.findByMainPostType();
         return new HotPostTrialDto(trialTb);
