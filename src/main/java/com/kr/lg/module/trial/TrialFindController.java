@@ -1,6 +1,6 @@
 package com.kr.lg.module.trial;
 
-import com.kr.lg.module.trial.model.dto.TrialCreateCountEvent;
+import com.kr.lg.module.trial.model.dto.TrialCountEvent;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.model.res.FindTrialWithNotLoginResponse;
@@ -73,7 +73,7 @@ public class TrialFindController {
             @ApiParam(value = "트라이얼 아이디", required = true) @PathVariable("id") Long id
     ) throws TrialException {
         TrialEntry trial = trialService.findTrialWithNotLogin(id);
-        applicationEventPublisher.publishEvent(new TrialCreateCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가
+        applicationEventPublisher.publishEvent(new TrialCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가
         AbstractSpec spec = FindTrialWithNotLoginResponse.builder().trial(trial).build();
         return ResponseEntity.ok(spec);
     }
@@ -86,7 +86,7 @@ public class TrialFindController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws  TrialException {
         TrialEntry trial = trialService.findTrialWithLogin(id, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new TrialCreateCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가
+        applicationEventPublisher.publishEvent(new TrialCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가
         AbstractSpec spec = FindTrialWithLoginResponse.builder().trial(trial).build();
         return ResponseEntity.ok(spec);
     }

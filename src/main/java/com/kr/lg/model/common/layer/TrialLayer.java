@@ -7,6 +7,8 @@ import com.kr.lg.enums.TrialSubjectEnum;
 import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.PrecedentEnum;
+import com.kr.lg.module.trial.model.req.EnrollTrialWithLoginRequest;
+import com.kr.lg.module.trial.model.req.EnrollVideoWithLoginRequest;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
 import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;
 import com.kr.lg.web.dto.global.GlobalFile;
@@ -98,7 +100,7 @@ public class TrialLayer {
         this.depth = depth;
     }
 
-    public TrialLayer(EnrollUTRequest request, UserTb userTb) {
+    public TrialLayer(EnrollTrialWithLoginRequest request, UserTb userTb) {
         this.title = request.getTitle();
         this.plaintiff = request.getPlaintiff();
         this.defendant = request.getDefendant();
@@ -248,7 +250,7 @@ public class TrialLayer {
         this.precedent = PrecedentEnum.of(requestDto.getPrecedent());
     }
 
-    public TrialLayer(EnrollVRequest request, UserTb userTb) {
+    public TrialLayer(EnrollVideoWithLoginRequest request, UserTb userTb) {
         this.id = request.getId();
         this.playVideo = request.getPlayVideo();
         this.replay = request.getReplay();

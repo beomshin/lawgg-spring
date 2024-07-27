@@ -1,38 +1,48 @@
 package com.kr.lg.module.trial.service.impl;
 
+import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.TrialVoteTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialRecommendRepository;
+import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.TrialVoteRepository;
 import com.kr.lg.enums.PrecedentEnum;
+import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.enums.TrialTopicEnum;
+import com.kr.lg.model.common.listener.AlertVideoEvent;
+import com.kr.lg.module.trial.model.req.EnrollTrialWithLoginRequest;
+import com.kr.lg.module.trial.model.req.EnrollVideoWithLoginRequest;
 import com.kr.lg.module.comment.mapper.CommentMapper;
 import com.kr.lg.module.comment.model.entry.TrialCommentEntry;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.exception.TrialResultCode;
+import com.kr.lg.module.trial.model.dto.TrialEnrollDto;
 import com.kr.lg.module.trial.model.entry.TrialAttachEntry;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.model.entry.TrialVoteEntry;
 import com.kr.lg.module.trial.model.mapper.FindTrialParamData;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
 import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;
+import com.kr.lg.module.trial.service.TrialEnrollService;
 import com.kr.lg.module.trial.service.TrialFindService;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.module.trial.sort.TrialSort;
+import com.kr.lg.service.file.FileService;
+import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,11 +50,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TrialServiceImpl implements TrialService {
 
-    private final CommentMapper commentMapper;
+
     private final TrialFindService trialFindService;
+    private final TrialEnrollService trialEnrollService;
+    private final FileService<GlobalFile> fileService;
+
+    private final TrialRepository trialRepository;
     private final TrialRecommendRepository trialRecommendRepository;
     private final TrialVoteRepository trialVoteRepository;
     private final TrialAttachRepository trialAttachRepository;
+    private final CommentMapper commentMapper;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public Page<TrialEntry> findTrials(FindTrialsRequest request) throws TrialException {
@@ -88,6 +104,42 @@ public class TrialServiceImpl implements TrialService {
         trial.setIsVote(voteTb.map(trialVoteTb -> trialVoteTb.getPrecedent().getCode()).orElseGet(PrecedentEnum.PROCEEDING::getCode)); // 투표여부
         trial.setComments(comments);
         return trial;
+    }
+
+    @Override
+    public TrialTb enrollTrialWithLogin(EnrollTrialWithLoginRequest request, UserTb userTb) throws TrialException {
+        TrialEnrollDto enrollDto = TrialEnrollDto.builder()
+                .userTb(userTb)
+                .title(request.getTitle())
+                .plaintiff(request.getPlaintiff())
+                .defendant(request.getDefendant())
+                .subheading(request.getSubheading())
+                .plaintiffOpinion(request.getPlaintiffOpinion())
+                .defendantOpinion(request.getDefendantOpinion())
+                .content(request.getContent())
+                .lawFirmTb(request.getIsLawFirm() != null && request.getIsLawFirm() == 1 ? userTb.getLawFirmId() : null)
+                .build();
+        TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
+        trialEnrollService.enrollTrialFiles(trialTb, request.getFiles());
+        return trialTb;
+    }
+
+    @Override
+    @Transactional
+    public TrialTb enrollVideoWithLogin(EnrollVideoWithLoginRequest request, UserTb userTb) throws TrialException {
+        GlobalFile replay = null;
+        TrialTb trialTb = trialRepository.findLockTrial(request.getId());
+        GlobalFile video = fileService.uploadVideo(request.getPlayVideo());
+
+        if (request.getReplay() != null) replay = fileService.uploadReplay(request.getReplay());
+
+        trialEnrollService.enrollTrialFiles(trialTb, Arrays.asList(video, replay));
+        trialRepository.uploadVideoAndReply(trialTb.getTrialId(),
+                video != null ? video.getPath() : null,
+                replay != null ? replay.getPath() : null,
+                video == null ? StatusEnum.FAIL_STATUS : StatusEnum.NORMAL_STATUS
+        );
+        return trialTb;
     }
 
     private Sort getSort(int topic) {
