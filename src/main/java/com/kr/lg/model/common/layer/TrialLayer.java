@@ -7,6 +7,8 @@ import com.kr.lg.enums.TrialSubjectEnum;
 import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.PrecedentEnum;
+import com.kr.lg.module.trial.model.req.FindATLRequest;
+import com.kr.lg.module.trial.model.req.FindLFTLRequest;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.net.request.trial.base.*;
 import com.kr.lg.model.net.request.trial.comment.*;

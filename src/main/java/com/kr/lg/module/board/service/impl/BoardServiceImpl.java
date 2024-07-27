@@ -121,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
-    public BoardEntry findBoardIdWithNotLogin(long boardId) throws BoardException {
+    public BoardEntry findBoardWithNotLogin(long boardId) throws BoardException {
         log.info("▶ [포지션 게시판] findBoardIdWithNotLogin 메소드 실행");
         MapperParam param = FindBoardParamData.builder()
                 .boardId(boardId)
@@ -139,7 +139,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
-    public BoardEntry findBoardIdWithLogin(long boardId, UserTb userTb) throws BoardException {
+    public BoardEntry findBoardWithLogin(long boardId, UserTb userTb) throws BoardException {
         log.info("▶ [포지션 게시판] findBoardIdWithLogin 메소드 실행");
         MapperParam param = FindBoardParamData.builder()
                 .boardId(boardId)

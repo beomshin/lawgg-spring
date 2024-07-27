@@ -1,4 +1,4 @@
-package com.kr.lg.service.trial.base.impl;
+package com.kr.lg.module.trial.service.impl;
 
 import com.kr.lg.db.dao.TrialDao;
 import com.kr.lg.db.entities.TrialVoteTb;
@@ -15,7 +15,7 @@ import com.kr.lg.model.net.response.trial.base.FindALTResponse;
 import com.kr.lg.model.net.response.trial.base.FindADTResponse;
 import com.kr.lg.model.net.response.trial.base.FindLFLTResponse;
 import com.kr.lg.model.net.response.trial.base.FindUDTResponse;
-import com.kr.lg.service.trial.base.TrialFindService;
+import com.kr.lg.module.trial.service.TrialFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -38,12 +38,6 @@ public class TrialFindServiceImpl implements TrialFindService {
     @Override
     public DefaultResponse findAllListTrial(TrialLayer requestDto) throws LgException {
         Page<TrialQ> trials = trialDao.findAllListTrial(requestDto, PageRequest.of(requestDto.getPage(), requestDto.getPageNum()));
-        return new FindALTResponse(trials);
-    }
-
-    @Override
-    public DefaultResponse findUserListTrial(TrialLayer requestDto) throws LgException {
-        Page<TrialQ> trials = trialDao.findUserListTrial(requestDto, PageRequest.of(requestDto.getPage(), requestDto.getPageNum()));
         return new FindALTResponse(trials);
     }
 

@@ -11,8 +11,8 @@ public interface BoardService {
     Page<BoardEntry> findBoards(FindBoardRequest request) throws BoardException;
     Page<BoardEntry> findMyBoards(FindMyBoardRequest request, UserTb userTb) throws BoardException;
     Page<BoardEntry> findLawFirmBoards(FindLawFirmBoardRequest request) throws BoardException;
-    BoardEntry findBoardIdWithNotLogin(long boardId) throws BoardException;
-    BoardEntry findBoardIdWithLogin(long boardId, UserTb userTb) throws BoardException;
+    BoardEntry findBoardWithNotLogin(long boardId) throws BoardException;
+    BoardEntry findBoardWithLogin(long boardId, UserTb userTb) throws BoardException;
     void enrollBoardWithNotLogin(EnrollBoardWithNotLoginRequest request, String ip) throws BoardException;
     void enrollBoardWithLogin(EnrollBoardWithLoginRequest request, String ip, UserTb userTb) throws BoardException;
     void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException;
