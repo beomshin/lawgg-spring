@@ -10,9 +10,8 @@ import com.kr.lg.db.repositories.TrialVoteRepository;
 import com.kr.lg.enums.PrecedentEnum;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.enums.TrialTopicEnum;
-import com.kr.lg.model.common.listener.AlertVideoEvent;
-import com.kr.lg.module.trial.model.req.EnrollTrialWithLoginRequest;
-import com.kr.lg.module.trial.model.req.EnrollVideoWithLoginRequest;
+import com.kr.lg.module.trial.model.dto.TrialUpdateDto;
+import com.kr.lg.module.trial.model.req.*;
 import com.kr.lg.module.comment.mapper.CommentMapper;
 import com.kr.lg.module.comment.model.entry.TrialCommentEntry;
 import com.kr.lg.module.trial.exception.TrialException;
@@ -22,11 +21,10 @@ import com.kr.lg.module.trial.model.entry.TrialAttachEntry;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.model.entry.TrialVoteEntry;
 import com.kr.lg.module.trial.model.mapper.FindTrialParamData;
-import com.kr.lg.module.trial.model.req.FindTrialsRequest;
-import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;
 import com.kr.lg.module.trial.service.TrialEnrollService;
 import com.kr.lg.module.trial.service.TrialFindService;
 import com.kr.lg.module.trial.service.TrialService;
+import com.kr.lg.module.trial.service.TrialUpdateService;
 import com.kr.lg.module.trial.sort.TrialSort;
 import com.kr.lg.service.file.FileService;
 import com.kr.lg.web.dto.global.GlobalFile;
@@ -34,7 +32,6 @@ import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -53,6 +50,7 @@ public class TrialServiceImpl implements TrialService {
 
     private final TrialFindService trialFindService;
     private final TrialEnrollService trialEnrollService;
+    private final TrialUpdateService trialUpdateService;
     private final FileService<GlobalFile> fileService;
 
     private final TrialRepository trialRepository;
@@ -60,7 +58,6 @@ public class TrialServiceImpl implements TrialService {
     private final TrialVoteRepository trialVoteRepository;
     private final TrialAttachRepository trialAttachRepository;
     private final CommentMapper commentMapper;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public Page<TrialEntry> findTrials(FindTrialsRequest request) throws TrialException {
@@ -107,6 +104,7 @@ public class TrialServiceImpl implements TrialService {
     }
 
     @Override
+    @Transactional
     public TrialTb enrollTrialWithLogin(EnrollTrialWithLoginRequest request, UserTb userTb) throws TrialException {
         TrialEnrollDto enrollDto = TrialEnrollDto.builder()
                 .userTb(userTb)
@@ -142,6 +140,36 @@ public class TrialServiceImpl implements TrialService {
         return trialTb;
     }
 
+    @Override
+    @Transactional
+    public TrialTb trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialTb> trialTb = trialRepository.findById(request.getId());
+        if (trialTb.isPresent()) {
+            trialUpdateService.updateLiveStartTrial(TrialUpdateDto.builder()
+                    .trialId(request.getId())
+                    .userTb(userTb)
+                    .url(request.getUrl())
+                    .build());
+        } else {
+            throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public void trialEndLive(UpdateEndTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialTb> trialTb = trialRepository.findById(request.getId());
+        if (trialTb.isPresent()) {
+            trialUpdateService.updateEndTrial(TrialUpdateDto.builder()
+                    .trialId(request.getId())
+                    .precedent(PrecedentEnum.of(request.getPrecedent()))
+                    .build());
+        } else {
+            throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
+        }
+    }
+
     private Sort getSort(int topic) {
         if (TrialTopicEnum.ALL_TOPIC == TrialTopicEnum.of(topic)) {
             return TrialSort.notificationSortWithDesc().and(TrialSort.dateWithDesc());
@@ -161,7 +189,7 @@ public class TrialServiceImpl implements TrialService {
             trial.get().setDefendantCount(vote.getDefendantCount());
             return trial.get();
         } else {
-            throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 게시판 미존재
+            throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
         }
     }
 

@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class TrialEnrollController {
     @PostMapping("/api/v1/enroll/trial")
     @ApiOperation(value = "회원 트라이얼 게시판 등록", notes = "회원 트라이얼 게시판을 등록합니다.")
     public ResponseEntity<?> enrollTrialWithLogin(
-            @RequestBody EnrollTrialWithLoginRequest request,
+            @RequestBody @Valid EnrollTrialWithLoginRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
         TrialTb trialTb = trialService.enrollTrialWithLogin(request, userAdapter.getUserTb());
@@ -48,7 +50,7 @@ public class TrialEnrollController {
 
     @PostMapping("/api/v1/enroll/video")
     public ResponseEntity<?> enrollVideoWithLogin(
-            @ModelAttribute EnrollVideoWithLoginRequest request,
+            @ModelAttribute @Valid EnrollVideoWithLoginRequest request,
             @ApiParam(value = "회원EnrollVideoDto 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
         TrialTb trialTb = trialService.enrollVideoWithLogin(request, userAdapter.getUserTb());

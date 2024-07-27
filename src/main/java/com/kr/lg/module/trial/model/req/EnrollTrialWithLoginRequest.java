@@ -1,7 +1,6 @@
 package com.kr.lg.module.trial.model.req;
 
 import com.kr.lg.web.dto.global.GlobalFile;
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -13,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "유저 트라이얼 게시판 등록 요청 바디")
-public class EnrollTrialWithLoginRequest implements RootRequest { // EnrollUserTrialRequest
+public class EnrollTrialWithLoginRequest {
 
     @ApiModelProperty(value = "제목", required = true)
     @NotNull(message = "제목이 입력되어있지않습니다.")
