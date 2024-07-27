@@ -1,6 +1,5 @@
 package com.kr.lg.module.trial.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "전체 트라이얼 게시판 리스트 조회 요청 바디")
-public class FindATLRequest implements RootRequest { // FindAllTrialListRequest
+public class FindTrialsRequest {
 
     @ApiModelProperty(value = "페이지", required = true)
     @NotNull(message = "페이지가 입력되어있지않습니다.")

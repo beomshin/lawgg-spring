@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kr.lg.module.trial.mapper.TrialMapper">
+
+    <!-- 로펌 리스트 조회 쿼리 -->
+    <select id="findTrials" parameterType="com.kr.lg.web.dto.mapper.TrialParam" resultType="com.kr.lg.module.trial.model.entry.TrialEntry">
+        SELECT tt.trialId, tt.title, tt.content, tt.writer, tt.thumbnail, tt.`view`, tt.recommendCount, tt.commentCount, tt.writeDt, tt.postType, tt.liveType, ut.profile
+        FROM  TrialTb tt
+        LEFT JOIN UserTb ut ON(tt.userId = ut.userId)
+        <where>
+            AND tt.status = 1
+
+            <!-- 검색조건 타입 -->
+            <if test="data.subject != null and data.keyword != null and data.keyword.length() > 0">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="data.subject == 0">
+                        AND (tt.title LIKE CONCAT('%', #{data.keyword}, '%') OR tt.content LIKE CONCAT('%', #{data.keyword}, '%') OR tt.writer LIKE CONCAT('%', #{data.keyword}, '%'))
+                    </when>
+                    <!-- 트라이얼 제목 조회 -->
+                    <when test="data.subject == 1">
+                        AND tt.title LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                    <!-- 트라이얼 제목 조회 -->
+                    <when test="data.subject == 2">
+                        AND tt.content LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                    <!-- 트라이얼 대표명 조회 -->
+                    <when test="data.subject == 3">
+                        AND tt.writer LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+
+            <!-- 로펌 게시판 -->
+            <if test="data.lawFirmId != null">
+                AND tt.lawFirmId = #{data.lawFirmId}
+            </if>
+
+        </where>
+
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+    <!-- 로펌 리스트 총 개수 조회 쿼리 -->
+    <select id="findTrialsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+        SELECT COUNT(*) AS 'count'
+        FROM  TrialTb tt
+        LEFT JOIN UserTb ut ON(tt.userId = ut.userId)
+        <where>
+            AND tt.status = 1
+
+            <!-- 검색조건 타입 -->
+            <if test="subject != null and keyword != null and keyword.length() > 0">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="subject == 0">
+                        AND (tt.title LIKE CONCAT('%', #{keyword}, '%') OR tt.content LIKE CONCAT('%', #{keyword}, '%') OR tt.writer LIKE CONCAT('%', #{keyword}, '%'))
+                    </when>
+                    <!-- 트라이얼 제목 조회 -->
+                    <when test="subject == 1">
+                        AND tt.title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <!-- 트라이얼 제목 조회 -->
+                    <when test="subject == 2">
+                        AND tt.content LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <!-- 트라이얼 대표명 조회 -->
+                    <when test="subject == 3">
+                        AND tt.writer LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 로펌 상세 조회 쿼리 -->
+    <select id="findTrial" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.trial.model.entry.TrialEntry">
+        SELECT tt.*
+        , (SELECT tct.trialCommentId FROM TrialCommentTb tct WHERE tt.trialId = tct.trialId AND tct.`depth` = '0') AS "trialCommentId"
+        , (SELECT ut.nickName FROM UserTb ut WHERE ut.userId = tt.judge  ) AS "judgeName"
+        FROM TrialTb tt
+        <where>
+            tt.trialId = #{trialId}
+        </where>
+    </select>
+
+    <select id="findVotePercent" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.trial.model.entry.TrialVoteEntry">
+        SELECT
+            COUNT(if(precedent=0, 1, NULL))  as 'plaintiffCount',
+                COUNT(if(precedent=1, 1, NULL)) as 'defendantCount'
+        FROM TrialVoteTb WHERE trialId = #{trialId}
+    </select>
+
+</mapper>

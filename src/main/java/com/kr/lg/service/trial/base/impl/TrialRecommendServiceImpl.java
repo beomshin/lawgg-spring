@@ -22,7 +22,7 @@ public class TrialRecommendServiceImpl implements TrialRecommendService {
     private final ApplicationEventPublisher applicationEventPublisher;
     @Override
     public void recommendTrial(TrialLayer requestDto) throws LgException {
-        long count = trialRecommendRepository.countByTrialTb_TrialIdAndUserTb(requestDto.getId(), requestDto.getUserTb());
+        int count = trialRecommendRepository.countByTrialTb_TrialIdAndUserTb_UserId(requestDto.getId(), requestDto.getUserTb().getUserId());
         if (count > 0) throw new LgException(GlobalCode.ALREADY_RECOMMEND_TRIAL); // 이미 추천 처리
         applicationEventPublisher.publishEvent(new TrialREvent(requestDto.getId(), 1));
         trialRecommendRepository.save(TrialRecommendTb.builder()
@@ -33,7 +33,7 @@ public class TrialRecommendServiceImpl implements TrialRecommendService {
 
     @Override
     public int deleteRecommendTrial(TrialLayer requestDto) throws LgException {
-        long count = trialRecommendRepository.countByTrialTb_TrialIdAndUserTb(requestDto.getId(), requestDto.getUserTb());
+        int count = trialRecommendRepository.countByTrialTb_TrialIdAndUserTb_UserId(requestDto.getId(), requestDto.getUserTb().getUserId());
         if (count == 0) throw new LgException(GlobalCode.ALREADY_DELETE_TRIAL); // 이미 추천 처리
         return trialRecommendRepository.deleteRecommendTrial(TrialTb.builder().trialId(requestDto.getId()).build(), requestDto.getUserTb());
     }

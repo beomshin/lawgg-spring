@@ -2,7 +2,7 @@ package com.kr.lg.listener;
 
 import com.kr.lg.model.common.listener.TrialCEvent;
 import com.kr.lg.model.common.listener.TrialCNTEvent;
-import com.kr.lg.model.common.listener.TrialCTEvent;
+import com.kr.lg.module.trial.model.dto.TrialCreateCountEvent;
 import com.kr.lg.model.common.listener.TrialREvent;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.UserRepository;
@@ -31,8 +31,8 @@ public class TrialListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void increaseCount(TrialCTEvent TrialCTEvent) { // 조회수 증가
-        trialRepository.viewTrial(TrialCTEvent.getTrialId()); // 조회수 증가
+    public void increaseCount(TrialCreateCountEvent TrialCreateCountEvent) { // 조회수 증가
+        trialRepository.viewTrial(TrialCreateCountEvent.getTrialId()); // 조회수 증가
     }
 
     @TransactionalEventListener

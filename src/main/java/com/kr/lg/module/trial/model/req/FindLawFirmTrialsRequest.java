@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "로펌 트라이얼 게시판 리스트 조회 요청 바디")
-public class FindLFTLRequest implements RootRequest { // FindLawFirmTrialListRequest
+public class FindLawFirmTrialsRequest implements RootRequest { // FindLawFirmTrialListRequest
 
     @ApiModelProperty(value = "로펌 아이디", required = true)
     @NotNull(message = "로펌 아이디가 입력되어있지않습니다.")

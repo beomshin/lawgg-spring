@@ -456,8 +456,8 @@ public class BoardServiceImpl implements BoardService {
     private BoardEntry findBoard(MapperParam param) throws BoardException {
         Optional<BoardEntry> boardEntry = boardFindService.findBoard(param);
         if (boardEntry.isPresent() && boardEntry.get().isNormalStatus()) { // 게시판 존재 & 정상 상태
-            List<BoardAttachEntry> files = boardAttachRepository.findByBoardTb_BoardId(boardEntry.get().getBoardId()) // 파일리스트 조회
-                    .stream().map(BoardAttachEntry::new).collect(Collectors.toList());
+            List<BoardAttachEntry> files = boardAttachRepository.findByBoardTb_BoardId(boardEntry.get().getBoardId())
+                    .stream().map(BoardAttachEntry::new).collect(Collectors.toList()); // 파일리스트 조회
             boardEntry.get().setFiles(files);
             return boardEntry.get();
         } else {

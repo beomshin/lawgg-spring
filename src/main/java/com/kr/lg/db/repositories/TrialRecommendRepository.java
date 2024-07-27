@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface TrialRecommendRepository extends RootTrialRecommendRepository {
 
-    long countByTrialTb_TrialIdAndUserTb(Long trialId, UserTb userTb);
+    int countByTrialTb_TrialIdAndUserTb_UserId(long trialId, long userId);
 
     @Transactional
     @Modifying

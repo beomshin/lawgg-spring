@@ -54,7 +54,7 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
             video = fileService.uploadVideo(requestDto.getPlayVideo());
             log.debug("{}", video);
             attachTbs.add(TrialAttachTb.builder()
-                    .trialId(trialTb)
+                    .trialTb(trialTb)
                     .path(video.getPath())
                     .oriName(video.getOriName())
                     .newName(video.getNewName())
@@ -66,7 +66,7 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
             replay = fileService.uploadReplay(requestDto.getReplay());
             log.debug("{}", replay);
             attachTbs.add(TrialAttachTb.builder()
-                    .trialId(trialTb)
+                    .trialTb(trialTb)
                     .path(replay.getPath())
                     .oriName(replay.getOriName())
                     .newName(replay.getNewName())

@@ -11,9 +11,9 @@ import java.sql.Timestamp;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL) // NULL 제외 속성
-public class BoardCommentEntry {
+public class TrialCommentEntry {
 
-    private long boardCommentId; // boardComment 식별자
+    private long trialCommentId; // boardComment 식별자
     private long parentId; // 댓글 부모 키
     private int order; // 댓글 순번
     private int depth; // 댓글 레벨 ( 0 : 루트 , 1: 댓글, 2: 대댓글)

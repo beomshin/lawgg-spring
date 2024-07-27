@@ -41,7 +41,7 @@ public class TrialUpdateServiceImpl implements TrialUpdateService {
         if (StringUtils.isBlank(requestDto.getContent())) requestDto.setContent(trialTb.getContent());
         trialRepository.updateTrial(trialTb.getTrialId(), requestDto.getSubheading(), requestDto.getPlaintiffOpinion(), requestDto.getDefendantOpinion(), requestDto.getContent());
         List<TrialAttachTb> attachTbs = requestDto.getFiles().stream().filter(it -> it != null).map(it -> TrialAttachTb.builder()
-                .trialId(trialTb)
+                .trialTb(trialTb)
                 .path(it.getPath())
                 .oriName(it.getOriName())
                 .newName(it.getNewName())

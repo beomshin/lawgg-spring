@@ -35,7 +35,7 @@ public class TrialAttachTb {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trialId")
-    private TrialTb trialId;
+    private TrialTb trialTb;
 
     @Column(name = "path")
     private String path;

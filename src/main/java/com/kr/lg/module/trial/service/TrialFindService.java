@@ -1,15 +1,17 @@
 package com.kr.lg.module.trial.service;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.dto.root.DefaultResponse;
-import com.kr.lg.model.common.layer.TrialLayer;
-import org.springframework.transaction.annotation.Transactional;
+import com.kr.lg.module.trial.exception.TrialException;
+import com.kr.lg.module.trial.model.entry.TrialEntry;
+import com.kr.lg.module.trial.model.entry.TrialVoteEntry;
+import com.kr.lg.web.dto.mapper.MapperParam;
+import com.kr.lg.web.dto.mapper.TrialParam;
+import org.springframework.data.domain.Page;
 
-@Transactional(readOnly = true)
+import java.util.Optional;
+
 public interface TrialFindService {
 
-    DefaultResponse findAllListTrial(TrialLayer requestDto) throws LgException;
-    DefaultResponse findLawFirmListTrial(TrialLayer requestDto) throws LgException;
-    DefaultResponse findAnonymousDetailTrial(TrialLayer requestDto) throws LgException;
-    DefaultResponse findUserDetailTrial(TrialLayer requestDto) throws LgException;
+    Page<TrialEntry> findTrials(TrialParam<?> param) throws TrialException;
+    Optional<TrialEntry> findTrial(MapperParam param) throws TrialException;
+    TrialVoteEntry findVotePercent(MapperParam param) throws TrialException;
 }
