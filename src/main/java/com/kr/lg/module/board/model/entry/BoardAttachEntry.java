@@ -1,5 +1,6 @@
 package com.kr.lg.module.board.model.entry;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.db.entities.BoardAttachTb;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL) // NULL 제외 속성
 public class BoardAttachEntry {
 
     private long boardAttachId; // boardAttach 식별자

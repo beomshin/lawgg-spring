@@ -121,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
-    public BoardEntry findBoardIdWithNotLogin(long boardId) throws BoardException {
+    public BoardEntry findBoardWithNotLogin(long boardId) throws BoardException {
         log.info("▶ [포지션 게시판] findBoardIdWithNotLogin 메소드 실행");
         MapperParam param = FindBoardParamData.builder()
                 .boardId(boardId)
@@ -139,7 +139,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
-    public BoardEntry findBoardIdWithLogin(long boardId, UserTb userTb) throws BoardException {
+    public BoardEntry findBoardWithLogin(long boardId, UserTb userTb) throws BoardException {
         log.info("▶ [포지션 게시판] findBoardIdWithLogin 메소드 실행");
         MapperParam param = FindBoardParamData.builder()
                 .boardId(boardId)
@@ -456,8 +456,8 @@ public class BoardServiceImpl implements BoardService {
     private BoardEntry findBoard(MapperParam param) throws BoardException {
         Optional<BoardEntry> boardEntry = boardFindService.findBoard(param);
         if (boardEntry.isPresent() && boardEntry.get().isNormalStatus()) { // 게시판 존재 & 정상 상태
-            List<BoardAttachEntry> files = boardAttachRepository.findByBoardTb_BoardId(boardEntry.get().getBoardId()) // 파일리스트 조회
-                    .stream().map(BoardAttachEntry::new).collect(Collectors.toList());
+            List<BoardAttachEntry> files = boardAttachRepository.findByBoardTb_BoardId(boardEntry.get().getBoardId())
+                    .stream().map(BoardAttachEntry::new).collect(Collectors.toList()); // 파일리스트 조회
             boardEntry.get().setFiles(files);
             return boardEntry.get();
         } else {

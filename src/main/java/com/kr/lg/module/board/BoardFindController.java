@@ -72,7 +72,7 @@ public class BoardFindController {
 
     @ApiOperation(value = "로펌 포지션 게시판 조회", notes = "로펌 포지션 게시판을 조회합니다.")
     @GetMapping("/api/public/v1/find/law-firm/boards")
-    public ResponseEntity<?> findUserBoards(
+    public ResponseEntity<?> findLawFirmBoards(
             @Valid FindLawFirmBoardRequest request
     ) throws BoardException {
         Page<BoardEntry> boards = boardService.findLawFirmBoards(request);
@@ -89,11 +89,11 @@ public class BoardFindController {
 
     @GetMapping("/api/public/v1/find/board/{id}")
     @ApiOperation(value = "비로그인 포지션 게시판 상세 조회", notes = "포지션 게시판 상세 조회 조회합니다.")
-    public ResponseEntity<?> findBoardIdWithNotLogin(
+    public ResponseEntity<?> findBoardWithNotLogin(
             HttpServletRequest request,
             @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long id
     ) throws BoardException {
-        BoardEntry boardEntry = boardService.findBoardIdWithNotLogin(id);
+        BoardEntry boardEntry = boardService.findBoardWithNotLogin(id);
         applicationEventPublisher.publishEvent(new BoardCountEventDto(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
         AbstractSpec spec = FindBoardResponse.builder()
                 .board(boardEntry)
@@ -104,12 +104,12 @@ public class BoardFindController {
 
     @GetMapping("/api/v1/find/board/{id}")
     @ApiOperation(value = "로그인 포지션 게시판 상세 조회", notes = "포지션 게시판 상세 조회 조회합니다.")
-    public ResponseEntity<?> findBoardIdWithLogin(
+    public ResponseEntity<?> findBoardWithLogin(
             HttpServletRequest request,
             @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long id,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
-        BoardEntry boardEntry = boardService.findBoardIdWithLogin(id, userAdapter.getUserTb());
+        BoardEntry boardEntry = boardService.findBoardWithLogin(id, userAdapter.getUserTb());
         applicationEventPublisher.publishEvent(new BoardCountEventDto(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
         AbstractSpec spec = FindBoardResponse.builder()
                 .board(boardEntry)

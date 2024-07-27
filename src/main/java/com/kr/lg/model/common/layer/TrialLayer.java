@@ -7,6 +7,8 @@ import com.kr.lg.enums.TrialSubjectEnum;
 import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.PrecedentEnum;
+import com.kr.lg.module.trial.model.req.FindTrialsRequest;
+import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.net.request.trial.base.*;
 import com.kr.lg.model.net.request.trial.comment.*;
@@ -135,7 +137,7 @@ public class TrialLayer {
         this.userTb = userTb;
     }
 
-    public TrialLayer(FindATLRequest requestDto) {
+    public TrialLayer(FindTrialsRequest requestDto) {
         this.page = requestDto.getPage();
         this.pageNum = requestDto.getPageNum();
         this.topic = TrialTopicEnum.of(requestDto.getTopic());
@@ -225,7 +227,7 @@ public class TrialLayer {
         this.userTb = userTb;
     }
 
-    public TrialLayer(FindLFTLRequest requestDto) {
+    public TrialLayer(FindLawFirmTrialsRequest requestDto) {
         this.id = requestDto.getId();
         this.page = requestDto.getPage();
         this.pageNum = requestDto.getPageNum();

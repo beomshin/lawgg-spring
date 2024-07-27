@@ -38,7 +38,7 @@ public class TrialQ {
     private Integer precedent;
     private Integer liveType;
     private Integer endingType;
-    private Long isRecommend;
+    private int isRecommend;
     private Integer isVote;
     private Long created;
     private Long anonymous;

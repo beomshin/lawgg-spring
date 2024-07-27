@@ -27,7 +27,7 @@
                     </when>
                     <!-- 로펌 대표명 조회 -->
                     <when test="data.subject == 2">
-                        AND LIKE CONCAT('%', #{data.keyword}, '%')
+                        AND ut.nickName LIKE CONCAT('%', #{data.keyword}, '%')
                     </when>
                 </choose>
             </if>
