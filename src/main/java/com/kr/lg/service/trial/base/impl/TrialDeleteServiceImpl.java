@@ -3,7 +3,7 @@ package com.kr.lg.service.trial.base.impl;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.exception.LgException;
 import com.kr.lg.enums.StatusEnum;
-import com.kr.lg.model.common.listener.TrialCNTEvent;
+import com.kr.lg.module.trial.model.dto.TrialCreateCount;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.common.utils.TrialUtils;
 import com.kr.lg.model.common.layer.TrialLayer;
@@ -27,6 +27,6 @@ public class TrialDeleteServiceImpl implements TrialDeleteService {
         TrialTb trialTb = trialRepository.findByTrialIdAndUserTb(requestDto.getId(), requestDto.getUserTb());
         trialUtils.isRightUserPassword(requestDto.getUserTb(), trialTb.getUserTb(), requestDto.getPassword());
         trialRepository.updateStatus(trialTb.getTrialId(), StatusEnum.DELETE_STATUS);
-        applicationEventPublisher.publishEvent(new TrialCNTEvent(requestDto.getUserTb(), -1));
+        applicationEventPublisher.publishEvent(new TrialCreateCount(requestDto.getUserTb(), -1));
     }
 }

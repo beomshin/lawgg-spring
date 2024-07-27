@@ -1,8 +1,8 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.model.common.listener.TrialCEvent;
-import com.kr.lg.model.common.listener.TrialCNTEvent;
-import com.kr.lg.module.trial.model.dto.TrialCreateCountEvent;
+import com.kr.lg.module.trial.model.dto.TrialCreateCount;
+import com.kr.lg.module.trial.model.dto.TrialCountEvent;
 import com.kr.lg.model.common.listener.TrialREvent;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.UserRepository;
@@ -31,8 +31,8 @@ public class TrialListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void increaseCount(TrialCreateCountEvent TrialCreateCountEvent) { // 조회수 증가
-        trialRepository.viewTrial(TrialCreateCountEvent.getTrialId()); // 조회수 증가
+    public void increaseCount(TrialCountEvent TrialCountEvent) { // 조회수 증가
+        trialRepository.viewTrial(TrialCountEvent.getTrialId()); // 조회수 증가
     }
 
     @TransactionalEventListener
@@ -47,10 +47,10 @@ public class TrialListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void updateTrialCount(TrialCNTEvent TrialCNTEvent) {
+    public void updateTrialCount(TrialCreateCount TrialCreateCount) {
         log.debug("[updateTrialCount]");
-        UserTb userTb = TrialCNTEvent.getUserTb();
-        userRepository.updateTrialCount(userTb.getUserId(), Long.valueOf(TrialCNTEvent.getNum()));
+        UserTb userTb = TrialCreateCount.getUserTb();
+        userRepository.updateTrialCount(userTb.getUserId(), Long.valueOf(TrialCreateCount.getNum()));
     }
 
 

@@ -24,15 +24,14 @@ public interface TrialRepository extends RootTrialRepository {
     @Query(value = "SELECT * FROM TrialTb b ORDER BY b.mainPostType desc, b.view desc LIMIT 1", nativeQuery = true)
     TrialTb findByMainPostType();
 
-    long countByTrialIdAndUserTb(Long trialId, UserTb userTb);
-
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT b FROM TrialTb b where b.trialId = :trialId")
     TrialTb findLockTrial(@Param("trialId") Long trialId);
 
-    @Query(value = "SELECT * FROM TrialTb ORDER BY view DESC LIMIT 1", nativeQuery = true)
-    Optional<TrialTb> findTopTrial();
-    
+    @Modifying
+    @Query(value = "UPDATE TrialTb SET playVideo = :playVideo, replay = :replay, status = :status WHERE trialId = :trialId")
+    void uploadVideoAndReply(@Param("trialId") Long trialId, String playVideo, String replay, StatusEnum status);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE TrialTb SET report = report + 1  WHERE trialId = :trialId")
@@ -48,16 +47,6 @@ public interface TrialRepository extends RootTrialRepository {
     @Query(value = "UPDATE TrialTb SET status = :status WHERE trialId = :trialId")
     int updateStatus(@Param("trialId") Long trialId, @Param("status") StatusEnum status);
 
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE TrialTb SET subheading = :subheading, plaintiffOpinion = :plaintiffOpinion, defendantOpinion = :defendantOpinion, content = :content WHERE trialId = :trialId")
-    int updateTrial(@Param("trialId") Long trialId, String subheading, String plaintiffOpinion, String defendantOpinion, String content);
-
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE TrialTb SET playVideo = :playVideo, replay = :replay, status = :status WHERE trialId = :trialId")
-    int updateTrial(@Param("trialId") Long trialId, String playVideo, String replay, StatusEnum status);
-
     @Modifying
     @Query(value = "UPDATE TrialTb SET commentCount = commentCount + :count  WHERE trialId = :trialId")
     int updateCommentCount(@Param("trialId") Long trialId, Long count);
@@ -68,10 +57,10 @@ public interface TrialRepository extends RootTrialRepository {
 
     @Modifying
     @Query(value = "UPDATE TrialTb SET lawFirmTb = :lawFirmTb, judge = :judge, url = :url, liveType = :liveType, liveDt = :liveDt  WHERE trialId = :trialId")
-    int updateLive(@Param("trialId") Long trialId, LawFirmTb lawFirmTb, UserTb judge, String url, LiveEnum liveType, Timestamp liveDt);
+    void updateLive(@Param("trialId") Long trialId, LawFirmTb lawFirmTb, UserTb judge, String url, LiveEnum liveType, Timestamp liveDt);
 
     @Modifying
     @Query(value = "UPDATE TrialTb SET precedent = :precedent, endingType = :endingType, endDt = :endDt  WHERE trialId = :trialId")
-    int updateEnd(@Param("trialId") Long trialId, PrecedentEnum precedent, EndingEnum endingType, Timestamp endDt);
+    void updateEnd(@Param("trialId") Long trialId, PrecedentEnum precedent, EndingEnum endingType, Timestamp endDt);
 
 }

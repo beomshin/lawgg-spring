@@ -8,9 +8,12 @@ import lombok.Getter;
 public enum TrialResultCode {
 
     FAIL_FIND_TRIAL("6000", "트라이얼 조회 실패."),
-    NOT_EXIST_TRIAL("60001", "트라이얼 미존재"),
-    FAIL_FIND_TRAIL_VOTE("60001", "트라이얼 투표 정보 조회 실패"),
-
+    NOT_EXIST_TRIAL("6001", "트라이얼 미존재"),
+    FAIL_FIND_TRAIL_VOTE("6001", "트라이얼 투표 정보 조회 실패"),
+    FAIL_ENROLL_TRAIL("6002", "트라이얼 등록 실패"),
+    FAIL_ENROLL_TRAIL_IMAGE("6003", "트라이얼 이미지 등록 실패"),
+    FAIL_UPDATE_LIVE_START_TRIAL("6004", "재판 시작 실패"),
+    FAIL_UPDATE_LIVE_END_TRIAL("6005", "재판 종료 실패"),
 
     ;
 

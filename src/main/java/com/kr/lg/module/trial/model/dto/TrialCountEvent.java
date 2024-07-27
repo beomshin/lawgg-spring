@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Getter
-public class TrialCreateCountEvent {
+public class TrialCountEvent {
 
     private Long trialId;
     private String ip;

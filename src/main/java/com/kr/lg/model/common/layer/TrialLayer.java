@@ -7,8 +7,7 @@ import com.kr.lg.enums.TrialSubjectEnum;
 import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.PrecedentEnum;
-import com.kr.lg.module.trial.model.req.FindTrialsRequest;
-import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;
+import com.kr.lg.module.trial.model.req.*;
 import com.kr.lg.web.dto.global.GlobalFile;
 import com.kr.lg.model.net.request.trial.base.*;
 import com.kr.lg.model.net.request.trial.comment.*;
@@ -98,7 +97,7 @@ public class TrialLayer {
         this.depth = depth;
     }
 
-    public TrialLayer(EnrollUTRequest request, UserTb userTb) {
+    public TrialLayer(EnrollTrialWithLoginRequest request, UserTb userTb) {
         this.title = request.getTitle();
         this.plaintiff = request.getPlaintiff();
         this.defendant = request.getDefendant();
@@ -236,19 +235,19 @@ public class TrialLayer {
         this.keyword = requestDto.getKeyword();
     }
 
-    public TrialLayer(UpdateLTRequest requestDto, UserTb userTb) {
+    public TrialLayer(UpdateLiveTrialRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.url = requestDto.getUrl();
         this.userTb = userTb;
     }
 
-    public TrialLayer(UpdateETRequest requestDto, UserTb userTb) {
+    public TrialLayer(UpdateEndTrialRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.userTb = userTb;
         this.precedent = PrecedentEnum.of(requestDto.getPrecedent());
     }
 
-    public TrialLayer(EnrollVRequest request, UserTb userTb) {
+    public TrialLayer(EnrollVideoWithLoginRequest request, UserTb userTb) {
         this.id = request.getId();
         this.playVideo = request.getPlayVideo();
         this.replay = request.getReplay();
