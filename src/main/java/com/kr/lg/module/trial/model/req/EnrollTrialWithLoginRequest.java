@@ -8,10 +8,12 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "유저 트라이얼 게시판 등록 요청 바디")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "로그인 트라이얼 게시판 등록 요청 Body")
 public class EnrollTrialWithLoginRequest {
 
     @ApiModelProperty(value = "제목", required = true)

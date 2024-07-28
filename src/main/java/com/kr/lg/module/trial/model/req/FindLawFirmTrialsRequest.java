@@ -2,16 +2,16 @@ package com.kr.lg.module.trial.model.req;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "로펌 트라이얼 게시판 리스트 조회 요청 바디")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "로펌 트라이얼 게시판 리스트 조회 요청 Body")
 public class FindLawFirmTrialsRequest {
 
     @ApiModelProperty(value = "로펌 아이디", required = true)

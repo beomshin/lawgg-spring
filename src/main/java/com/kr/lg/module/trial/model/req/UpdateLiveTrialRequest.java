@@ -7,10 +7,12 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "트라이얼 게시판 라이브 업데이트 요청 바디")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "트라이얼 게시판 재판 시작 요청 Body")
 public class UpdateLiveTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디", required = true)

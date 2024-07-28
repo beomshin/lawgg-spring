@@ -40,7 +40,7 @@ public interface BoardRepository extends RootBoardRepository {
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET commentCount = commentCount + :count  WHERE boardId = :boardId")
-    void updateCommentCount(@Param("boardId") Long boardId, Long count);
+    void updateCommentCount(@Param("boardId") long boardId, long count);
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET recommendCount = recommendCount + :count WHERE boardId = :boardId")

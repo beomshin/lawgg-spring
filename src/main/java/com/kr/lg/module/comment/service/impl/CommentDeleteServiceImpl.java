@@ -1,6 +1,7 @@
 package com.kr.lg.module.comment.service.impl;
 
 import com.kr.lg.db.repositories.BoardCommentRepository;
+import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.comment.exception.CommentException;
@@ -17,14 +18,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentDeleteServiceImpl implements CommentDeleteService {
 
     private final BoardCommentRepository boardCommentRepository;
-
+    private final TrialCommentRepository trialCommentRepository;
 
     @Override
     @Transactional
     public void deleteBoardComment(long boardCommentId) throws CommentException {
         try {
-            log.info("▶ [포지션 게시판] 댓글 삭제");
+            log.info("▶ [포지션 게시판 댓글] 댓글 삭제");
             boardCommentRepository.updateBoardCommentStatus(boardCommentId, StatusEnum.DELETE_STATUS);
+        } catch (Exception e) {
+            log.error("", e);
+            throw new CommentException(CommentResultCode.FAIL_DELETE_COMMENT);
+        }
+    }
+
+
+    @Override
+    @Transactional
+    public void deleteTrialComment(long trialCommentId) throws CommentException {
+        try {
+            log.info("▶ [트라이얼 댓글] 댓글 삭제");
+            trialCommentRepository.updateTrialCommentStatus(trialCommentId, StatusEnum.DELETE_STATUS);
         } catch (Exception e) {
             log.error("", e);
             throw new CommentException(CommentResultCode.FAIL_DELETE_COMMENT);

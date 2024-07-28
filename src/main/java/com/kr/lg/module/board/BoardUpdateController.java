@@ -1,7 +1,7 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.module.board.model.dto.BoardRecommendEventDto;
+import com.kr.lg.module.board.model.event.BoardRecommendEvent;
 import com.kr.lg.module.board.model.req.DeleteRecommendBoardRequest;
 import com.kr.lg.module.board.model.req.RecommendBoardRequest;
 import com.kr.lg.module.board.model.req.ReportBoardRequest;
@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +30,6 @@ import javax.validation.Valid;
 public class BoardUpdateController {
 
     private final BoardService boardService;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
 
     @PostMapping("/api/public/v1/update/board")
@@ -71,7 +69,6 @@ public class BoardUpdateController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         boardService.recommendBoard(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardRecommendEventDto(request.getId(), 1)); // 추천 수 증가
         return ResponseEntity.ok(new SuccessResponse());
     }
 

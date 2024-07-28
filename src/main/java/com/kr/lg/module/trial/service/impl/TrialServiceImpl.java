@@ -1,5 +1,6 @@
 package com.kr.lg.module.trial.service.impl;
 
+import com.kr.lg.db.entities.TrialRecommendTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.TrialVoteTb;
 import com.kr.lg.db.entities.UserTb;
@@ -10,7 +11,16 @@ import com.kr.lg.db.repositories.TrialVoteRepository;
 import com.kr.lg.enums.PrecedentEnum;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.enums.TrialTopicEnum;
+import com.kr.lg.module.trial.model.event.AlertTLEvent;
+import com.kr.lg.module.trial.model.event.AlertVideoEvent;
+import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
+import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
+import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
+import com.kr.lg.module.trial.model.req.VoteTrialRequest;
+import com.kr.lg.module.board.model.req.ReportTrialRequest;
+import com.kr.lg.module.trial.model.dto.TrialReportDto;
 import com.kr.lg.module.trial.model.dto.TrialUpdateDto;
+import com.kr.lg.module.trial.model.dto.TrialVoteDto;
 import com.kr.lg.module.trial.model.req.*;
 import com.kr.lg.module.comment.mapper.CommentMapper;
 import com.kr.lg.module.comment.model.entry.TrialCommentEntry;
@@ -21,10 +31,7 @@ import com.kr.lg.module.trial.model.entry.TrialAttachEntry;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.model.entry.TrialVoteEntry;
 import com.kr.lg.module.trial.model.mapper.FindTrialParamData;
-import com.kr.lg.module.trial.service.TrialEnrollService;
-import com.kr.lg.module.trial.service.TrialFindService;
-import com.kr.lg.module.trial.service.TrialService;
-import com.kr.lg.module.trial.service.TrialUpdateService;
+import com.kr.lg.module.trial.service.*;
 import com.kr.lg.module.trial.sort.TrialSort;
 import com.kr.lg.service.file.FileService;
 import com.kr.lg.web.dto.global.GlobalFile;
@@ -32,10 +39,12 @@ import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +60,10 @@ public class TrialServiceImpl implements TrialService {
     private final TrialFindService trialFindService;
     private final TrialEnrollService trialEnrollService;
     private final TrialUpdateService trialUpdateService;
+    private final TrialRecommendService trialRecommendService;
+    private final TrialReportService trialReportService;
+    private final TrialVoteService trialVoteService;
+    private final TrialDeleteService trialDeleteService;
     private final FileService<GlobalFile> fileService;
 
     private final TrialRepository trialRepository;
@@ -58,6 +71,8 @@ public class TrialServiceImpl implements TrialService {
     private final TrialVoteRepository trialVoteRepository;
     private final TrialAttachRepository trialAttachRepository;
     private final CommentMapper commentMapper;
+    private final BCryptPasswordEncoder encoder;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public Page<TrialEntry> findTrials(FindTrialsRequest request) throws TrialException {
@@ -94,9 +109,9 @@ public class TrialServiceImpl implements TrialService {
         MapperParam param = FindTrialParamData.builder().trialId(id).build();
         TrialEntry trial = this.findTrial(param);
         List<TrialCommentEntry> comments = commentMapper.findTrialCommentsWithLogin(trial.getTrialCommentId(), userTb.getUserId());
-        int isRecommend = trialRecommendRepository.countByTrialTb_TrialIdAndUserTb_UserId(trial.getTrialId(), userTb.getUserId());
+        Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(trial.getTrialId(), userTb.getUserId());
         Optional<TrialVoteTb> voteTb = trialVoteRepository.findByTrialTb_TrialIdAndUserTb_UserId(trial.getTrialId(), userTb.getUserId());
-        trial.setIsRecommend(isRecommend);
+        trial.setIsRecommend(recommendTb.isPresent() ? 1 : 0);
         trial.setCreated(Objects.equals(trial.getUserId(), userTb.getUserId()) ? 1 : 0);
         trial.setIsVote(voteTb.map(trialVoteTb -> trialVoteTb.getPrecedent().getCode()).orElseGet(PrecedentEnum.PROCEEDING::getCode)); // 투표여부
         trial.setComments(comments);
@@ -119,6 +134,7 @@ public class TrialServiceImpl implements TrialService {
                 .build();
         TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
         trialEnrollService.enrollTrialFiles(trialTb, request.getFiles());
+        applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, 1));
         return trialTb;
     }
 
@@ -137,12 +153,14 @@ public class TrialServiceImpl implements TrialService {
                 replay != null ? replay.getPath() : null,
                 video == null ? StatusEnum.FAIL_STATUS : StatusEnum.NORMAL_STATUS
         );
+        applicationEventPublisher.publishEvent(new AlertVideoEvent(trialTb));
+
         return trialTb;
     }
 
     @Override
     @Transactional
-    public TrialTb trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException {
+    public void trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException {
         Optional<TrialTb> trialTb = trialRepository.findById(request.getId());
         if (trialTb.isPresent()) {
             trialUpdateService.updateLiveStartTrial(TrialUpdateDto.builder()
@@ -150,10 +168,10 @@ public class TrialServiceImpl implements TrialService {
                     .userTb(userTb)
                     .url(request.getUrl())
                     .build());
+            applicationEventPublisher.publishEvent(new AlertTLEvent(trialTb.get()));
         } else {
             throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
         }
-        return null;
     }
 
     @Override
@@ -165,6 +183,62 @@ public class TrialServiceImpl implements TrialService {
                     .trialId(request.getId())
                     .precedent(PrecedentEnum.of(request.getPrecedent()))
                     .build());
+        } else {
+            throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
+        }
+    }
+
+    @Override
+    @Transactional
+    public void recommendTrial(RecommendTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        if (recommendTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_RECOMMEND_TRIAL); // 중복 추천 방어코드
+        trialRecommendService.recommendTrial(TrialTb.builder().trialId(request.getId()).build(), userTb);
+        applicationEventPublisher.publishEvent(new TrialRecommendEvent(request.getId(), 1));
+    }
+
+    @Override
+    @Transactional
+    public void deleteRecommendTrial(DeleteRecommendTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        if (!recommendTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_DELETE_RECOMMEND_TRIAL); // 이미 추천 취소 처리
+        trialRecommendService.deleteRecommendTrial(request.getId(), userTb.getUserId());
+    }
+
+    @Override
+    public void reportTrial(ReportTrialRequest request, String ip) throws TrialException {
+        trialReportService.reportTrial(TrialReportDto.builder()
+                        .ip(ip)
+                        .content(request.getContent())
+                        .trialTb(TrialTb.builder().trialId(request.getId()).build())
+                .build());
+    }
+
+    @Override
+    public void voteTrial(VoteTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialVoteTb> trialVoteTb = trialVoteRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        if (trialVoteTb.isPresent()) {
+            trialVoteService.changeVoteTrial(TrialVoteDto.builder()
+                            .precedent(PrecedentEnum.of(request.getPrecedent()))
+                            .trialVoteId(trialVoteTb.get().getTrialVoteId())
+                    .build());
+        } else {
+            trialVoteService.voteTrial(TrialVoteDto.builder()
+                            .precedent(PrecedentEnum.of(request.getPrecedent()))
+                            .trialTb(TrialTb.builder().trialId(request.getId()).build())
+                            .userTb(userTb)
+                    .build());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteTrial(DeleteTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialTb> trialTb = trialRepository.findByTrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        if (trialTb.isPresent()) {
+            if (!encoder.matches(request.getPassword(), userTb.getPassword())) throw new TrialException(TrialResultCode.UN_MATCH_PASSWORD); // 비밀번호 불일치
+            trialDeleteService.deleteTrial(trialTb.get().getTrialId());
+            applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, -1));
         } else {
             throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
         }

@@ -1,8 +1,7 @@
 package com.kr.lg.module.trial;
 
 import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.model.common.listener.AlertVideoEvent;
-import com.kr.lg.module.trial.model.dto.TrialCreateCount;
+import com.kr.lg.module.trial.model.req.VoteTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
@@ -17,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +30,6 @@ import javax.validation.Valid;
 public class TrialEnrollController {
 
     private final TrialService trialService;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/api/v1/enroll/trial")
     @ApiOperation(value = "회원 트라이얼 게시판 등록", notes = "회원 트라이얼 게시판을 등록합니다.")
@@ -41,7 +38,6 @@ public class TrialEnrollController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
         TrialTb trialTb = trialService.enrollTrialWithLogin(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new TrialCreateCount(userAdapter.getUserTb(), 1));
         AbstractSpec spec = EnrollTrialWithLoginResponse.builder()
                 .id(trialTb.getTrialId())
                 .build();
@@ -49,12 +45,22 @@ public class TrialEnrollController {
     }
 
     @PostMapping("/api/v1/enroll/video")
+    @ApiOperation(value = "회원 트라이얼 게시판 비디오 파일 등록", notes = "회원 트라이얼 게시판 비디오 파일을 등록합니다.")
     public ResponseEntity<?> enrollVideoWithLogin(
             @ModelAttribute @Valid EnrollVideoWithLoginRequest request,
-            @ApiParam(value = "회원EnrollVideoDto 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
         TrialTb trialTb = trialService.enrollVideoWithLogin(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new AlertVideoEvent(trialTb));
+        return ResponseEntity.ok().body(new SuccessResponse());
+    }
+
+    @PostMapping("/api/v1/vote/trial")
+    @ApiOperation(value = "트라이얼 투표", notes = "트라이얼 투표를 합니다.")
+    public ResponseEntity<?> voteTrial(
+            @RequestBody @Valid VoteTrialRequest request,
+            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+    ) throws TrialException {
+        trialService.voteTrial(request, userAdapter.getUserTb());
         return ResponseEntity.ok().body(new SuccessResponse());
     }
 }

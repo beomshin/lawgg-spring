@@ -29,25 +29,25 @@ public interface UserRepository extends RootUserRepository {
 
     @Modifying
     @Query(value = "UPDATE UserTb SET commentCount = commentCount + :count  WHERE userId = :userId")
-    int updateCommentCount(@Param("userId") Long userId, Long count);
+    void updateCommentCount(@Param("userId") Long userId, Long count);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET boardCount = boardCount + :count  WHERE userId = :userId")
-    int updateBoardCount(@Param("userId") Long userId, Long count);
+    void updateBoardCount(@Param("userId") Long userId, Long count);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET trialCount = trialCount + :count  WHERE userId = :userId")
-    int updateTrialCount(@Param("userId") Long userId, Long count);
+    void updateTrialCount(@Param("userId") Long userId, Long count);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET password = :password  WHERE userId = :userId")
-    int updatePassword(@Param("userId") Long userId, String password);
+    void updatePassword(@Param("userId") Long userId, String password);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET password = :password, nickName = :nickName, email = :email, hashEmail = :hashEmail  WHERE userId = :userId")
-    int updateUser(@Param("userId") Long userId, String password, String nickName, String email, String hashEmail);
+    void updateUser(@Param("userId") Long userId, String password, String nickName, String email, String hashEmail);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET profile = :profile  WHERE userId = :userId")
-    int updateProfile(@Param("userId") Long userId, String profile);
+    void updateProfile(@Param("userId") Long userId, String profile);
 }
