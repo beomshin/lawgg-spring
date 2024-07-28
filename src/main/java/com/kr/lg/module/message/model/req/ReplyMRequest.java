@@ -1,5 +1,4 @@
-
-package com.kr.lg.model.net.request.message;
+package com.kr.lg.module.message.model.req;
 
 import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
@@ -13,14 +12,14 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "메세지 발신 요청 바디")
-public class SendMRequest implements RootRequest { // SendMessageRequest
+@ApiModel(value = "메세지 수신 요청 바디")
+public class ReplyMRequest implements RootRequest { // ReplyMessageRequest
 
-    @ApiModelProperty(value = "받는이 아이디", required = true)
-    @NotBlank(message = "받는이가 입력되어있지않습니다.")
-    private String receiver;
+    @ApiModelProperty(value = "수신 메세지 아이디", required = true)
+    @NotBlank(message = "수신 메세지 아이디가 입력되어있지않습니다.")
+    private Long id;
 
-    @ApiModelProperty(value = "제목", required = true)
+    @ApiModelProperty(value = "title", required = true)
     @NotBlank(message = "제목이 입력되어있지않습니다.")
     private String title;
 

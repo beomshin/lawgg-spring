@@ -1,10 +1,10 @@
 package com.kr.lg.model.common.layer;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.model.net.request.message.FindRMLRequest;
-import com.kr.lg.model.net.request.message.FindSMLRequest;
-import com.kr.lg.model.net.request.message.ReplyMRequest;
-import com.kr.lg.model.net.request.message.SendMRequest;
+import com.kr.lg.module.message.model.req.FindRMLRequest;
+import com.kr.lg.module.message.model.req.FindSMLRequest;
+import com.kr.lg.module.message.model.req.ReplyMRequest;
+import com.kr.lg.module.message.model.req.SendMRequest;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

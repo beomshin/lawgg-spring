@@ -1,4 +1,4 @@
-package com.kr.lg.service.message;
+package com.kr.lg.module.message.service;
 
 import com.kr.lg.exception.LgException;
 import com.kr.lg.model.common.layer.MainLayer;
@@ -9,7 +9,5 @@ public interface MessageCreateService {
 
     @Transactional
     void sendMessage(MainLayer messageDto) throws LgException;
-    @Transactional
-    void replyMessage(MainLayer messageDto) throws LgException;
 
 }

@@ -1,4 +1,4 @@
-package com.kr.lg.model.net.request.message;
+package com.kr.lg.module.message.model.req;
 
 import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;

@@ -4,6 +4,7 @@ import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.comment.exception.CommentResultCode;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
+import com.kr.lg.module.message.exception.MessageResultCode;
 import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.web.dto.global.GlobalCode;
 
@@ -35,6 +36,10 @@ public class ErrorResponse extends AbstractSpec {
     }
 
     public ErrorResponse(TrialResultCode code) {
+        super(code.getCode(), code.getMsg(), isSuccess(code.getCode()));
+    }
+
+    public ErrorResponse(MessageResultCode code) {
         super(code.getCode(), code.getMsg(), isSuccess(code.getCode()));
     }
 

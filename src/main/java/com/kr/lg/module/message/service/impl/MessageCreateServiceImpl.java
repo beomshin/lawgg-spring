@@ -1,15 +1,14 @@
-package com.kr.lg.service.message.impl;
+package com.kr.lg.module.message.service.impl;
 
 import com.kr.lg.db.entities.MessageTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.exception.LgException;
-import com.kr.lg.enums.ReplyEnum;
 import com.kr.lg.db.repositories.MessageRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.MessageUtils;
 import com.kr.lg.model.common.layer.MainLayer;
-import com.kr.lg.service.message.MessageCreateService;
+import com.kr.lg.module.message.service.MessageCreateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,16 +33,4 @@ public class MessageCreateServiceImpl implements MessageCreateService {
                 .build());
     }
 
-    @Override
-    public void replyMessage(MainLayer messageDto) throws LgException {
-        MessageTb messageTb = messageRepository.findById(messageDto.getId()).orElseThrow(() -> new LgException(GlobalCode.NOT_EXIST_MESSAGE)); // 수신 메세지
-        messageUtils.checkReceiver(messageTb.getReceiver(), messageDto.getUserTb()); // 발송자가 수신한 메세지 맞는지 확인
-        messageRepository.save(MessageTb.builder()
-                .receiver(messageDto.getSender())
-                .sender(messageDto.getUserTb())
-                .title(messageDto.getTitle())
-                .content(messageDto.getContent())
-                .build()); // 회신하기
-        messageRepository.reply(messageTb.getMessageId(), ReplyEnum.REPLY_FLAG);
-    }
 }
