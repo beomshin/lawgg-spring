@@ -5,54 +5,65 @@
 
 <mapper namespace="com.kr.lg.module.user.mapper.UserMapper">
 
-    <select id="findUserBoards"  resultType="com.kr.lg.module.user.model.mapper.UBoardMapper">
+    <select id="findBoards" parameterType="com.kr.lg.web.dto.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserBoardEntry">
         SELECT *
-
         FROM
-            (
-                SELECT boardId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 0 as `type`, status
-                FROM BoardTb
-                WHERE userId = #{userId} and status = 1
-                    <if test="keyword != null and keyword.length > 0">
-                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
-                    </if>
+        (
+            SELECT bt.boardId AS 'id', bt.userId,  bt.lawFirmId, bt.title,  bt.content,  bt.writer, bt.writeDt, bt.postType, bt.commentCount, bt.recommendCount, bt.`view`, bt.report, 0 as `type`, bt.status
+            FROM BoardTb bt
+            WHERE bt.userId = #{data.userId} and bt.status = 1
+            <if test="data.keyword != null and data.keyword.length > 0">
+                 and (bt.title like concat('%', #{data.keyword}, '%') or bt.content like concat('%', #{data.keyword}, '%') or bt.writer like concat('%', #{data.keyword}, '%'))
+            </if>
 
-                UNION ALL
+            UNION ALL
 
-                SELECT trialId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 1 as `type`, status
-                FROM TrialTb
-                WHERE userId = #{userId} and (status = 1 or status = 3 or status = 4)
-                    <if test="keyword != null and keyword.length > 0">
-                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
-                    </if>
-            ) A
-        ORDER BY writeDt DESC
-        LIMIT #{limit}
-        OFFSET #{offset};
+            SELECT tt.trialId AS 'id', tt.userId, tt.lawFirmId, tt.title, tt.content, tt.writer, tt.writeDt, tt.postType, tt.commentCount, tt.recommendCount, tt.`view`, tt.report, 1 as `type`, tt.status
+            FROM TrialTb tt
+            WHERE tt.userId = #{data.userId} and (tt.status = 1 or tt.status = 3 or tt.status = 4)
+            <if test="data.keyword != null and data.keyword.length > 0">
+                and (tt.title like concat('%', #{data.keyword}, '%') or tt.content like concat('%', #{data.keyword}, '%') or tt.writer like concat('%', #{data.keyword}, '%'))
+            </if>
+        ) A
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
     </select>
 
-    <select id="findUserBoardsCount" resultType="int">
+    <select id="findBoardsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
         SELECT COUNT(*)
         FROM
-            (
-                SELECT boardId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 0 as `type`
-                FROM BoardTb
-                WHERE userId = #{userId} and status = 1
-                    <if test="keyword != null and keyword.length > 0">
-                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
-                    </if>
+        (
+            SELECT bt.boardId AS 'id', bt.userId,  bt.lawFirmId, bt.title,  bt.content,  bt.writer, bt.writeDt, bt.postType, bt.commentCount, bt.recommendCount, bt.`view`, bt.report, 0 as `type`, bt.status
+            FROM BoardTb bt
+            WHERE bt.userId = #{userId} and bt.status = 1
+            <if test="keyword != null and keyword.length > 0">
+                and (bt.title like concat('%', #{keyword}, '%') or bt.content like concat('%', #{keyword}, '%') or bt.writer like concat('%', #{keyword}, '%'))
+            </if>
 
-                UNION ALL
+            UNION ALL
 
-                SELECT trialId AS 'id', userId, lawFirmId, title, content, writer, writeDt, postType, commentCount, recommendCount, `view`, report, 1 as `type`
-                FROM TrialTb
-                WHERE userId = #{userId} and (status = 1 or status = 3 or status = 4)
-                    <if test="keyword != null and keyword.length > 0">
-                        and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%') or writer like concat('%', #{keyword}, '%'))
-                    </if>
-
-            ) A
+            SELECT tt.trialId AS 'id', tt.userId, tt.lawFirmId, tt.title, tt.content, tt.writer, tt.writeDt, tt.postType, tt.commentCount, tt.recommendCount, tt.`view`, tt.report, 1 as `type`, tt.status
+            FROM TrialTb tt
+            WHERE tt.userId = #{userId} and (tt.status = 1 or tt.status = 3 or tt.status = 4)
+            <if test="keyword != null and keyword.length > 0">
+                and (tt.title like concat('%', #{keyword}, '%') or tt.content like concat('%', #{keyword}, '%') or tt.writer like concat('%', #{keyword}, '%'))
+            </if>
+        ) A
     </select>
 
+    <select id="findUserIds" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserEntry">
+        SELECT ut.loginId, ut.profile, ut.nickName, ut.delFlag, ut.status, ut.regDt, ut.snsType
+        FROM UserTb ut
+        <where>
+            ut.snsType = '0'
+            AND ut.ci = #{ci}
+        </where>
+    </select>
 
 </mapper>

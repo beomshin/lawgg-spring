@@ -1,5 +1,6 @@
 package com.kr.lg.module.board.model.entry;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.module.board.exception.BoardException;
@@ -22,6 +23,7 @@ public class BoardEntry {
     private int postType; // 게시글 타입
     private String title; // 제목
     private String writer; // 작성자
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp writeDt; // 작성일
     private int view; // 조회수
     private int recommendCount; // 추천수

@@ -40,7 +40,7 @@ public class UserLayer {
         this.userTb = userTb;
     }
 
-    public UserLayer(FindIURequest request) throws NoSuchAlgorithmException {
+    public UserLayer(FindUserIdRequest request) throws NoSuchAlgorithmException {
         this.error_code = request.getError_code();
         this.error_msg = request.getError_msg();
         this.imp_uid = request.getImp_uid();
@@ -83,7 +83,7 @@ public class UserLayer {
         this.userTb = userTb;
     }
 
-    public UserLayer(FindUBRequest requestDto, UserTb userTb) {
+    public UserLayer(FindUserBoardsRequest requestDto, UserTb userTb) {
         this.userTb = userTb;
         this.page = requestDto.getPage();
         this.pageNum = requestDto.getPageNum();

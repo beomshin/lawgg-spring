@@ -28,25 +28,6 @@ public class UserQuery {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public JPAQuery<UserQ> findIdUser(UserLayer requestDto) {
-        log.debug("[findIdUser] 아이디 찾기 ci 조회");
-        return jpaQueryFactory
-                .select(new QUserQ(
-                        userTb.loginId,
-                        userTb.profile,
-                        userTb.nickName,
-                        userTb.delFlag,
-                        userTb.status,
-                        userTb.regDt,
-                        userTb.snsType
-                ))
-                .from(userTb)
-                .where(
-                        userTb.ci.eq(requestDto.getCi()),
-                        userTb.snsType.eq(SnsType.LG_SNS_TYPE)
-                );
-    }
-
     public JPAQuery<UserQ> findInfoUser(UserLayer requestDto) {
         return jpaQueryFactory
                 .select(new QUserQ(

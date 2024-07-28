@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface UserDao {
 
-    List<UserQ> findIdUser(UserLayer requestDto);
     UserQ findInfoUser(UserLayer requestDto);
     Page<AlertQ> findUserAlert(UserLayer requestDto, Pageable pageable);
     List<AlertTb> findTop5Alert(UserLayer requestDto, Pageable pageable);

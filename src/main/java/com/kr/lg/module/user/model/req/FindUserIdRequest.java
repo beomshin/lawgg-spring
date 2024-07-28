@@ -1,15 +1,16 @@
 package com.kr.lg.module.user.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "회원 아이디 조회 요청 바디")
-public class FindIURequest implements RootRequest { // FindIdUserRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "회원 아이디 조회 요청 Body")
+public class FindUserIdRequest {
 
     @ApiModelProperty(value = "에러 코드")
     private String error_code;
