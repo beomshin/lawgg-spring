@@ -1,4 +1,4 @@
-package com.kr.lg.service.user;
+package com.kr.lg.module.user.service;
 
 import com.kr.lg.exception.LgException;
 import com.kr.lg.web.dto.root.DefaultResponse;

@@ -1,6 +1,6 @@
-package com.kr.lg.db.mapper;
+package com.kr.lg.module.user.mapper;
 
-import com.kr.lg.model.mapper.UBoardMapper;
+import com.kr.lg.module.user.model.mapper.UBoardMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.kr.lg.model.common.layer;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.model.net.request.user.*;
+import com.kr.lg.module.user.model.req.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;

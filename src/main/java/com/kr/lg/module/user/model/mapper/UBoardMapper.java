@@ -1,4 +1,4 @@
-package com.kr.lg.model.mapper;
+package com.kr.lg.module.user.model.mapper;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

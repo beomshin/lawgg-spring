@@ -1,15 +1,15 @@
-package com.kr.lg.controller.user;
+package com.kr.lg.module.user;
 
 import com.kr.lg.exception.LgException;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.dto.root.DefaultResponse;
-import com.kr.lg.model.net.request.user.UpdateUARequest;
+import com.kr.lg.module.user.model.req.UpdateUARequest;
 import com.kr.lg.model.common.layer.UserLayer;
-import com.kr.lg.model.net.request.user.UpdateIURequest;
-import com.kr.lg.model.net.request.user.UpdatePURequest;
-import com.kr.lg.model.net.request.user.UpdateUPRequest;
-import com.kr.lg.service.user.UserUpdateService;
+import com.kr.lg.module.user.model.req.UpdateIURequest;
+import com.kr.lg.module.user.model.req.UpdatePURequest;
+import com.kr.lg.module.user.model.req.UpdateUPRequest;
+import com.kr.lg.module.user.service.UserUpdateService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

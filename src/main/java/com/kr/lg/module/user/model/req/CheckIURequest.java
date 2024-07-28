@@ -1,15 +1,21 @@
-package com.kr.lg.model.net.request.user;
+package com.kr.lg.module.user.model.req;
 
 import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "회원 아이디 조회 요청 바디")
-public class FindIURequest implements RootRequest { // FindIdUserRequest
+@ApiModel(value = "유저 아이디 찾기 요청 바디")
+public class CheckIURequest implements RootRequest { // CheckIdUserRequest
+
+    @ApiModelProperty(value = "로그인 아이디", required = true)
+    @NotBlank(message = "loginId 값이 입력되어있지않습니다.")
+    private String loginId;
 
     @ApiModelProperty(value = "에러 코드")
     private String error_code;
@@ -31,4 +37,5 @@ public class FindIURequest implements RootRequest { // FindIdUserRequest
 
     @ApiModelProperty(value = "성공 여부")
     private Boolean success;
+
 }

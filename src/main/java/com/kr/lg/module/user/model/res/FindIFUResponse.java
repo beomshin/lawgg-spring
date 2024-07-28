@@ -1,4 +1,4 @@
-package com.kr.lg.model.net.response.user;
+package com.kr.lg.module.user.model.res;
 
 import com.kr.lg.web.dto.root.DefaultResponse;
 import com.kr.lg.model.querydsl.UserQ;
