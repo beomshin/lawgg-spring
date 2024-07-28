@@ -1,6 +1,6 @@
 package com.kr.lg.module.trial;
 
-import com.kr.lg.module.trial.model.dto.TrialCountEvent;
+import com.kr.lg.module.trial.model.event.TrialCountEvent;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.model.res.FindTrialWithNotLoginResponse;

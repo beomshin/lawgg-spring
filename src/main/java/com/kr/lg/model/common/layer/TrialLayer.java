@@ -7,9 +7,9 @@ import com.kr.lg.enums.TrialSubjectEnum;
 import com.kr.lg.enums.TrialTopicEnum;
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.enums.PrecedentEnum;
+import com.kr.lg.module.board.model.req.ReportTrialRequest;
 import com.kr.lg.module.trial.model.req.*;
 import com.kr.lg.web.dto.global.GlobalFile;
-import com.kr.lg.model.net.request.trial.base.*;
 import com.kr.lg.model.net.request.trial.comment.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -112,25 +112,8 @@ public class TrialLayer {
         }
     }
 
-    public TrialLayer(EnrollLFTRequest request, UserTb userTb) {
-        this.title = request.getTitle();
-        this.plaintiff = request.getPlaintiff();
-        this.defendant = request.getDefendant();
-        this.subheading = request.getSubheading();
-        this.plaintiffOpinion = request.getPlaintiffOpinion();
-        this.defendantOpinion = request.getDefendantOpinion();
-        this.content = request.getContent();
-        this.files = request.getFiles();
-        this.userTb = userTb;
-    }
 
-    public TrialLayer(LoginUTRequest requestDto, UserTb userTb) {
-        this.id = requestDto.getId();
-        this.password = requestDto.getPassword();
-        this.userTb = userTb;
-    }
-
-    public TrialLayer(DeleteUTRequest requestDto, UserTb userTb) {
+    public TrialLayer(DeleteTrialRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.password = requestDto.getPassword();
         this.userTb = userTb;
@@ -144,14 +127,6 @@ public class TrialLayer {
         this.keyword = requestDto.getKeyword();
     }
 
-    public TrialLayer(FindUTLRequest requestDto, UserTb userTb) {
-        this.page = requestDto.getPage();
-        this.pageNum = requestDto.getPageNum();
-        this.topic = requestDto.getTopic();
-        this.subject = requestDto.getSubject();
-        this.keyword = requestDto.getKeyword();
-        this.userTb = userTb;
-    }
 
     public TrialLayer(Long id, String ip) {
         this.id = id;
@@ -164,27 +139,18 @@ public class TrialLayer {
         this.userTb = userTb;
     }
 
-    public TrialLayer(UpdateTRequest requestDto, UserTb userTb) {
-        this.subheading = requestDto.getSubheading();
-        this.plaintiffOpinion = requestDto.getPlaintiffOpinion();
-        this.defendantOpinion = requestDto.getDefendantOpinion();
-        this.content = requestDto.getContent();
-        this.addFiles = requestDto.getAddFiles();
-        this.deleteFiles = requestDto.getDeleteFiles();
-        this.userTb = userTb;
-    }
 
-    public TrialLayer(RecommendTRequest requestDto, UserTb userTb) {
+    public TrialLayer(RecommendTrialRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.userTb = userTb;
     }
 
-    public TrialLayer(DeleteRTRequest requestDto, UserTb userTb) {
+    public TrialLayer(DeleteRecommendTrialRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.userTb = userTb;
     }
 
-    public TrialLayer(ReportTRequest requestDto, String ip) {
+    public TrialLayer(ReportTrialRequest requestDto, String ip) {
         this.id = requestDto.getId();
         this.ip = ip;
         this.content = requestDto.getContent();
@@ -220,7 +186,7 @@ public class TrialLayer {
         this.userTb = userTb;
     }
 
-    public TrialLayer(VoteTRequest requestDto, UserTb userTb) {
+    public TrialLayer(VoteTrialRequest requestDto, UserTb userTb) {
         this.id = requestDto.getId();
         this.precedent = PrecedentEnum.of(requestDto.getPrecedent());
         this.userTb = userTb;

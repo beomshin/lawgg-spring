@@ -1,4 +1,4 @@
-package com.kr.lg.module.trial.model.dto;
+package com.kr.lg.module.board.model.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Getter
-public class TrialCountEvent {
+public class BoardCountEvent { // BoardCreateEvent
 
-    private Long trialId;
+
+    private Long boardId;
     private String ip;
 }

@@ -1,18 +1,17 @@
 package com.kr.lg.db.repositories;
 
-import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.db.entities.TrialRecommendTb;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 public interface TrialRecommendRepository extends RootTrialRecommendRepository {
 
-    int countByTrialTb_TrialIdAndUserTb_UserId(long trialId, long userId);
+    Optional<TrialRecommendTb> findByTrialTb_TrialIdAndUserTb_UserId(@Param("trialId") long trialId, @Param("userId") long userId);
 
-    @Transactional
     @Modifying
-    @Query(value = "DELETE FROM TrialRecommendTb where trialTb = :trialTb and userTb = :userTb")
-    int deleteRecommendTrial(@Param("trialTb") TrialTb trialTb, @Param("userTb") UserTb userTb);
+    @Query(value = "DELETE FROM TrialRecommendTb where trialTb.trialId = :trialId and userTb.userId = :userId")
+    void deleteRecommendTrial(@Param("trialId") long trialId, @Param("userId") long userId);
 }

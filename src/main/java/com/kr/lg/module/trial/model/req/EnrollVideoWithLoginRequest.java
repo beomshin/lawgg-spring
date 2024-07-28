@@ -7,10 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "트라이얼 비디오,리플레이 등록 요청 바디")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "로그인 트라이얼 비디오,리플레이 등록 요청 Body")
 public class EnrollVideoWithLoginRequest {
 
     @NotNull

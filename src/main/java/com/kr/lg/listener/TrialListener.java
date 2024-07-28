@@ -1,9 +1,9 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.model.common.listener.TrialCEvent;
-import com.kr.lg.module.trial.model.dto.TrialCreateCount;
-import com.kr.lg.module.trial.model.dto.TrialCountEvent;
-import com.kr.lg.model.common.listener.TrialREvent;
+import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
+import com.kr.lg.module.trial.model.event.TrialCountEvent;
+import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.TrialTb;
@@ -47,17 +47,17 @@ public class TrialListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void updateTrialCount(TrialCreateCount TrialCreateCount) {
+    public void updateTrialCount(TrialCreateCountEvent TrialCreateCountEvent) {
         log.debug("[updateTrialCount]");
-        UserTb userTb = TrialCreateCount.getUserTb();
-        userRepository.updateTrialCount(userTb.getUserId(), Long.valueOf(TrialCreateCount.getNum()));
+        UserTb userTb = TrialCreateCountEvent.getUserTb();
+        userRepository.updateTrialCount(userTb.getUserId(), Long.valueOf(TrialCreateCountEvent.getNum()));
     }
 
 
     @TransactionalEventListener
     @Async
     @Transactional
-    public void  updateTrialRecommendCount(TrialREvent trialR) {
+    public void  updateTrialRecommendCount(TrialRecommendEvent trialR) {
         log.debug("[updateTrialRecommendCount] : {}", trialR);
         TrialTb trialTb = trialRepository.findLockTrial(trialR.getTrialId());
         trialRepository.updateRecommendCount(trialTb.getTrialId(), Long.valueOf(trialR.getNum()));

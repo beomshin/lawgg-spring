@@ -2,6 +2,9 @@ package com.kr.lg.module.trial.service;
 
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
+import com.kr.lg.module.trial.model.req.VoteTrialRequest;
+import com.kr.lg.module.board.model.req.ReportTrialRequest;
 import com.kr.lg.module.trial.model.req.*;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
@@ -16,4 +19,9 @@ public interface TrialService {
     TrialTb enrollVideoWithLogin(EnrollVideoWithLoginRequest request, UserTb userTb) throws TrialException;
     TrialTb trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException;
     void trialEndLive(UpdateEndTrialRequest request, UserTb userTb) throws TrialException;
+    void recommendTrial(RecommendTrialRequest request, UserTb userTb) throws TrialException;
+    void deleteRecommendTrial(DeleteRecommendTrialRequest request, UserTb userTb) throws TrialException;
+    void reportTrial(ReportTrialRequest request, String ip) throws TrialException;
+    void voteTrial(VoteTrialRequest request, UserTb userTb) throws TrialException;
+    void deleteTrial(DeleteTrialRequest request, UserTb userTb) throws TrialException;
 }

@@ -1,17 +1,17 @@
-package com.kr.lg.model.net.request.trial.base;
+package com.kr.lg.module.trial.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "트라이얼 게시판 추천 삭제 요청 바디")
-public class DeleteRTRequest implements RootRequest { // DeleteRecommendTrialRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "트라이얼 게시판 추천요청 Body")
+public class RecommendTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디", required = true)
     @NotNull(message = "트라이얼 아이디가 입력되어있지않습니다.")

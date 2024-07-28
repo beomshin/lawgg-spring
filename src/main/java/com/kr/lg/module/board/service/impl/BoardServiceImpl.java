@@ -63,7 +63,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public Page<BoardEntry> findBoards(FindBoardRequest request) throws BoardException {
-        log.info("▶ [포지션 게시판] findBoards 메소드 실행");
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
         MapperParam param = FindBoardsParamData.builder()
                 .type(request.getType())
@@ -83,7 +82,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public Page<BoardEntry> findMyBoards(FindMyBoardRequest request, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] findMyBoards 메소드 실행");
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
         MapperParam param = FindBoardsParamData.builder()
                 .type(request.getType())
@@ -103,7 +101,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public Page<BoardEntry> findLawFirmBoards(FindLawFirmBoardRequest request) throws BoardException {
-        log.info("▶ [포지션 게시판] findLawFirmBoards 메소드 실행");
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
         MapperParam param = FindBoardsParamData.builder()
                 .subject(request.getSubject())
@@ -122,7 +119,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public BoardEntry findBoardWithNotLogin(long boardId) throws BoardException {
-        log.info("▶ [포지션 게시판] findBoardIdWithNotLogin 메소드 실행");
         MapperParam param = FindBoardParamData.builder()
                 .boardId(boardId)
                 .build();
@@ -140,7 +136,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public BoardEntry findBoardWithLogin(long boardId, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] findBoardIdWithLogin 메소드 실행");
         MapperParam param = FindBoardParamData.builder()
                 .boardId(boardId)
                 .userId(userTb.getUserId())
@@ -159,7 +154,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void enrollBoardWithNotLogin(EnrollBoardWithNotLoginRequest request, String ip) throws BoardException {
-        log.info("▶ [포지션 게시판] enrollBoardWithNotLogin 메소드 실행");
         boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
 
         BoardEnrollDto board = BoardEnrollDto.builder()
@@ -190,8 +184,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void enrollBoardWithLogin(EnrollBoardWithLoginRequest request, String ip, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] enrollBoardWithLogin 메소드 실행");
-
         if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
         boolean isEnrollLawFirm = request.getIsLawFirm() != null && request.getIsLawFirm() == 1;
         boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
@@ -224,8 +216,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] enrollBoardWithLawFirmLogin 메소드 실행");
-
         if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
         else if (userTb.getLawFirmId() == null) throw new BoardException(BoardResultCode.NOT_EXIST_LAW_FIRM); // 로펌 필수
         else if (!Objects.equals(userTb.getLawFirmId().getLawFirmId(), request.getId())) throw new BoardException(BoardResultCode.UN_MATCHED_LAW_FIRM_USER);
@@ -258,8 +248,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException {
-        log.info("▶ [포지션 게시판] updateBoardWithNotLogin 메소드 실행");
-
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.ANONYMOUS_TYPE);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
@@ -288,8 +276,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] updateBoardWithLogin 메소드 실행");
-
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.MEMBER_TYPE);
         if (boardTb.isPresent()) {
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
@@ -316,8 +302,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException {
-        log.info("▶ [포지션 게시판] deleteBoardWithNotLogin 메소드 실행");
-
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.ANONYMOUS_TYPE, StatusEnum.NORMAL_STATUS);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
@@ -336,8 +320,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] deleteBoardWithLogin 메소드 실행");
-
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.MEMBER_TYPE, StatusEnum.NORMAL_STATUS);
         if (boardTb.isPresent()) {
             boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostEnum.BEST_TYPE) || boardTb.get().getPostType().equals(PostEnum.RECOMMEND); // 베스트 or 추천 게시판 플래그
@@ -359,7 +341,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void reportBoard(ReportBoardRequest request, String ip) throws BoardException {
-        log.info("▶ [포지션 게시판] reportBoard 메소드 실행");
         BoardReportDto reportDto = BoardReportDto.builder()
                 .ip(ip)
                 .content(request.getContent())
@@ -376,8 +357,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] recommendBoard 메소드 실행");
-
         Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getId(), userTb.getUserId()); // 나의 추천 내역 조회
         if (boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_RECOMMEND_BOARD); // 중복 추천 방어코드
         boardRecommendService.recommendBoard(BoardTb.builder().boardId(request.getId()).build(), userTb); // 게시판 추천
@@ -391,7 +370,8 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void deleteRecommendBoard(DeleteRecommendBoardRequest request, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] deleteRecommendBoard 메소드 실행");
+        Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getId(), userTb.getUserId()); // 나의 추천 내역 조회
+        if (!boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_DELETE_RECOMMEND_BOARD); // 이미 추천 취소 처리
         boardRecommendService.deleteRecommendBoard(request.getId(), userTb.getUserId()); // 게시판 추천 취소
     }
 
@@ -402,8 +382,6 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void loginBoardWithNotLogin(LoginBoardWithNotLoginRequest request) throws BoardException {
-        log.info("▶ [포지션 게시판] loginBoardWithNotLogin 메소드 실행");
-
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.ANONYMOUS_TYPE);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);

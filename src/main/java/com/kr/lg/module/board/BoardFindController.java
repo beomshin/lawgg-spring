@@ -3,7 +3,7 @@ package com.kr.lg.module.board;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.module.board.model.dto.BoardCountEventDto;
+import com.kr.lg.module.board.model.event.BoardCountEvent;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.model.req.FindBoardRequest;
@@ -94,7 +94,7 @@ public class BoardFindController {
             @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long id
     ) throws BoardException {
         BoardEntry boardEntry = boardService.findBoardWithNotLogin(id);
-        applicationEventPublisher.publishEvent(new BoardCountEventDto(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
+        applicationEventPublisher.publishEvent(new BoardCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
         AbstractSpec spec = FindBoardResponse.builder()
                 .board(boardEntry)
                 .build();
@@ -110,7 +110,7 @@ public class BoardFindController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         BoardEntry boardEntry = boardService.findBoardWithLogin(id, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardCountEventDto(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
+        applicationEventPublisher.publishEvent(new BoardCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가 이벤트
         AbstractSpec spec = FindBoardResponse.builder()
                 .board(boardEntry)
                 .build();

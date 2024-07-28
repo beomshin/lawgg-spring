@@ -1,17 +1,18 @@
-package com.kr.lg.model.net.request.trial.base;
+package com.kr.lg.module.trial.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "유저 트라이얼 게시판 삭제 요청 바디")
-public class DeleteUTRequest implements RootRequest { // DeleteUserTrialRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "트라이얼 게시판 삭제 요청 Body")
+public class DeleteTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디")
     @NotNull(message = "게시판아이디가 입력되어있지않습니다.")

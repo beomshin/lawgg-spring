@@ -19,6 +19,7 @@ import java.util.Optional;
 
 public interface TrialRepository extends RootTrialRepository {
 
+    Optional<TrialTb> findByTrialIdAndUserTb_UserId(@Param("trialId") long trialId, @Param("userId") long userId);
     TrialTb findByTrialIdAndUserTb(Long trialId, UserTb userTb);
 
     @Query(value = "SELECT * FROM TrialTb b ORDER BY b.mainPostType desc, b.view desc LIMIT 1", nativeQuery = true)

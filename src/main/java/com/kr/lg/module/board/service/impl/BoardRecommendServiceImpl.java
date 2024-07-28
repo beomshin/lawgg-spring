@@ -43,7 +43,7 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
             boardRecommendRepository.deleteRecommendBoard(boardId, userId);
         } catch (Exception e) {
             log.error("", e);
-            throw new BoardException(BoardResultCode.DELETE_BOARD);
+            throw new BoardException(BoardResultCode.FAIL_DELETE_RECOMMEND_BOARD);
         }
     }
 

@@ -1,7 +1,7 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.module.board.model.dto.BoardRecommendEventDto;
+import com.kr.lg.module.board.model.event.BoardRecommendEvent;
 import com.kr.lg.module.board.model.req.DeleteRecommendBoardRequest;
 import com.kr.lg.module.board.model.req.RecommendBoardRequest;
 import com.kr.lg.module.board.model.req.ReportBoardRequest;
@@ -71,7 +71,7 @@ public class BoardUpdateController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         boardService.recommendBoard(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardRecommendEventDto(request.getId(), 1)); // 추천 수 증가
+        applicationEventPublisher.publishEvent(new BoardRecommendEvent(request.getId(), 1)); // 추천 수 증가
         return ResponseEntity.ok(new SuccessResponse());
     }
 
