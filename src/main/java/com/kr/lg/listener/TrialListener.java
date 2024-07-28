@@ -1,6 +1,6 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.model.common.listener.TrialCEvent;
+import com.kr.lg.module.comment.model.event.TrialCommentCreateCountEvent;
 import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
 import com.kr.lg.module.trial.model.event.TrialCountEvent;
 import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
@@ -11,6 +11,7 @@ import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +25,7 @@ public class TrialListener {
     private final TrialRepository trialRepository;
     private final UserRepository userRepository;
 
-    @Value("${spring.profiles.active}")
-    private String active;
-
-
-    @TransactionalEventListener
+    @EventListener
     @Async
     @Transactional
     public void increaseCount(TrialCountEvent TrialCountEvent) { // 조회수 증가
@@ -38,10 +35,10 @@ public class TrialListener {
     @TransactionalEventListener
     @Async
     @Transactional
-    public void  updateTrialCommentCount(TrialCEvent TrialCEvent) {
+    public void  updateTrialCommentCount(TrialCommentCreateCountEvent TrialCommentCreateCountEvent) {
         log.debug("[updateTrialCommentCount]");
-        TrialTb trialTb = trialRepository.findLockTrial(TrialCEvent.getTrialId());
-        trialRepository.updateCommentCount(trialTb.getTrialId(), Long.valueOf(TrialCEvent.getNum()));
+        TrialTb trialTb = trialRepository.findLockTrial(TrialCommentCreateCountEvent.getTrialId());
+        trialRepository.updateCommentCount(trialTb.getTrialId(), Long.valueOf(TrialCommentCreateCountEvent.getNum()));
     }
 
     @TransactionalEventListener

@@ -1,7 +1,6 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.model.common.UserAdapter;
-import com.kr.lg.module.board.model.event.BoardCreateCountEvent;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;
@@ -12,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +24,6 @@ import javax.validation.Valid;
 public class BoardDeleteController {
 
     private final BoardService boardService;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/api/public/v1/delete/board")
     @ApiOperation(value = "비로그인 포지션 게시판 삭제", notes = "비로그인 포지션 게시판 삭제를 합니다.")
@@ -44,7 +41,6 @@ public class BoardDeleteController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
         boardService.deleteBoardWithLogin(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new BoardCreateCountEvent(userAdapter.getUserTb(), -1));
         return ResponseEntity.ok(new SuccessResponse());
     }
 

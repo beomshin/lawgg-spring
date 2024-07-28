@@ -1,4 +1,4 @@
-package com.kr.lg.module.comment.model.dto;
+package com.kr.lg.module.comment.model.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

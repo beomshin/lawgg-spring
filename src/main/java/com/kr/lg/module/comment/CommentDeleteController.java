@@ -1,6 +1,7 @@
 package com.kr.lg.module.comment;
 
 import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentException;
@@ -45,5 +46,13 @@ public class CommentDeleteController {
         return ResponseEntity.ok().body(new SuccessResponse());
     }
 
-
+    @PostMapping("/api/v1/delete/trial/comment")
+    @ApiOperation(value = "로그인 트라이얼 게시판 댓글 삭제", notes = "로그인 트라이얼 게시판 댓글 삭제를합니다.")
+    public ResponseEntity<?> deleteCommentTrial(
+            @RequestBody DeleteCommentTrialRequest request,
+            @ApiParam(value = "회원 토큰", required = true, hidden = true) @UserPrincipal UserAdapter userAdapter
+    ) throws  CommentException {
+        commentService.deleteTrialCommentWithLogin(request, userAdapter.getUserTb());
+        return ResponseEntity.ok().body(new SuccessResponse());
+    }
 }

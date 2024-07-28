@@ -2,10 +2,7 @@ package com.kr.lg.module.trial;
 
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.model.common.listener.AlertTLEvent;
 import com.kr.lg.module.board.model.req.ReportTrialRequest;
-import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
 import com.kr.lg.module.trial.model.req.DeleteRecommendTrialRequest;
 import com.kr.lg.module.trial.model.req.RecommendTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
@@ -20,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,15 +31,13 @@ import javax.validation.Valid;
 public class TrialUpdateController {
 
     private final TrialService trialService;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/api/v1/live/start/trial")
     public ResponseEntity<?> updateLiveTrial(
             @RequestBody @Valid UpdateLiveTrialRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
-        TrialTb trialTb = trialService.trialStartLive(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new AlertTLEvent(trialTb));
+        trialService.trialStartLive(request, userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());
     }
 
@@ -63,7 +57,6 @@ public class TrialUpdateController {
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
         trialService.recommendTrial(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new TrialRecommendEvent(request.getId(), 1));
         return ResponseEntity.ok(new SuccessResponse());
     }
 

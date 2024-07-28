@@ -11,6 +11,10 @@ import com.kr.lg.db.repositories.TrialVoteRepository;
 import com.kr.lg.enums.PrecedentEnum;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.enums.TrialTopicEnum;
+import com.kr.lg.module.trial.model.event.AlertTLEvent;
+import com.kr.lg.module.trial.model.event.AlertVideoEvent;
+import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
+import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
 import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
 import com.kr.lg.module.board.model.req.ReportTrialRequest;
@@ -35,6 +39,7 @@ import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -67,6 +72,7 @@ public class TrialServiceImpl implements TrialService {
     private final TrialAttachRepository trialAttachRepository;
     private final CommentMapper commentMapper;
     private final BCryptPasswordEncoder encoder;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public Page<TrialEntry> findTrials(FindTrialsRequest request) throws TrialException {
@@ -128,6 +134,7 @@ public class TrialServiceImpl implements TrialService {
                 .build();
         TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
         trialEnrollService.enrollTrialFiles(trialTb, request.getFiles());
+        applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, 1));
         return trialTb;
     }
 
@@ -146,12 +153,14 @@ public class TrialServiceImpl implements TrialService {
                 replay != null ? replay.getPath() : null,
                 video == null ? StatusEnum.FAIL_STATUS : StatusEnum.NORMAL_STATUS
         );
+        applicationEventPublisher.publishEvent(new AlertVideoEvent(trialTb));
+
         return trialTb;
     }
 
     @Override
     @Transactional
-    public TrialTb trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException {
+    public void trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException {
         Optional<TrialTb> trialTb = trialRepository.findById(request.getId());
         if (trialTb.isPresent()) {
             trialUpdateService.updateLiveStartTrial(TrialUpdateDto.builder()
@@ -159,10 +168,10 @@ public class TrialServiceImpl implements TrialService {
                     .userTb(userTb)
                     .url(request.getUrl())
                     .build());
+            applicationEventPublisher.publishEvent(new AlertTLEvent(trialTb.get()));
         } else {
             throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
         }
-        return null;
     }
 
     @Override
@@ -185,6 +194,7 @@ public class TrialServiceImpl implements TrialService {
         Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
         if (recommendTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_RECOMMEND_TRIAL); // 중복 추천 방어코드
         trialRecommendService.recommendTrial(TrialTb.builder().trialId(request.getId()).build(), userTb);
+        applicationEventPublisher.publishEvent(new TrialRecommendEvent(request.getId(), 1));
     }
 
     @Override
@@ -222,11 +232,13 @@ public class TrialServiceImpl implements TrialService {
     }
 
     @Override
+    @Transactional
     public void deleteTrial(DeleteTrialRequest request, UserTb userTb) throws TrialException {
         Optional<TrialTb> trialTb = trialRepository.findByTrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
         if (trialTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), userTb.getPassword())) throw new TrialException(TrialResultCode.UN_MATCH_PASSWORD); // 비밀번호 불일치
             trialDeleteService.deleteTrial(trialTb.get().getTrialId());
+            applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, -1));
         } else {
             throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
         }

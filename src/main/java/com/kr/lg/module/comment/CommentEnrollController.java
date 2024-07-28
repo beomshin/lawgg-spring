@@ -2,6 +2,7 @@ package com.kr.lg.module.comment;
 
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.module.comment.model.req.EnrollCommentTrialRequest;
 import com.kr.lg.module.comment.model.req.EnrollBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.comment.model.req.EnrollBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentException;
@@ -47,5 +48,17 @@ public class CommentEnrollController {
         commentService.enrollBoardCommentWithLogin(request, userAdapter.getUserTb(), ClientUtils.getRemoteIP(servletRequest));
         return ResponseEntity.ok(new SuccessResponse());
     }
+
+    @PostMapping("/api/v1/enroll/trial/comment")
+    @ApiOperation(value = "로그인 트라이얼 게시판 댓글 등록", notes = "로그인 트라이얼 게시판 댓글을 등록합니다.")
+    public ResponseEntity<?> enrollCommentTrial(
+            HttpServletRequest servletRequest,
+            @RequestBody @Valid EnrollCommentTrialRequest request,
+            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+    ) throws CommentException {
+        commentService.enrollTrialCommentWithLogin(request,userAdapter.getUserTb(), ClientUtils.getRemoteIP(servletRequest));
+        return ResponseEntity.ok(new SuccessResponse());
+    }
+
 
 }

@@ -1,6 +1,6 @@
 package com.kr.lg.listener;
 
-import com.kr.lg.module.comment.model.dto.UserCommentCreateCountEvent;
+import com.kr.lg.module.comment.model.event.UserCommentCreateCountEvent;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.db.entities.UserTb;
 import lombok.RequiredArgsConstructor;

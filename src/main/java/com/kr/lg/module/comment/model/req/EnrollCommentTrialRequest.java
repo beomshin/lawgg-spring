@@ -1,4 +1,4 @@
-package com.kr.lg.model.net.request.trial.comment;
+package com.kr.lg.module.comment.model.req;
 
 import com.kr.lg.enums.DepthEnum;
 import com.kr.lg.model.common.root.RootRequest;
@@ -8,11 +8,13 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "트라이얼 게시판 댓글 등록 요청 바디")
-public class EnrollCTRequest implements RootRequest { // EnrollCommentTrialRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "트라이얼 게시판 댓글 등록 요청 Body")
+public class EnrollCommentTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디", required = true)
     @NotNull(message = "트라이얼 아이디가 입력되어있지않습니다.")

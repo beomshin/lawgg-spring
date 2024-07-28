@@ -1,7 +1,8 @@
-package com.kr.lg.module.comment.model.dto;
+package com.kr.lg.module.comment.model.event;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.DepthEnum;
+import com.kr.lg.module.comment.model.dto.CommentEnrollDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Getter
-public class CommentCreateAlertToWriterEvent { // AlertBoardCommentEvent
+public class BoardCommentCreateAlertToWriterEvent { // AlertBoardCommentEvent
 
 
     private Long boardId;
@@ -19,7 +20,7 @@ public class CommentCreateAlertToWriterEvent { // AlertBoardCommentEvent
     private UserTb userTb;
 
 
-    public CommentCreateAlertToWriterEvent(CommentEnrollDto commentEnrollDto) {
+    public BoardCommentCreateAlertToWriterEvent(CommentEnrollDto commentEnrollDto) {
         this.boardId = commentEnrollDto.getId();
         if (commentEnrollDto.getDepth().equals(DepthEnum.PARENT_COMMENT)) {
             this.parentId = commentEnrollDto.getParentId();

@@ -7,6 +7,8 @@ import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardRecommendRepository;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.enums.*;
+import com.kr.lg.module.board.model.event.BoardRecommendEvent;
+import com.kr.lg.module.board.model.event.UserBoardCreateCountEvent;
 import com.kr.lg.module.board.model.req.*;
 import com.kr.lg.module.board.model.dto.BoardReportDto;
 import com.kr.lg.module.board.model.dto.BoardEnrollDto;
@@ -24,6 +26,7 @@ import com.kr.lg.web.dto.mapper.BoardParam;
 import com.kr.lg.module.board.model.mapper.FindBoardsParamData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,6 +57,7 @@ public class BoardServiceImpl implements BoardService {
     private final CommentMapper commentMapper;
 
     private final BCryptPasswordEncoder encoder;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * 포지션 게시판 조회 리스트
@@ -201,6 +205,7 @@ public class BoardServiceImpl implements BoardService {
                 .build();
 
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
+        applicationEventPublisher.publishEvent(new UserBoardCreateCountEvent(userTb, 1));
         if (isEnrollFile) {
             boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
         }
@@ -234,6 +239,7 @@ public class BoardServiceImpl implements BoardService {
                 .build();
 
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
+        applicationEventPublisher.publishEvent(new UserBoardCreateCountEvent(userTb, 1));
         if (isEnrollFile) {
             boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
         }
@@ -319,6 +325,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
+    @Transactional
     public void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException {
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.MEMBER_TYPE, StatusEnum.NORMAL_STATUS);
         if (boardTb.isPresent()) {
@@ -326,6 +333,7 @@ public class BoardServiceImpl implements BoardService {
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER); // 작성자 체크
             else if (isBestOrRecommendBoard && !encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD); // 베스트 or 추천 게시판은 패스워드 검증
             boardDeleteService.deleteBoard(boardTb.get().getBoardId());
+            applicationEventPublisher.publishEvent(new UserBoardCreateCountEvent(userTb, -1));
         } else {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
 
@@ -356,10 +364,12 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
+    @Transactional
     public void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException {
         Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getId(), userTb.getUserId()); // 나의 추천 내역 조회
         if (boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_RECOMMEND_BOARD); // 중복 추천 방어코드
         boardRecommendService.recommendBoard(BoardTb.builder().boardId(request.getId()).build(), userTb); // 게시판 추천
+        applicationEventPublisher.publishEvent(new BoardRecommendEvent(request.getId(), 1)); // 추천 수 증가
     }
 
     /**

@@ -1,8 +1,8 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.comment.model.event;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.DepthEnum;
-import com.kr.lg.model.common.layer.TrialLayer;
+import com.kr.lg.module.comment.model.dto.CommentEnrollDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Slf4j
 @Getter
-public class AlertTCEvent { // AlertTrialCommentEvent
+public class TrialCommentCreateAlertToWriterEvent {
 
     private Long trialId;
     private Long parentId;
@@ -20,7 +20,7 @@ public class AlertTCEvent { // AlertTrialCommentEvent
     private String title;
     private UserTb userTb;
 
-    public AlertTCEvent(TrialLayer requestDto) {
+    public TrialCommentCreateAlertToWriterEvent(CommentEnrollDto requestDto) {
         this.trialId = requestDto.getId();
         this.content = requestDto.getContent();
         if (requestDto.getDepth().equals(DepthEnum.PARENT_COMMENT)) {

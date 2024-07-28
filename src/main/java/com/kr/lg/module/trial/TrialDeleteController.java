@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,6 @@ import javax.validation.Valid;
 public class TrialDeleteController {
 
     private final TrialService trialService;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/api/v1/delete/trial")
     @ApiOperation(value = "회원 트라이얼 게시판 삭제", notes = "회원 트라이얼 게시판 삭제를 합니다.")
@@ -34,7 +32,6 @@ public class TrialDeleteController {
             @ApiParam(value = "회원 토큰", required = true, hidden = true) @UserPrincipal UserAdapter userAdapter
     ) throws TrialException {
         trialService.deleteTrial(request, userAdapter.getUserTb());
-        applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userAdapter.getUserTb(), -1));
         return ResponseEntity.ok(new SuccessResponse());
     }
 

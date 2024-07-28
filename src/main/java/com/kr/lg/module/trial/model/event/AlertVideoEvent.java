@@ -1,4 +1,4 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.trial.model.event;
 
 import com.kr.lg.db.entities.TrialTb;
 import lombok.AllArgsConstructor;

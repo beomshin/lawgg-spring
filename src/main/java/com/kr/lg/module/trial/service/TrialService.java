@@ -17,7 +17,7 @@ public interface TrialService {
     TrialEntry findTrialWithLogin(long id, UserTb userTb) throws TrialException;
     TrialTb enrollTrialWithLogin(EnrollTrialWithLoginRequest request, UserTb userTb) throws TrialException;
     TrialTb enrollVideoWithLogin(EnrollVideoWithLoginRequest request, UserTb userTb) throws TrialException;
-    TrialTb trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException;
+    void trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException;
     void trialEndLive(UpdateEndTrialRequest request, UserTb userTb) throws TrialException;
     void recommendTrial(RecommendTrialRequest request, UserTb userTb) throws TrialException;
     void deleteRecommendTrial(DeleteRecommendTrialRequest request, UserTb userTb) throws TrialException;

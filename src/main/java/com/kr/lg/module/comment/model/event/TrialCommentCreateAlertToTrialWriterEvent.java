@@ -1,7 +1,7 @@
-package com.kr.lg.model.common.listener;
+package com.kr.lg.module.comment.model.event;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.model.common.layer.TrialLayer;
+import com.kr.lg.module.comment.model.dto.CommentEnrollDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,18 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Slf4j
 @Getter
-public class AlertTEvent { // AlertTrialEvent
+public class TrialCommentCreateAlertToTrialWriterEvent {
 
     private Long trialId;
     private String content;
     private String title;
     private UserTb userTb;
 
-    public AlertTEvent(TrialLayer requestDto) {
-        this.trialId = requestDto.getId();
-        this.content = requestDto.getContent();
-        this.title = requestDto.getAlertTitle();
-        this.userTb = requestDto.getUserTb();
+
+    public TrialCommentCreateAlertToTrialWriterEvent(CommentEnrollDto enrollDto) {
+        this.trialId = enrollDto.getId();
+        this.content = enrollDto.getContent();
+        this.title = enrollDto.getAlertTitle();
+        this.userTb = enrollDto.getUserTb();
     }
 
     public boolean isPost(UserTb writer) {
