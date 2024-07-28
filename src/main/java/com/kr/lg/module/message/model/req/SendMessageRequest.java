@@ -1,20 +1,19 @@
 
 package com.kr.lg.module.message.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "메세지 발신 요청 바디")
-public class SendMRequest implements RootRequest { // SendMessageRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "메세지 발신 요청 Body")
+public class SendMessageRequest {
 
     @ApiModelProperty(value = "받는이 아이디", required = true)
     @NotBlank(message = "받는이가 입력되어있지않습니다.")

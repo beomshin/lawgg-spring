@@ -7,7 +7,8 @@ import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.dto.root.AbstractSpec;
-import com.kr.lg.module.message.model.req.FindRMLRequest;
+import com.kr.lg.module.message.model.req.FindReceiveMessagesRequest;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,8 @@ public class MessageFindController {
 
     @GetMapping("/api/v1/find/receive/messages")
     public ResponseEntity<?> findReceiveMessages(
-            @Valid FindRMLRequest requestDto,
-            @UserPrincipal UserAdapter userAdapter
+            @Valid FindReceiveMessagesRequest requestDto,
+            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws MessageException {
         Page<MessageEntry> messages = messageService.findReceiveMessages(requestDto, userAdapter.getUserTb());
         AbstractSpec spec = FindReceiveMessagesResponse.builder()
