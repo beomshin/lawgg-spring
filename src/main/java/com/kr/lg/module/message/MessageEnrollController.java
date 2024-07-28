@@ -23,7 +23,7 @@ public class MessageEnrollController {
 
     private final MessageService messageService;
 
-    @PostMapping("/api/send/message")
+    @PostMapping("/api/v1/send/message")
     public ResponseEntity<?> sendMessage(
             @RequestBody @Valid SendMessageRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
