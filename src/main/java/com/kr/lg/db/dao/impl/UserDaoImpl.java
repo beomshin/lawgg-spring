@@ -24,11 +24,6 @@ public class UserDaoImpl implements UserDao {
     private final UserQuery userQuery;
 
     @Override
-    public List<UserQ> findIdUser(UserLayer requestDto) {
-        return userQuery.findIdUser(requestDto).fetch();
-    }
-
-    @Override
     public UserQ findInfoUser(UserLayer requestDto) {
         return userQuery.findInfoUser(requestDto).fetchOne();
     }

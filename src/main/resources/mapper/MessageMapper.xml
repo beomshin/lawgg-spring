@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.kr.lg.module.message.mapper.MessageMapper">
+
+    <!-- 메세지 리스트 조회 쿼리 -->
+    <select id="findMessages" parameterType="com.kr.lg.web.dto.mapper.MessageParam" resultType="com.kr.lg.module.message.model.entry.MessageEntry">
+        SELECT A.*
+        FROM
+            (
+                SELECT mt.messageId, mt.senderId,mt.title, mt.content, mt.readFlag, mt.regDt,ut.nickName AS "receiverNickName",
+                       (SELECT ut.nickName FROM UserTb ut2 WHERE ut2.userId = mt.senderId) AS "senderNickName"
+                FROM MessageTb mt
+                LEFT OUTER JOIN UserTb ut ON(mt.receiverId  = ut.userId)
+                <!--수신자 미삭제 (receiverDelFlag : 0) -->
+                WHERE mt.receiverDelFlag = '0' AND mt.receiverId = #{data.receiverId}
+            ) A
+        <where>
+            <!-- 검색조건 타입 -->
+            <if test="data.subject != null and data.keyword != null and data.keyword.length() > 0">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="data.subject == 0">
+                        AND (A.title LIKE CONCAT('%', #{data.keyword}, '%') OR A.content LIKE CONCAT('%', #{data.keyword}, '%') OR A.receiverNickName LIKE CONCAT('%', #{data.keyword}, '%') OR A.senderNickName LIKE CONCAT('%', #{data.keyword}, '%'))
+                    </when>
+                    <!-- 로펌 제목 조회 -->
+                    <when test="data.subject == 1">
+                        AND A.title LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                    <!-- 로펌 대표명 조회 -->
+                    <when test="data.subject == 2">
+                        AND A.content LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                    <!-- 받는이 조회 -->
+                    <when test="data.subject == 3">
+                        AND A.receiverNickName LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                    <!-- 보낸이 조회 -->
+                    <when test="data.subject == 4">
+                        AND A.senderNickName LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+    <select id="findMessagesCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+        SELECT COUNT(*)
+        FROM
+        (
+            SELECT mt.messageId, mt.senderId,mt.title, mt.content, mt.readFlag, mt.regDt,ut.nickName AS "receiverNickName",
+            (SELECT ut.nickName FROM UserTb ut2 WHERE ut2.userId = mt.senderId) AS "senderNickName"
+            FROM MessageTb mt
+            LEFT OUTER JOIN UserTb ut ON(mt.receiverId  = ut.userId)
+            WHERE mt.receiverDelFlag = '0' AND mt.receiverId = #{receiverId}
+        ) A
+        <where>
+            <!-- 검색조건 타입 -->
+            <if test="subject != null and keyword != null and keyword.length() > 0">
+                <choose>
+                    <!-- 전체 키워드 조회 -->
+                    <when test="subject == 0">
+                        AND (A.title LIKE CONCAT('%', #{keyword}, '%') OR A.content LIKE CONCAT('%', #{keyword}, '%') OR A.receiverNickName LIKE CONCAT('%', #{keyword}, '%') OR A.senderNickName LIKE CONCAT('%', #{keyword}, '%'))
+                    </when>
+                    <!-- 로펌 제목 조회 -->
+                    <when test="subject == 1">
+                        AND A.title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <!-- 로펌 대표명 조회 -->
+                    <when test="subject == 2">
+                        AND A.content LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <!-- 받는이 조회 -->
+                    <when test="subject == 3">
+                        AND A.receiverNickName LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <!-- 보낸이 조회 -->
+                    <when test="subject == 4">
+                        AND A.senderNickName LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+</mapper>

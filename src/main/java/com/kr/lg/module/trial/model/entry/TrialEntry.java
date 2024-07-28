@@ -1,5 +1,6 @@
 package com.kr.lg.module.trial.model.entry;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.module.comment.model.entry.TrialCommentEntry;
 import lombok.*;
@@ -23,6 +24,7 @@ public class TrialEntry {
     private Long view; // 조회수
     private Long recommendCount; // 추천수
     private Integer commentCount; // 댓글 수
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp writeDt; // 작성일
     private Long postType; // 게시글 타입
     private Long liveType; // 라이브 타입
@@ -39,6 +41,7 @@ public class TrialEntry {
     private Integer endingType;
     private Integer status;
     private Long trialCommentId;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp  liveDt;
     private String replay;
     private Integer plaintiffCount;
