@@ -57,12 +57,56 @@
         ) A
     </select>
 
-    <select id="findUserIds" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserEntry">
+    <select id="findUserIds" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserIdEntry">
         SELECT ut.loginId, ut.profile, ut.nickName, ut.delFlag, ut.status, ut.regDt, ut.snsType
         FROM UserTb ut
         <where>
             ut.snsType = '0'
             AND ut.ci = #{ci}
+        </where>
+    </select>
+
+    <select id="findUser" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserEntry">
+        SELECT ut.userId, ut.loginId, ut.nickName, ut.name, ut.profile, ut.email, ut.boardCount, ut.commentCount, ut.trialCount, ut.personalPeriod, ut.regDt, ut.phone,
+               ut.authFlag, ut.snsType, ut.judgeFlag, ut.gender, ut.birth, ut.`point`, lft.name AS 'lawFirmName', tt.name AS 'tierName', tt.`level` AS 'tireLevel'
+        FROM UserTb ut
+                 LEFT JOIN LawFirmTb lft ON(ut.lawFirmId = lft.lawFirmId)
+                 LEFT JOIN TierTb tt ON (ut.tierId = tt.tierId)
+        <where>
+            ut.userId = #{userId}
+        </where>
+    </select>
+
+    <select id="findUserAlerts" parameterType="com.kr.lg.web.dto.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserAlertEntry">
+        SELECT at2.alertId, at2.trialId, at2.boardId, at2.title, at2.content, at2.`type`, at2.readFlag, at2.regDt
+        FROM AlertTb at2
+        <where>
+            at2.userId = #{data.userId}
+
+            <if test="data.keyword != null and data.keyword.length() > 0">
+                AND at2.title LIKE CONCAT('%', #{data.keyword}, '%')
+            </if>
+
+        </where>
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+    <select id="findUserAlertsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+        SELECT COUNT(*)
+        FROM AlertTb at2
+        <where>
+            at2.userId = #{userId}
+
+            <if test="keyword != null and keyword.length() > 0">
+                AND at2.title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
         </where>
     </select>
 

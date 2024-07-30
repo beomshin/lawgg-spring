@@ -1,17 +1,18 @@
 package com.kr.lg.module.user.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "유저 비밀번호 인증 요청 바디")
-public class CheckPURequest implements RootRequest { // CheckPwUserRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "회원 비밀번호 인증 요청 Body")
+public class VerifyPasswordRequest {
 
     @ApiModelProperty(value = "패스워드", required = true)
     @NotBlank(message = "password 값이 입력되어있지않습니다.")

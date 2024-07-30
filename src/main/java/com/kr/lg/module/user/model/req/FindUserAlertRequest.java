@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "회원 비밀번호 조회 바디")
-public class FindUARequest implements RootRequest { // FindUserAlertRequest
+public class FindUserAlertRequest implements RootRequest { // FindUserAlertRequest
 
     @ApiModelProperty(value = "페이지", required = true)
     @NotNull(message = "페이지가 입력되어있지않습니다.")

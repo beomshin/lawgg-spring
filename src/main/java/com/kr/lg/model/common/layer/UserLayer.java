@@ -50,7 +50,7 @@ public class UserLayer {
         this.success = request.getSuccess();
     }
 
-    public UserLayer(CheckIURequest request) throws NoSuchAlgorithmException {
+    public UserLayer(VerifyUserRequest request) throws NoSuchAlgorithmException {
         this.loginId = request.getLoginId();
         this.error_code = request.getError_code();
         this.error_msg = request.getError_msg();
@@ -78,7 +78,7 @@ public class UserLayer {
         this.userTb = userTb;
     }
 
-    public UserLayer(CheckPURequest requestDto, UserTb userTb) {
+    public UserLayer(VerifyPasswordRequest requestDto, UserTb userTb) {
         this.password = requestDto.getPassword();
         this.userTb = userTb;
     }
@@ -90,7 +90,7 @@ public class UserLayer {
         this.keyword = requestDto.getKeyword();
     }
 
-    public UserLayer(FindUARequest requestDto, UserTb userTb) {
+    public UserLayer(FindUserAlertRequest requestDto, UserTb userTb) {
         this.userTb = userTb;
         this.page = requestDto.getPage();
         this.pageNum = requestDto.getPageNum();

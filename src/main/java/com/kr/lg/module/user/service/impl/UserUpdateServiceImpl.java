@@ -77,7 +77,7 @@ public class UserUpdateServiceImpl implements UserUpdateService {
     }
 
     @Override
-    public void updateUserAlertAll(UserLayer userLayer) throws LgException {
+    public void updateUserAlertAll(UserLayer userLayer) {
         List<AlertTb> alertTbs = userDao.findTop5Alert(userLayer, PageRequest.of(0, 5));
         alertRepository.readAlert(alertTbs.stream().map(AlertTb::getAlertId).collect(Collectors.toList()));
     }
