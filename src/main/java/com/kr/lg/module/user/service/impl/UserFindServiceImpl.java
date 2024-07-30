@@ -2,10 +2,7 @@ package com.kr.lg.module.user.service.impl;
 
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.excpetion.UserResultCode;
-import com.kr.lg.module.user.model.entry.UserAlertEntry;
-import com.kr.lg.module.user.model.entry.UserBoardEntry;
-import com.kr.lg.module.user.model.entry.UserEntry;
-import com.kr.lg.module.user.model.entry.UserIdEntry;
+import com.kr.lg.module.user.model.entry.*;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.UserParam;
 import com.kr.lg.module.user.mapper.UserMapper;
@@ -66,6 +63,17 @@ public class UserFindServiceImpl implements UserFindService {
             List<UserAlertEntry> content = userMapper.findUserAlerts(param);
             long count = userMapper.findUserAlertsCnt(param.getData()); // 알림 개수 조회
             return new PageImpl<>(content, param.getPageable(), count); // pageable 생성
+        } catch (Exception e) {
+            log.error("", e);
+            throw new UserException(UserResultCode.FAIL_FIND_USER_ALERTS);
+        }
+    }
+
+    @Override
+    public List<UserAlertsEntry> findTop5Alert(UserParam<?> param) throws UserException {
+        try {
+            log.info("▶ [유저] 유저 알림 리스트 탑 5 조회");
+            return userMapper.findTop5Alert(param);
         } catch (Exception e) {
             log.error("", e);
             throw new UserException(UserResultCode.FAIL_FIND_USER_ALERTS);

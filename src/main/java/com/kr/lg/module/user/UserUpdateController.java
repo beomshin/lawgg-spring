@@ -1,6 +1,8 @@
 package com.kr.lg.module.user;
 
 import com.kr.lg.exception.LgException;
+import com.kr.lg.module.user.excpetion.UserException;
+import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
 import com.kr.lg.model.common.UserAdapter;
 import com.kr.lg.web.dto.root.DefaultResponse;
@@ -10,6 +12,7 @@ import com.kr.lg.module.user.model.req.UpdateIURequest;
 import com.kr.lg.module.user.model.req.UpdatePURequest;
 import com.kr.lg.module.user.model.req.UpdateUPRequest;
 import com.kr.lg.module.user.service.UserUpdateService;
+import com.kr.lg.web.dto.root.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,15 @@ import java.security.NoSuchAlgorithmException;
 public class UserUpdateController {
 
     private final UserUpdateService userUpdateService;
+    private final UserService userService;
+
+    @PostMapping("/api/v1/update/read/user/alerts")
+    public ResponseEntity<?> updateUserAlertAll(
+            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+    ) throws UserException {
+        userService.updateReadUserAlerts(userAdapter.getUserTb());
+        return ResponseEntity.ok(new SuccessResponse());
+    }
 
     @PostMapping("/api/public/user/update/pw")
     @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
@@ -56,14 +68,6 @@ public class UserUpdateController {
     ) throws LgException {
         DefaultResponse body = userUpdateService.updateUserProfile(new UserLayer(request, userAdapter.getUserTb()));
         return ResponseEntity.ok(body);
-    }
-
-    @PostMapping("/api/user/update/alert/all")
-    public ResponseEntity<DefaultResponse> updateUserAlertAll(
-            @ApiParam(value = "유저 토큰", required = true, hidden = true) @UserPrincipal UserAdapter userAdapter
-    ) throws LgException {
-        userUpdateService.updateUserAlertAll(new UserLayer(userAdapter.getUserTb()));
-        return ResponseEntity.ok(new DefaultResponse());
     }
 
     @PostMapping("/api/user/update/alert")

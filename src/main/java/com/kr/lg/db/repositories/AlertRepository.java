@@ -13,8 +13,7 @@ public interface AlertRepository extends RootAlertRepository {
     @Query(value = "UPDATE AlertTb at SET at.readFlag = 1 WHERE at.alertId = :alertId")
     void readAlert(Long alertId);
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE AlertTb at SET at.readFlag = 1 WHERE at.alertId in (:alertId)")
-    void readAlert(List<Long> alertId);
+    void readAlertAll(List<Long> alertId);
 }

@@ -110,4 +110,23 @@
         </where>
     </select>
 
+
+    <select id="findTop5Alert" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserAlertsEntry">
+        SELECT at2.alertId
+        FROM AlertTb at2
+        <where>
+            at2.userId = #{data.userId}
+        </where>
+
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+
 </mapper>

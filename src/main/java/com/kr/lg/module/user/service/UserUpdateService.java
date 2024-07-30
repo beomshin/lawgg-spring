@@ -17,7 +17,5 @@ public interface UserUpdateService {
     @Transactional
     DefaultResponse updateUserProfile(UserLayer userLayer) throws LgException;
     @Transactional
-    void updateUserAlertAll(UserLayer userLayer) throws LgException;
-    @Transactional
     void updateUserAlert(UserLayer userLayer) throws LgException;
 }

@@ -12,4 +12,8 @@ public class UserSort {
         return Sort.by("at2.alertId").descending();
     }
 
+    public static Sort regDtDesc() { // 식별자 내림차순
+        return Sort.by("at2.regDt").descending();
+    }
+
 }

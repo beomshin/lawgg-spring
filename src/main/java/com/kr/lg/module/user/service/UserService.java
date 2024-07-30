@@ -20,4 +20,5 @@ public interface UserService {
     void verifyPassword(VerifyPasswordRequest request, UserTb userTb) throws UserException;
     UserEntry findUser(UserTb userTb) throws UserException;
     Page<UserAlertEntry> findUserAlerts(FindUserAlertRequest request, UserTb userTb) throws UserException;
+    void updateReadUserAlerts(UserTb userTb) throws UserException;
 }

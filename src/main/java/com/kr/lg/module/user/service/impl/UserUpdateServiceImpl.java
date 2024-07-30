@@ -1,7 +1,6 @@
 package com.kr.lg.module.user.service.impl;
 
 import com.kr.lg.common.crypto.HashNMacUtil;
-import com.kr.lg.db.dao.UserDao;
 import com.kr.lg.db.entities.AlertTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.exception.LgException;
@@ -17,14 +16,11 @@ import com.kr.lg.module.user.service.UserUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -35,7 +31,6 @@ public class UserUpdateServiceImpl implements UserUpdateService {
     private final BCryptPasswordEncoder encoder;
     private final FileService<GlobalFile> fileService;
     private final AlertRepository alertRepository;
-    private final UserDao userDao;
 
     @Override
     @Transactional
@@ -74,12 +69,6 @@ public class UserUpdateServiceImpl implements UserUpdateService {
             userRepository.updateProfile(userTb.getUserId(), globalFile.getPath());
         }
         return new UpdateUPResponse(userTb.getProfile());
-    }
-
-    @Override
-    public void updateUserAlertAll(UserLayer userLayer) {
-        List<AlertTb> alertTbs = userDao.findTop5Alert(userLayer, PageRequest.of(0, 5));
-        alertRepository.readAlert(alertTbs.stream().map(AlertTb::getAlertId).collect(Collectors.toList()));
     }
 
     @Override
