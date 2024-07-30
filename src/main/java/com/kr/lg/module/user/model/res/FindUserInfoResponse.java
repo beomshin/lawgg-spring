@@ -1,5 +1,6 @@
 package com.kr.lg.module.user.model.res;
 
+import com.kr.lg.module.user.model.entry.UserEntry;
 import com.kr.lg.web.dto.root.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
@@ -9,8 +10,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ApiModel(value = "프로필 업데이트 조회 응답 Body")
-public class UpdateUPResponse extends AbstractSpec {
+@ApiModel(value = "회원 정보 조회 응답 Body")
+public class FindUserInfoResponse extends AbstractSpec {
 
-    private String profile;
+    UserEntry user;
 }

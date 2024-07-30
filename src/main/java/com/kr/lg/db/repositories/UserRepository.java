@@ -4,6 +4,7 @@ import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.AuthEnum;
 import com.kr.lg.common.enums.entity.type.SnsType;
+import com.kr.lg.module.user.model.dto.UpdateUserInfoDto;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +17,19 @@ public interface UserRepository extends RootUserRepository {
     Optional<UserTb> findByLoginId(String loginId);
     Optional<UserTb> findByNickName(String nickName);
     Optional<UserTb> findByLoginIdAndCi(String loginId, String ci);
+
+    @Modifying
+    @Query(value = "UPDATE UserTb SET password = :password  WHERE userId = :userId")
+    void updatePassword(@Param("userId") Long userId, String password);
+
+
+    @Modifying
+    @Query(value = "UPDATE UserTb SET password = :password, nickName = :nickName, email = :email, hashEmail = :hashEmail  WHERE userId = :userId")
+    void updateUserInfo(@Param("userId") Long userId, String password, String nickName, String email, String hashEmail);
+
+
     Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
+
 
     @Modifying
     @Query(value = "UPDATE UserTb SET lawFirmId = null, lawFirmEnrollDt = null  WHERE userId = :userId")
@@ -38,14 +51,6 @@ public interface UserRepository extends RootUserRepository {
     @Modifying
     @Query(value = "UPDATE UserTb SET trialCount = trialCount + :count  WHERE userId = :userId")
     void updateTrialCount(@Param("userId") Long userId, Long count);
-
-    @Modifying
-    @Query(value = "UPDATE UserTb SET password = :password  WHERE userId = :userId")
-    void updatePassword(@Param("userId") Long userId, String password);
-
-    @Modifying
-    @Query(value = "UPDATE UserTb SET password = :password, nickName = :nickName, email = :email, hashEmail = :hashEmail  WHERE userId = :userId")
-    void updateUser(@Param("userId") Long userId, String password, String nickName, String email, String hashEmail);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET profile = :profile  WHERE userId = :userId")

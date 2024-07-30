@@ -1,30 +1,19 @@
 package com.kr.lg.module.user.service.impl;
 
-import com.kr.lg.common.crypto.HashNMacUtil;
-import com.kr.lg.db.dao.UserDao;
-import com.kr.lg.db.entities.AlertTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.exception.LgException;
 import com.kr.lg.db.repositories.AlertRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.web.dto.root.DefaultResponse;
-import com.kr.lg.service.file.FileService;
-import com.kr.lg.web.dto.global.GlobalFile;
-import com.kr.lg.web.dto.global.GlobalCode;
-import com.kr.lg.model.common.layer.UserLayer;
-import com.kr.lg.module.user.model.res.UpdateUPResponse;
+import com.kr.lg.module.user.excpetion.UserException;
+import com.kr.lg.module.user.excpetion.UserResultCode;
+import com.kr.lg.module.user.model.dto.UpdateUserInfoDto;
 import com.kr.lg.module.user.service.UserUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,58 +22,66 @@ public class UserUpdateServiceImpl implements UserUpdateService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final FileService<GlobalFile> fileService;
     private final AlertRepository alertRepository;
-    private final UserDao userDao;
 
     @Override
     @Transactional
-    public void updatePwUser(UserLayer userLayer) throws LgException {
-        UserTb userTb = userRepository.findByLoginId(userLayer.getLoginId()).orElseThrow(() -> new LgException(GlobalCode.FAIL_UPDATE_PASSWORD)); // 아이디 조회
-        if (encoder.matches(userLayer.getPassword(), userTb.getPassword())) throw new LgException(GlobalCode.MATCH_PASSWORD); // 비밀번호 검사
-        userRepository.updatePassword(userTb.getUserId(), encoder.encode(userLayer.getPassword()));
-    }
-
-    @Override
-    public void updateInfoUser(UserLayer userLayer) throws LgException, NoSuchAlgorithmException {
-        UserTb userTb = userLayer.getUserTb();
-        String nickName = userTb.getNickName();
-        String password = userTb.getPassword();
-        String hashEmail = "";
-
-        if (!nickName.equals(userLayer.getNickName()) && userRepository.findByNickName(userLayer.getNickName()).isPresent()) throw new LgException(GlobalCode.OVERLAP_NICK_NAME);
-
-        if (!StringUtils.isBlank(userLayer.getNickName())) nickName = userLayer.getNickName();
-
-        if (!StringUtils.isBlank(userLayer.getPassword())) password = encoder.encode(userLayer.getPassword());
-
-        if (!StringUtils.isBlank(userLayer.getEmail())) {
-            hashEmail = HashNMacUtil.getHashSHA256(userLayer.getEmail());
+    public void updateReadUserAlerts(List<Long> alerts) throws UserException {
+        try {
+            log.info("▶ [유저] 유저 알림 리스트 읽기 업데이트");
+            alertRepository.readAlertAll(alerts);
+        } catch (Exception e) {
+            log.error("", e);
+            throw new UserException(UserResultCode.FAIL_UPDATE_USER_ALERT_LIST);
         }
-
-        userRepository.updateUser(userTb.getUserId(), password, nickName, userLayer.getEmail(), hashEmail);
     }
 
     @Override
-    public DefaultResponse updateUserProfile(UserLayer userLayer) throws LgException {
-        UserTb userTb = userLayer.getUserTb();
-        if (userLayer.getProfile() != null) { // 프로필 수정 경우
-            GlobalFile globalFile = fileService.uploadSingle(userLayer.getProfile()); // s3 프로필 사진 업로드
-            if (globalFile == null) throw new LgException(GlobalCode.FAIL_FILE_UPLOAD); // 업로드 실패
-            userRepository.updateProfile(userTb.getUserId(), globalFile.getPath());
+    @Transactional
+    public void updateReadUserAlert(long alertId) throws UserException {
+        try {
+            log.info("▶ [유저] 유저 알림 읽기 업데이트");
+            alertRepository.readAlert(alertId);
+        } catch (Exception e) {
+            log.error("", e);
+            throw new UserException(UserResultCode.FAIL_UPDATE_USER_ALERT);
         }
-        return new UpdateUPResponse(userTb.getProfile());
     }
 
     @Override
-    public void updateUserAlertAll(UserLayer userLayer) throws LgException {
-        List<AlertTb> alertTbs = userDao.findTop5Alert(userLayer, PageRequest.of(0, 5));
-        alertRepository.readAlert(alertTbs.stream().map(AlertTb::getAlertId).collect(Collectors.toList()));
+    @Transactional
+    public void updateUserPassword(UserTb userTb, String password) throws UserException {
+        try {
+            log.info("▶ [유저] 유저 패스워드 업데이트");
+            userRepository.updatePassword(userTb.getUserId(), encoder.encode(password));
+        } catch (Exception e) {
+            log.error("", e);
+            throw new UserException(UserResultCode.FAIL_UPDATE_USER_PASSWORD);
+        }
     }
 
     @Override
-    public void updateUserAlert(UserLayer userLayer) throws LgException {
-        AlertTb alertTb = alertRepository.findById(userLayer.getId()).orElseThrow(() -> new LgException(GlobalCode.NOT_EXIST_ALERT));
-        alertRepository.readAlert(alertTb.getAlertId());
+    @Transactional
+    public void updateUserInfo(UpdateUserInfoDto updateUserInfoDto) throws UserException {
+        try {
+            log.info("▶ [유저] 유저 정보 업데이트");
+            userRepository.updateUserInfo(updateUserInfoDto.getUserId(), updateUserInfoDto.getPassword(), updateUserInfoDto.getNickName(), updateUserInfoDto.getEmail(), updateUserInfoDto.getHashEmail());
+        } catch (Exception e) {
+            log.error("", e);
+            throw new UserException(UserResultCode.FAIL_UPDATE_USER_INFO);
+        }
     }
+
+    @Override
+    @Transactional
+    public void updateUserProfile(long userId, String path) throws UserException {
+        try {
+            log.info("▶ [유저] 유저 프로필 업데이트");
+            userRepository.updateProfile(userId, path);
+        } catch (Exception e) {
+            log.error("", e);
+            throw new UserException(UserResultCode.FAIL_UPDATE_USER_PROFILE);
+        }
+    }
+
 }

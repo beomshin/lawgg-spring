@@ -7,11 +7,13 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@ApiModel(value = "회원 비밀번호 조회 바디")
-public class FindUARequest implements RootRequest { // FindUserAlertRequest
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "회원 알림 리스트 조회 요청 Body")
+public class FindUserAlertRequest {
 
     @ApiModelProperty(value = "페이지", required = true)
     @NotNull(message = "페이지가 입력되어있지않습니다.")

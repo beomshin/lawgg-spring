@@ -1,13 +1,16 @@
 package com.kr.lg.module.user.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
-@Data
-@ApiModel(value = "유저 정보 변경하기 요청 바디")
-public class UpdateIURequest implements RootRequest { // UpdateInfoUserRequest
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "회원 정보 업데이트 요청 Body")
+public class UpdateUserInfoRequest {
 
     @ApiModelProperty(value = "닉네임")
     private String nickName;

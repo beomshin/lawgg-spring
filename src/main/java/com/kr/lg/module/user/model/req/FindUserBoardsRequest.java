@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "유저 게시판 리스트 조회 Body")
 public class FindUserBoardsRequest {
+
     @ApiModelProperty(value = "페이지", required = true)
     @NotNull(message = "페이지가 입력되어있지않습니다.")
     private Integer page;
