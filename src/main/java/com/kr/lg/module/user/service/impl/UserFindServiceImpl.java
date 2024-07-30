@@ -30,7 +30,8 @@ public class UserFindServiceImpl implements UserFindService {
         } catch (Exception e) {
             log.error("", e);
             throw new UserException(UserResultCode.FAIL_FIND_USER);
-        }    }
+        }
+    }
 
     @Override
     public Page<UserBoardEntry> findUserBoard(UserParam<?> param) throws UserException {

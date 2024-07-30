@@ -1,21 +1,16 @@
 package com.kr.lg.module.user.service;
 
-import com.kr.lg.exception.LgException;
-import com.kr.lg.web.dto.root.DefaultResponse;
-import com.kr.lg.model.common.layer.UserLayer;
-import org.springframework.transaction.annotation.Transactional;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.module.user.excpetion.UserException;
+import com.kr.lg.module.user.model.dto.UpdateUserInfoDto;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
-@Transactional(readOnly = true)
 public interface UserUpdateService {
 
-    @Transactional
-    void updatePwUser(UserLayer userLayer) throws LgException, NoSuchAlgorithmException;
-    @Transactional
-    void updateInfoUser(UserLayer userLayer) throws LgException, NoSuchAlgorithmException;
-    @Transactional
-    DefaultResponse updateUserProfile(UserLayer userLayer) throws LgException;
-    @Transactional
-    void updateUserAlert(UserLayer userLayer) throws LgException;
+    void updateReadUserAlerts(List<Long> alerts) throws UserException;
+    void updateReadUserAlert(long alertId) throws UserException;
+    void updateUserPassword(UserTb userTb, String password) throws UserException;
+    void updateUserInfo(UpdateUserInfoDto updateUserInfoDto) throws UserException;
+    void updateUserProfile(long userId, String path) throws UserException;
 }

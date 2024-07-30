@@ -1,14 +1,16 @@
 package com.kr.lg.module.user.model.res;
 
-import com.kr.lg.web.dto.root.DefaultResponse;
+import com.kr.lg.web.dto.root.AbstractSpec;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class UpdateUPResponse extends DefaultResponse { // UpdateUserProfileResponse
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "프로필 업데이트 조회 응답 Body")
+public class UpdateUPResponse extends AbstractSpec {
 
     private String profile;
 }
