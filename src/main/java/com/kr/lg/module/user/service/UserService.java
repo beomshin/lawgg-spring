@@ -2,6 +2,7 @@ package com.kr.lg.module.user.service;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.exception.LgException;
+import com.kr.lg.model.net.request.sign.SignURequest;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
 import com.kr.lg.module.user.model.entry.UserBoardEntry;
@@ -26,4 +27,5 @@ public interface UserService {
     void updateUserPassword(UpdateUserPasswordRequest request) throws  UserException;
     void updateUserInfo(UpdateUserInfoRequest request, UserTb userTb) throws UserException, NoSuchAlgorithmException;
     String updateUserProfile(UpdateUserProfileRequest request, UserTb userTb) throws  UserException;
+    UserTb enrollUser(SignURequest request) throws UserException;
 }

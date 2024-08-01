@@ -22,6 +22,8 @@ public enum UserResultCode {
     FAIL_UPDATE_USER_ALERT("8012", "유저 알림 업데이트 실패"),
     FAIL_UPDATE_USER_ALERT_LIST("8013", "유저 알림 리스트 업데이트 실패"),
     NOT_EXIST_ALERT("8014", "미존재 유저 알림"),
+    FAIL_ENROLL_USER("8015", "유저 등록 실패"),
+    ALREADY_ENROLL_USER("8016", "이미 등록된 유저"),
     ;
 
     private final String code;

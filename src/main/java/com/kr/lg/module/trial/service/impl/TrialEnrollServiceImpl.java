@@ -37,7 +37,7 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
             TrialTb trialTb = TrialTb.builder()
                     .userTb(enrollDto.getUserTb())
                     .lawFirmTb(enrollDto.getLawFirmTb())
-                    .tierId(enrollDto.getUserTb().getTierId())
+                    .tierId(enrollDto.getUserTb().getTierTb())
                     .id(enrollDto.getUserTb().getLoginId())
                     .title(enrollDto.getTitle())
                     .password(enrollDto.getUserTb().getPassword())

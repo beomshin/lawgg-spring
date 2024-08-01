@@ -1,19 +1,26 @@
 package com.kr.lg.module.user.service.impl;
 
 import com.kr.lg.common.crypto.HashNMacUtil;
+import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.common.utils.RestPortOne;
 import com.kr.lg.db.entities.AlertTb;
+import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.AlertRepository;
+import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
+import com.kr.lg.enums.AuthEnum;
 import com.kr.lg.exception.LgException;
+import com.kr.lg.model.net.request.sign.SignURequest;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.excpetion.UserResultCode;
+import com.kr.lg.module.user.model.dto.EnrollUserDto;
 import com.kr.lg.module.user.model.dto.UpdateUserInfoDto;
 import com.kr.lg.module.user.model.entry.*;
 import com.kr.lg.module.user.model.mapper.FindUserIdParamData;
 import com.kr.lg.module.user.model.mapper.FindUserParamData;
 import com.kr.lg.module.user.model.req.*;
+import com.kr.lg.module.user.service.UserEnrollService;
 import com.kr.lg.module.user.service.UserFindService;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.module.user.service.UserUpdateService;
@@ -45,11 +52,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserFindService userFindService;
     private final UserUpdateService userUpdateService;
+    private final UserEnrollService userEnrollService;
     private final FileService<GlobalFile> fileService;
 
     private final RestPortOne restPortOne;
     private final UserRepository userRepository;
     private final AlertRepository alertRepository;
+    private final TierRepository tierRepository;
 
     private final BCryptPasswordEncoder encoder;
 
@@ -181,6 +190,27 @@ public class UserServiceImpl implements UserService {
         if (globalFile == null) throw new UserException(UserResultCode.FAIL_FILE_UPLOAD); // 업로드 실패
         userUpdateService.updateUserProfile(userTb.getUserId(), globalFile.getPath());
         return globalFile.getPath();
+    }
+
+    @Override
+    public UserTb enrollUser(SignURequest request) throws UserException {
+        Optional<UserTb> userTb = userRepository.findByLoginId(request.getLoginId());
+        if (!userTb.isPresent()) {
+            TierTb tierTb = tierRepository.findByKey("Bronze_3");
+            return userEnrollService.enrollUser(EnrollUserDto.builder()
+                            .loginId(request.getLoginId())
+                            .password(request.getPassword())
+                            .nickName(request.getNickName())
+                            .personalPeriod(request.getPersonalPeriod())
+                            .snsType(SnsType.LG_SNS_TYPE)
+                            .authFlag(AuthEnum.NON_AUTH_STATUS)
+                            .tierTb(tierTb)
+                    .build());
+        } else {
+            throw new UserException(UserResultCode.ALREADY_ENROLL_USER);
+
+        }
+
     }
 
 }

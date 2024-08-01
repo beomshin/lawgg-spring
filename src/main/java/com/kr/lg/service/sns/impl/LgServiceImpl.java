@@ -48,7 +48,7 @@ public class LgServiceImpl implements LgService {
                     .name(lgLoginDto.getName())
                     .profile(lgLoginDto.getProfile())
                     .snsType(lgLoginDto.getSnsType())
-                    .tierId(tierTb)
+                    .tierTb(tierTb)
                     .build());
 
             userId = userTb1.getUserId();
