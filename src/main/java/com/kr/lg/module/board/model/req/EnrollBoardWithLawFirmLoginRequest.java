@@ -1,6 +1,6 @@
 package com.kr.lg.module.board.model.req;
 
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.web.dto.global.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,5 +33,5 @@ public class EnrollBoardWithLawFirmLoginRequest {
     private Integer lineType;
 
     @ApiModelProperty(value = "파일")
-    private List<GlobalFile> files;
+    private List<FileDto> files;
 }

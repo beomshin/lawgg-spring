@@ -6,7 +6,7 @@ import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.service.jwt.JwtService;
+import com.kr.lg.module.auth.service.JwtService;
 import com.kr.lg.model.common.sns.lg.LgLoginDto;
 import com.kr.lg.service.sns.LgService;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ public class LgServiceImpl implements LgService {
                     .name(lgLoginDto.getName())
                     .profile(lgLoginDto.getProfile())
                     .snsType(lgLoginDto.getSnsType())
-                    .tierId(tierTb)
+                    .tierTb(tierTb)
                     .build());
 
             userId = userTb1.getUserId();

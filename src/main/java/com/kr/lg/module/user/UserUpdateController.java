@@ -4,7 +4,7 @@ import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.res.UpdateUPResponse;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.web.dto.root.AbstractSpec;
 import com.kr.lg.module.user.model.req.UpdateUserAlertRequest;
 import com.kr.lg.module.user.model.req.UpdateUserInfoRequest;

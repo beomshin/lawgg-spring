@@ -1,7 +1,6 @@
 package com.kr.lg.module.comment.model.req;
 
 import com.kr.lg.enums.DepthEnum;
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

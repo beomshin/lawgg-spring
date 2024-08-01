@@ -9,7 +9,7 @@ import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.module.trial.model.dto.TrialEnrollDto;
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.web.dto.global.FileDto;
 import com.kr.lg.module.trial.service.TrialEnrollService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
             TrialTb trialTb = TrialTb.builder()
                     .userTb(enrollDto.getUserTb())
                     .lawFirmTb(enrollDto.getLawFirmTb())
-                    .tierId(enrollDto.getUserTb().getTierId())
+                    .tierId(enrollDto.getUserTb().getTierTb())
                     .id(enrollDto.getUserTb().getLoginId())
                     .title(enrollDto.getTitle())
                     .password(enrollDto.getUserTb().getPassword())
@@ -68,13 +68,13 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
             log.info("▶ [트라이얼] 트라이얼 파일 등록");
             List<TrialAttachTb> boardAttach = files.stream()
                     .filter(Objects::nonNull)
-                    .filter(it -> it instanceof GlobalFile)
+                    .filter(it -> it instanceof FileDto)
                     .map(it -> TrialAttachTb.builder()
                             .trialTb(trialTb)
-                            .path(((GlobalFile)it).getPath())
-                            .oriName(((GlobalFile)it).getOriName())
-                            .newName(((GlobalFile)it).getNewName())
-                            .size(((GlobalFile)it).getSize())
+                            .path(((FileDto)it).getPath())
+                            .oriName(((FileDto)it).getOriName())
+                            .newName(((FileDto)it).getNewName())
+                            .size(((FileDto)it).getSize())
                             .status(StatusEnum.NORMAL_STATUS)
                             .build()).collect(Collectors.toList());
             trialAttachRepository.saveAll(boardAttach);

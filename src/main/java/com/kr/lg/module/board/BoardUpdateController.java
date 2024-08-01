@@ -1,12 +1,11 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.module.board.model.event.BoardRecommendEvent;
 import com.kr.lg.module.board.model.req.DeleteRecommendBoardRequest;
 import com.kr.lg.module.board.model.req.RecommendBoardRequest;
 import com.kr.lg.module.board.model.req.ReportBoardRequest;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.service.BoardService;
 import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;

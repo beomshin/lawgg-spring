@@ -2,7 +2,7 @@ package com.kr.lg.module.board;
 
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.board.model.req.EnrollBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.EnrollBoardWithLawFirmLoginRequest;
 import com.kr.lg.module.board.model.req.EnrollBoardWithLoginRequest;

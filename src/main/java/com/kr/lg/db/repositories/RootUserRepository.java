@@ -10,6 +10,6 @@ public interface RootUserRepository extends JpaRepository<UserTb, Long> {
 
     Optional<UserTb> findByLoginId(String loginId);
 
-    @EntityGraph(attributePaths = {"tierId", "lawFirmId"})
+    @EntityGraph(attributePaths = {"tierTb", "lawFirmId"})
     Optional<UserTb> findByUserId(Long userId);
 }

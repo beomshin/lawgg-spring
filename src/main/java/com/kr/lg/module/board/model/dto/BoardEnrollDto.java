@@ -6,7 +6,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.web.dto.global.FileDto;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,7 +30,7 @@ public class BoardEnrollDto {
     private WriterEnum writerType; // 작성자 타입
     private LineEnum lineType; // 라인 타입
     private String ip; // ip
-    private List<GlobalFile> files;
+    private List<FileDto> files;
     private BoardTb boardTb;
 
     public boolean hasPassword() {

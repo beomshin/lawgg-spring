@@ -5,7 +5,7 @@ import com.kr.lg.module.message.model.entry.MessageEntry;
 import com.kr.lg.module.message.model.res.FindReceiveMessagesResponse;
 import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.web.dto.root.AbstractSpec;
 import com.kr.lg.module.message.model.req.FindReceiveMessagesRequest;
 import io.swagger.annotations.ApiParam;

@@ -2,8 +2,7 @@ package com.kr.lg.security.login.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kr.lg.security.dto.LoginResponse;
-import com.kr.lg.module.auth.excpetion.AuthException;
-import com.kr.lg.service.jwt.JwtService;
+import com.kr.lg.module.auth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;

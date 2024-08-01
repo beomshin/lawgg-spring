@@ -1,6 +1,5 @@
 package com.kr.lg.module.user;
 
-import com.kr.lg.exception.LgException;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
 import com.kr.lg.module.user.model.entry.UserBoardEntry;
@@ -13,7 +12,7 @@ import com.kr.lg.module.user.model.res.FindUserBoardsResponse;
 import com.kr.lg.module.user.model.res.FindUserIdResponse;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.web.dto.root.AbstractSpec;
 import com.kr.lg.web.dto.root.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
@@ -22,10 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -41,7 +37,7 @@ public class UserFindController {
     @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디 정보를 조회합니다.")
     public ResponseEntity<?> findUserId(
             @RequestBody @Valid FindUserIdRequest request
-    ) throws LgException, UserException {
+    ) throws UserException {
         List<UserIdEntry> ids = userService.findUserId(request);
         AbstractSpec spec = FindUserIdResponse.builder()
                 .ids(ids)
@@ -69,7 +65,7 @@ public class UserFindController {
     @ApiOperation(value = "회원 인증", notes = "회원 인증합니다.")
     public ResponseEntity<?> verifyUser(
             @RequestBody @Valid VerifyUserRequest request
-    ) throws LgException, UserException {
+    ) throws UserException {
         userService.verifyUser(request);
         return ResponseEntity.ok(new SuccessResponse());
     }
@@ -97,6 +93,7 @@ public class UserFindController {
     }
 
     @GetMapping("/api/v1/find/user/alerts")
+    @ApiOperation(value = "유저 알림 리스트 조회", notes = "유저 알림 리스트 정보를 조회합니다.")
     public ResponseEntity<?> findUserAlert(
             FindUserAlertRequest request,
             @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
@@ -109,5 +106,23 @@ public class UserFindController {
                 .curPage(alerts.getNumber())
                 .build();
         return ResponseEntity.ok(spec);
+    }
+
+    @GetMapping("/api/public/v1/check/overlap/id")
+    @ApiOperation(value = "아이디 중복 조회", notes = "아이디 중복을 조회합니다.")
+    public ResponseEntity<?> checkOverLapId(
+            @RequestParam(name = "loginId") String loginId
+    ) throws UserException {
+        userService.checkOverLapId(loginId);
+        return ResponseEntity.ok(new SuccessResponse());
+    }
+
+    @GetMapping("/api/public/v1/check/overlap/nickName")
+    @ApiOperation(value = "닉네임 중복 조회", notes = "닉네임 중복을 조회합니다.")
+    public ResponseEntity<?> checkOverLapNickName(
+            @RequestParam(name = "nickName") String nickName
+    ) throws UserException {
+        userService.checkOverLapNickName(nickName);
+        return ResponseEntity.ok(new SuccessResponse());
     }
 }

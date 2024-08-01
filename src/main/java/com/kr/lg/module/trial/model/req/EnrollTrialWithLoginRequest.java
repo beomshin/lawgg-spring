@@ -1,6 +1,6 @@
 package com.kr.lg.module.trial.model.req;
 
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.web.dto.global.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -45,7 +45,7 @@ public class EnrollTrialWithLoginRequest {
     private String content;
 
     @ApiModelProperty(value = "파일")
-    private List<GlobalFile> files;
+    private List<FileDto> files;
 
     @ApiModelProperty(value = "로펌게시판여부")
     private Integer isLawFirm;
