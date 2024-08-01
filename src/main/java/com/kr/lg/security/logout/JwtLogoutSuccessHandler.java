@@ -3,7 +3,7 @@ package com.kr.lg.security.logout;
 
 import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.module.auth.excpetion.AuthException;
-import com.kr.lg.service.jwt.JwtService;
+import com.kr.lg.module.auth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

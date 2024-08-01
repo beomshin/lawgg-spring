@@ -1,6 +1,7 @@
 package com.kr.lg.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -31,9 +32,10 @@ public class RestPortOne {
     @Value("${portone.url.certificate}")
     private String portoneCertUrl;
 
-    public HashMap getPersonalInfo(String imp_uid) throws LgException {
+    public HashMap getPersonalInfo(String imp_uid) throws JsonProcessingException {
        try {
 
+           log.info("▶ [다날] 다날 본인 인증 시작");
            RestTemplate restTemplate = new RestTemplate();
 
            ObjectMapper objectMapper = new ObjectMapper();
@@ -65,7 +67,7 @@ public class RestPortOne {
            return certApiRes2;
        } catch (Exception e) {
            log.error("{}", e.getMessage());
-           throw new LgException(GlobalCode.FAIL_PORTONE_GET_INFO);
+           throw e;
        }
     }
 

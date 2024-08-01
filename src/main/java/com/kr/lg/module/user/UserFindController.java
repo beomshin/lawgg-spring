@@ -1,6 +1,5 @@
 package com.kr.lg.module.user;
 
-import com.kr.lg.exception.LgException;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
 import com.kr.lg.module.user.model.entry.UserBoardEntry;
@@ -13,7 +12,7 @@ import com.kr.lg.module.user.model.res.FindUserBoardsResponse;
 import com.kr.lg.module.user.model.res.FindUserIdResponse;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.web.dto.root.AbstractSpec;
 import com.kr.lg.web.dto.root.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +37,7 @@ public class UserFindController {
     @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디 정보를 조회합니다.")
     public ResponseEntity<?> findUserId(
             @RequestBody @Valid FindUserIdRequest request
-    ) throws LgException, UserException {
+    ) throws UserException {
         List<UserIdEntry> ids = userService.findUserId(request);
         AbstractSpec spec = FindUserIdResponse.builder()
                 .ids(ids)
@@ -66,7 +65,7 @@ public class UserFindController {
     @ApiOperation(value = "회원 인증", notes = "회원 인증합니다.")
     public ResponseEntity<?> verifyUser(
             @RequestBody @Valid VerifyUserRequest request
-    ) throws LgException, UserException {
+    ) throws UserException {
         userService.verifyUser(request);
         return ResponseEntity.ok(new SuccessResponse());
     }

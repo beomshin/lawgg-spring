@@ -1,6 +1,5 @@
 package com.kr.lg.module.user.model.req;
 
-import com.kr.lg.model.common.root.RootRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

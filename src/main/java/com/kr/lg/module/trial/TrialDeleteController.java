@@ -1,10 +1,9 @@
 package com.kr.lg.module.trial;
 
 import com.kr.lg.module.trial.exception.TrialException;
-import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
 import com.kr.lg.web.dto.root.SuccessResponse;
 import io.swagger.annotations.ApiOperation;

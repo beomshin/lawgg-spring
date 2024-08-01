@@ -3,7 +3,7 @@ package com.kr.lg.module.auth;
 import com.kr.lg.LgWasApplication;
 import com.kr.lg.module.auth.service.AuthService;
 import com.kr.lg.module.config.MockMvcConfig;
-import com.kr.lg.service.jwt.JwtService;
+import com.kr.lg.module.auth.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

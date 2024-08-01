@@ -6,7 +6,7 @@ import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.module.auth.service.AuthService;
-import com.kr.lg.service.jwt.JwtService;
+import com.kr.lg.module.auth.service.JwtService;
 import com.kr.lg.common.provider.CookieProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

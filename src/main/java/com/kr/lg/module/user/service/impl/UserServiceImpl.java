@@ -12,8 +12,7 @@ import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.enums.AuthEnum;
-import com.kr.lg.exception.LgException;
-import com.kr.lg.model.net.request.sign.SignURequest;
+import com.kr.lg.module.user.model.req.EnrollUserRequest;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.excpetion.UserResultCode;
 import com.kr.lg.module.user.model.dto.EnrollUserDto;
@@ -27,8 +26,8 @@ import com.kr.lg.module.user.service.UserFindService;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.module.user.service.UserUpdateService;
 import com.kr.lg.module.user.sort.UserSort;
-import com.kr.lg.service.file.FileService;
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.module.thirdparty.service.FileService;
+import com.kr.lg.web.dto.global.FileDto;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.UserParam;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
     private final UserFindService userFindService;
     private final UserUpdateService userUpdateService;
     private final UserEnrollService userEnrollService;
-    private final FileService<GlobalFile> fileService;
+    private final FileService<FileDto> fileService;
 
     private final RestPortOne restPortOne;
     private final UserRepository userRepository;
@@ -76,32 +75,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserIdEntry> findUserId(FindUserIdRequest request) throws UserException, LgException {
+    public List<UserIdEntry> findUserId(FindUserIdRequest request) throws UserException {
         if (!request.getSuccess()) {
             throw new UserException(UserResultCode.FAIL_CERTIFICATION);
         }
-        HashMap<String, Object> map = restPortOne.getPersonalInfo(request.getImp_uid());
-        String ci = (String) map.get("unique_key");
-        MapperParam param = FindUserIdParamData.builder()
-                .ci(ci)
-                .build();
-        List<UserIdEntry> users = userFindService.findUserIds(param);
-        if (users.isEmpty()) {
-            throw new UserException(UserResultCode.NOT_EXIST_ENROLL_ID);
+        try {
+            HashMap<String, Object> map = restPortOne.getPersonalInfo(request.getImp_uid());
+            String ci = (String) map.get("unique_key");
+            MapperParam param = FindUserIdParamData.builder()
+                    .ci(ci)
+                    .build();
+            List<UserIdEntry> users = userFindService.findUserIds(param);
+            if (users.isEmpty()) {
+                throw new UserException(UserResultCode.NOT_EXIST_ENROLL_ID);
+            }
+            return users;
+        } catch (UserException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new UserException(UserResultCode.FAIL_CERTIFICATION);
         }
-        return users;
     }
 
     @Override
-    public void verifyUser(VerifyUserRequest request) throws UserException, LgException {
+    public void verifyUser(VerifyUserRequest request) throws UserException {
         if (!request.getSuccess()) {
             throw new UserException(UserResultCode.FAIL_CERTIFICATION);
         }
-        HashMap<String, Object> map = restPortOne.getPersonalInfo(request.getImp_uid());
-        String ci = (String) map.get("unique_key");
-        Optional<UserTb> userTb = userRepository.findByLoginIdAndCi(request.getLoginId(), ci);
-        if (!userTb.isPresent()) {
-            throw new UserException(UserResultCode.NOT_EXIST_ENROLL_ID);
+        try {
+            HashMap<String, Object> map = restPortOne.getPersonalInfo(request.getImp_uid());
+            String ci = (String) map.get("unique_key");
+            Optional<UserTb> userTb = userRepository.findByLoginIdAndCi(request.getLoginId(), ci);
+            if (!userTb.isPresent()) {
+                throw new UserException(UserResultCode.NOT_EXIST_ENROLL_ID);
+            }
+        } catch (UserException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new UserException(UserResultCode.FAIL_CERTIFICATION);
         }
 
     }
@@ -189,14 +200,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public String updateUserProfile(UpdateUserProfileRequest request, UserTb userTb) throws UserException {
-        GlobalFile globalFile = fileService.uploadSingle(request.getProfile()); // s3 프로필 사진 업로드
-        if (globalFile == null) throw new UserException(UserResultCode.FAIL_FILE_UPLOAD); // 업로드 실패
-        userUpdateService.updateUserProfile(userTb.getUserId(), globalFile.getPath());
-        return globalFile.getPath();
+        FileDto fileDto = fileService.uploadSingle(request.getProfile()); // s3 프로필 사진 업로드
+        if (fileDto == null) throw new UserException(UserResultCode.FAIL_FILE_UPLOAD); // 업로드 실패
+        userUpdateService.updateUserProfile(userTb.getUserId(), fileDto.getPath());
+        return fileDto.getPath();
     }
 
     @Override
-    public UserTb enrollUser(SignURequest request) throws UserException {
+    public UserTb enrollUser(EnrollUserRequest request) throws UserException {
         Optional<UserTb> userTb = userRepository.findByLoginId(request.getLoginId());
         if (!userTb.isPresent()) {
             TierTb tierTb = tierRepository.findByKey("Bronze_3");

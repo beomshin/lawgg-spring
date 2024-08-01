@@ -1,7 +1,7 @@
 package com.kr.lg.module.comment;
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.comment.model.req.EnrollCommentTrialRequest;
 import com.kr.lg.module.comment.model.req.EnrollBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.comment.model.req.EnrollBoardCommentWithLoginRequest;

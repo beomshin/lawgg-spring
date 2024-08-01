@@ -8,7 +8,7 @@ import com.kr.lg.module.trial.model.req.RecommendTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.trial.model.req.UpdateEndTrialRequest;
 import com.kr.lg.module.trial.model.req.UpdateLiveTrialRequest;
 

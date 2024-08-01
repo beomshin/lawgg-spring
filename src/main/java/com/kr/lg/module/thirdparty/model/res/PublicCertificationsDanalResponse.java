@@ -1,14 +1,14 @@
 package com.kr.lg.module.thirdparty.model.res;
 
-import com.kr.lg.web.dto.root.DefaultResponse;
+import com.kr.lg.web.dto.root.AbstractSpec;
 import lombok.*;
 
 @Getter
-@Setter
 @ToString(callSuper = true)
+@Builder
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@NoArgsConstructor
-public class PublicCertificationsDanalResponse extends DefaultResponse {
+public class PublicCertificationsDanalResponse extends AbstractSpec {
 
     private String data;
 }

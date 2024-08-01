@@ -1,6 +1,6 @@
 package com.kr.lg.module.board;
 
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.req.DeleteBoardWithLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardWithNotLoginRequest;

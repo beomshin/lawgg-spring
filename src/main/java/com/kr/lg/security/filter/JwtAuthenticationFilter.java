@@ -5,7 +5,7 @@ import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.web.dto.root.ErrorResponse;
-import com.kr.lg.service.jwt.JwtService;
+import com.kr.lg.module.auth.service.JwtService;
 import com.kr.lg.security.login.detail.JwtDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

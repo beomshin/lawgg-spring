@@ -1,7 +1,7 @@
 package com.kr.lg.module.board.model.dto;
 
 
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.web.dto.global.FileDto;
 import lombok.*;
 
 import java.util.List;
@@ -17,6 +17,6 @@ public class BoardUpdateDto {
     private long boardId;
     private String title;
     private String content;
-    private List<GlobalFile> files;
+    private List<FileDto> files;
 
 }

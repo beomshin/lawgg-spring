@@ -1,6 +1,6 @@
 package com.kr.lg.module.comment;
 
-import com.kr.lg.model.common.UserAdapter;
+import com.kr.lg.web.dto.annotation.UserAdapter;
 import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardCommentWithLoginRequest;

@@ -33,8 +33,8 @@ import com.kr.lg.module.trial.model.entry.TrialVoteEntry;
 import com.kr.lg.module.trial.model.mapper.FindTrialParamData;
 import com.kr.lg.module.trial.service.*;
 import com.kr.lg.module.trial.sort.TrialSort;
-import com.kr.lg.service.file.FileService;
-import com.kr.lg.web.dto.global.GlobalFile;
+import com.kr.lg.module.thirdparty.service.FileService;
+import com.kr.lg.web.dto.global.FileDto;
 import com.kr.lg.web.dto.mapper.MapperParam;
 import com.kr.lg.web.dto.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +64,7 @@ public class TrialServiceImpl implements TrialService {
     private final TrialReportService trialReportService;
     private final TrialVoteService trialVoteService;
     private final TrialDeleteService trialDeleteService;
-    private final FileService<GlobalFile> fileService;
+    private final FileService<FileDto> fileService;
 
     private final TrialRepository trialRepository;
     private final TrialRecommendRepository trialRecommendRepository;
@@ -141,9 +141,9 @@ public class TrialServiceImpl implements TrialService {
     @Override
     @Transactional
     public TrialTb enrollVideoWithLogin(EnrollVideoWithLoginRequest request, UserTb userTb) throws TrialException {
-        GlobalFile replay = null;
+        FileDto replay = null;
         TrialTb trialTb = trialRepository.findLockTrial(request.getId());
-        GlobalFile video = fileService.uploadVideo(request.getPlayVideo());
+        FileDto video = fileService.uploadVideo(request.getPlayVideo());
 
         if (request.getReplay() != null) replay = fileService.uploadReplay(request.getReplay());
 
