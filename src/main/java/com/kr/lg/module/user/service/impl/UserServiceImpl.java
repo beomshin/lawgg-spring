@@ -4,9 +4,11 @@ import com.kr.lg.common.crypto.HashNMacUtil;
 import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.common.utils.RestPortOne;
 import com.kr.lg.db.entities.AlertTb;
+import com.kr.lg.db.entities.NickNameTb;
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.AlertRepository;
+import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.enums.AuthEnum;
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AlertRepository alertRepository;
     private final TierRepository tierRepository;
+    private final NickNameRepository nickNameRepository;
 
     private final BCryptPasswordEncoder encoder;
 
@@ -211,6 +214,26 @@ public class UserServiceImpl implements UserService {
 
         }
 
+    }
+
+    @Override
+    public void checkOverLapId(String loginId) throws UserException {
+        Optional<UserTb> userTb = userRepository.findByLoginId(loginId);
+        if (userTb.isPresent()) { // 아이디 중복
+            throw new UserException(UserResultCode.ALREADY_ENROLL_USER);
+        }
+    }
+
+    @Override
+    public void checkOverLapNickName(String nickName) throws UserException {
+        Optional<UserTb> userTb = userRepository.findByNickName(nickName);
+        if (userTb.isPresent()) { // 닉네임 중복
+            throw new UserException(UserResultCode.OVERLAP_NICK_NAME);
+        }
+        Optional<NickNameTb> nickNameTb = nickNameRepository.findByName(nickName);
+        if (nickNameTb.isPresent()) { // 이벤트 닉네임
+            throw new UserException(UserResultCode.OVERLAP_NICK_NAME);
+        }
     }
 
 }

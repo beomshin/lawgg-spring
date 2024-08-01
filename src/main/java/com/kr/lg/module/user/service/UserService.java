@@ -28,4 +28,6 @@ public interface UserService {
     void updateUserInfo(UpdateUserInfoRequest request, UserTb userTb) throws UserException, NoSuchAlgorithmException;
     String updateUserProfile(UpdateUserProfileRequest request, UserTb userTb) throws  UserException;
     UserTb enrollUser(SignURequest request) throws UserException;
+    void checkOverLapId(String loginId) throws UserException;
+    void checkOverLapNickName(String nickName) throws UserException;
 }

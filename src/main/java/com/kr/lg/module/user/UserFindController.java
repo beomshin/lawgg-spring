@@ -22,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -97,6 +94,7 @@ public class UserFindController {
     }
 
     @GetMapping("/api/v1/find/user/alerts")
+    @ApiOperation(value = "유저 알림 리스트 조회", notes = "유저 알림 리스트 정보를 조회합니다.")
     public ResponseEntity<?> findUserAlert(
             FindUserAlertRequest request,
             @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
@@ -109,5 +107,23 @@ public class UserFindController {
                 .curPage(alerts.getNumber())
                 .build();
         return ResponseEntity.ok(spec);
+    }
+
+    @GetMapping("/api/public/v1/check/overlap/id")
+    @ApiOperation(value = "아이디 중복 조회", notes = "아이디 중복을 조회합니다.")
+    public ResponseEntity<?> checkOverLapId(
+            @RequestParam(name = "loginId") String loginId
+    ) throws UserException {
+        userService.checkOverLapId(loginId);
+        return ResponseEntity.ok(new SuccessResponse());
+    }
+
+    @GetMapping("/api/public/v1/check/overlap/nickName")
+    @ApiOperation(value = "닉네임 중복 조회", notes = "닉네임 중복을 조회합니다.")
+    public ResponseEntity<?> checkOverLapNickName(
+            @RequestParam(name = "nickName") String nickName
+    ) throws UserException {
+        userService.checkOverLapNickName(nickName);
+        return ResponseEntity.ok(new SuccessResponse());
     }
 }
