@@ -2,8 +2,8 @@ package com.kr.lg.module.board.service;
 
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.entry.BoardEntry;
-import com.kr.lg.web.dto.mapper.BoardParam;
-import com.kr.lg.web.dto.mapper.MapperParam;
+import com.kr.lg.model.mapper.BoardParam;
+import com.kr.lg.model.mapper.MapperParam;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;

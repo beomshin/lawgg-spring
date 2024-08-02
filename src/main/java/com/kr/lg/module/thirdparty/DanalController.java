@@ -1,13 +1,13 @@
 package com.kr.lg.module.thirdparty;
 
 import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
-import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.web.dto.annotation.UserAdapter;
+import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.thirdparty.model.req.CertificationsDanalRequest;
 import com.kr.lg.module.thirdparty.model.res.PublicCertificationsDanalResponse;
 import com.kr.lg.module.thirdparty.service.DanalService;
-import com.kr.lg.web.dto.root.AbstractSpec;
-import com.kr.lg.web.dto.root.SuccessResponse;
+import com.kr.lg.model.common.AbstractSpec;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

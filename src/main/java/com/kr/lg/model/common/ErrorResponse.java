@@ -1,5 +1,6 @@
-package com.kr.lg.web.dto.root;
+package com.kr.lg.model.common;
 
+import com.kr.lg.model.enums.GlobalResultCode;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.comment.exception.CommentResultCode;
@@ -8,7 +9,6 @@ import com.kr.lg.module.message.exception.MessageResultCode;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
 import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.module.user.excpetion.UserResultCode;
-import com.kr.lg.web.dto.global.GlobalCode;
 
 
 public class ErrorResponse extends AbstractSpec {
@@ -17,7 +17,7 @@ public class ErrorResponse extends AbstractSpec {
         super(code, msg, isSuccess(code));
     }
 
-    public ErrorResponse(GlobalCode code) {
+    public ErrorResponse(GlobalResultCode code) {
         super(code.getCode(), code.getMsg(), isSuccess(code.getCode()));
     }
 
@@ -53,7 +53,7 @@ public class ErrorResponse extends AbstractSpec {
         super(code.getCode(), code.getMsg(), isSuccess(code.getCode()));
     }
     private static boolean isSuccess(String code) {
-        return GlobalCode.SUCCESS.getCode().equals(code);
+        return GlobalResultCode.SUCCESS.getCode().equals(code);
     }
 
 }

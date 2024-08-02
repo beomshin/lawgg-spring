@@ -1,8 +1,8 @@
 package com.kr.lg.module.thirdparty;
 
 import com.kr.lg.module.thirdparty.service.FileService;
-import com.kr.lg.web.dto.global.FileDto;
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.dto.FileDto;
+import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.module.thirdparty.model.req.EnrollFileRequest;
 import com.kr.lg.module.thirdparty.model.res.EnrollFileResponse;
 import io.swagger.annotations.ApiOperation;

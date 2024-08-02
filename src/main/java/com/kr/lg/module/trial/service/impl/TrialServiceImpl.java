@@ -34,9 +34,9 @@ import com.kr.lg.module.trial.model.mapper.FindTrialParamData;
 import com.kr.lg.module.trial.service.*;
 import com.kr.lg.module.trial.sort.TrialSort;
 import com.kr.lg.module.thirdparty.service.FileService;
-import com.kr.lg.web.dto.global.FileDto;
-import com.kr.lg.web.dto.mapper.MapperParam;
-import com.kr.lg.web.dto.mapper.TrialParam;
+import com.kr.lg.model.dto.FileDto;
+import com.kr.lg.model.mapper.MapperParam;
+import com.kr.lg.model.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -130,7 +130,7 @@ public class TrialServiceImpl implements TrialService {
                 .plaintiffOpinion(request.getPlaintiffOpinion())
                 .defendantOpinion(request.getDefendantOpinion())
                 .content(request.getContent())
-                .lawFirmTb(request.getIsLawFirm() != null && request.getIsLawFirm() == 1 ? userTb.getLawFirmId() : null)
+                .lawFirmTb(request.getIsLawFirm() != null && request.getIsLawFirm() == 1 ? userTb.getLawFirmTb() : null)
                 .build();
         TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
         trialEnrollService.enrollTrialFiles(trialTb, request.getFiles());

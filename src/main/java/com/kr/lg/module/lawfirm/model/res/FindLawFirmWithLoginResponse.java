@@ -1,7 +1,7 @@
 package com.kr.lg.module.lawfirm.model.res;
 
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import lombok.*;
 
 @Getter

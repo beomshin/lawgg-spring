@@ -1,10 +1,10 @@
 package com.kr.lg.module.thirdparty.service.impl;
 
-import com.kr.lg.exception.LgException;
+import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
+import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
 import com.kr.lg.module.thirdparty.service.FileService;
-import com.kr.lg.web.dto.global.GlobalCode;
 import com.kr.lg.common.utils.AwsS3Utils;
-import com.kr.lg.web.dto.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import com.kr.lg.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,15 +57,17 @@ public class FileServiceImpl implements FileService<FileDto> {
 
     private FileDto upload(MultipartFile file, Integer maxSize, Set<String> accessSet) {
         try {
-            if (file == null || file.isEmpty()) throw new LgException(GlobalCode.NOT_EXIST_FILE);
-            String ext = FileUtils.getAccessFileExtension(file.getOriginalFilename());
+            if (file == null || file.isEmpty()) throw new ThirdPartyException(ThirdPartyResultCode.NOT_EXIST_FILE);
+            String ext = FileUtils.getAccessFileExtension(Objects.requireNonNull(file.getOriginalFilename()));
             log.debug("[파일 업로드] 파일명 [{}], 사이즈 [{}], 최대 사이즈 [{}], 확장자 [{}]", file.getOriginalFilename(), file.getSize(), maxSize, ext);
-            if (file.getSize() >= maxSize || !accessSet.contains(ext)) throw new LgException(GlobalCode.FAIL_FILE_CONDITION);
+            if (file.getSize() >= maxSize || !accessSet.contains(ext)) throw new ThirdPartyException(ThirdPartyResultCode.FAIL_FILE_CONDITION);
             String path = awsS3Utils.fileUploadToS3(file, ext);
             return path != null ? new FileDto(file, path) : null;
+        } catch (ThirdPartyException e) {
+            log.error("{}", e.getMessage());
+            return null;
         } catch (Exception e) {
-            log.error("[파일 업로드 실패]======================>");
-            log.error("{}", e);
+            log.error("", e);
             return null;
         }
     }

@@ -1,8 +1,8 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.web.dto.annotation.UserAdapter;
+import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.board.model.event.BoardCountEvent;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.entry.BoardEntry;
@@ -14,7 +14,7 @@ import com.kr.lg.module.board.model.res.FindBoardsResponse;
 import com.kr.lg.module.board.model.res.FindLawFirmBoardsResponse;
 import com.kr.lg.module.board.model.res.FindMyBoardsResponse;
 import com.kr.lg.module.board.service.BoardService;
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

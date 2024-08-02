@@ -12,6 +12,8 @@ public enum ThirdPartyResultCode {
     FAIL_VERIFY_MAIL("9002","메일 인증 내역 저장 실패"),
     FAIL_CERTIFICATION("9003", "본인 인증을 실패"),
     FAIL_INSERT_VERIFY_USER_DATA("9004", "유저 인증 데이터 적재 실패"),
+    NOT_EXIST_FILE("9005", "파일 미존재"),
+    FAIL_FILE_CONDITION("9006", "파일 업로드 조건 미부합"),
 
     ;
 

@@ -2,8 +2,8 @@ package com.kr.lg.module.user.service;
 
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.*;
-import com.kr.lg.web.dto.mapper.MapperParam;
-import com.kr.lg.web.dto.mapper.UserParam;
+import com.kr.lg.model.mapper.MapperParam;
+import com.kr.lg.model.mapper.UserParam;
 import org.springframework.data.domain.Page;
 import java.util.List;
 

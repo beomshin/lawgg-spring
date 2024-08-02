@@ -1,8 +1,8 @@
 package com.kr.lg.module.board.mapper;
 
 import com.kr.lg.module.board.model.entry.BoardEntry;
-import com.kr.lg.web.dto.mapper.MapperParam;
-import com.kr.lg.web.dto.mapper.BoardParam;
+import com.kr.lg.model.mapper.MapperParam;
+import com.kr.lg.model.mapper.BoardParam;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

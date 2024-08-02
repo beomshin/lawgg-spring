@@ -7,6 +7,7 @@ import com.kr.lg.enums.EndingEnum;
 import com.kr.lg.enums.LiveEnum;
 import com.kr.lg.enums.PrecedentEnum;
 import com.kr.lg.enums.StatusEnum;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,10 +18,9 @@ import javax.persistence.LockModeType;
 import java.sql.Timestamp;
 import java.util.Optional;
 
-public interface TrialRepository extends RootTrialRepository {
+public interface TrialRepository extends JpaRepository<TrialTb, Long> {
 
     Optional<TrialTb> findByTrialIdAndUserTb_UserId(@Param("trialId") long trialId, @Param("userId") long userId);
-    TrialTb findByTrialIdAndUserTb(Long trialId, UserTb userTb);
 
     @Query(value = "SELECT * FROM TrialTb b ORDER BY b.mainPostType desc, b.view desc LIMIT 1", nativeQuery = true)
     TrialTb findByMainPostType();
@@ -28,33 +28,29 @@ public interface TrialRepository extends RootTrialRepository {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT b FROM TrialTb b where b.trialId = :trialId")
     TrialTb findLockTrial(@Param("trialId") Long trialId);
-
     @Modifying
     @Query(value = "UPDATE TrialTb SET playVideo = :playVideo, replay = :replay, status = :status WHERE trialId = :trialId")
     void uploadVideoAndReply(@Param("trialId") Long trialId, String playVideo, String replay, StatusEnum status);
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE TrialTb SET report = report + 1  WHERE trialId = :trialId")
-    int reportTrial(@Param("trialId") Long trialId);
+    void reportTrial(@Param("trialId") Long trialId);
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE TrialTb SET view = view + 1  WHERE trialId = :trialId")
-    int viewTrial(@Param("trialId") Long trialId);
+    void viewTrial(@Param("trialId") Long trialId);
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE TrialTb SET status = :status WHERE trialId = :trialId")
-    int updateStatus(@Param("trialId") Long trialId, @Param("status") StatusEnum status);
+    void updateStatus(@Param("trialId") Long trialId, @Param("status") StatusEnum status);
 
     @Modifying
     @Query(value = "UPDATE TrialTb SET commentCount = commentCount + :count  WHERE trialId = :trialId")
-    int updateCommentCount(@Param("trialId") Long trialId, Long count);
+    void updateCommentCount(@Param("trialId") Long trialId, Long count);
 
     @Modifying
     @Query(value = "UPDATE TrialTb SET recommendCount = recommendCount + :count  WHERE trialId = :trialId")
-    int updateRecommendCount(@Param("trialId") Long trialId, Long count);
+    void updateRecommendCount(@Param("trialId") Long trialId, Long count);
 
     @Modifying
     @Query(value = "UPDATE TrialTb SET lawFirmTb = :lawFirmTb, judge = :judge, url = :url, liveType = :liveType, liveDt = :liveDt  WHERE trialId = :trialId")

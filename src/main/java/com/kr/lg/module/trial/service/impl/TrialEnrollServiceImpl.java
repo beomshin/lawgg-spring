@@ -9,7 +9,7 @@ import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.module.trial.model.dto.TrialEnrollDto;
-import com.kr.lg.web.dto.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import com.kr.lg.module.trial.service.TrialEnrollService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -3,7 +3,7 @@ package com.kr.lg.module.auth;
 import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.auth.model.res.RefreshTokenResponse;
 import com.kr.lg.module.auth.service.AuthService;
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

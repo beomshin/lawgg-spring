@@ -1,6 +1,5 @@
-package com.kr.lg.web.dto.mapper;
+package com.kr.lg.model.mapper;
 
-import com.kr.lg.web.dto.mapper.MapperParam;
 import lombok.*;
 import org.springframework.data.domain.Pageable;
 
@@ -9,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardParam<T extends MapperParam> {
+public class TrialParam<T extends MapperParam> {
 
     private T data; // mapper data 파라미터
 

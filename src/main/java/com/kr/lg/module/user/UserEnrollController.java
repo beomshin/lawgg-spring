@@ -4,7 +4,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.module.user.model.req.EnrollUserRequest;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.service.UserService;
-import com.kr.lg.web.dto.root.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

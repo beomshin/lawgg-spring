@@ -1,6 +1,6 @@
 package com.kr.lg.module.trial.model.mapper;
 
-import com.kr.lg.web.dto.mapper.MapperParam;
+import com.kr.lg.model.mapper.MapperParam;
 import lombok.*;
 
 @Getter

@@ -6,7 +6,7 @@
 <mapper namespace="com.kr.lg.module.lawfirm.mapper.LawFirmMapper">
 
     <!-- 로펌 리스트 조회 쿼리 -->
-    <select id="findLawFirms" parameterType="com.kr.lg.web.dto.mapper.LawFirmParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmEntry">
+    <select id="findLawFirms" parameterType="com.kr.lg.model.mapper.LawFirmParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmEntry">
         SELECT lft.lawFirmId, lft.name, lft.profile, lft.background, lft.status, ut.nickName,
                (SELECT COUNT(*) FROM UserTb ut2 WHERE ut2.lawFirmId = lft.lawFirmId AND ut2.status = 1) AS 'userCnt'
         FROM LawFirmTb lft
@@ -44,7 +44,7 @@
     </select>
 
     <!-- 로펌 리스트 총 개수 조회 쿼리 -->
-    <select id="findLawFirmsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+    <select id="findLawFirmsCnt" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="long">
         SELECT COUNT(*) AS 'count'
         FROM LawFirmTb lft
         LEFT JOIN UserTb ut ON(ut.userId = lft.userId)
@@ -72,7 +72,7 @@
     </select>
 
     <!-- 로펌 상세 조회 쿼리 -->
-    <select id="findLawFirm" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmEntry">
+    <select id="findLawFirm" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmEntry">
         SELECT A.*,
                (SELECT (COUNT(*)/ IF(A.trialTotalCount=0, 1, A.trialTotalCount))*100
                 FROM TrialTb tt3

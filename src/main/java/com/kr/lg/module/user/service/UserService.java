@@ -1,7 +1,6 @@
 package com.kr.lg.module.user.service;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.exception.LgException;
 import com.kr.lg.module.login.model.dto.LoginDto;
 import com.kr.lg.module.user.model.req.EnrollUserRequest;
 import com.kr.lg.module.user.excpetion.UserException;

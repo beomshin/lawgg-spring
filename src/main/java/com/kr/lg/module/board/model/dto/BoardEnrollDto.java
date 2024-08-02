@@ -6,7 +6,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.enums.LineEnum;
 import com.kr.lg.enums.PostEnum;
 import com.kr.lg.enums.WriterEnum;
-import com.kr.lg.web.dto.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 

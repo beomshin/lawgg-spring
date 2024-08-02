@@ -6,7 +6,7 @@
 <mapper namespace="com.kr.lg.module.trial.mapper.TrialMapper">
 
     <!-- 로펌 리스트 조회 쿼리 -->
-    <select id="findTrials" parameterType="com.kr.lg.web.dto.mapper.TrialParam" resultType="com.kr.lg.module.trial.model.entry.TrialEntry">
+    <select id="findTrials" parameterType="com.kr.lg.model.mapper.TrialParam" resultType="com.kr.lg.module.trial.model.entry.TrialEntry">
         SELECT tt.trialId, tt.title, tt.content, tt.writer, tt.thumbnail, tt.`view`, tt.recommendCount, tt.commentCount, tt.writeDt, tt.postType, tt.liveType, ut.profile
         FROM  TrialTb tt
         LEFT JOIN UserTb ut ON(tt.userId = ut.userId)
@@ -53,7 +53,7 @@
     </select>
 
     <!-- 로펌 리스트 총 개수 조회 쿼리 -->
-    <select id="findTrialsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+    <select id="findTrialsCnt" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="long">
         SELECT COUNT(*) AS 'count'
         FROM  TrialTb tt
         LEFT JOIN UserTb ut ON(tt.userId = ut.userId)
@@ -86,7 +86,7 @@
     </select>
 
     <!-- 로펌 상세 조회 쿼리 -->
-    <select id="findTrial" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.trial.model.entry.TrialEntry">
+    <select id="findTrial" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.trial.model.entry.TrialEntry">
         SELECT tt.*
         , (SELECT tct.trialCommentId FROM TrialCommentTb tct WHERE tt.trialId = tct.trialId AND tct.`depth` = '0') AS "trialCommentId"
         , (SELECT ut.nickName FROM UserTb ut WHERE ut.userId = tt.judge  ) AS "judgeName"
@@ -96,7 +96,7 @@
         </where>
     </select>
 
-    <select id="findVotePercent" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.trial.model.entry.TrialVoteEntry">
+    <select id="findVotePercent" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.trial.model.entry.TrialVoteEntry">
         SELECT
             COUNT(if(precedent=0, 1, NULL))  as 'plaintiffCount',
                 COUNT(if(precedent=1, 1, NULL)) as 'defendantCount'

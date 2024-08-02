@@ -1,5 +1,10 @@
 package com.kr.lg.db.repositories;
 
-public interface ConfigRepository extends RootConfigRepository {
+import com.kr.lg.db.entities.ConfigTb;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface ConfigRepository extends JpaRepository<ConfigTb, Long> {
+
 
 }

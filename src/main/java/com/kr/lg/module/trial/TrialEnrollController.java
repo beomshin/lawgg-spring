@@ -4,14 +4,14 @@ import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
-import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.web.dto.annotation.UserAdapter;
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.model.annotation.UserAdapter;
+import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.module.trial.model.req.EnrollVideoWithLoginRequest;
 import com.kr.lg.module.trial.model.res.EnrollTrialWithLoginResponse;
 
 import com.kr.lg.module.trial.model.req.EnrollTrialWithLoginRequest;
-import com.kr.lg.web.dto.root.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

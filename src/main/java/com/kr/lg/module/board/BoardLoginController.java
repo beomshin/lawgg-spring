@@ -2,11 +2,11 @@ package com.kr.lg.module.board;
 
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.service.BoardService;
-import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.web.dto.annotation.UserAdapter;
+import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.board.model.req.LoginBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.LoginBoardWithLoginRequest;
-import com.kr.lg.web.dto.root.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

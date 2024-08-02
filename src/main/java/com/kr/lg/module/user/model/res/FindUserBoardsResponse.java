@@ -1,6 +1,6 @@
 package com.kr.lg.module.user.model.res;
 
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 

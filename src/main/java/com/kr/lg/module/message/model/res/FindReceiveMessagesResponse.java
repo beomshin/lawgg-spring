@@ -1,6 +1,6 @@
 package com.kr.lg.module.message.model.res;
 
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import lombok.*;
 
 import java.util.List;
