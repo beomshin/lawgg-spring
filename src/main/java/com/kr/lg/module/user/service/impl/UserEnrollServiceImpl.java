@@ -30,8 +30,12 @@ public class UserEnrollServiceImpl implements UserEnrollService {
             log.info("▶ [유저] 유저 등록");
             return userRepository.save(UserTb.builder()
                     .loginId(enrollUserDto.getLoginId())
+                    .snsId(enrollUserDto.getSnsId())
                     .password(StringUtils.isBlank(enrollUserDto.getPassword()) ? null : encoder.encode(enrollUserDto.getPassword()))
                     .nickName(enrollUserDto.getNickName())
+                    .email(enrollUserDto.getEmail())
+                    .name(enrollUserDto.getName())
+                    .profile(enrollUserDto.getProfile())
                     .personalPeriod(enrollUserDto.getPersonalPeriod())
                     .snsType(enrollUserDto.getSnsType())
                     .authFlag(enrollUserDto.getAuthFlag())

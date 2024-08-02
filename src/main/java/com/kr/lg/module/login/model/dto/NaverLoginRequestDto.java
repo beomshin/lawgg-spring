@@ -1,5 +1,6 @@
-package com.kr.lg.module.login.model.naver;
+package com.kr.lg.module.login.model.dto;
 
+import com.kr.lg.module.login.model.naver.NaverProp;
 import lombok.Data;
 
 @Data

@@ -14,6 +14,7 @@ public interface UserRepository extends RootUserRepository {
     Optional<UserTb> findByLoginId(String loginId);
     Optional<UserTb> findByNickName(String nickName);
     Optional<UserTb> findByLoginIdAndCi(String loginId, String ci);
+    Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET password = :password  WHERE userId = :userId")
@@ -39,7 +40,5 @@ public interface UserRepository extends RootUserRepository {
     @Modifying
     @Query(value = "UPDATE UserTb SET profile = :profile  WHERE userId = :userId")
     void updateProfile(@Param("userId") Long userId, String profile);
-
-    Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
 
 }

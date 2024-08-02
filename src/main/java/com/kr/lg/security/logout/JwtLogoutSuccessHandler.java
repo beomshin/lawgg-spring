@@ -22,7 +22,7 @@ public class JwtLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final JwtService jwtService;
 
-    @Value("${lg.logout.url}")
+    @Value("${lg.redirect.url.home}")
     String homeUrl;
 
     @Override

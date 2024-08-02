@@ -1,4 +1,4 @@
-package com.kr.lg.module.login.model.lg;
+package com.kr.lg.module.login.model.dto;
 
 import com.kr.lg.module.login.model.google.GoogleLoginDto;
 import com.kr.lg.module.login.model.kakao.KakaoLoginDto;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 @NoArgsConstructor
-public class LgLoginDto {
+public class LoginDto {
 
     private String nickname;
     private String snsId;
@@ -21,7 +21,7 @@ public class LgLoginDto {
     private String profile;
     private String loginId;
 
-    public LgLoginDto(GoogleLoginDto googleLoginDto) {
+    public LoginDto(GoogleLoginDto googleLoginDto) {
         this.nickname = googleLoginDto.getName();
         this.snsId = googleLoginDto.getSub();
         this.name = googleLoginDto.getName();
@@ -30,7 +30,7 @@ public class LgLoginDto {
         this.snsType = SnsType.GOOGLE_SNS_TYPE;
     }
 
-    public LgLoginDto(KakaoLoginDto kakaoLoginDto) {
+    public LoginDto(KakaoLoginDto kakaoLoginDto) {
         this.nickname = kakaoLoginDto.getProperties().getNickname();
         this.snsId = kakaoLoginDto.getId();
         this.name = kakaoLoginDto.getProperties().getNickname();
@@ -39,7 +39,7 @@ public class LgLoginDto {
         this.snsType = SnsType.KAKAO_SNS_TYPE;
     }
 
-    public LgLoginDto(NaverLoginDto naverLoginDto) {
+    public LoginDto(NaverLoginDto naverLoginDto) {
         this.nickname = naverLoginDto.getNickname();
         this.snsId = naverLoginDto.getId();
         this.name = naverLoginDto.getName();
