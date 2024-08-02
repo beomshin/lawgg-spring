@@ -1,4 +1,4 @@
-package com.kr.lg.web.dto.annotation;
+package com.kr.lg.model.annotation;
 
 import com.kr.lg.db.entities.UserTb;
 import lombok.Getter;

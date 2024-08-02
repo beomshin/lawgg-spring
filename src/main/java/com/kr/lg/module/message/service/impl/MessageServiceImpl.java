@@ -13,8 +13,9 @@ import com.kr.lg.module.message.service.MessageEnrollService;
 import com.kr.lg.module.message.service.MessageFindService;
 import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.module.message.sort.MessageSort;
-import com.kr.lg.web.dto.mapper.MapperParam;
-import com.kr.lg.web.dto.mapper.MessageParam;
+import com.kr.lg.model.mapper.MapperParam;
+import com.kr.lg.model.mapper.MessageParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

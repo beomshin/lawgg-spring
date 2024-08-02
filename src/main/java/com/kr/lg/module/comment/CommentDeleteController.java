@@ -1,13 +1,13 @@
 package com.kr.lg.module.comment;
 
-import com.kr.lg.web.dto.annotation.UserAdapter;
+import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.board.model.req.DeleteBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentService;
-import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.web.dto.root.SuccessResponse;
+import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.model.global.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

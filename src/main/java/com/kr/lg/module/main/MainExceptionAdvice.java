@@ -1,7 +1,7 @@
 package com.kr.lg.module.main;
 
-import com.kr.lg.web.dto.global.GlobalCode;
-import com.kr.lg.web.dto.root.ErrorResponse;
+import com.kr.lg.model.enums.GlobalCode;
+import com.kr.lg.model.global.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

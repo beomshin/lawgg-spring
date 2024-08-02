@@ -1,6 +1,6 @@
 package com.kr.lg.module.trial.model.res;
 
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.global.AbstractSpec;
 import lombok.*;
 
 import java.util.List;

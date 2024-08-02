@@ -2,10 +2,10 @@ package com.kr.lg.module.message;
 
 import com.kr.lg.module.message.exception.MessageException;
 import com.kr.lg.module.message.service.MessageService;
-import com.kr.lg.web.dto.annotation.UserPrincipal;
-import com.kr.lg.web.dto.annotation.UserAdapter;
+import com.kr.lg.model.annotation.UserPrincipal;
+import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.message.model.req.SendMessageRequest;
-import com.kr.lg.web.dto.root.SuccessResponse;
+import com.kr.lg.model.global.SuccessResponse;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

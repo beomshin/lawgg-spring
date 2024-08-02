@@ -1,6 +1,6 @@
 package com.kr.lg.module.board.model.req;
 
-import com.kr.lg.web.dto.global.FileDto;
+import com.kr.lg.model.global.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

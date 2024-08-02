@@ -1,7 +1,7 @@
 package com.kr.lg.module.board.model.dto;
 
 
-import com.kr.lg.web.dto.global.FileDto;
+import com.kr.lg.model.global.FileDto;
 import lombok.*;
 
 import java.util.List;

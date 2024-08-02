@@ -1,7 +1,7 @@
-package com.kr.lg.web.dto.root;
+package com.kr.lg.model.global;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.web.dto.global.GlobalCode;
+import com.kr.lg.model.enums.GlobalCode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

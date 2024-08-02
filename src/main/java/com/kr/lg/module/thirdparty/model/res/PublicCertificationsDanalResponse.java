@@ -1,6 +1,6 @@
 package com.kr.lg.module.thirdparty.model.res;
 
-import com.kr.lg.web.dto.root.AbstractSpec;
+import com.kr.lg.model.global.AbstractSpec;
 import lombok.*;
 
 @Getter

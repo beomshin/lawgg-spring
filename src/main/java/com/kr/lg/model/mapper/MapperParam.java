@@ -1,4 +1,4 @@
-package com.kr.lg.web.dto.mapper;
+package com.kr.lg.model.mapper;
 
 public interface MapperParam {
 }

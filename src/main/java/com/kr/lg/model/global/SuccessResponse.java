@@ -1,4 +1,4 @@
-package com.kr.lg.web.dto.root;
+package com.kr.lg.model.global;
 
 import lombok.*;
 

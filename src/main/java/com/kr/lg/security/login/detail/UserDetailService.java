@@ -1,7 +1,7 @@
 package com.kr.lg.security.login.detail;
 
 import com.kr.lg.common.enums.entity.status.UserStatus;
-import com.kr.lg.web.dto.annotation.UserAdapter;
+import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.db.repositories.RootUserRepository;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.security.exception.SecurityException;

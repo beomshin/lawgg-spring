@@ -1,11 +1,11 @@
 
 package com.kr.lg.module.message.service.impl;
 
+import com.kr.lg.model.mapper.MessageParam;
 import com.kr.lg.module.message.exception.MessageException;
 import com.kr.lg.module.message.exception.MessageResultCode;
 import com.kr.lg.module.message.mapper.MessageMapper;
 import com.kr.lg.module.message.model.entry.MessageEntry;
-import com.kr.lg.web.dto.mapper.MessageParam;
 import com.kr.lg.module.message.service.MessageFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

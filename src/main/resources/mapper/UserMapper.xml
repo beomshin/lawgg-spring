@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kr.lg.module.user.mapper.UserMapper">
 
-    <select id="findBoards" parameterType="com.kr.lg.web.dto.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserBoardEntry">
+    <select id="findBoards" parameterType="com.kr.lg.model.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserBoardEntry">
         SELECT *
         FROM
         (
@@ -35,7 +35,7 @@
         OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
     </select>
 
-    <select id="findBoardsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+    <select id="findBoardsCnt" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="long">
         SELECT COUNT(*)
         FROM
         (
@@ -57,7 +57,7 @@
         ) A
     </select>
 
-    <select id="findUserIds" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserIdEntry">
+    <select id="findUserIds" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserIdEntry">
         SELECT ut.loginId, ut.profile, ut.nickName, ut.delFlag, ut.status, ut.regDt, ut.snsType
         FROM UserTb ut
         <where>
@@ -66,7 +66,7 @@
         </where>
     </select>
 
-    <select id="findUser" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserEntry">
+    <select id="findUser" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserEntry">
         SELECT ut.userId, ut.loginId, ut.nickName, ut.name, ut.profile, ut.email, ut.boardCount, ut.commentCount, ut.trialCount, ut.personalPeriod, ut.regDt, ut.phone,
                ut.authFlag, ut.snsType, ut.judgeFlag, ut.gender, ut.birth, ut.`point`, lft.name AS 'lawFirmName', tt.name AS 'tierName', tt.`level` AS 'tireLevel'
         FROM UserTb ut
@@ -77,7 +77,7 @@
         </where>
     </select>
 
-    <select id="findUserAlerts" parameterType="com.kr.lg.web.dto.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserAlertEntry">
+    <select id="findUserAlerts" parameterType="com.kr.lg.model.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserAlertEntry">
         SELECT at2.alertId, at2.trialId, at2.boardId, at2.title, at2.content, at2.`type`, at2.readFlag, at2.regDt
         FROM AlertTb at2
         <where>
@@ -98,7 +98,7 @@
         OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
     </select>
 
-    <select id="findUserAlertsCnt" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="long">
+    <select id="findUserAlertsCnt" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="long">
         SELECT COUNT(*)
         FROM AlertTb at2
         <where>
@@ -111,7 +111,7 @@
     </select>
 
 
-    <select id="findTop5Alert" parameterType="com.kr.lg.web.dto.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserAlertsEntry">
+    <select id="findTop5Alert" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserAlertsEntry">
         SELECT at2.alertId
         FROM AlertTb at2
         <where>

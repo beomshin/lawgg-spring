@@ -3,7 +3,7 @@ package com.kr.lg.security.login.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.security.exception.SecurityException;
-import com.kr.lg.web.dto.root.ErrorResponse;
+import com.kr.lg.model.global.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;

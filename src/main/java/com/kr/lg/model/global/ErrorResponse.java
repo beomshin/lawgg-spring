@@ -1,5 +1,6 @@
-package com.kr.lg.web.dto.root;
+package com.kr.lg.model.global;
 
+import com.kr.lg.model.enums.GlobalCode;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.comment.exception.CommentResultCode;
@@ -8,7 +9,6 @@ import com.kr.lg.module.message.exception.MessageResultCode;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
 import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.module.user.excpetion.UserResultCode;
-import com.kr.lg.web.dto.global.GlobalCode;
 
 
 public class ErrorResponse extends AbstractSpec {
