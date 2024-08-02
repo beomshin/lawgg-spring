@@ -14,8 +14,12 @@ import lombok.*;
 public class EnrollUserDto {
 
     private String loginId;
+    private String snsId;
     private String password;
     private String nickName;
+    private String profile;
+    private String email;
+    private String name;
     private Integer personalPeriod;
     private SnsType snsType;
     private AuthEnum authFlag;

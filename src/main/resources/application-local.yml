@@ -6,8 +6,6 @@ lg:
     url:
       home: http://localhost:8080/lawgg
       login: http://localhost:8080/lawgg/login
-  logout:
-    url: http://localhost:8080/lawgg
 
 token:
   key: ENC(xvK6dVxj9kBxialsqxZhY9hFunGuX4B/I59alGhszJsKCkXrmb2SC6N2pCC5Y7z9bn/LpLkdpLoZV6jadStAnW8gYtHjO0iFuV1BoeGM8lw=)

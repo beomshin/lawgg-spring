@@ -31,7 +31,7 @@ public class DanalController {
     public ResponseEntity<?> certificationsDanal(
             @RequestBody @Valid CertificationsDanalRequest request,
             @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws ThirdPartyException {
+    ) throws ThirdPartyException { // 미사용
         danalService.certificationsDanal(request, userAdapter.getUserTb());
         return ResponseEntity.ok().body(new SuccessResponse());
     }
@@ -40,7 +40,7 @@ public class DanalController {
     @ApiOperation(value = "비로그인 다날 본인 인증 요청", notes = "비로그인 다날 본인 인증 요청을 전송합니다.")
     public ResponseEntity<?> publicCertificationsDanal(
             @RequestBody @Valid CertificationsDanalRequest request
-    ) throws Exception {
+    ) throws Exception { // 미사용
         String data = danalService.certificationsDanal(request);
         AbstractSpec spec = PublicCertificationsDanalResponse.builder()
                 .data(data)

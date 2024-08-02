@@ -2,6 +2,7 @@ package com.kr.lg.module.user.service.impl;
 
 import com.kr.lg.common.crypto.HashNMacUtil;
 import com.kr.lg.common.enums.entity.type.SnsType;
+import com.kr.lg.common.utils.LoginUtils;
 import com.kr.lg.common.utils.RestPortOne;
 import com.kr.lg.db.entities.AlertTb;
 import com.kr.lg.db.entities.NickNameTb;
@@ -12,6 +13,7 @@ import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.enums.AuthEnum;
+import com.kr.lg.module.login.model.dto.LoginDto;
 import com.kr.lg.module.user.model.req.EnrollUserRequest;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.excpetion.UserResultCode;
@@ -225,6 +227,26 @@ public class UserServiceImpl implements UserService {
 
         }
 
+    }
+
+    @Override
+    public UserTb enrollUser(LoginDto loginDto) throws UserException {
+        Optional<UserTb> userTb = userRepository.findBySnsIdAndSnsType(loginDto.getSnsId(), loginDto.getSnsType());
+        if (!userTb.isPresent()) {
+            TierTb tierTb = tierRepository.findByKey("Bronze_3");
+            return userEnrollService.enrollUser(EnrollUserDto.builder()
+                    .loginId(LoginUtils.getLoginId(loginDto.getSnsType()))
+                    .snsId(loginDto.getSnsId())
+                    .nickName(loginDto.getNickname())
+                    .email(loginDto.getEmail())
+                    .name(loginDto.getName())
+                    .profile(loginDto.getProfile())
+                    .snsType(loginDto.getSnsType())
+                    .tierTb(tierTb)
+                    .build());
+        } else {
+            return userTb.get();
+        }
     }
 
     @Override

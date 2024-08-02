@@ -32,6 +32,7 @@ public class UserUpdateController {
     private final UserService userService;
 
     @PostMapping("/api/v1/update/read/user/alerts")
+    @ApiOperation(value = "회원 알림 리스트 업데이트", notes = "회원 알림 리스트를 업데이트합니다.")
     public ResponseEntity<?> updateUserAlertAll(
             @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws UserException {

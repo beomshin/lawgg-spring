@@ -6,8 +6,6 @@ lg:
     url:
       home: https://cground.store/lawgg
       login: https://cground.store/lawgg/login
-  logout:
-    url: https://cground.store/lawgg/
 
 token:
   key: ENC(xvK6dVxj9kBxialsqxZhY9hFunGuX4B/I59alGhszJsKCkXrmb2SC6N2pCC5Y7z9bn/LpLkdpLoZV6jadStAnW8gYtHjO0iFuV1BoeGM8lw=)
