@@ -194,7 +194,7 @@ public class BoardServiceImpl implements BoardService {
 
         BoardEnrollDto board = BoardEnrollDto.builder()
                 .userTb(userTb)
-                .lawFirmTb(isEnrollLawFirm ? userTb.getLawFirmId() : null)
+                .lawFirmTb(isEnrollLawFirm ? userTb.getLawFirmTb() : null)
                 .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
                 .title(request.getTitle())
                 .content(request.getContent())
@@ -222,13 +222,13 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException {
         if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
-        else if (userTb.getLawFirmId() == null) throw new BoardException(BoardResultCode.NOT_EXIST_LAW_FIRM); // 로펌 필수
-        else if (!Objects.equals(userTb.getLawFirmId().getLawFirmId(), request.getId())) throw new BoardException(BoardResultCode.UN_MATCHED_LAW_FIRM_USER);
+        else if (userTb.getLawFirmTb() == null) throw new BoardException(BoardResultCode.NOT_EXIST_LAW_FIRM); // 로펌 필수
+        else if (!Objects.equals(userTb.getLawFirmTb().getLawFirmId(), request.getId())) throw new BoardException(BoardResultCode.UN_MATCHED_LAW_FIRM_USER);
         boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
 
         BoardEnrollDto board = BoardEnrollDto.builder()
                 .userTb(userTb)
-                .lawFirmTb(userTb.getLawFirmId())
+                .lawFirmTb(userTb.getLawFirmTb())
                 .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
                 .title(request.getTitle())
                 .content(request.getContent())

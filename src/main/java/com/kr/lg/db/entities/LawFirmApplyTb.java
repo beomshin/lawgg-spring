@@ -43,9 +43,11 @@ public class LawFirmApplyTb {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private UserTb userTb;
+
     @Column(name = "title")
     @Convert(converter = EmojiConverter.class)
     private String title;
+
     @Column(name = "introduction")
     @Convert(converter = EmojiConverter.class)
     private String introduction;

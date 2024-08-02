@@ -130,7 +130,7 @@ public class TrialServiceImpl implements TrialService {
                 .plaintiffOpinion(request.getPlaintiffOpinion())
                 .defendantOpinion(request.getDefendantOpinion())
                 .content(request.getContent())
-                .lawFirmTb(request.getIsLawFirm() != null && request.getIsLawFirm() == 1 ? userTb.getLawFirmId() : null)
+                .lawFirmTb(request.getIsLawFirm() != null && request.getIsLawFirm() == 1 ? userTb.getLawFirmTb() : null)
                 .build();
         TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
         trialEnrollService.enrollTrialFiles(trialTb, request.getFiles());

@@ -1,6 +1,6 @@
 package com.kr.lg.security.login.detail;
 
-import com.kr.lg.db.repositories.RootUserRepository;
+import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class JwtDetailService implements UserDetailsService {
 
-    private final RootUserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {

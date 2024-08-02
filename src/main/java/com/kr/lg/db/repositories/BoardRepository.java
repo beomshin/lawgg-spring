@@ -4,6 +4,7 @@ package com.kr.lg.db.repositories;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.enums.WriterEnum;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import javax.persistence.LockModeType;
 import java.util.Optional;
 
-public interface BoardRepository extends RootBoardRepository {
+public interface BoardRepository extends JpaRepository<BoardTb, Long> {
 
     Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterEnum writerEnum); // 게시판 조회
 

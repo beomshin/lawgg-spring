@@ -44,7 +44,7 @@ public class UserTb { // 관리자 테이블
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lawFirmId")
-    private LawFirmTb lawFirmId;
+    private LawFirmTb lawFirmTb;
 
     @Column(name = "loginId")
     private String loginId;

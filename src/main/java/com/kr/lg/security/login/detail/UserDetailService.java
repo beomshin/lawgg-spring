@@ -1,8 +1,8 @@
 package com.kr.lg.security.login.detail;
 
 import com.kr.lg.common.enums.entity.status.UserStatus;
+import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.db.repositories.RootUserRepository;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.security.exception.SecurityException;
 import com.kr.lg.db.entities.UserTb;
@@ -23,7 +23,7 @@ import java.util.Collections;
 @Slf4j
 public class UserDetailService implements  UserDetailsService {
 
-    private final RootUserRepository userRepository;
+    private final UserRepository userRepository;
 
     /**
      * 아이디 로그인 체크

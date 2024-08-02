@@ -45,7 +45,7 @@ public class LawFirmServiceImpl implements LawFirmService {
     public void applyLawFirm(ApplyLawFirmRequest request, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] applyLawFirm 메소드 실행");
 
-        if (userTb.getLawFirmId() != null) throw new LawFirmException(LawFirmResultCode.ALREADY_JOIN_USER); // 이미 로펌을 가지고 있는 경우
+        if (userTb.getLawFirmTb() != null) throw new LawFirmException(LawFirmResultCode.ALREADY_JOIN_USER); // 이미 로펌을 가지고 있는 경우
         int isApply = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(request.getId(), userTb.getUserId(), ApplyStatusEnum.APPLY_STATUS);
         if (isApply > 0) throw new LawFirmException(LawFirmResultCode.ALREADY_APPLY_USER); // 이미 로펌을 가지고 있는 경우
         LawFirmEnrollDto enrollDto =  LawFirmEnrollDto.builder()
@@ -62,7 +62,7 @@ public class LawFirmServiceImpl implements LawFirmService {
     public void quitLawFirm(QuitLawFirmRequest request, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] quitLawFirm 메소드 실행");
 
-        if (userTb.getLawFirmId() == null || !Objects.equals(userTb.getLawFirmId().getLawFirmId(), request.getId())) {
+        if (userTb.getLawFirmTb() == null || !Objects.equals(userTb.getLawFirmTb().getLawFirmId(), request.getId())) {
             throw new LawFirmException(LawFirmResultCode.FAIL_QUIT_LAW_FIRM);
         }
         lawFirmDeleteService.quitLawFirm(userTb.getUserId());
@@ -108,7 +108,7 @@ public class LawFirmServiceImpl implements LawFirmService {
         LawFirmEntry entry = lawFirmFindService.findLawFirm(param);
         int result = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(id, userTb.getUserId(), ApplyStatusEnum.APPLY_STATUS);
         entry.setApplyFlag(result > 0 ? 1 : 0); // 지원 여부
-        LawFirmTb lawFirmTb = userTb.getLawFirmId();
+        LawFirmTb lawFirmTb = userTb.getLawFirmTb();
         if (lawFirmTb != null && lawFirmTb.getStatus() == Status2Enum.NORMAL_STATUS) { // 로그인 유저 가입 로펌이 있는 경우
             entry.setMyLawFirmId(lawFirmTb.getLawFirmId()); // 내로펌가기 (id 제공)
             entry.setIsSignLawFirmFlag(1); // 다른 로펌 가입여부 (0: 미가입, 1:가입)
