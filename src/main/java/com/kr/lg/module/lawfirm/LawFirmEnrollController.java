@@ -5,7 +5,7 @@ import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
-import com.kr.lg.model.global.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

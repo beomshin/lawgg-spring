@@ -4,7 +4,7 @@ import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
 import com.kr.lg.module.thirdparty.service.FileService;
 import com.kr.lg.common.utils.AwsS3Utils;
-import com.kr.lg.model.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import com.kr.lg.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

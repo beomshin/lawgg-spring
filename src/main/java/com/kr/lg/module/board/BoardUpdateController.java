@@ -10,7 +10,7 @@ import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.service.BoardService;
 import com.kr.lg.module.board.model.req.UpdateBoardWithNotLoginRequest;
 import com.kr.lg.module.board.model.req.UpdateBoardWithLoginRequest;
-import com.kr.lg.model.global.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

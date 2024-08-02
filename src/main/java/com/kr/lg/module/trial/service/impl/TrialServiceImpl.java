@@ -34,7 +34,7 @@ import com.kr.lg.module.trial.model.mapper.FindTrialParamData;
 import com.kr.lg.module.trial.service.*;
 import com.kr.lg.module.trial.sort.TrialSort;
 import com.kr.lg.module.thirdparty.service.FileService;
-import com.kr.lg.model.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import com.kr.lg.model.mapper.MapperParam;
 import com.kr.lg.model.mapper.TrialParam;
 import lombok.RequiredArgsConstructor;

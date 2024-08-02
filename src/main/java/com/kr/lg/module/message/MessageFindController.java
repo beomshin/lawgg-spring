@@ -6,7 +6,7 @@ import com.kr.lg.module.message.model.res.FindReceiveMessagesResponse;
 import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.module.message.model.req.FindReceiveMessagesRequest;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

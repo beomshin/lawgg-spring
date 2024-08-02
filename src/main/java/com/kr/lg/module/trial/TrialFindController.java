@@ -10,7 +10,7 @@ import com.kr.lg.module.trial.model.res.FindTrialWithLoginResponse;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
 import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;

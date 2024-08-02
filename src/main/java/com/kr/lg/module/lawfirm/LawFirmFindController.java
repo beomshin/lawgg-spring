@@ -9,7 +9,7 @@ import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

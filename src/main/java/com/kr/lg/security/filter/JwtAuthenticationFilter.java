@@ -3,8 +3,8 @@ package com.kr.lg.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kr.lg.module.auth.excpetion.AuthException;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
-import com.kr.lg.model.enums.GlobalCode;
-import com.kr.lg.model.global.ErrorResponse;
+import com.kr.lg.model.enums.GlobalResultCode;
+import com.kr.lg.model.common.ErrorResponse;
 import com.kr.lg.module.auth.service.JwtService;
 import com.kr.lg.security.login.detail.JwtDetailService;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             this.generateFailResponseBody(response, HttpStatus.UNAUTHORIZED, e.getResultCode().getCode(), e.getResultCode().getMsg());
         } catch (Exception e) {
             log.error("▶ [JwtAuthenticationFilter] Exception", e);
-            this.generateFailResponseBody(response, HttpStatus.INTERNAL_SERVER_ERROR, GlobalCode.SYSTEM_ERROR.getCode(), GlobalCode.SYSTEM_ERROR.getMsg());
+            this.generateFailResponseBody(response, HttpStatus.INTERNAL_SERVER_ERROR, GlobalResultCode.SYSTEM_ERROR.getCode(), GlobalResultCode.SYSTEM_ERROR.getMsg());
         }
     }
 

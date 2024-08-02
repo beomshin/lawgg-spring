@@ -7,7 +7,7 @@ import com.kr.lg.module.comment.model.req.UpdateBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentService;
 import com.kr.lg.model.annotation.UserPrincipal;
-import com.kr.lg.model.global.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

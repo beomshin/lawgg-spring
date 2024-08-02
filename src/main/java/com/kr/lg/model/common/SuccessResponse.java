@@ -1,4 +1,4 @@
-package com.kr.lg.model.global;
+package com.kr.lg.model.common;
 
 import lombok.*;
 

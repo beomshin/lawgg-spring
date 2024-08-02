@@ -2,7 +2,7 @@ package com.kr.lg.module.main;
 
 import com.kr.lg.module.main.model.res.MainResponse;
 import com.kr.lg.module.main.service.MainService;
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

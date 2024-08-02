@@ -7,7 +7,7 @@ import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
 import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
-import com.kr.lg.model.global.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

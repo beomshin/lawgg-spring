@@ -1,7 +1,7 @@
 package com.kr.lg.module.trial.model.res;
 
 import com.kr.lg.module.trial.model.entry.TrialEntry;
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import lombok.*;
 
 @Getter

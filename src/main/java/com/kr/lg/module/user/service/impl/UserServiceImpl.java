@@ -29,7 +29,7 @@ import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.module.user.service.UserUpdateService;
 import com.kr.lg.module.user.sort.UserSort;
 import com.kr.lg.module.thirdparty.service.FileService;
-import com.kr.lg.model.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import com.kr.lg.model.mapper.MapperParam;
 import com.kr.lg.model.mapper.UserParam;
 import lombok.RequiredArgsConstructor;

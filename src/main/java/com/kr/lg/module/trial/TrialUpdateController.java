@@ -12,7 +12,7 @@ import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.trial.model.req.UpdateEndTrialRequest;
 import com.kr.lg.module.trial.model.req.UpdateLiveTrialRequest;
 
-import com.kr.lg.model.global.SuccessResponse;
+import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

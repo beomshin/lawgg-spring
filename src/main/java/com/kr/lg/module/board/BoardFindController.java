@@ -14,7 +14,7 @@ import com.kr.lg.module.board.model.res.FindBoardsResponse;
 import com.kr.lg.module.board.model.res.FindLawFirmBoardsResponse;
 import com.kr.lg.module.board.model.res.FindMyBoardsResponse;
 import com.kr.lg.module.board.service.BoardService;
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

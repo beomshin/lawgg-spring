@@ -1,4 +1,4 @@
-package com.kr.lg.model.global;
+package com.kr.lg.model.dto;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;

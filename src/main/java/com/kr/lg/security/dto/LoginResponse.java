@@ -1,6 +1,6 @@
 package com.kr.lg.security.dto;
 
-import com.kr.lg.model.global.AbstractSpec;
+import com.kr.lg.model.common.AbstractSpec;
 import lombok.*;
 
 

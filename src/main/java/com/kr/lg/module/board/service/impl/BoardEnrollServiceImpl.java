@@ -11,7 +11,7 @@ import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.board.model.dto.BoardEnrollDto;
 import com.kr.lg.module.board.service.BoardEnrollService;
-import com.kr.lg.model.global.FileDto;
+import com.kr.lg.model.dto.FileDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
