@@ -1,5 +1,6 @@
 package com.kr.lg.module.trial.service.impl;
 
+import com.kr.lg.common.enums.entity.status.TrialStatus;
 import com.kr.lg.db.entities.TrialRecommendTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.TrialVoteTb;
@@ -8,9 +9,8 @@ import com.kr.lg.db.repositories.TrialAttachRepository;
 import com.kr.lg.db.repositories.TrialRecommendRepository;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.db.repositories.TrialVoteRepository;
-import com.kr.lg.enums.PrecedentEnum;
-import com.kr.lg.enums.StatusEnum;
-import com.kr.lg.enums.TrialTopicEnum;
+import com.kr.lg.common.enums.entity.status.PrecedentStatus;
+import com.kr.lg.common.enums.logic.TrialTopic;
 import com.kr.lg.module.trial.model.event.AlertTLEvent;
 import com.kr.lg.module.trial.model.event.AlertVideoEvent;
 import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
@@ -113,7 +113,7 @@ public class TrialServiceImpl implements TrialService {
         Optional<TrialVoteTb> voteTb = trialVoteRepository.findByTrialTb_TrialIdAndUserTb_UserId(trial.getTrialId(), userTb.getUserId());
         trial.setIsRecommend(recommendTb.isPresent() ? 1 : 0);
         trial.setCreated(Objects.equals(trial.getUserId(), userTb.getUserId()) ? 1 : 0);
-        trial.setIsVote(voteTb.map(trialVoteTb -> trialVoteTb.getPrecedent().getCode()).orElseGet(PrecedentEnum.PROCEEDING::getCode)); // 투표여부
+        trial.setIsVote(voteTb.map(trialVoteTb -> trialVoteTb.getPrecedent().getCode()).orElseGet(PrecedentStatus.PROCEEDING::getCode)); // 투표여부
         trial.setComments(comments);
         return trial;
     }
@@ -151,7 +151,7 @@ public class TrialServiceImpl implements TrialService {
         trialRepository.uploadVideoAndReply(trialTb.getTrialId(),
                 video != null ? video.getPath() : null,
                 replay != null ? replay.getPath() : null,
-                video == null ? StatusEnum.FAIL_STATUS : StatusEnum.NORMAL_STATUS
+                video == null ? TrialStatus.FAIL_STATUS : TrialStatus.NORMAL_STATUS
         );
         applicationEventPublisher.publishEvent(new AlertVideoEvent(trialTb));
 
@@ -181,7 +181,7 @@ public class TrialServiceImpl implements TrialService {
         if (trialTb.isPresent()) {
             trialUpdateService.updateEndTrial(TrialUpdateDto.builder()
                     .trialId(request.getId())
-                    .precedent(PrecedentEnum.of(request.getPrecedent()))
+                    .precedent(PrecedentStatus.of(request.getPrecedent()))
                     .build());
         } else {
             throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
@@ -219,12 +219,12 @@ public class TrialServiceImpl implements TrialService {
         Optional<TrialVoteTb> trialVoteTb = trialVoteRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
         if (trialVoteTb.isPresent()) {
             trialVoteService.changeVoteTrial(TrialVoteDto.builder()
-                            .precedent(PrecedentEnum.of(request.getPrecedent()))
+                            .precedent(PrecedentStatus.of(request.getPrecedent()))
                             .trialVoteId(trialVoteTb.get().getTrialVoteId())
                     .build());
         } else {
             trialVoteService.voteTrial(TrialVoteDto.builder()
-                            .precedent(PrecedentEnum.of(request.getPrecedent()))
+                            .precedent(PrecedentStatus.of(request.getPrecedent()))
                             .trialTb(TrialTb.builder().trialId(request.getId()).build())
                             .userTb(userTb)
                     .build());
@@ -245,7 +245,7 @@ public class TrialServiceImpl implements TrialService {
     }
 
     private Sort getSort(int topic) {
-        if (TrialTopicEnum.ALL_TOPIC == TrialTopicEnum.of(topic)) {
+        if (TrialTopic.ALL_TOPIC == TrialTopic.of(topic)) {
             return TrialSort.notificationSortWithDesc().and(TrialSort.dateWithDesc());
         } else {
             return TrialSort.notificationSortWithDesc().and(TrialSort.dateTimeWithDesc());

@@ -2,8 +2,8 @@ package com.kr.lg.db.repositories;
 
 
 import com.kr.lg.db.entities.BoardTb;
-import com.kr.lg.enums.StatusEnum;
-import com.kr.lg.enums.WriterEnum;
+import com.kr.lg.common.enums.entity.status.BoardStatus;
+import com.kr.lg.common.enums.entity.type.WriterType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,9 +15,9 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<BoardTb, Long> {
 
-    Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterEnum writerEnum); // 게시판 조회
+    Optional<BoardTb> findByBoardIdAndWriterType(long boardId, WriterType writerEnum); // 게시판 조회
 
-    Optional<BoardTb> findByBoardIdAndWriterTypeAndStatus(long boardId, WriterEnum writerEnum, StatusEnum statusEnum); // 정상 게시판 조회
+    Optional<BoardTb> findByBoardIdAndWriterTypeAndStatus(long boardId, WriterType writerEnum, BoardStatus statusEnum); // 정상 게시판 조회
 
     @Modifying
     @Query(value = "UPDATE BoardTb SET view = view + 1  WHERE boardId = :boardId")

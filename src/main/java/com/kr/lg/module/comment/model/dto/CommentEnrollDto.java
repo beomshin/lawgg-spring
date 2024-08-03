@@ -3,7 +3,7 @@ package com.kr.lg.module.comment.model.dto;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.enums.DepthEnum;
+import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
 import lombok.*;
 
 @Getter
@@ -18,7 +18,7 @@ public class CommentEnrollDto {
     private BoardTb boardTb; // 게시판 테이블
     private TrialTb trialTb; // 트라이얼 테이블
     private long parentId; // 부모 식별자
-    private DepthEnum depth; // 댓글 레벨
+    private CommentDepthLevel depth; // 댓글 레벨
     private long id; // 게시판 식별자
     private Long boardCommentId; // 포지션 게시판 댓글 식별자
     private Long trialCommentId; // 트라이얼 댓글 식별자

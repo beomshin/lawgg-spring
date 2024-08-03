@@ -12,7 +12,7 @@ import com.kr.lg.db.repositories.AlertRepository;
 import com.kr.lg.db.repositories.NickNameRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.enums.AuthEnum;
+import com.kr.lg.common.enums.entity.flag.AuthFlag;
 import com.kr.lg.module.login.model.dto.LoginDto;
 import com.kr.lg.module.user.model.req.EnrollUserRequest;
 import com.kr.lg.module.user.excpetion.UserException;
@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
                             .nickName(request.getNickName())
                             .personalPeriod(request.getPersonalPeriod())
                             .snsType(SnsType.LG_SNS_TYPE)
-                            .authFlag(AuthEnum.NON_AUTH_STATUS)
+                            .authFlag(AuthFlag.NON_AUTH_STATUS)
                             .tierTb(tierTb)
                     .build());
         } else {

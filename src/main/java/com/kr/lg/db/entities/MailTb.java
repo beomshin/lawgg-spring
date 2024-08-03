@@ -2,8 +2,8 @@ package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kr.lg.common.enums.convert.crypt.DataBaseAESCryptConverter;
-import com.kr.lg.common.converters.VerificationEnumConverter;
-import com.kr.lg.enums.VerificationEnum;
+import com.kr.lg.common.enums.convert.status.VerificationStatusConverter;
+import com.kr.lg.common.enums.entity.status.VerificationStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -46,8 +46,8 @@ public class MailTb {
     private String code;
 
     @Column(name = "verification")
-    @Convert(converter = VerificationEnumConverter.class)
-    private VerificationEnum verification;
+    @Convert(converter = VerificationStatusConverter.class)
+    private VerificationStatus verification; // 이메일 인증 상태 ( 0 : 미완료 , 1: 완료 )
 
     @Column(name = "expired")
     private Date expired;

@@ -14,8 +14,8 @@
                        (SELECT ut.nickName FROM UserTb ut2 WHERE ut2.userId = mt.senderId) AS "senderNickName"
                 FROM MessageTb mt
                 LEFT OUTER JOIN UserTb ut ON(mt.receiverId  = ut.userId)
-                <!--수신자 미삭제 (receiverDelFlag : 0) -->
-                WHERE mt.receiverDelFlag = '0' AND mt.receiverId = #{data.receiverId}
+                <!--수신자 미삭제 (receiverDeleteStatus : 0) -->
+                WHERE mt.receiverDeleteStatus = '0' AND mt.receiverId = #{data.receiverId}
             ) A
         <where>
             <!-- 검색조건 타입 -->
@@ -63,7 +63,7 @@
             (SELECT ut.nickName FROM UserTb ut2 WHERE ut2.userId = mt.senderId) AS "senderNickName"
             FROM MessageTb mt
             LEFT OUTER JOIN UserTb ut ON(mt.receiverId  = ut.userId)
-            WHERE mt.receiverDelFlag = '0' AND mt.receiverId = #{receiverId}
+            WHERE mt.receiverDeleteStatus = '0' AND mt.receiverId = #{receiverId}
         ) A
         <where>
             <!-- 검색조건 타입 -->

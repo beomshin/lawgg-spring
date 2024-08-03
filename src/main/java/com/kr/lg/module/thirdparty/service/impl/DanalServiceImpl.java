@@ -5,7 +5,7 @@ import com.kr.lg.common.crypto.AESCrypt;
 import com.kr.lg.common.utils.RestPortOne;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.UserRepository;
-import com.kr.lg.enums.AuthEnum;
+import com.kr.lg.common.enums.entity.flag.AuthFlag;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
 import com.kr.lg.module.thirdparty.model.req.CertificationsDanalRequest;
@@ -46,7 +46,7 @@ public class DanalServiceImpl implements DanalService {
 
             try {
                 log.info("▶ [유저] 유저 본인 인증 정보 등록");
-                userRepository.updateAuth(ci, di, name, gender, birthday, AuthEnum.AUTH_STATUS, userTb.getUserId());
+                userRepository.updateAuth(ci, di, name, gender, birthday, AuthFlag.AUTH_STATUS, userTb.getUserId());
             } catch (Exception e) {
               throw new ThirdPartyException(ThirdPartyResultCode.FAIL_INSERT_VERIFY_USER_DATA);
             }

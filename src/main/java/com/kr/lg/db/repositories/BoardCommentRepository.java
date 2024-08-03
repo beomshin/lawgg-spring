@@ -1,7 +1,7 @@
 package com.kr.lg.db.repositories;
 
+import com.kr.lg.common.enums.entity.status.CommentStatus;
 import com.kr.lg.db.entities.BoardCommentTb;
-import com.kr.lg.enums.StatusEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ public interface BoardCommentRepository extends JpaRepository<BoardCommentTb, Lo
 
     @Modifying
     @Query(value = "UPDATE BoardCommentTb SET status = :status WHERE boardCommentId = :boardCommentId")
-    void updateBoardCommentStatus(@Param("boardCommentId") long boardCommentId, @Param("status") StatusEnum status);
+    void updateBoardCommentStatus(@Param("boardCommentId") long boardCommentId, @Param("status") CommentStatus status);
 
     @Modifying
     @Query(value = "UPDATE BoardCommentTb SET content = :content WHERE boardCommentId = :boardCommentId")

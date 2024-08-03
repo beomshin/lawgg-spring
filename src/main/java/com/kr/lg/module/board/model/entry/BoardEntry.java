@@ -2,7 +2,7 @@ package com.kr.lg.module.board.model.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.common.enums.entity.status.BoardStatus;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.comment.model.entry.BoardCommentEntry;
@@ -43,9 +43,9 @@ public class BoardEntry {
      * @throws BoardException
      */
     public boolean isNormalStatus() throws BoardException {
-        if (this.status == StatusEnum.NORMAL_STATUS.getCode()) return true;
-        else if (this.status == StatusEnum.DELETE_STATUS.getCode()) throw new BoardException(BoardResultCode.DELETE_BOARD); // 삭제 게시판
-        else if (this.status == StatusEnum.REPORT_STATUS.getCode()) throw new BoardException(BoardResultCode.REPORT_BOARD); // 정지 게시판
+        if (this.status == BoardStatus.NORMAL_STATUS.getCode()) return true;
+        else if (this.status == BoardStatus.DELETE_STATUS.getCode()) throw new BoardException(BoardResultCode.DELETE_BOARD); // 삭제 게시판
+        else if (this.status == BoardStatus.REPORT_STATUS.getCode()) throw new BoardException(BoardResultCode.REPORT_BOARD); // 정지 게시판
         else {
             return false; // 미존재 상태 처리
         }

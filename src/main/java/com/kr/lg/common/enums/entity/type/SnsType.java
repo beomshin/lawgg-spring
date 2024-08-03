@@ -1,12 +1,12 @@
 package com.kr.lg.common.enums.entity.type;
 
-import com.kr.lg.enums.LegacyEnum;
+import com.kr.lg.common.enums.EnumEntry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum SnsType implements LegacyEnum {
+public enum SnsType implements EnumEntry {
 
     LG_SNS_TYPE(0),
     GOOGLE_SNS_TYPE(1),
@@ -21,6 +21,6 @@ public enum SnsType implements LegacyEnum {
             return null;
         }
 
-        return LegacyEnum.of(values(), code);
+        return EnumEntry.of(values(), code);
     }
 }

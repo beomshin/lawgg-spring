@@ -1,12 +1,16 @@
 package com.kr.lg.module.board.service.impl;
 
+import com.kr.lg.common.enums.entity.status.BoardStatus;
+import com.kr.lg.common.enums.entity.type.LineType;
+import com.kr.lg.common.enums.entity.type.PostType;
+import com.kr.lg.common.enums.entity.type.WriterType;
+import com.kr.lg.common.enums.logic.BoardTopic;
 import com.kr.lg.db.entities.BoardRecommendTb;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardRecommendRepository;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.kr.lg.enums.*;
 import com.kr.lg.module.board.model.event.BoardRecommendEvent;
 import com.kr.lg.module.board.model.event.UserBoardCreateCountEvent;
 import com.kr.lg.module.board.model.req.*;
@@ -162,12 +166,12 @@ public class BoardServiceImpl implements BoardService {
 
         BoardEnrollDto board = BoardEnrollDto.builder()
                 .password(request.getPassword())
-                .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
+                .postType(isEnrollFile ? PostType.IMAGE_TYPE : PostType.NORMAL_TYPE)
                 .title(request.getTitle())
                 .content(request.getContent())
                 .writer(request.getId())
-                .lineType(LineEnum.of(request.getLineType()))
-                .writerType(WriterEnum.ANONYMOUS_TYPE)
+                .lineType(LineType.of(request.getLineType()))
+                .writerType(WriterType.ANONYMOUS_TYPE)
                 .ip(ip)
                 .build();
 
@@ -195,12 +199,12 @@ public class BoardServiceImpl implements BoardService {
         BoardEnrollDto board = BoardEnrollDto.builder()
                 .userTb(userTb)
                 .lawFirmTb(isEnrollLawFirm ? userTb.getLawFirmTb() : null)
-                .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
+                .postType(isEnrollFile ? PostType.IMAGE_TYPE : PostType.NORMAL_TYPE)
                 .title(request.getTitle())
                 .content(request.getContent())
                 .writer(userTb.getNickName())
-                .lineType(LineEnum.of(request.getLineType()))
-                .writerType(WriterEnum.MEMBER_TYPE)
+                .lineType(LineType.of(request.getLineType()))
+                .writerType(WriterType.MEMBER_TYPE)
                 .ip(ip)
                 .build();
 
@@ -229,12 +233,12 @@ public class BoardServiceImpl implements BoardService {
         BoardEnrollDto board = BoardEnrollDto.builder()
                 .userTb(userTb)
                 .lawFirmTb(userTb.getLawFirmTb())
-                .postType(isEnrollFile ? PostEnum.IMAGE_TYPE : PostEnum.NORMAL_TYPE)
+                .postType(isEnrollFile ? PostType.IMAGE_TYPE : PostType.NORMAL_TYPE)
                 .title(request.getTitle())
                 .content(request.getContent())
                 .writer(userTb.getNickName())
-                .lineType(LineEnum.of(request.getLineType()))
-                .writerType(WriterEnum.LAW_FIRM_TYPE)
+                .lineType(LineType.of(request.getLineType()))
+                .writerType(WriterType.LAW_FIRM_TYPE)
                 .ip(ip)
                 .build();
 
@@ -254,7 +258,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.ANONYMOUS_TYPE);
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.ANONYMOUS_TYPE);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
             boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
@@ -282,7 +286,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.MEMBER_TYPE);
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.MEMBER_TYPE);
         if (boardTb.isPresent()) {
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
             boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
@@ -308,7 +312,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.ANONYMOUS_TYPE, StatusEnum.NORMAL_STATUS);
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterType.ANONYMOUS_TYPE, BoardStatus.NORMAL_STATUS);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
             boardDeleteService.deleteBoard(boardTb.get().getBoardId());
@@ -327,9 +331,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterEnum.MEMBER_TYPE, StatusEnum.NORMAL_STATUS);
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterType.MEMBER_TYPE, BoardStatus.NORMAL_STATUS);
         if (boardTb.isPresent()) {
-            boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostEnum.BEST_TYPE) || boardTb.get().getPostType().equals(PostEnum.RECOMMEND); // 베스트 or 추천 게시판 플래그
+            boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostType.BEST_TYPE) || boardTb.get().getPostType().equals(PostType.RECOMMEND); // 베스트 or 추천 게시판 플래그
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER); // 작성자 체크
             else if (isBestOrRecommendBoard && !encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD); // 베스트 or 추천 게시판은 패스워드 검증
             boardDeleteService.deleteBoard(boardTb.get().getBoardId());
@@ -392,7 +396,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void loginBoardWithNotLogin(LoginBoardWithNotLoginRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.ANONYMOUS_TYPE);
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.ANONYMOUS_TYPE);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
             log.info("▶ [포지션 게시판] 비로그인 포지션 게시판 로그인");
@@ -412,7 +416,7 @@ public class BoardServiceImpl implements BoardService {
     public void loginBoardWithLogin(LoginBoardWithLoginRequest request, UserTb userTb) throws BoardException {
         log.info("▶ [포지션 게시판] loginBoardWithLogin 메소드 실행");
 
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterEnum.MEMBER_TYPE);
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.MEMBER_TYPE);
         if (boardTb.isPresent()) {
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
             log.info("▶ [포지션 게시판] 로그인 포지션 게시판 로그인");
@@ -428,7 +432,7 @@ public class BoardServiceImpl implements BoardService {
      * @return
      */
     private Sort getSort(int topic) {
-        if (BoardTopicEnum.HOT_TOPIC == BoardTopicEnum.of(topic)) {
+        if (BoardTopic.HOT_TOPIC == BoardTopic.of(topic)) {
             return BoardSort.notificationSortWithDesc().and(BoardSort.dateWithDesc()).and(BoardSort.hotDesc());
         } else {
             return BoardSort.notificationSortWithDesc().and(BoardSort.dateTimeWithDesc());

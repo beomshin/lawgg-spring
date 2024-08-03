@@ -1,10 +1,10 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.DepthEnumConverter;
-import com.kr.lg.common.converters.StatusEnumConverter;
-import com.kr.lg.enums.DepthEnum;
-import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.common.enums.convert.level.CommentDepthLevelConverter;
+import com.kr.lg.common.enums.convert.status.CommentStatusConverter;
+import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
+import com.kr.lg.common.enums.entity.status.CommentStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -50,8 +50,8 @@ public class TrialCommentTb {
     private Integer order;
 
     @Column(name = "depth")
-    @Convert(converter = DepthEnumConverter.class)
-    private DepthEnum depth;
+    @Convert(converter = CommentDepthLevelConverter.class)
+    private CommentDepthLevel depth; // 댓글 레벨 ( 0 : 루트 , 1: 댓글, 2: 대댓글)
 
     @Column(name = "ip")
     private String ip;
@@ -74,8 +74,8 @@ public class TrialCommentTb {
     private Long report;
 
     @Column(name = "status")
-    @Convert(converter = StatusEnumConverter.class)
-    private StatusEnum status;
+    @Convert(converter = CommentStatusConverter.class)
+    private CommentStatus status; // 댓글 상태 ( 1: 정상,  2: 삭제 )
 
     @Column(name = "regDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")

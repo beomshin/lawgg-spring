@@ -1,9 +1,8 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.EmojiConverter;
-import com.kr.lg.common.converters.Status2EnumConverter;
-import com.kr.lg.enums.Status2Enum;
+import com.kr.lg.common.enums.convert.status.LawFirmStatusConverter;
+import com.kr.lg.common.enums.entity.status.LawFirmStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -48,12 +47,11 @@ public class LawFirmTb {
     private String background;
 
     @Column(name = "introduction")
-    @Convert(converter = EmojiConverter.class)
     private String introduction;
 
     @Column(name = "status")
-    @Convert(converter = Status2EnumConverter.class)
-    private Status2Enum status;
+    @Convert(converter = LawFirmStatusConverter.class)
+    private LawFirmStatus status; // 로펌 상태( 0: 미운영, 1: 운영, 2: 삭제 )
 
     @Column(name = "regDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

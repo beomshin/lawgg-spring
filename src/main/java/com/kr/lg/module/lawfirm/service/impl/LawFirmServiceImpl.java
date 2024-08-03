@@ -3,8 +3,8 @@ package com.kr.lg.module.lawfirm.service.impl;
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
-import com.kr.lg.enums.ApplyStatusEnum;
-import com.kr.lg.enums.Status2Enum;
+import com.kr.lg.common.enums.entity.status.ApplyStatus;
+import com.kr.lg.common.enums.entity.status.LawFirmStatus;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
 import com.kr.lg.module.lawfirm.model.dto.LawFirmEnrollDto;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
@@ -46,7 +46,7 @@ public class LawFirmServiceImpl implements LawFirmService {
         log.info("▶ [로펌] applyLawFirm 메소드 실행");
 
         if (userTb.getLawFirmTb() != null) throw new LawFirmException(LawFirmResultCode.ALREADY_JOIN_USER); // 이미 로펌을 가지고 있는 경우
-        int isApply = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(request.getId(), userTb.getUserId(), ApplyStatusEnum.APPLY_STATUS);
+        int isApply = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(request.getId(), userTb.getUserId(), ApplyStatus.APPLY_STATUS);
         if (isApply > 0) throw new LawFirmException(LawFirmResultCode.ALREADY_APPLY_USER); // 이미 로펌을 가지고 있는 경우
         LawFirmEnrollDto enrollDto =  LawFirmEnrollDto.builder()
                 .lawFirmTb(LawFirmTb.builder().lawFirmId(request.getId()).build())
@@ -106,10 +106,10 @@ public class LawFirmServiceImpl implements LawFirmService {
                 .lawFirmId(id)
                 .build();
         LawFirmEntry entry = lawFirmFindService.findLawFirm(param);
-        int result = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(id, userTb.getUserId(), ApplyStatusEnum.APPLY_STATUS);
+        int result = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(id, userTb.getUserId(), ApplyStatus.APPLY_STATUS);
         entry.setApplyFlag(result > 0 ? 1 : 0); // 지원 여부
         LawFirmTb lawFirmTb = userTb.getLawFirmTb();
-        if (lawFirmTb != null && lawFirmTb.getStatus() == Status2Enum.NORMAL_STATUS) { // 로그인 유저 가입 로펌이 있는 경우
+        if (lawFirmTb != null && lawFirmTb.getStatus() == LawFirmStatus.NORMAL_STATUS) { // 로그인 유저 가입 로펌이 있는 경우
             entry.setMyLawFirmId(lawFirmTb.getLawFirmId()); // 내로펌가기 (id 제공)
             entry.setIsSignLawFirmFlag(1); // 다른 로펌 가입여부 (0: 미가입, 1:가입)
             entry.setIsMyLawFirmFlag(lawFirmTb.getLawFirmId() == id ? 1 : 0); // 조회 로펌이 로그인 유저 가입 로펌과 동일 확인

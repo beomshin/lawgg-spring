@@ -1,9 +1,9 @@
 package com.kr.lg.module.trial.service.impl;
 
+import com.kr.lg.common.enums.entity.status.AttachStatus;
 import com.kr.lg.db.entities.*;
 import com.kr.lg.db.repositories.TrialCommentRepository;
-import com.kr.lg.enums.DepthEnum;
-import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.db.repositories.TrialAttachRepository;
@@ -51,7 +51,7 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
                     .build();
             TrialCommentTb commentTb = TrialCommentTb.builder() // 게실글 루트 댓글 엔티티 생성
                     .trialTb(trialTb)
-                    .depth(DepthEnum.ROOT_COMMENT)
+                    .depth(CommentDepthLevel.ROOT_COMMENT)
                     .build();
             trialRepository.save(trialTb); // 게시글 save
             trialCommentRepository.save(commentTb); // 게시글 루트 댓글 save
@@ -75,7 +75,7 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
                             .oriName(((FileDto)it).getOriName())
                             .newName(((FileDto)it).getNewName())
                             .size(((FileDto)it).getSize())
-                            .status(StatusEnum.NORMAL_STATUS)
+                            .status(AttachStatus.NORMAL_STATUS)
                             .build()).collect(Collectors.toList());
             trialAttachRepository.saveAll(boardAttach);
         } catch (Exception e) {

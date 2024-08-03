@@ -1,8 +1,16 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.*;
-import com.kr.lg.enums.*;
+import com.kr.lg.common.enums.convert.status.PrecedentStatusConverter;
+import com.kr.lg.common.enums.convert.status.BoardStatusConverter;
+import com.kr.lg.common.enums.convert.type.LiveTypeConverter;
+import com.kr.lg.common.enums.convert.type.PostTypeConverter;
+import com.kr.lg.common.enums.convert.type.TrialEndingTypeConverter;
+import com.kr.lg.common.enums.entity.status.PrecedentStatus;
+import com.kr.lg.common.enums.entity.status.TrialStatus;
+import com.kr.lg.common.enums.entity.type.LiveType;
+import com.kr.lg.common.enums.entity.type.PostType;
+import com.kr.lg.common.enums.entity.type.TrialEndingType;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -96,8 +104,8 @@ public class MainTrialTb {
     private String thumbnail;
 
     @Column(name = "precedent")
-    @Convert(converter = PrecedentEnumConverter.class)
-    private PrecedentEnum precedent;
+    @Convert(converter = PrecedentStatusConverter.class)
+    private PrecedentStatus precedent; // 판례 ( 0: 원고 승, 1: 피고 승, 9 :진행중)
 
     @Column(name = "commentCount")
     private Long commentCount;
@@ -112,20 +120,20 @@ public class MainTrialTb {
     private Integer report;
 
     @Column(name = "postType")
-    @Convert(converter = PostEnumConverter.class)
-    private PostEnum postType;
+    @Convert(converter = PostTypeConverter.class)
+    private PostType postType; // 게시글 타입 ( 0 : 일반, 1: 이미지, 2: 추천, 3: 베스트, 98: 이벤트, 99: 공지 )
 
     @Column(name = "liveType")
-    @Convert(converter = LiveEnumConverter.class)
-    private LiveEnum liveType;
+    @Convert(converter = LiveTypeConverter.class)
+    private LiveType liveType; // 라이브 상태 ( 0: 미방송, 1: 방송)
 
     @Column(name = "endingType")
-    @Convert(converter = EndingEnumConverter.class)
-    private EndingEnum endingType;
+    @Convert(converter = TrialEndingTypeConverter.class)
+    private TrialEndingType endingType; // 종료 재판 ( 0: 미종료, 1: 종료)
 
     @Column(name = "status")
-    @Convert(converter = StatusEnumConverter.class)
-    private StatusEnum status;
+    @Convert(converter = BoardStatusConverter.class)
+    private TrialStatus status; // 게시글 상태 ( 1: 정상, 2: 삭제, 3: 업로드중, 4: 업로드 실패, 9:정지 )
 
     @Column(name = "regDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")

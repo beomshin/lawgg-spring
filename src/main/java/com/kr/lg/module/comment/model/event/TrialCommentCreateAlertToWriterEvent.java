@@ -1,7 +1,7 @@
 package com.kr.lg.module.comment.model.event;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.enums.DepthEnum;
+import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
 import com.kr.lg.module.comment.model.dto.CommentEnrollDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +23,9 @@ public class TrialCommentCreateAlertToWriterEvent {
     public TrialCommentCreateAlertToWriterEvent(CommentEnrollDto requestDto) {
         this.trialId = requestDto.getId();
         this.content = requestDto.getContent();
-        if (requestDto.getDepth().equals(DepthEnum.PARENT_COMMENT)) {
+        if (requestDto.getDepth().equals(CommentDepthLevel.PARENT_COMMENT)) {
             this.parentId = requestDto.getParentId();
-        } else if (requestDto.getDepth().equals(DepthEnum.CHILDREN_COMMENT)){
+        } else if (requestDto.getDepth().equals(CommentDepthLevel.CHILDREN_COMMENT)){
             this.parentId = requestDto.getTrialCommentId();
         }
         this.title = requestDto.getAlertTitle();

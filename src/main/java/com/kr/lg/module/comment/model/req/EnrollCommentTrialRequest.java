@@ -1,6 +1,5 @@
 package com.kr.lg.module.comment.model.req;
 
-import com.kr.lg.enums.DepthEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -31,7 +30,7 @@ public class EnrollCommentTrialRequest {
 
     @ApiModelProperty(value = "댓글 레벨", required = true)
     @NotNull(message = "댓글 레벨이 입력되어있지않습니다.")
-    private DepthEnum depth;
+    private int depth;
 
     @ApiModelProperty(value = "부모 댓글 아이디(대댓글)")
     private Long trialCommentId;

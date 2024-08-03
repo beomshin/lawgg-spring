@@ -1,12 +1,13 @@
 package com.kr.lg.module.board.service.impl;
 
+import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
+import com.kr.lg.common.enums.entity.status.AttachStatus;
 import com.kr.lg.db.entities.BoardAttachTb;
 import com.kr.lg.db.entities.BoardCommentTb;
 import com.kr.lg.db.entities.BoardTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardCommentRepository;
 import com.kr.lg.db.repositories.BoardRepository;
-import com.kr.lg.enums.*;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.board.model.dto.BoardEnrollDto;
@@ -52,7 +53,7 @@ public class BoardEnrollServiceImpl implements BoardEnrollService {
                     .build();
             BoardCommentTb commentTb = BoardCommentTb.builder() // 게실글 루트 댓글 엔티티 생성
                     .boardTb(boardTb)
-                    .depth(DepthEnum.ROOT_COMMENT)
+                    .depth(CommentDepthLevel.ROOT_COMMENT)
                     .build();
             boardRepository.save(boardTb); // 게시글 save
             boardCommentRepository.save(commentTb); // 게시글 루트 댓글 save
@@ -76,7 +77,7 @@ public class BoardEnrollServiceImpl implements BoardEnrollService {
                             .oriName(((FileDto)it).getOriName())
                             .newName(((FileDto)it).getNewName())
                             .size(((FileDto)it).getSize())
-                            .status(StatusEnum.NORMAL_STATUS)
+                            .status(AttachStatus.NORMAL_STATUS)
                             .build()).collect(Collectors.toList());
             boardAttachRepository.saveAll(boardAttach);
         } catch (Exception e) {

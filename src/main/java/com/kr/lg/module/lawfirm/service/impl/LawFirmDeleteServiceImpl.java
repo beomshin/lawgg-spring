@@ -1,6 +1,6 @@
 package com.kr.lg.module.lawfirm.service.impl;
 
-import com.kr.lg.enums.ApplyStatusEnum;
+import com.kr.lg.common.enums.entity.status.ApplyStatus;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
@@ -37,7 +37,7 @@ public class LawFirmDeleteServiceImpl implements LawFirmDeleteService {
     public void cancelApplyLawFirm(long lawFirmId, long userId) throws LawFirmException {
         try {
             log.info("▶ [로펌] 신청 취소");
-            lawFirmApplyRepository.cancelApplyLawFirm(lawFirmId, userId, ApplyStatusEnum.CANCEL_STATUS);
+            lawFirmApplyRepository.cancelApplyLawFirm(lawFirmId, userId, ApplyStatus.CANCEL_STATUS);
         } catch (Exception e) {
             log.error("", e);
             throw new LawFirmException(LawFirmResultCode.ALREADY_APPLY_USER);

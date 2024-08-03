@@ -1,8 +1,8 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.StatusEnumConverter;
-import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.common.enums.convert.status.AttachStatusConverter;
+import com.kr.lg.common.enums.entity.status.AttachStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -50,8 +50,8 @@ public class TrialAttachTb {
     private Long size;
 
     @Column(name = "status")
-    @Convert(converter = StatusEnumConverter.class)
-    private StatusEnum status;
+    @Convert(converter = AttachStatusConverter.class)
+    private AttachStatus status; // 첨부파일 상태 ( 1: 정상, 2: 삭제)
 
     @Column(name = "regDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
