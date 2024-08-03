@@ -2,7 +2,7 @@ package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kr.lg.common.enums.convert.status.PrecedentStatusConverter;
-import com.kr.lg.common.enums.convert.status.BoardStatusConverter;
+import com.kr.lg.common.enums.convert.status.TrialStatusConverter;
 import com.kr.lg.common.enums.convert.type.LiveTypeConverter;
 import com.kr.lg.common.enums.convert.type.PostTypeConverter;
 import com.kr.lg.common.enums.convert.type.TrialEndingTypeConverter;
@@ -132,7 +132,7 @@ public class MainTrialTb {
     private TrialEndingType endingType; // 종료 재판 ( 0: 미종료, 1: 종료)
 
     @Column(name = "status")
-    @Convert(converter = BoardStatusConverter.class)
+    @Convert(converter = TrialStatusConverter.class)
     private TrialStatus status; // 게시글 상태 ( 1: 정상, 2: 삭제, 3: 업로드중, 4: 업로드 실패, 9:정지 )
 
     @Column(name = "regDt")
