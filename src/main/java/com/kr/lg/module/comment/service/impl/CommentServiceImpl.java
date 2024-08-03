@@ -1,9 +1,10 @@
 package com.kr.lg.module.comment.service.impl;
 
+import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
+import com.kr.lg.common.enums.entity.status.CommentStatus;
 import com.kr.lg.db.entities.*;
 import com.kr.lg.db.repositories.BoardCommentRepository;
 import com.kr.lg.db.repositories.TrialCommentRepository;
-import com.kr.lg.enums.StatusEnum;
 import com.kr.lg.module.comment.model.event.TrialCommentCreateAlertToWriterEvent;
 import com.kr.lg.module.comment.model.event.TrialCommentCreateAlertToTrialWriterEvent;
 import com.kr.lg.module.comment.model.event.TrialCommentCreateCountEvent;
@@ -61,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
                 .password(request.getPassword())
                 .writer(request.getLoginId())
                 .content(request.getContent())
-                .depth(request.getDepth())
+                .depth(CommentDepthLevel.of(request.getDepth()))
                 .emoticon(request.getEmoticon())
                 .ip(ip)
                 .boardCommentId(request.getBoardCommentId())
@@ -84,7 +85,7 @@ public class CommentServiceImpl implements CommentService {
                 .loginId(userTb.getLoginId())
                 .writer(userTb.getNickName())
                 .content(request.getContent())
-                .depth(request.getDepth())
+                .depth(CommentDepthLevel.of(request.getDepth()))
                 .userTb(userTb)
                 .emoticon(request.getEmoticon())
                 .ip(ip)
@@ -144,7 +145,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteBoardCommentNotWithLogin(DeleteBoardCommentNotWithLoginRequest request) throws CommentException {
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
-            if (boardCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
+            if (boardCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
             else if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
             commentDeleteService.deleteBoardComment(request.getId());
             applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(boardCommentTb.get().getBoardTb().getBoardId(), -1));
@@ -159,7 +160,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteBoardCommentWithLogin(DeleteBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
         if (boardCommentTb.isPresent()) {
-            if (boardCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
+            if (boardCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
             else if (!userTb.getUserId().equals(boardCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);
             commentDeleteService.deleteBoardComment(request.getId());
             applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(boardCommentTb.get().getBoardTb().getBoardId(), -1));
@@ -178,14 +179,14 @@ public class CommentServiceImpl implements CommentService {
                 .parentId(request.getParentId())
                 .content(request.getContent())
                 .emoticon(request.getEmoticon())
-                .depth(request.getDepth())
+                .depth(CommentDepthLevel.of(request.getDepth()))
                 .trialCommentId(request.getTrialCommentId())
                 .ip(ip)
                 .build();
         commentEnrollService.enrollTrialComment(enrollDto);
         applicationEventPublisher.publishEvent(new TrialCommentCreateCountEvent(request.getId(), 1)); // 트라이얼 답글 개수 증가
         applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(userTb, 1)); // 댓글 개수 증가
-        switch (request.getDepth()) {
+        switch (enrollDto.getDepth()) {
             case PARENT_COMMENT: applicationEventPublisher.publishEvent(new TrialCommentCreateAlertToTrialWriterEvent(enrollDto)); break;
             case CHILDREN_COMMENT: applicationEventPublisher.publishEvent(new TrialCommentCreateAlertToWriterEvent(enrollDto)); break;
         }
@@ -196,7 +197,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteTrialCommentWithLogin(DeleteCommentTrialRequest request, UserTb userTb) throws CommentException {
         Optional<TrialCommentTb> trialCommentTb = trialCommentRepository.findById(request.getId());
         if (trialCommentTb.isPresent()) {
-            if (trialCommentTb.get().getStatus().equals(StatusEnum.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_TRIAL_COMMENT);
+            if (trialCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_TRIAL_COMMENT);
             else if (!userTb.getUserId().equals(trialCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);
             commentDeleteService.deleteTrialComment(trialCommentTb.get().getTrialCommentId());
             applicationEventPublisher.publishEvent(new TrialCommentCreateCountEvent(trialCommentTb.get().getTrialTb().getTrialId(), -1)); // 트라이얼 답글 개수 감수

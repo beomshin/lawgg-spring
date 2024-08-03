@@ -1,13 +1,17 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.*;
 import com.kr.lg.common.enums.convert.crypt.DataBaseAESCryptConverter;
+import com.kr.lg.common.enums.convert.flag.AuthFlagConverter;
+import com.kr.lg.common.enums.convert.flag.JudgeUserFlagConverter;
+import com.kr.lg.common.enums.convert.status.DeleteStatusConverter;
 import com.kr.lg.common.enums.convert.status.UserStatusConverter;
 import com.kr.lg.common.enums.convert.type.SnsTypeConverter;
+import com.kr.lg.common.enums.entity.flag.AuthFlag;
+import com.kr.lg.common.enums.entity.flag.JudgeUserFlag;
+import com.kr.lg.common.enums.entity.status.DeleteStatus;
 import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.common.enums.entity.status.UserStatus;
-import com.kr.lg.enums.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -110,20 +114,20 @@ public class UserTb { // 관리자 테이블
     private Integer personalPeriod;
 
     @Column(name = "delFlag")
-    @Convert(converter = DelEnumConverter.class)
-    private DelEnum delFlag;
+    @Convert(converter = DeleteStatusConverter.class)
+    private DeleteStatus delFlag; // 삭제 플래그 ( 0: 미삭제, 1: 삭제)
 
     @Column(name = "authFlag")
-    @Convert(converter = AuthEnumConverter.class)
-    private AuthEnum authFlag;
+    @Convert(converter = AuthFlagConverter.class)
+    private AuthFlag authFlag; // 인증 플래그 ( 0: 미인증, 1: 인증)
 
     @Column(name = "judgeFlag")
-    @Convert(converter = JudgeEnumConverter.class)
-    private JudgeEnum judgeFlag;
+    @Convert(converter = JudgeUserFlagConverter.class)
+    private JudgeUserFlag judgeFlag; // 재판 가능 유저 플래그 ( 0: 미가능, 1: 가능)
 
     @Column(name = "status")
     @Convert(converter = UserStatusConverter.class)
-    private UserStatus status;
+    private UserStatus status; // 유저 상태 ( 1: 정상, 9: 탈퇴)
 
     @Column(name = "authDt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

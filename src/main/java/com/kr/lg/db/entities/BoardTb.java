@@ -1,11 +1,14 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.*;
-import com.kr.lg.enums.LineEnum;
-import com.kr.lg.enums.PostEnum;
-import com.kr.lg.enums.StatusEnum;
-import com.kr.lg.enums.WriterEnum;
+import com.kr.lg.common.enums.convert.status.BoardStatusConverter;
+import com.kr.lg.common.enums.convert.type.LineTypeConverter;
+import com.kr.lg.common.enums.convert.type.PostTypeConverter;
+import com.kr.lg.common.enums.convert.type.WriterTypeConverter;
+import com.kr.lg.common.enums.entity.status.BoardStatus;
+import com.kr.lg.common.enums.entity.type.LineType;
+import com.kr.lg.common.enums.entity.type.PostType;
+import com.kr.lg.common.enums.entity.type.WriterType;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -48,11 +51,9 @@ public class BoardTb {
     private String password;
 
     @Column(name = "title")
-    @Convert(converter = EmojiConverter.class)
     private String title;
 
     @Column(name = "content")
-    @Convert(converter = EmojiConverter.class)
     private String content;
 
     @Column(name = "writer")
@@ -65,16 +66,16 @@ public class BoardTb {
     private Timestamp writeDt; // 수정일
 
     @Column(name = "postType")
-    @Convert(converter = PostEnumConverter.class)
-    private PostEnum postType;
+    @Convert(converter = PostTypeConverter.class)
+    private PostType postType; // 게시글 타입 ( 0 : 일반, 1: 이미지, 2: 추천, 3: 베스트, 98: 이벤트, 99: 공지 )
 
     @Column(name = "writerType")
-    @Convert(converter = WriterEnumConverter.class)
-    private WriterEnum writerType;
+    @Convert(converter = WriterTypeConverter.class)
+    private WriterType writerType; // 작성 타입 ( 0: 비회원, 1: 회원, 2: 로펌 )
 
     @Column(name = "lineType")
-    @Convert(converter = LineEnumConverter.class)
-    private LineEnum lineType;
+    @Convert(converter = LineTypeConverter.class)
+    private LineType lineType; // 라인 타입 ( 0 : top , 1 : jug, 2 : mid, 3: add , 4: spt, 5: all)
 
     @Column(name = "commentCount")
     private Long commentCount;
@@ -89,8 +90,8 @@ public class BoardTb {
     private Long report;
 
     @Column(name = "status")
-    @Convert(converter = StatusEnumConverter.class)
-    private StatusEnum status;
+    @Convert(converter = BoardStatusConverter.class)
+    private BoardStatus status; // 게시글 상태 ( 1: 정상, 2: 삭제, 9: 정지 )
 
     @Column(name = "regDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")

@@ -1,11 +1,10 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.AcceptConverter;
-import com.kr.lg.common.converters.ApplyStatusConverter;
-import com.kr.lg.common.converters.EmojiConverter;
-import com.kr.lg.enums.AcceptEnum;
-import com.kr.lg.enums.ApplyStatusEnum;
+import com.kr.lg.common.enums.convert.status.AcceptStatusConverter;
+import com.kr.lg.common.enums.convert.status.ApplyStatusConverter;
+import com.kr.lg.common.enums.entity.status.AcceptStatus;
+import com.kr.lg.common.enums.entity.status.ApplyStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -45,20 +44,18 @@ public class LawFirmApplyTb {
     private UserTb userTb;
 
     @Column(name = "title")
-    @Convert(converter = EmojiConverter.class)
     private String title;
 
     @Column(name = "introduction")
-    @Convert(converter = EmojiConverter.class)
     private String introduction;
 
     @Convert(converter = ApplyStatusConverter.class)
     @Column(name = "status")
-    private ApplyStatusEnum status;
+    private ApplyStatus status; // 신청 상태 (0: 신청중, 1: 처리완료, 2: 취소)
 
-    @Convert(converter = AcceptConverter.class)
+    @Convert(converter = AcceptStatusConverter.class)
     @Column(name = "accept")
-    private AcceptEnum accept;
+    private AcceptStatus accept; // 승인/거절 ( 0: 대기, 1: 승인, 2: 거절)
 
     @Column(name = "confirmDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

@@ -1,6 +1,6 @@
 package com.kr.lg.module.trial.service.impl;
 
-import com.kr.lg.enums.StatusEnum;
+import com.kr.lg.common.enums.entity.status.TrialStatus;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.db.repositories.TrialRepository;
@@ -22,7 +22,7 @@ public class TrialDeleteServiceImpl implements TrialDeleteService {
     public void deleteTrial(long trialId) throws TrialException {
         try {
             log.info("▶ [트라이얼] 트라이얼 삭제");
-            trialRepository.updateStatus(trialId, StatusEnum.DELETE_STATUS);
+            trialRepository.updateStatus(trialId, TrialStatus.DELETE_STATUS);
         } catch (Exception e) {
             log.error("", e);
             throw new TrialException(TrialResultCode.FAIL_DELETE_TRIAL);

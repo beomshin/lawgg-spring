@@ -2,7 +2,7 @@ package com.kr.lg.module.user.model.dto;
 
 import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.db.entities.TierTb;
-import com.kr.lg.enums.AuthEnum;
+import com.kr.lg.common.enums.entity.flag.AuthFlag;
 import lombok.*;
 
 @Getter
@@ -22,7 +22,7 @@ public class EnrollUserDto {
     private String name;
     private Integer personalPeriod;
     private SnsType snsType;
-    private AuthEnum authFlag;
+    private AuthFlag authFlag;
     private TierTb tierTb; // 티어
 
 }

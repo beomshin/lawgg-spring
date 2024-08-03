@@ -1,8 +1,8 @@
 package com.kr.lg.db.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kr.lg.common.converters.PrecedentEnumConverter;
-import com.kr.lg.enums.PrecedentEnum;
+import com.kr.lg.common.enums.convert.status.PrecedentStatusConverter;
+import com.kr.lg.common.enums.entity.status.PrecedentStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -42,8 +42,8 @@ public class TrialVoteTb {
     private TrialTb trialTb;
 
     @Column(name = "precedent")
-    @Convert(converter = PrecedentEnumConverter.class)
-    private PrecedentEnum precedent;
+    @Convert(converter = PrecedentStatusConverter.class)
+    private PrecedentStatus precedent; // 판례 ( 0: 원고 승, 1: 피고 승, 9 :진행중)
 
     @Column(name = "regDt")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")

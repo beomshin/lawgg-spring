@@ -1,20 +1,19 @@
 package com.kr.lg.db.repositories;
 
 import com.kr.lg.db.entities.LawFirmApplyTb;
-import com.kr.lg.enums.ApplyStatusEnum;
+import com.kr.lg.common.enums.entity.status.ApplyStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 
 public interface LawFirmApplyRepository extends JpaRepository<LawFirmApplyTb, Long> {
 
-    int countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(Long lawFirmId, Long userId, ApplyStatusEnum status);
+    int countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(Long lawFirmId, Long userId, ApplyStatus status);
 
     @Modifying
     @Query("UPDATE LawFirmApplyTb SET status = :status WHERE lawFirmTb.lawFirmId = :lawFirmId AND userTb.userId = :userId")
-    void cancelApplyLawFirm(@Param("lawFirmId") long lawFirmId, @Param("userId") long userId, @Param("status") ApplyStatusEnum status);
+    void cancelApplyLawFirm(@Param("lawFirmId") long lawFirmId, @Param("userId") long userId, @Param("status") ApplyStatus status);
 
 }

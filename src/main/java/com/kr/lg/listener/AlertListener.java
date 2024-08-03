@@ -1,8 +1,8 @@
 package com.kr.lg.listener;
 
 import com.kr.lg.db.entities.*;
-import com.kr.lg.enums.AlertEnum;
-import com.kr.lg.enums.ReadEnum;
+import com.kr.lg.common.enums.entity.type.AlertType;
+import com.kr.lg.common.enums.entity.flag.ReadFlag;
 import com.kr.lg.db.repositories.*;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateAlertToWriterEvent;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateAlertToBoardWriterEvent;
@@ -45,8 +45,8 @@ public class AlertListener {
                                 .userTb(writer)
                                 .title(BoardCommentCreateAlertToBoardWriterEvent.getTitle())
                                 .content(BoardCommentCreateAlertToBoardWriterEvent.getContent())
-                                .type(AlertEnum.BOARD_ALERT_TYPE)
-                                .readFlag(ReadEnum.NON_READ_FLAG)
+                                .type(AlertType.BOARD_ALERT_TYPE)
+                                .readFlag(ReadFlag.NON_READ_FLAG)
                                 .build()
                 );
             }
@@ -67,8 +67,8 @@ public class AlertListener {
                                 .userTb(writer)
                                 .title(BoardCommentCreateAlertToWriterEvent.getTitle())
                                 .content(BoardCommentCreateAlertToWriterEvent.getContent())
-                                .type(AlertEnum.BOARD_ALERT_TYPE)
-                                .readFlag(ReadEnum.NON_READ_FLAG)
+                                .type(AlertType.BOARD_ALERT_TYPE)
+                                .readFlag(ReadFlag.NON_READ_FLAG)
                                 .build()
                 );
             }
@@ -90,8 +90,8 @@ public class AlertListener {
                                 .userTb(writer)
                                 .title(TrialCommentCreateAlertToTrialWriterEvent.getTitle())
                                 .content(TrialCommentCreateAlertToTrialWriterEvent.getContent())
-                                .type(AlertEnum.TRIAL_ALERT_TYPE)
-                                .readFlag(ReadEnum.NON_READ_FLAG)
+                                .type(AlertType.TRIAL_ALERT_TYPE)
+                                .readFlag(ReadFlag.NON_READ_FLAG)
                                 .build()
                 );
             }
@@ -112,8 +112,8 @@ public class AlertListener {
                                 .userTb(writer)
                                 .title(TrialCommentCreateAlertToWriterEvent.getTitle())
                                 .content(TrialCommentCreateAlertToWriterEvent.getContent())
-                                .type(AlertEnum.TRIAL_ALERT_TYPE)
-                                .readFlag(ReadEnum.NON_READ_FLAG)
+                                .type(AlertType.TRIAL_ALERT_TYPE)
+                                .readFlag(ReadFlag.NON_READ_FLAG)
                                 .build()
                 );
             }
@@ -131,8 +131,8 @@ public class AlertListener {
                         .userTb(AlertTLEvent.getTrialTb().getUserTb())
                         .title("나의 트라이얼 재판이 시작되었습니다")
                         .content(new StringBuffer().append("제목 : ").append(AlertTLEvent.getTrialTb().getTitle()).toString())
-                        .type(AlertEnum.TRIAL_ALERT_TYPE)
-                        .readFlag(ReadEnum.NON_READ_FLAG)
+                        .type(AlertType.TRIAL_ALERT_TYPE)
+                        .readFlag(ReadFlag.NON_READ_FLAG)
                         .build()
         );
     }
@@ -147,8 +147,8 @@ public class AlertListener {
                         .userTb(alertVideoEvent.getTrialTb().getUserTb())
                         .title("등록하신 트라이얼 영상이 업로드 완료되었습니다.")
                         .content(new StringBuffer().append("제목 : ").append(alertVideoEvent.getTrialTb().getTitle()).toString())
-                        .type(AlertEnum.TRIAL_ALERT_TYPE)
-                        .readFlag(ReadEnum.NON_READ_FLAG)
+                        .type(AlertType.TRIAL_ALERT_TYPE)
+                        .readFlag(ReadFlag.NON_READ_FLAG)
                         .build()
         );
     }

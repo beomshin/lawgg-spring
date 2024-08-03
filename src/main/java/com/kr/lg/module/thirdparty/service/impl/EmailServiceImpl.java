@@ -2,7 +2,7 @@ package com.kr.lg.module.thirdparty.service.impl;
 
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.MailTb;
-import com.kr.lg.enums.VerificationEnum;
+import com.kr.lg.common.enums.entity.status.VerificationStatus;
 import com.kr.lg.db.repositories.MailRepository;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
@@ -44,13 +44,13 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Transactional
     public void verifyEmail(String txId, String code) throws ThirdPartyException {
-        Optional<MailTb> mailTb = mailRepository.findByCodeAndTxIdAndExpiredAfterAndVerification(code, txId, new Date(), VerificationEnum.NON_COMPLETE);
+        Optional<MailTb> mailTb = mailRepository.findByCodeAndTxIdAndExpiredAfterAndVerification(code, txId, new Date(), VerificationStatus.NON_COMPLETE);
         if (!mailTb.isPresent()) {
             throw new ThirdPartyException(ThirdPartyResultCode.FAIL_VERIFY_EMAIL);
         }
         try {
             log.info("▶ [메일] 메일 인증 내역 저장");
-            mailRepository.updateCompleteVerifyEmail(mailTb.get().getMailId(), VerificationEnum.COMPLETE);
+            mailRepository.updateCompleteVerifyEmail(mailTb.get().getMailId(), VerificationStatus.COMPLETE);
         } catch (Exception e) {
             throw new ThirdPartyException(ThirdPartyResultCode.FAIL_VERIFY_MAIL);
         }

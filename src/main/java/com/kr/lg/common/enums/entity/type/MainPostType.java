@@ -1,12 +1,12 @@
 package com.kr.lg.common.enums.entity.type;
 
-import com.kr.lg.enums.LegacyEnum;
+import com.kr.lg.common.enums.EnumEntry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum MainPostType implements LegacyEnum {
+public enum MainPostType implements EnumEntry {
 
     NORMAL_TYPE(0),
     MAIN_POST_TYPE(1),
@@ -19,6 +19,6 @@ public enum MainPostType implements LegacyEnum {
             return null;
         }
 
-        return LegacyEnum.of(values(), code);
+        return EnumEntry.of(values(), code);
     }
 }

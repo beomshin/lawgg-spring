@@ -1,7 +1,7 @@
 package com.kr.lg.module.trial.service.impl;
 
-import com.kr.lg.enums.EndingEnum;
-import com.kr.lg.enums.LiveEnum;
+import com.kr.lg.common.enums.entity.type.TrialEndingType;
+import com.kr.lg.common.enums.entity.type.LiveType;
 import com.kr.lg.db.repositories.TrialRepository;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.exception.TrialResultCode;
@@ -25,7 +25,7 @@ public class TrialUpdateServiceImpl implements TrialUpdateService {
     @Transactional
     public void updateLiveStartTrial(TrialUpdateDto updateDto) throws TrialException {
         try {
-            trialRepository.updateLive(updateDto.getTrialId(), updateDto.getUserTb().getLawFirmTb(), updateDto.getUserTb(), updateDto.getUrl(), LiveEnum.LIVE_TYPE, new Timestamp(System.currentTimeMillis()));
+            trialRepository.updateLive(updateDto.getTrialId(), updateDto.getUserTb().getLawFirmTb(), updateDto.getUserTb(), updateDto.getUrl(), LiveType.LIVE_TYPE, new Timestamp(System.currentTimeMillis()));
         } catch (Exception e) {
             log.error("", e);
             throw new TrialException(TrialResultCode.FAIL_UPDATE_LIVE_START_TRIAL);
@@ -36,7 +36,7 @@ public class TrialUpdateServiceImpl implements TrialUpdateService {
     @Transactional
     public void updateEndTrial(TrialUpdateDto updateDto) throws TrialException {
        try {
-           trialRepository.updateEnd(updateDto.getTrialId(), updateDto.getPrecedent(), EndingEnum.ENDING_TYPE, new Timestamp(System.currentTimeMillis()));
+           trialRepository.updateEnd(updateDto.getTrialId(), updateDto.getPrecedent(), TrialEndingType.ENDING_TYPE, new Timestamp(System.currentTimeMillis()));
        } catch (Exception e) {
            log.error("", e);
            throw new TrialException(TrialResultCode.FAIL_UPDATE_LIVE_END_TRIAL);
