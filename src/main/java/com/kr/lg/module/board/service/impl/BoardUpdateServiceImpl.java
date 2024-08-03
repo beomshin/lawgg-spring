@@ -5,7 +5,6 @@ import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.board.model.dto.BoardUpdateDto;
 import com.kr.lg.module.board.service.BoardUpdateService;
-import com.vdurmont.emoji.EmojiParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
     public void updateBoard(BoardUpdateDto boardUpdateDto) throws BoardException {
         try {
             log.info("▶ [포지션 게시판] 포지션 게시판 업데이트");
-            boardRepository.updateBoard(boardUpdateDto.getBoardId(), EmojiParser.parseToAliases(boardUpdateDto.getTitle()), boardUpdateDto.getContent()); // 게시판 업데이트
+            boardRepository.updateBoard(boardUpdateDto.getBoardId(), boardUpdateDto.getTitle(), boardUpdateDto.getContent()); // 게시판 업데이트
         } catch (Exception e) {
             log.error("", e);
             throw new BoardException(BoardResultCode.FAIL_UPDATE_BOARD);
