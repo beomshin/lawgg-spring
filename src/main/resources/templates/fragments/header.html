@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<div th:fragment="headerFragment">
+    <div class="header">
+        <dl>
+            <dt>
+                <!-- 로고/메뉴 -->
+                <div class="header-logo-menu">
+                    <p>
+                        <i class="uit uit-bars"  style="cursor: pointer" onclick="open()" ></i>
+                        <a ><img th:src="@{/static/images/logo.svg}" width="50" alt="" title="" /></a>
+                    </p>
+                    <ul>
+                        <li>
+                            <a >포지션게시판</a>
+                        </li>
+                        <li>
+                            <a >트라이얼</a>
+                        </li>
+                        <li>
+                            <a >로펌</a>
+                        </li>
+                          <li>
+                            <a >LCK</a>
+                          </li>
+                        <li>
+                            <a >자유게시판</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 로고/메뉴 끝 -->
+            </dt>
+            <dd>
+
+                <div class="header-search">
+                    <div class="input-search-line">
+                        <p><i class="uit uit-search"></i></p>
+                        <div><input type="text" title="keywords" placeholder="검색어를 입력하세요." /></div>
+                    </div>
+                </div>
+
+<!--                <div class="header-login-join">-->
+<!--                    <button class="btn-line-gray-m w80 mr5" ><i class="uit uit-padlock"></i> 로그인</button>-->
+<!--                    <button class="btn-default-m bg-black w100" ><i class="uit uit-user"></i> 회원가입</button>-->
+<!--                </div>-->
+
+                <div class="header-info">
+                    <div >
+                        <i class="uit uit-bell"></i>
+                        <span ></span>
+                    </div>
+                    <p >홍</p>
+                </div>
+
+                <div class="header-side-mobile" id="headerSideMobile">
+                    <div class="hsm-close"><i class="uil uil-times" onclick="close()"></i></div>
+                    <div class="hsm-search">
+                        <div class="input-search-line-mobile">
+                            <p><i class="uil uil-search"></i></p>
+                            <div><input type="text" name="" title="keywords" placeholder="검색어를 입력하세요." /></div>
+                        </div>
+                    </div>
+                    <div class="hsm-menu">
+                        <a style="cursor: pointer"><i class="uil uil-comment"></i> 포지션 게시판</a>
+                        <a style="cursor: pointer"><i class="uil uil-notes"></i> 트라이얼</a>
+                        <a style="cursor: pointer"><i class="uil uil-book-open"></i> 로펌</a>
+                        <a style="cursor: pointer"><i class="uil uil-book-alt"></i> 자유 게시판</a>
+                    </div>
+                </div>
+                <div class="header-side-bg-mobile" id="headerSideBgMobile" onclick="close()">&nbsp;</div>
+
+            </dd>
+        </dl>
+    </div>
+
+    <div class="footer-mobile-menu">
+        <ul>
+            <li>
+                <p><i class="uil uil-comment"></i></p>
+                <h2>포지션게시판</h2>
+            </li>
+            <li>
+                <p><i class="uil uil-notes"></i></p>
+                <h2>트라이얼</h2>
+            </li>
+            <li>
+                <p><i class="uil uil-book-open"></i></p>
+                <h2>로펌</h2>
+            </li>
+            <li>
+                <p><i class="uil uil-book-alt"></i></p>
+                <h2>자유게시판</h2>
+            </li>
+        </ul>
+    </div>
+
+<!--    <div class="header-message-dropdown">-->
+<!--        <div class="header-message">-->
+<!--            <dl>-->
+<!--                <dt>새알림</dt>-->
+<!--                <dd>-->
+<!--                    <a style="cursor: pointer" >-->
+<!--                        <i class="uil uil-comment-alt"></i>-->
+<!--&lt;!&ndash;                        <span ></span>&ndash;&gt;-->
+<!--                        <em>전부읽음</em>-->
+<!--                    </a>-->
+<!--                </dd>-->
+<!--            </dl>-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <dl>-->
+<!--                        <dt>-->
+<!--                            <h2>타이틀</h2>-->
+<!--                            <h3>내용</h3>-->
+<!--                        </dt>-->
+<!--                        <dd>-->
+<!--                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 2024-08-01</h2>-->
+<!--    &lt;!&ndash;                                <p ></p>&ndash;&gt;-->
+<!--                        </dd>-->
+<!--                    </dl>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <p>-->
+<!--                <a style="cursor: pointer">전체보기</a>-->
+<!--            </p>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--        <div class="header-myinfo">-->
+<!--            <dl>-->
+<!--                <dt><span style="cursor: pointer"></span></dt>-->
+<!--                <dd>-->
+<!--                    <h2>홍길동 님</h2>-->
+<!--                    <h3>포인트 : 0 p</h3>-->
+<!--                    <div>가입일 : 2024-08-04</div>-->
+<!--                </dd>-->
+<!--            </dl>-->
+<!--            <div>-->
+<!--                <h2>내 활동내역</h2>-->
+<!--                <ul>-->
+<!--                    <li><i class="uil uil-diamond"></i> 브론즈 <span>5</span></li>-->
+<!--                    <li><i class="uil uil-book-open"></i>-->
+<!--&lt;!&ndash;                        <template >&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span>길동</span> 로펌&ndash;&gt;-->
+<!--&lt;!&ndash;                        </template>&ndash;&gt;-->
+<!--                            로펌 <span>미가입</span>-->
+<!--                    </li>-->
+<!--                    <li><i class="uil uil-clipboard"></i> 게시글 <span>1</span></li>-->
+<!--                    <li><i class="uil uil-clipboard"></i> 트라이얼 <span>2</span></li>-->
+<!--                    <li><i class="uil uil-comment"></i> 댓글 <span>3</span></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <h2>마이페이지</h2>-->
+<!--                <div>-->
+<!--                    <a style="cursor: pointer"><i class="uil uil-user-circle" ></i> 회원정보수정</a>-->
+<!--                    <a style="cursor: pointer"><i class="uil uil-bell"></i> 알림함</a>-->
+<!--                    <a style="cursor: pointer"><i class="uil uil-clipboard-notes"></i> 글목록</a>-->
+<!--                    <a style="cursor: pointer"><i class="uil uil-bell"></i> 쪽지함</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <p><a class="btn-default-m bg-black w100p" >로그아웃</a></p>-->
+<!--        </div>-->
+
+    <script>
+        function open() {
+            document.getElementById("headerSideMobile").style.left = "0";
+            document.getElementById("headerSideBgMobile").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function close() {
+            document.getElementById("headerSideMobile").style.left = "-305px";
+            document.getElementById("headerSideBgMobile").style.display = "none";
+            document.body.style.overflow = "visible";
+        }
+    </script>
+</div>

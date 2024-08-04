@@ -1,6 +1,9 @@
 package com.kr.lg.config;
 
+import com.kr.lg.module.auth.service.JwtService;
+import com.kr.lg.security.filter.JwtAuthenticationFilter;
 import com.kr.lg.security.filter.LoginAuthenticationFilter;
+import com.kr.lg.security.login.detail.JwtDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -35,6 +39,13 @@ public class SecurityConfig {
             "/webjars/**"
     };
 
+    private static final String[] Static = {
+            "/static/**",
+            "/css/**",
+            "/js/**",
+            "/fonts/**"
+    };
+
     private static final String LOGIN_PATH = "/api/public/login"; // 로그인 path
 
     private static final String LOGOUT_PATH = "/api/public/logout"; // 로그아웃 path (미사용 기능)
@@ -46,15 +57,24 @@ public class SecurityConfig {
     }
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return web -> web
+                .ignoring()
+                .antMatchers(Static)
+                .antMatchers(SwaggerPatterns);
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             AuthenticationManager authenticationManager,
             CorsConfigurationSource corsConfigurationSource,
-            Filter jwtAuthenticationFilter,
             AuthenticationSuccessHandler loginSuccessHandler,
             AuthenticationFailureHandler loginFailHandler,
             LogoutSuccessHandler jwtLogoutSuccessHandler,
-            LogoutHandler jwtLogoutHandler
+            LogoutHandler jwtLogoutHandler,
+            JwtDetailService jwtDetailService,
+             JwtService jwtService
     ) throws Exception {
 
         http.httpBasic().disable(); // REST API로 사용안함
@@ -77,11 +97,12 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
                 .antMatchers("/api/public/**").permitAll() // public path 허용
+                .antMatchers(Static).permitAll()
                 .antMatchers(SwaggerPatterns).permitAll() // swagger path 허용
                 .anyRequest().hasRole("USER"); // 이외 USER ROLE 확인 처리
 
         http.addFilter(new LoginAuthenticationFilter(authenticationManager, loginSuccessHandler, loginFailHandler, LOGIN_PATH)); // 로그인 필터 등록
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // before 필터 등록으로 JWT 검사 실행
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtDetailService, jwtService), UsernamePasswordAuthenticationFilter.class); // before 필터 등록으로 JWT 검사 실행
 
         return http.build();
     }

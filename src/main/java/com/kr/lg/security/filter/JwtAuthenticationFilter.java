@@ -27,12 +27,10 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtDetailService jwtDetailService;
     private final JwtService jwtService;
-    private final ObjectMapper objectMapper;
 
     /**
      * 인증 필터
@@ -45,7 +43,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         try {
-            log.info("▶ [토큰 인증 시작]");
             this.isValid(jwtService.parseJwt(request), request.getRequestURI()); // jwt 인증
             filterChain.doFilter(request, response);
         } catch (AuthException e) {
@@ -69,10 +66,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * @throws AuthException
      */
     private void isValid(String token, String uri) throws AuthException {
-        if (uri.contains("/public") || uri.contains("swagger") || uri.contains("api-docs")) {
+        if (uri.contains("/public")) {
             return; // public 접근으로 간주
         }
 
+        log.info("▶ [토큰 인증 시작]");
         if (StringUtils.isBlank(token)) {
             log.error("▶ [인증 토큰] 토큰 누락 실패");
             throw new AuthException(AuthResultCode.NOT_EXIST_JWT_TOKEN);
@@ -102,7 +100,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void generateFailResponseBody(HttpServletResponse response, HttpStatus status, String code, String msg) throws IOException {
         response.setStatus(status.value()); // http status
         response.setContentType(MediaType.APPLICATION_JSON_VALUE); // content-type json 고정
-        objectMapper.writeValue(response.getOutputStream(), new ErrorResponse(code, msg)); // 응답 body
+        new ObjectMapper().writeValue(response.getOutputStream(), new ErrorResponse(code, msg)); // 응답 body
     }
 
 }

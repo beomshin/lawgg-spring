@@ -1,0 +1,178 @@
+@charset "utf-8";
+
+
+/* 폰트세팅 ******************************************************** */
+/* 구글폰트 - 영문 */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Raleway:100,200,300,400,500,600,700,800,900');
+
+
+/* 잘난체 - 국문 */
+@font-face {
+	font-family: 'Jalnan';
+	font-style: normal;
+	font-weight: 400;
+	src: local('※'), url('../fonts/JalnanOTF00.woff') format('woff');
+}
+
+
+/* 나눔스퀘어 네오 */
+@font-face {
+	font-family: 'NanumSquareNeo';
+	font-style: normal;
+	font-weight: 300;
+	src: local('※'), url('../fonts/NanumSquareNeoTTF-aLt.woff') format('woff');
+}
+@font-face {
+	font-family: 'NanumSquareNeo';
+	font-style: normal;
+	font-weight: 400;
+	src: local('※'), url('../fonts/NanumSquareNeoTTF-bRg.woff') format('woff');
+}
+@font-face {
+	font-family: 'NanumSquareNeo';
+	font-style: normal;
+	font-weight: 500;
+	src: local('※'), url('../fonts/NanumSquareNeoTTF-cBd.woff') format('woff');
+}
+@font-face {
+	font-family: 'NanumSquareNeo';
+	font-style: normal;
+	font-weight: 600;
+	src: local('※'), url('../fonts/NanumSquareNeoTTF-dEb.woff') format('woff');
+}
+@font-face {
+	font-family: 'NanumSquareNeo';
+	font-style: normal;
+	font-weight: 700;
+	src: local('※'), url('../fonts/NanumSquareNeoTTF-eHv.woff') format('woff');
+}
+
+
+/* 본고딕 - 국문 */
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 250;
+	src: local('NotoSansKR-Thin'),
+	url('../fonts/NotoSans-Thin.eot'),
+	url('../fonts/NotoSans-Thin.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-Thin.woff') format('woff'),
+	url('../fonts/NotoSans-Thin.otf') format('truetype');
+}
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 300;
+	src: local('NotoSansKR-Light'),
+	url('../fonts/NotoSans-Light.eot'),
+	url('../fonts/NotoSans-Light.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-Light.woff') format('woff'),
+	url('../fonts/NotoSans-Light.otf') format('truetype');
+}
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 350;
+	src: local('NotoSansKR-DemiLight'),
+	url('../fonts/NotoSans-DemiLight.eot'),
+	url('../fonts/NotoSans-DemiLight.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-DemiLight.woff') format('woff'),
+	url('../fonts/NotoSans-DemiLight.otf') format('truetype');
+}
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 400;
+	src: local('NotoSansKR-Regular'),
+	url('../fonts/NotoSans-Regular.eot'),
+	url('../fonts/NotoSans-Regular.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-Regular.woff') format('woff'),
+	url('../fonts/NotoSans-Regular.otf') format('truetype');
+}
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 500;
+	src: local('NotoSansKR-Medium'),
+	url('../fonts/NotoSans-Medium.eot'),
+	url('../fonts/NotoSans-Medium.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-Medium.woff') format('woff'),
+	url('../fonts/NotoSans-Medium.otf') format('truetype');
+}
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 700;
+	src: local('NotoSansKR-Bold'),
+	url('../fonts/NotoSans-Bold.eot'),
+	url('../fonts/NotoSans-Bold.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-Bold.woff') format('woff'),
+	url('../fonts/NotoSans-Bold.otf') format('truetype');
+}
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 900;
+	src: local('NotoSansKR-Black'),
+	url('../fonts/NotoSans-Black.eot'),
+	url('../fonts/NotoSans-Black.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/NotoSans-Black.woff') format('woff'),
+	url('../fonts/NotoSans-Black.otf') format('truetype');
+}
+
+
+/* Montserrat */
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 100;
+src: local('※'), url('../fonts/Montserrat-Thin.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 200;
+src: local('※'), url('../fonts/Montserrat-ExtraLight.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 300;
+src: local('※'), url('../fonts/Montserrat-Light.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+src: local('※'), url('../fonts/Montserrat-Regular.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+src: local('※'), url('../fonts/Montserrat-Medium.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+src: local('※'), url('../fonts/Montserrat-SemiBold.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 700;
+src: local('※'), url('../fonts/Montserrat-Bold.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 800;
+src: local('※'), url('../fonts/Montserrat-ExtraBold.woff') format('woff');
+}
+@font-face {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 900;
+src: local('※'), url('../fonts/Montserrat-Black.woff') format('woff');
+}
