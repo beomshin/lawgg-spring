@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content">
+
+
+            <!-- 회원관련 - 타이틀 -->
+            <div class="member-title">
+                <h2>회원가입완료</h2>
+                <h3>로우지지 회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                <div>
+                    <p></p>
+                    <ul>
+                        <li>
+                            <p><i class="uil uil-check"></i></p>
+                            <div>약관동의</div>
+                        </li>
+                        <li>
+                            <p><i class="uil uil-check"></i></p>
+                            <div>정보입력</div>
+                        </li>
+                        <li class="active">
+                            <p><i class="uil uil-check"></i></p>
+                            <div>가입완료</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 회원관련 - 타이틀 끝 -->
+
+            <!-- 가입완료 -->
+            <div class="join-end">
+                <div>
+                    <h2>로우지지 홈페이지에 가입하신 것을 축하드립니다.</h2>
+                    <h3>
+                        회원가입을 축하드립니다.<br />
+                        다양한 정보와 푸짐한 혜택으로 보답하겠습니다.
+                    </h3>
+                    <div>
+                        <a th:href="@{/login}" class="btn-default bg-pink w250">로그인 페이지로 이동</a>
+                        &nbsp;
+                        <a th:href="@{/}" class="btn-default bg-black w250">메인 페이지로 이동</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 가입완료 끝 -->
+
+
+        </div>
+    </th:block>
+
+</html>

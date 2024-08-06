@@ -7,10 +7,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
@@ -29,9 +29,4 @@ public class MainController {
         return ResponseEntity.ok(spec);
     }
 
-
-    @GetMapping("/api/public/test")
-    public String test() {
-        return "view/home";
-    }
 }

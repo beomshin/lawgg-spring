@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content">
+
+
+            <!-- 로그인 - 회원 -->
+            <div class="login-area login-member">
+                <div class="member-title pt0">
+                    <h2>로그인</h2>
+                    <h3>회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                </div>
+                <div class="la-content">
+                    <ul>
+                        <li>
+                            <input type="text" name="" title="" placeholder="아이디를 입력하세요." class="input-box w100p h60" />
+                        </li>
+                        <li>
+                            <input type="password" name="" title="" placeholder="비밀번호를 입력하세요." class="input-box w100p h60" />
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="check-box">
+                            <input type="checkbox" name="opt" id="chk1" />
+                            <label for="chk1">아이디 저장</label>
+                        </div>
+                        <div class="check-box">
+                            <input type="checkbox" name="opt" id="chk2" />
+                            <label for="chk2">자동 로그인</label>
+                        </div>
+                    </div>
+                    <p><a href="#" class="btn-default-b bg-black w100p">로그인</a></p>
+                    <dl>
+                        <dt><a th:href="@{/id/search}">아이디찾기</a></dt>
+                        <dd>|</dd>
+                        <dt><a th:href="@{/pw/search}">비밀번호찾기</a></dt>
+                        <dd>|</dd>
+                        <dt><a th:href="@{/join/agree}">회원가입</a></dt>
+                    </dl>
+                </div>
+                <div class="la-bottom">
+                    <dl>
+                        <dt></dt>
+                        <dd>또는 다른 서비스 계정으로 로그인</dd>
+                        <dt></dt>
+                    </dl>
+                    <ul>
+                        <li><a href="#"><img th:src="@{/static/images/icn_sns_kakao.svg}" alt="" title=""/></a></li>
+                        <li><a href="#"><img th:src="@{/static/images/icn_sns_google.svg}" alt="" title=""/></a></li>
+                        <li><a href="#"><img th:src="@{/static/images/icn_sns_naver.svg}" alt="" tile=""/></a></li>
+                        <li><a href="#"><img th:src="@{/static/images/icn_sns_facebook.svg}" alt="" title=""/></a></li>
+                        <li><a href="#"><img th:src="@{/static/images/icn_sns_twitter.svg}" alt="" title=""/></a></li>
+                    </ul>
+                    <p>
+                        SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <!-- 로그인 - 회원 끝 -->
+
+
+        </div>
+    </th:block>
+
+</html>

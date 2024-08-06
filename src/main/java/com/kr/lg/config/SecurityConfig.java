@@ -99,7 +99,8 @@ public class SecurityConfig {
                 .antMatchers("/api/public/**").permitAll() // public path 허용
                 .antMatchers(Static).permitAll()
                 .antMatchers(SwaggerPatterns).permitAll() // swagger path 허용
-                .anyRequest().hasRole("USER"); // 이외 USER ROLE 확인 처리
+                .antMatchers("/api/**").hasRole("USER")
+                .anyRequest().permitAll(); // 이외 USER ROLE 확인 처리
 
         http.addFilter(new LoginAuthenticationFilter(authenticationManager, loginSuccessHandler, loginFailHandler, LOGIN_PATH)); // 로그인 필터 등록
         http.addFilterBefore(new JwtAuthenticationFilter(jwtDetailService, jwtService), UsernamePasswordAuthenticationFilter.class); // before 필터 등록으로 JWT 검사 실행

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content">
+
+
+            <!-- 회원관련 - 타이틀 -->
+            <div class="member-title">
+                <h2>회원가입</h2>
+                <h3>로우지지 회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                <div>
+                    <p></p>
+                    <ul>
+                        <li>
+                            <p><i class="uil uil-check"></i></p>
+                            <div>약관동의</div>
+                        </li>
+                        <li class="active">
+                            <p><i class="uil uil-check"></i></p>
+                            <div>정보입력</div>
+                        </li>
+                        <li>
+                            <p><i class="uil uil-check"></i></p>
+                            <div>가입완료</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 회원관련 - 타이틀 끝 -->
+
+            <!-- 회원가입 -->
+            <div class="join-input">
+                <ul>
+                    <li>
+                        <div>
+                            <input type="text" name="" title="" placeholder="아이디" class="input-box w100p h60" />
+                            <button class="btn-default-b bg-black">중복확인</button>
+                        </div>
+                        <h3><i class="uil uil-exclamation-triangle color-pink"></i> 6~20자의 영문/숫자 입력</h3>
+                    </li>
+                    <li>
+                        <div><input type="password" name="" title="" placeholder="비밀번호" class="input-box w100p h60" /></div>
+                        <h3><i class="uil uil-exclamation-triangle color-pink"></i> 8~12자의 영문/숫자/특수문자 입력</h3>
+                    </li>
+                    <li>
+                        <div><input type="password" name="" title="" placeholder="비밀번호 확인" class="input-box w100p h60" /></div>
+                    </li>
+                    <li>
+                        <div><input type="text" name="" title="" placeholder="닉네임" class="input-box w100p h60" /></div>
+                    </li>
+                    <li>
+                        <div><input type="text" name="" title="" placeholder="이메일" class="input-box w100p h60" /></div>
+                    </li>
+                    <li>
+                        <h2>개인정보 유효기간</h2>
+                        <div class="mt15 mb15">
+                            <div class="radio-box">
+                                <input type="radio" name="pwRadio" id="pwRadio1" checked />
+                                <label for="pwRadio1">탈퇴시까지</label>
+                            </div>
+                            <div class="radio-box pl30">
+                                <input type="radio" name="pwRadio" id="pwRadio2" />
+                                <label for="pwRadio2">1년</label>
+                            </div>
+                        </div>
+                        <h3><i class="uil uil-exclamation-triangle color-pink"></i> 개인정보 유효기간 경과 이후 파기 또는 분리저장, 관리합니다.</h3>
+                    </li>
+                </ul>
+                <div style="display: flex">
+                    <a th:href="@{/join/end}" class="btn-default-b bg-pink w49p">회원가입</a>
+                    &nbsp;
+                    <a th:href="@{/}" class="btn-default-b bg-black w49p">취소</a>
+                </div>
+            </div>
+            <!-- 회원가입 끝 -->
+
+
+        </div>
+    </th:block>
+
+</html>

@@ -127,7 +127,7 @@
 .header-myinfo > dl {display:flex; align-items:center;}
 .header-myinfo > dl dt span {display:inline-block; width:60px; height:60px; border-radius:50%;}
 .header-myinfo > dl dd {margin-left:15px;}
-.header-myinfo > dl dd h2 {font-weight:500; font-size:15px; line-height:15px; color:#333; word-break: break-word;}
+.header-myinfo > dl dd h2 {font-weight:500; font-size:15px; line-height:15px; color:#333;}
 .header-myinfo > dl dd h3 {margin-top:3px;}
 .header-myinfo > div {margin-top:20px; padding-top:20px; border-top:#e5e5e5 1px solid;}
 .header-myinfo > div h2 {font-weight:500; color:#999;}
@@ -212,7 +212,7 @@
 
 @media all and (max-width:479px) {
   .sub-menu {width:90%; margin:-10px auto 0 auto; padding-bottom:30px;}
-  .sub-menu a {padding:10px 8px; font-size:13px; line-height:13px;}
+  .sub-menu a {padding:12px 10px; font-size:13px; line-height:13px;}
 }
 @media all and (min-width:480px) and (max-width:767px) {
   .sub-menu {width:470px; margin:-10px auto 0 auto; padding-bottom:30px;}

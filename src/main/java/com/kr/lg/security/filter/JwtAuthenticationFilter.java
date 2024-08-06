@@ -66,26 +66,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * @throws AuthException
      */
     private void isValid(String token, String uri) throws AuthException {
-        if (uri.contains("/public")) {
-            return; // public 접근으로 간주
-        }
+        if (!uri.contains("/public") && uri.contains("/api")) {
+            log.info("▶ [토큰 인증 시작]");
+            if (StringUtils.isBlank(token)) {
+                log.error("▶ [인증 토큰] 토큰 누락 실패");
+                throw new AuthException(AuthResultCode.NOT_EXIST_JWT_TOKEN);
+            } else if (!jwtService.validate(token)) {
+                log.error("▶ [인증 토큰] 토큰 유효성 검사 실패");
+                throw new AuthException(AuthResultCode.FAIL_VALIDATE_JWT_TOKEN);
+            }
 
-        log.info("▶ [토큰 인증 시작]");
-        if (StringUtils.isBlank(token)) {
-            log.error("▶ [인증 토큰] 토큰 누락 실패");
-            throw new AuthException(AuthResultCode.NOT_EXIST_JWT_TOKEN);
-        } else if (!jwtService.validate(token)) {
-            log.error("▶ [인증 토큰] 토큰 유효성 검사 실패");
-            throw new AuthException(AuthResultCode.FAIL_VALIDATE_JWT_TOKEN);
-        }
-
-        try {
-            UserDetails userDetails = jwtDetailService.loadUserByUsername(jwtService.getUserId(token)); // user 조회
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication); // security context authentication 주입
-        } catch (Exception e) {
-            log.error("▶ [인증 토큰] 유저 정보 조회 실패 - [{}]", e.getMessage());
-            throw new AuthException(AuthResultCode.FAIL_FIND_USER_INFO);
+            try {
+                UserDetails userDetails = jwtDetailService.loadUserByUsername(jwtService.getUserId(token)); // user 조회
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication); // security context authentication 주입
+            } catch (Exception e) {
+                log.error("▶ [인증 토큰] 유저 정보 조회 실패 - [{}]", e.getMessage());
+                throw new AuthException(AuthResultCode.FAIL_FIND_USER_INFO);
+            }
         }
     }
 
