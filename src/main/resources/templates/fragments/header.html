@@ -8,7 +8,7 @@
                 <!-- 로고/메뉴 -->
                 <div class="header-logo-menu">
                     <p>
-                        <i class="uit uit-bars"  style="cursor: pointer" onclick="open()" ></i>
+                        <i class="uit uit-bars" style="cursor: pointer" id="sideBarOpen"></i>
                         <a th:href="@{/}"><img th:src="@{/static/images/logo.svg}" width="50" alt="" title="" /></a>
                     </p>
                     <ul>
@@ -40,21 +40,21 @@
                     </div>
                 </div>
 
-                <div class="header-login-join">
-                    <button class="btn-line-gray-m w80 mr5" onclick="login()"><i class="uit uit-padlock"></i> 로그인</button>
-                    <button class="btn-default-m bg-black w100"onclick="join()"><i class="uit uit-user"></i> 회원가입</button>
-                </div>
-
-<!--                <div class="header-info">-->
-<!--                    <div >-->
-<!--                        <i class="uit uit-bell"></i>-->
-<!--                        <span ></span>-->
-<!--                    </div>-->
-<!--                    <p >홍</p>-->
+<!--                <div class="header-login-join">-->
+<!--                    <button class="btn-line-gray-m w80 mr5" onclick="login()"><i class="uit uit-padlock"></i> 로그인</button>-->
+<!--                    <button class="btn-default-m bg-black w100"onclick="join()"><i class="uit uit-user"></i> 회원가입</button>-->
 <!--                </div>-->
 
+                <div class="header-info">
+                    <div onclick="myMessage()">
+                        <i class="uit uit-bell"></i>
+                        <span ></span>
+                    </div>
+                    <p onclick="myInfo()">홍</p>
+                </div>
+
                 <div class="header-side-mobile" id="headerSideMobile">
-                    <div class="hsm-close"><i class="uil uil-times" onclick="close()"></i></div>
+                    <div class="hsm-close"><i class="uil uil-times" id="sideBarClose"></i></div>
                     <div class="hsm-search">
                         <div class="input-search-line-mobile">
                             <p><i class="uil uil-search"></i></p>
@@ -62,13 +62,13 @@
                         </div>
                     </div>
                     <div class="hsm-menu">
-                        <a style="cursor: pointer" th:href="@{/api/public/board/list}"><i class="uil uil-comment"></i> 포지션 게시판</a>
-                        <a style="cursor: pointer"><i class="uil uil-notes"></i> 트라이얼</a>
-                        <a style="cursor: pointer"><i class="uil uil-book-open"></i> 로펌</a>
-                        <a style="cursor: pointer"><i class="uil uil-book-alt"></i> 자유 게시판</a>
+                        <a style="cursor: pointer" th:href="@{/boards}"><i class="uil uil-comment"></i> 포지션 게시판</a>
+                        <a style="cursor: pointer" th:href="@{/trials}"><i class="uil uil-notes"></i> 트라이얼</a>
+                        <a style="cursor: pointer" th:href="@{/law-firms}"><i class="uil uil-book-open"></i> 로펌</a>
+                        <a style="cursor: pointer" th:href="@{/lck}"><i class="uil uil-book-alt"></i> LCK</a>
                     </div>
                 </div>
-                <div class="header-side-bg-mobile" id="headerSideBgMobile" onclick="close()">&nbsp;</div>
+                <div class="header-side-bg-mobile" id="headerSideBgMobile">&nbsp;</div>
 
             </dd>
         </dl>
@@ -76,21 +76,21 @@
 
     <div class="footer-mobile-menu">
         <ul>
-            <li>
+            <li onclick="boards()">
                 <p><i class="uil uil-comment"></i></p>
                 <h2>포지션게시판</h2>
             </li>
-            <li>
+            <li onclick="trials()">
                 <p><i class="uil uil-notes"></i></p>
                 <h2>트라이얼</h2>
             </li>
-            <li>
+            <li onclick="lawFirms()">
                 <p><i class="uil uil-book-open"></i></p>
                 <h2>로펌</h2>
             </li>
-            <li>
+            <li onclick="lck()">
                 <p><i class="uil uil-book-alt"></i></p>
-                <h2>자유게시판</h2>
+                <h2>LCK</h2>
             </li>
         </ul>
     </div>
@@ -164,6 +164,19 @@
 <!--        </div>-->
 
     <script th:inline="javascript">
+
+        document.getElementById('sideBarOpen').addEventListener('click', function () {
+            open()
+        })
+
+        document.getElementById('headerSideBgMobile').addEventListener('click', function () {
+            close()
+        })
+
+        document.getElementById('sideBarClose').addEventListener('click', function () {
+            close()
+        })
+
         function open() {
             document.getElementById("headerSideMobile").style.left = "0";
             document.getElementById("headerSideBgMobile").style.display = "block";
@@ -177,13 +190,40 @@
         }
 
         function login() {
-            const pathname = "/" + window.location.pathname.split("/")[1];
-            window.location.href = pathname + '/login';
+            move('/login')
         }
 
         function join() {
+            move('/join/agree')
+        }
+
+        function myInfo() {
+            move('/my/info')
+        }
+
+        function myMessage() {
+            move('/my/message')
+        }
+
+        function boards() {
+            move('/boards')
+        }
+
+        function trials() {
+            move('/trials')
+        }
+
+        function lawFirms() {
+            move('/law-firms')
+        }
+
+        function lck() {
+            move('/lck')
+        }
+
+        function move(path) {
             const pathname = "/" + window.location.pathname.split("/")[1];
-            window.location.href = pathname + '/join/agree';
+            window.location.href = pathname + path;
         }
     </script>
 </div>

@@ -4,7 +4,198 @@
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
+        <div class="content">
 
+
+            <dl class="mypage-layout">
+                <dt>
+                    <!-- 내정보 -->
+                    <div class="mypage-info">
+                        <div class="mi-info">
+                            <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            <div>
+                                <h2><i class="uil uil-user"></i> 홍길동 (lawggididid)</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 (2023.10.10)</h3>
+                                <h4><button class="btn-default-m bg-black w100p">로그아웃</button></h4>
+                            </div>
+                        </div>
+                        <div class="mi-menu">
+                            <a th:href="@{/my/info}">- 개인정보수정</a>
+                            <a th:href="@{/my/message}">- 알림함</a>
+                            <a th:href="@{/my/boards}" class="active">- 글목록</a>
+                        </div>
+                    </div>
+                    <!-- 내정보 끝 -->
+                </dt>
+                <dd>
+                    <!-- 마이페이지 - 타이틀 -->
+                    <div class="mypage-title">
+                        <h2>글목록</h2>
+                        <h3>로우지지 회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                    </div>
+                    <!-- 마이페이지 - 타이틀 끝 -->
+
+                    <!-- 구분 및 옵션 -->
+                    <dl class="board-sort-option w100p">
+                        <dt>
+                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>1,324</strong> 개의 글</div>
+                        </dt>
+                        <form name="searchForm" method="post" action="">
+                            <fieldset>
+                                <legend>게시물 검색</legend>
+                                <dd class="sso-two">
+                                    <div>
+                                        <select name="" class="w80">
+                                            <option value="">30개</option>
+                                        </select>
+                                        <input type="text" name="Sstring" title="검색어" value="" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                        <button class="btn-default bg-black"><i class="uit uit-search"></i> 검색</button>
+                                    </div>
+                                </dd>
+                            </fieldset>
+                        </form>
+                    </dl>
+                    <!-- 구분 및 옵션 끝 -->
+
+                    <!-- 리스트 -->
+                    <div class="board-list w100p">
+                        <ol class="bl-board">
+                            <li>번호</li>
+                            <li>제목</li>
+                            <li>작성일</li>
+                            <li>추천</li>
+                            <li>조회</li>
+                        </ol>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                        <ul class="bl-board">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>작성일 : </font> 2022-07-01</li>
+                            <li><font>추천 : </font> 254</li>
+                            <li><font>조회 : </font> 1,254</li>
+                        </ul>
+                    </div>
+                    <!-- 리스트 끝 -->
+
+
+                    <!-- 페이지넘버링 -->
+                    <div class="paging-list">
+                        <a href="#"><i class="uil uil-angle-left-b"></i></a>
+                        <a href="#">1</a>
+                        <a href="#" class="active">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#"><i class="uil uil-angle-right-b"></i></a>
+                    </div>
+                    <!-- 페이지넘버링 끝 -->
+                </dd>
+            </dl>
+
+
+        </div>
     </th:block>
 
 </html>

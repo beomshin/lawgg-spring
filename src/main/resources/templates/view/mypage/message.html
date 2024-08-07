@@ -4,7 +4,228 @@
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
+        <div class="content">
 
+
+            <dl class="mypage-layout">
+                <dt>
+                    <!-- 내정보 -->
+                    <div class="mypage-info">
+                        <div class="mi-info">
+                            <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            <div>
+                                <h2><i class="uil uil-user"></i> 홍길동 (lawggididid)</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 (2023.10.10)</h3>
+                                <h4><button class="btn-default-m bg-black w100p">로그아웃</button></h4>
+                            </div>
+                        </div>
+                        <div class="mi-menu">
+                            <a th:href="@{/my/info}" >- 개인정보수정</a>
+                            <a th:href="@{/my/message}" class="active">- 알림함</a>
+                            <a th:href="@{/my/boards}">- 글목록</a>
+                        </div>
+                    </div>
+                    <!-- 내정보 끝 -->
+                </dt>
+                <dd>
+                    <!-- 마이페이지 - 타이틀 -->
+                    <div class="mypage-title">
+                        <h2>알림함</h2>
+                        <h3>로우지지 회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                    </div>
+                    <!-- 마이페이지 - 타이틀 끝 -->
+
+                    <!-- 구분 및 옵션 -->
+                    <dl class="board-sort-option w100p">
+                        <dt>
+                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>1,324</strong> 개의 알림</div>
+                        </dt>
+                        <dd class="sso-two">
+                            <div>
+                                <select name="" class="w80">
+                                    <option value="">30개</option>
+                                </select>
+                                <input type="text" name="Sstring" title="검색어" value="" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                <button class="btn-default bg-black"><i class="uit uit-search"></i> 검색</button>
+                            </div>
+                            <p>
+                                <button class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 알림작성</button>
+                            </p>
+                        </dd>
+                    </dl>
+                    <!-- 구분 및 옵션 끝 -->
+
+                    <!-- 리스트 -->
+                    <div class="board-list w100p">
+                        <ol class="bl-message">
+                            <li>번호</li>
+                            <li>제목</li>
+                            <li>작성자</li>
+                            <li>작성일</li>
+                        </ol>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li>
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                        <ul class="bl-message">
+                            <li>1.</li>
+                            <li >
+                                <a href="#">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
+                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> 2022-07-01</li>
+                        </ul>
+                    </div>
+                    <!-- 리스트 끝 -->
+
+
+                    <!-- 페이지넘버링 -->
+                    <div class="paging-list">
+                        <a href="#"><i class="uil uil-angle-left-b"></i></a>
+                        <a href="#">1</a>
+                        <a href="#" class="active">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#"><i class="uil uil-angle-right-b"></i></a>
+                    </div>
+                    <!-- 페이지넘버링 끝 -->
+                </dd>
+            </dl>
+
+
+            <!-- 모달 - 알림 내용 -->
+<!--            <modal class="modal-area" name="modalMessageView" width="90%"  height="auto" :maxWidth="650" :adaptive="true" :scrollable="true">-->
+<!--                <dl class="ma-header">-->
+<!--                    <dt>알림 내용</dt>-->
+<!--                    <dd @click="$modal.hide('modalMessageView')"><i class="uil uil-times"></i></dd>-->
+<!--                </dl>-->
+
+<!--                <div class="ma-message-view">-->
+<!--                    <h2>로우지지에 대해서 너무 너무 궁금합니다.</h2>-->
+<!--                    <div>-->
+<!--                        로우지지에 대해서 너무 너무 궁급합니다. 로우지지에 대해서 너무 너무 궁급합니다. 로우지지에 대해서 너무 너무 궁급합니다.-->
+<!--                        <br /><br />-->
+<!--                        로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.-->
+<!--                    </div>-->
+<!--                    <p>-->
+<!--                        <button class="btn-default-m bg-pink w100">답하기</button>-->
+<!--                        &nbsp;-->
+<!--                        <button class="btn-default-m bg-black w100" @click="$modal.hide('modalMessageView')">닫기</button>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </modal>-->
+            <!-- 모달 - 알림 내용 끝 -->
+
+
+            <!-- 모달 - 알림 작성 -->
+<!--            <modal class="modal-area" name="modalMessageWrite" width="90%"  height="auto" :maxWidth="650" :adaptive="true" :scrollable="true">-->
+<!--                <dl class="ma-header">-->
+<!--                    <dt>알림 작성</dt>-->
+<!--                    <dd @click="$modal.hide('modalMessageWrite')"><i class="uil uil-times"></i></dd>-->
+<!--                </dl>-->
+
+<!--                <div class="ma-message-write">-->
+<!--                    <ul>-->
+<!--                        <li>-->
+<!--                            <input type="text" name="" title="" placeholder="수신인" class="input-box w100p h60" />-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <input type="text" name="" title="" placeholder="제목" class="input-box w100p h60" />-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <textarea cols="" rows="" placeholder="내용" class="w100p h200"></textarea>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <p>-->
+<!--                        <button class="btn-default-m bg-pink w100">전송하기</button>-->
+<!--                        &nbsp;-->
+<!--                        <button class="btn-default-m bg-black w100" @click="$modal.hide('modalMessageWrite')">닫기</button>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </modal>-->
+            <!-- 모달 - 알림 작성 끝 -->
+
+
+        </div>
     </th:block>
 
 </html>

@@ -103,4 +103,19 @@ public class ViewController {
     public String idResult() {
         return "view/member/idSearchResult";
     }
+
+    @GetMapping("/my/message")
+    public String myMessage() {
+        return "view/mypage/message";
+    }
+
+    @GetMapping("/my/boards")
+    public String myBoards() {
+        return "view/mypage/myBoard";
+    }
+
+    @GetMapping("/my/info")
+    public String myInfo() {
+        return "view/mypage/myInfo";
+    }
 }
