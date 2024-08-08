@@ -102,7 +102,6 @@
                     <h2>포지션 게시판</h2>
                     <h3>매일 매일 쌓이는 이야기 포지션 게시판!!</h3>
                     <p>
-                        <button>전체</button>
                         <button class="active">탑</button>
                         <button>정글</button>
                         <button>미드</button>
@@ -276,36 +275,7 @@
             </div>
             <!-- 베너 끝 -->
 
-            <script>
-                new Swiper('.swiper', {
-                    aslidesPerView: 3,
-                    //centeredSlides: true,
-                    spaceBetween: '3.3%',
-                    grabCursor: true,
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true
-                    },
-                    breakpoints: {
-                        300: {
-                            slidesPerView: 1.5
-                        },
-                        480: {
-                            slidesPerView: 1.5
-                        },
-                        768: {
-                            slidesPerView: 2.5
-                        },
-                        992: {
-                            slidesPerView: 3
-                        },
-                        1200: {
-                            slidesPerView: 3
-                        }
-                    }
-                })
-            </script>
-
+            <script th:src="@{/static/js/home.js}"></script>
         </div>
     </th:block>
 
