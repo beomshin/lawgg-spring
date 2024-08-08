@@ -46,11 +46,11 @@
 <!--                </div>-->
 
                 <div class="header-info">
-                    <div onclick="myMessage()">
+                    <div id="alert">
                         <i class="uit uit-bell"></i>
                         <span ></span>
                     </div>
-                    <p onclick="myInfo()">홍</p>
+                    <p id="myInfo">홍</p>
                 </div>
 
                 <div class="header-side-mobile" id="headerSideMobile">
@@ -69,6 +69,117 @@
                     </div>
                 </div>
                 <div class="header-side-bg-mobile" id="headerSideBgMobile">&nbsp;</div>
+
+                <!-- 알림 -->
+                <div  class="header-message-dropdown" style="display: none;">
+                    <div class="v-dropdown-menu__container">
+                        <div class="header-message">
+                            <dl>
+                                <dt>새알림</dt>
+                                <dd>
+                                    <a href="#">
+                                        <i class="uil uil-comment-alt"></i>
+                                        <span></span>
+                                        <em>전부읽음</em>
+                                    </a>
+                                </dd>
+                            </dl>
+                            <ul>
+                                <li class="active">
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 10시간전</h2>
+                                            <p></p>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 10시간전</h2>
+                                            <p></p>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 2일전</h2>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 1개월전</h2>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 3년전</h2>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <p><a th:href="@{/my/message}">전체보기</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-myinfo-dropdown" style="display: none;">
+                    <div class="v-dropdown-menu__container">
+                        <div class="header-myinfo">
+                            <dl>
+                                <dt><span style="background:url('https://i.pinimg.com/564x/d4/22/11/d42211cf93c61dc4d231f036c9c711c5.jpg'); background-size:cover;"></span></dt>
+                                <dd>
+                                    <h2>홍길동 님</h2>
+                                    <h3>username1234</h3>
+                                    <div>가입일 : 2022.10.21</div>
+                                </dd>
+                            </dl>
+                            <div>
+                                <h2>내 활동내역</h2>
+                                <ul>
+                                    <li><i class="uil uil-diamond"></i> 다이어 <span>2</span></li>
+                                    <li><i class="uil uil-book-open"></i> <span>00</span> 로펌</li>
+                                    <li><i class="uil uil-clipboard"></i> 글 <span>1,272</span></li>
+                                    <li><i class="uil uil-comment"></i> 댓글 <span>572</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h2>마이페이지</h2>
+                                <div>
+                                    <a th:href="@{/my/info}"><i class="uil uil-user-circle"></i> 회원정보수정</a>
+                                    <a th:href="@{/my/message}"><i class="uil uil-bell"></i> 알림함</a>
+                                    <a th:href="@{/my/boards}"><i class="uil uil-clipboard-notes"></i> 글목록</a>
+                                </div>
+                            </div>
+                            <p><a href="#" class="btn-default-m bg-black w100p">로그아웃</a></p>
+                        </div>
+                    </div>
+                </div>
 
             </dd>
         </dl>
@@ -95,87 +206,36 @@
         </ul>
     </div>
 
-<!--    <div class="header-message-dropdown">-->
-<!--        <div class="header-message">-->
-<!--            <dl>-->
-<!--                <dt>새알림</dt>-->
-<!--                <dd>-->
-<!--                    <a style="cursor: pointer" >-->
-<!--                        <i class="uil uil-comment-alt"></i>-->
-<!--&lt;!&ndash;                        <span ></span>&ndash;&gt;-->
-<!--                        <em>전부읽음</em>-->
-<!--                    </a>-->
-<!--                </dd>-->
-<!--            </dl>-->
-<!--            <ul>-->
-<!--                <li>-->
-<!--                    <dl>-->
-<!--                        <dt>-->
-<!--                            <h2>타이틀</h2>-->
-<!--                            <h3>내용</h3>-->
-<!--                        </dt>-->
-<!--                        <dd>-->
-<!--                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 2024-08-01</h2>-->
-<!--    &lt;!&ndash;                                <p ></p>&ndash;&gt;-->
-<!--                        </dd>-->
-<!--                    </dl>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--            <p>-->
-<!--                <a style="cursor: pointer">전체보기</a>-->
-<!--            </p>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--        <div class="header-myinfo">-->
-<!--            <dl>-->
-<!--                <dt><span style="cursor: pointer"></span></dt>-->
-<!--                <dd>-->
-<!--                    <h2>홍길동 님</h2>-->
-<!--                    <h3>포인트 : 0 p</h3>-->
-<!--                    <div>가입일 : 2024-08-04</div>-->
-<!--                </dd>-->
-<!--            </dl>-->
-<!--            <div>-->
-<!--                <h2>내 활동내역</h2>-->
-<!--                <ul>-->
-<!--                    <li><i class="uil uil-diamond"></i> 브론즈 <span>5</span></li>-->
-<!--                    <li><i class="uil uil-book-open"></i>-->
-<!--&lt;!&ndash;                        <template >&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span>길동</span> 로펌&ndash;&gt;-->
-<!--&lt;!&ndash;                        </template>&ndash;&gt;-->
-<!--                            로펌 <span>미가입</span>-->
-<!--                    </li>-->
-<!--                    <li><i class="uil uil-clipboard"></i> 게시글 <span>1</span></li>-->
-<!--                    <li><i class="uil uil-clipboard"></i> 트라이얼 <span>2</span></li>-->
-<!--                    <li><i class="uil uil-comment"></i> 댓글 <span>3</span></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <h2>마이페이지</h2>-->
-<!--                <div>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-user-circle" ></i> 회원정보수정</a>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-bell"></i> 알림함</a>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-clipboard-notes"></i> 글목록</a>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-bell"></i> 쪽지함</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <p><a class="btn-default-m bg-black w100p" >로그아웃</a></p>-->
-<!--        </div>-->
-
     <script th:inline="javascript">
 
-        document.getElementById('sideBarOpen').addEventListener('click', function () {
+        document.getElementById('sideBarOpen').addEventListener('click', function () { // 모바일 사이드 오픈
             open()
         })
 
-        document.getElementById('headerSideBgMobile').addEventListener('click', function () {
+        document.getElementById('headerSideBgMobile').addEventListener('click', function () { // 모바일 사이드바 종료 (배경화면 클릭)
             close()
         })
 
-        document.getElementById('sideBarClose').addEventListener('click', function () {
+        document.getElementById('sideBarClose').addEventListener('click', function () { // 모바일 사이드바 종료 (종료 버튼 클릭)
             close()
         })
+
+        document.getElementById('alert').addEventListener('click', function () { // 알림창 클릭 드롭 다운
+            dropDown('header-message-dropdown')
+        })
+
+        document.getElementById('myInfo').addEventListener('click', function () { // 나의 프로필 클릭 드롭 다운
+            dropDown('header-myinfo-dropdown')
+        })
+
+        function dropDown(className) {
+            var dropdown = document.getElementsByClassName(className)[0];
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';  // 현재 보이는 상태이면 숨김
+            } else {
+                dropdown.style.display = 'block'; // 현재 숨겨진 상태이면 보이게 함
+            }
+        }
 
         function open() {
             document.getElementById("headerSideMobile").style.left = "0";
@@ -195,14 +255,6 @@
 
         function join() {
             move('/join/agree')
-        }
-
-        function myInfo() {
-            move('/my/info')
-        }
-
-        function myMessage() {
-            move('/my/message')
         }
 
         function boards() {
