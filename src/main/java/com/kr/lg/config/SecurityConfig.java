@@ -1,8 +1,6 @@
 package com.kr.lg.config;
 
 import com.kr.lg.module.auth.service.JwtService;
-import com.kr.lg.security.filter.JwtAuthenticationFilter;
-import com.kr.lg.security.filter.LoginAuthenticationFilter;
 import com.kr.lg.security.login.detail.JwtDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +11,9 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -85,9 +81,14 @@ public class SecurityConfig {
 
         http.headers().frameOptions().disable();
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // REST API 사용안함;
-
         http.cors().configurationSource(corsConfigurationSource);
+
+        http.formLogin()
+                        .loginPage("/login")
+                        .usernameParameter("loginId")
+                        .successHandler(loginSuccessHandler)
+                        .failureHandler(loginFailHandler)
+                        .permitAll();
 
         http.logout()
                 .logoutUrl(LOGOUT_PATH)
@@ -101,9 +102,6 @@ public class SecurityConfig {
                 .antMatchers(SwaggerPatterns).permitAll() // swagger path 허용
                 .antMatchers("/api/**").hasRole("USER")
                 .anyRequest().permitAll(); // 이외 USER ROLE 확인 처리
-
-        http.addFilter(new LoginAuthenticationFilter(authenticationManager, loginSuccessHandler, loginFailHandler, LOGIN_PATH)); // 로그인 필터 등록
-        http.addFilterBefore(new JwtAuthenticationFilter(jwtDetailService, jwtService), UsernamePasswordAuthenticationFilter.class); // before 필터 등록으로 JWT 검사 실행
 
         return http.build();
     }

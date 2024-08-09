@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 
 <div th:fragment="headerFragment">
     <div class="header">
@@ -40,18 +42,22 @@
                     </div>
                 </div>
 
-<!--                <div class="header-login-join">-->
-<!--                    <button class="btn-line-gray-m w80 mr5" onclick="login()"><i class="uit uit-padlock"></i> 로그인</button>-->
-<!--                    <button class="btn-default-m bg-black w100"onclick="join()"><i class="uit uit-user"></i> 회원가입</button>-->
-<!--                </div>-->
-
-                <div class="header-info">
-                    <div id="alert">
-                        <i class="uit uit-bell"></i>
-                        <span ></span>
+                <th:block sec:authorize="isAnonymous()">
+                    <div class="header-login-join">
+                        <button class="btn-line-gray-m w80 mr5" onclick="login()"><i class="uit uit-padlock"></i> 로그인</button>
+                        <button class="btn-default-m bg-black w100" onclick="join()"><i class="uit uit-user"></i> 회원가입</button>
                     </div>
-                    <p id="myInfo">홍</p>
-                </div>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="header-info">
+                        <div id="alert">
+                            <i class="uit uit-bell"></i>
+                            <span ></span>
+                        </div>
+                        <p id="myInfo">홍</p>
+                    </div>
+                </th:block>
 
                 <div class="header-side-mobile" id="headerSideMobile">
                     <div class="hsm-close"><i class="uil uil-times" id="sideBarClose"></i></div>

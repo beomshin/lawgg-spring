@@ -1,24 +1,23 @@
 package com.kr.lg.security.login.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import com.kr.lg.security.exception.SecurityException;
-import com.kr.lg.model.common.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @Slf4j
 @Component
-public class LoginFailHandler implements AuthenticationFailureHandler {
+public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
     /**
      * 로그인 실패 핸들러
@@ -30,10 +29,11 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
      */
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws ServletException, IOException {
         log.error("▶ [Spring Security 로그인][LoginFailHandler] 로그인 실패");
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE); // content-type json
-        new ObjectMapper().writeValue(response.getOutputStream(), new ErrorResponse(getFailCode(exception))); // 응답 body
+        AuthResultCode code = getFailCode(exception);
+        setDefaultFailureUrl("/login?message=" + URLEncoder.encode(code.getMsg(), "UTF-8"));
+        super.onAuthenticationFailure(request, response, exception);
     }
 
     /**
