@@ -17,12 +17,15 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-@RestController
+
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class LoginController {
@@ -34,6 +37,21 @@ public class LoginController {
     private final UserService userService;
     private final OAuthService oAuthService;
     private final LoginService loginService;
+
+    @GetMapping("/login")
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) Boolean error, // 로그인 실패
+            @RequestParam(value = "message", required = false) String message, // 로그인 실패 메세지
+            @CookieValue(value = "savedLoginId", required = false) String savedLoginId, // 아이디 저장
+            ModelAndView modelAndView
+    ) {
+        modelAndView.addObject("savedLoginId", savedLoginId);
+        modelAndView.addObject("error", error);
+        modelAndView.addObject("message", message);
+        modelAndView.setViewName("view/member/login");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/api/public/google/login")
     @ApiOperation(value = "로우지지 구글 로그인", notes = "로우지지 구글 로그인을 합니다.")
     public RedirectView googleLogin() {

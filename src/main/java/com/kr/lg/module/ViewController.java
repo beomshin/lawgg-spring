@@ -74,30 +74,6 @@ public class ViewController {
         return "view/lawfirm/write";
     }
 
-    @GetMapping("/login")
-    public ModelAndView login(
-            @RequestParam(value = "error", required = false) Boolean error,
-            @RequestParam(value = "message", required = false) String message,
-            ModelAndView modelAndView,
-            HttpServletRequest request
-    ) {
-        // 쿠키에서 저장된 아이디를 읽어와 모델에 추가
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("savedLoginId".equals(cookie.getName())) {
-                    modelAndView.addObject("savedLoginId", cookie.getValue());
-                    break;
-                }
-            }
-        }
-
-        modelAndView.addObject("error", error);
-        modelAndView.addObject("message", message);
-        modelAndView.setViewName("view/member/login");
-        return modelAndView;
-    }
-
     @GetMapping("/join/agree")
     public String joinAgree() {
         return "view/member/joinAgree";
