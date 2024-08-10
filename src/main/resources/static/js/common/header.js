@@ -71,6 +71,10 @@ function lawFirms() {
     move('/law-firms')
 }
 
+function lawFirm() {
+    move('/law-firm')
+}
+
 function lck() {
     move('/lck')
 }

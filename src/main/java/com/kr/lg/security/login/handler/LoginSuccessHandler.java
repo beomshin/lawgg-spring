@@ -22,7 +22,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.debug("▶ [Spring Security 로그인][LoginSuccessHandler] 5. 로그인 성공 핸들러 ==========> ");
+        log.debug("▶ [Spring Security 로그인][LoginSuccessHandler] 4. 로그인 성공 핸들러 ==========> ");
 
         setDefaultTargetUrl("/");
 

@@ -4,7 +4,140 @@
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
+        <div class="content">
 
+
+            <!-- 타이틀 -->
+            <dl class="title">
+                <dt>
+                    <h2>로펌</h2>
+                    <h3>
+                        로펌에 관한 다양한 이야기를 할 수 있는 게시판입니다.<br />
+                        클린한 커뮤니케이션을 위해 비방하는 게시물은 자제해주세요.
+                    </h3>
+                </dt>
+            </dl>
+            <!-- 타이틀 끝 -->
+
+
+            <!-- 베너 -->
+            <div class="banner-area01">
+                <img th:src="@{/static/images/banner_img02.png}" alt="" title="" />
+            </div>
+            <!-- 베너 끝 -->
+
+
+            <!-- 구분 및 옵션 -->
+            <dl class="board-sort-option">
+                <dt>
+                    <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>1,324</strong> 개의 로펌 / 현재페이지 [2/23]</div>
+                </dt>
+                <form name="searchForm" method="post" action="">
+                    <fieldset>
+                        <legend>게시물 검색</legend>
+                        <dd class="sso-two">
+                            <div>
+                                <select name="" class="w80">
+                                    <option value="">30개</option>
+                                </select>
+                                <input type="text" name="Sstring" title="검색어" value="" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                <button class="btn-default bg-black"><i class="uit uit-search"></i> 검색</button>
+                            </div>
+                        </dd>
+                    </fieldset>
+                </form>
+            </dl>
+            <!-- 구분 및 옵션 끝 -->
+
+
+            <!-- 리스트 -갤러리형 -->
+            <div class="board-gallery-list">
+                <ul>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/53/7f/ee/537fee1351057a3b3e77b9b7457920b4.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/82/bb/50/82bb5044c552c9a32b9566d531a11ffe.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/42/4b/54/424b549bf3c7337af018b7387930bb1b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/4d/b8/83/4db883a3fbdd932627770bf403fde01b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/53/7f/ee/537fee1351057a3b3e77b9b7457920b4.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/82/bb/50/82bb5044c552c9a32b9566d531a11ffe.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/42/4b/54/424b549bf3c7337af018b7387930bb1b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/4d/b8/83/4db883a3fbdd932627770bf403fde01b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/53/7f/ee/537fee1351057a3b3e77b9b7457920b4.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/82/bb/50/82bb5044c552c9a32b9566d531a11ffe.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/42/4b/54/424b549bf3c7337af018b7387930bb1b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/4d/b8/83/4db883a3fbdd932627770bf403fde01b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/53/7f/ee/537fee1351057a3b3e77b9b7457920b4.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/82/bb/50/82bb5044c552c9a32b9566d531a11ffe.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/42/4b/54/424b549bf3c7337af018b7387930bb1b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                    <li onclick="lawFirm()">
+                        <p><img src="https://i.pinimg.com/564x/4d/b8/83/4db883a3fbdd932627770bf403fde01b.jpg" width="100%" alt="" title="" /></p>
+                        <h2>로펌 이름</h2>
+                    </li>
+                </ul>
+            </div>
+            <!-- 리스트 -갤러리형 끝 -->
+
+
+            <!-- 페이지넘버링 -->
+            <div class="paging-list">
+                <a href="#"><i class="uil uil-angle-left-b"></i></a>
+                <a href="#">1</a>
+                <a href="#" class="active">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#"><i class="uil uil-angle-right-b"></i></a>
+            </div>
+            <!-- 페이지넘버링 끝 -->
+
+
+        </div>
+
+        <script th:src="@{/static/js/common/header.js}"></script>
     </th:block>
 
 </html>

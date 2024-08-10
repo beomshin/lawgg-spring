@@ -13,7 +13,7 @@
                     <h2>로그인</h2>
                     <h3>회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
                 </div>
-                <form th:action="@{/login}" method="post" name="login">
+                <form th:action="@{/login/process}" method="post" name="login">
                     <div class="la-content">
                         <ul>
                             <li>
@@ -22,6 +22,9 @@
                             <li>
                                 <input type="password" id="password" name="password" title="" placeholder="비밀번호를 입력하세요." class="input-box w100p h60" />
                             </li>
+                            <span th:if="${param.error}">
+                                <p th:text="${param.message}" ></p>
+                            </span>
                         </ul>
                         <div>
                             <div class="check-box">
@@ -29,8 +32,8 @@
                                 <label for="chk1">아이디 저장</label>
                             </div>
                             <div class="check-box">
-                                <input type="checkbox" name="opt" id="chk2" />
-                                <label for="chk2">자동 로그인</label>
+                                <input type="checkbox" name="remember-me" id="remember-me" />
+                                <label for="remember-me">자동 로그인</label>
                             </div>
                         </div>
                         <p><button type="submit" class="btn-default-b bg-black w100p">로그인</button></p>
@@ -62,9 +65,12 @@
                 </div>
             </div>
             <!-- 로그인 - 회원 끝 -->
-
-
         </div>
+
+        <script>
+
+
+        </script>
     </th:block>
 
 </html>

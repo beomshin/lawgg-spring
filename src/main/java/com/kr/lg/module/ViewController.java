@@ -3,6 +3,8 @@ package com.kr.lg.module;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Slf4j
@@ -51,11 +53,16 @@ public class ViewController {
 
     @GetMapping("/law-firms")
     public String lawFirms() {
-        return "view/lawfirm/list";
+        return "view/lawfirm/index";
     }
 
     @GetMapping("/law-firm")
     public String lawFirm() {
+        return "view/lawfirm/list";
+    }
+
+    @GetMapping("/law-firm/{id}")
+    public String lawFirmPost() {
         return "view/lawfirm/view";
     }
 
@@ -65,8 +72,15 @@ public class ViewController {
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "view/member/login";
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) Boolean error,
+            @RequestParam(value = "message", required = false) String message,
+            ModelAndView modelAndView
+    ) {
+        modelAndView.addObject("error", error);
+        modelAndView.addObject("message", message);
+        modelAndView.setViewName("view/member/login");
+        return modelAndView;
     }
 
     @GetMapping("/join/agree")
