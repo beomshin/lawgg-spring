@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Slf4j
 public class ViewController {
@@ -75,8 +78,20 @@ public class ViewController {
     public ModelAndView login(
             @RequestParam(value = "error", required = false) Boolean error,
             @RequestParam(value = "message", required = false) String message,
-            ModelAndView modelAndView
+            ModelAndView modelAndView,
+            HttpServletRequest request
     ) {
+        // 쿠키에서 저장된 아이디를 읽어와 모델에 추가
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("savedLoginId".equals(cookie.getName())) {
+                    modelAndView.addObject("savedLoginId", cookie.getValue());
+                    break;
+                }
+            }
+        }
+
         modelAndView.addObject("error", error);
         modelAndView.addObject("message", message);
         modelAndView.setViewName("view/member/login");

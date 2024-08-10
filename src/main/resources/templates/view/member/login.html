@@ -17,7 +17,7 @@
                     <div class="la-content">
                         <ul>
                             <li>
-                                <input type="text" id="loginId" name="loginId" title="" placeholder="아이디를 입력하세요." class="input-box w100p h60" />
+                                <input type="text" id="loginId" name="loginId" title="" placeholder="아이디를 입력하세요." class="input-box w100p h60" th:value="${savedLoginId}"/>
                             </li>
                             <li>
                                 <input type="password" id="password" name="password" title="" placeholder="비밀번호를 입력하세요." class="input-box w100p h60" />
@@ -28,8 +28,8 @@
                         </ul>
                         <div>
                             <div class="check-box">
-                                <input type="checkbox" name="opt" id="chk1" />
-                                <label for="chk1">아이디 저장</label>
+                                <input type="checkbox" name="remember-id" id="remember-id" th:checked="${savedLoginId != null ? true : false}" />
+                                <label for="remember-id">아이디 저장</label>
                             </div>
                             <div class="check-box">
                                 <input type="checkbox" name="remember-me" id="remember-me" />
