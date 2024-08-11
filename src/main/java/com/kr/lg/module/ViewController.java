@@ -13,11 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class ViewController {
 
-    @GetMapping("/")
-    public String home() {
-        return "view/home";
-    }
-
     @GetMapping("/boards")
     public String boards() {
         return "view/position/list";

@@ -13,15 +13,20 @@
                     <dt>
                         <h2>당신의 티어를 제대로 한번 올리고 싶다면?</h2>
                         <h3>오늘의 <span>HOT</span> 트라이얼</h3>
-                        <h4>제목 : 50만 LP 빵입니다. 진짜 제대로 갑니다.</h4>
+                        <h4>제목 : [[${hotTrial.title}]]</h4>
                         <div>
-                            우선 시작은 영상부터 보고 가셔야 할 듯 싶습니다.<br />
-                            게임시간으로 3분 40초 경부터 문제가 시작이 되는데 우선 저희가 인베를 한 번 방어를 했던 상태입니다. 그러던 와중…..
+                            [[${hotTrial.content}]]
                         </div>
-                        <p><button>More <i class="uil uil-arrow-right"></i></button></p>
+                        <p><button style="cursor: pointer">More <i class="uil uil-arrow-right"></i></button></p>
                     </dt>
                     <dd>
-                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/G5WUsX7ulq8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="100%" height="300"
+                                th:src="${hotTrial.playVideo}"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                        </iframe>
                     </dd>
                 </dl>
             </div>
@@ -34,58 +39,18 @@
                     <h2>트라이얼</h2>
                     <h3>전문가들이 알려주는 제대로된 트라이얼!!</h3>
                     <ul>
-                        <li>
-                            <p><img src="https://i.pinimg.com/564x/ad/10/8f/ad108f8e82285778b9aa86adbbc4fc09.jpg" width="100%" alt="" title="" /></p>
+                        <li th:each="trial:${trials}">
+                            <p><img th:src="${trial.thumbnail}" width="100%" alt="" title="" /></p>
                             <div>
-                                <h2>안녕하세요. 반갑습니다.</h2>
-                                <h3>안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다....</h3>
+                                <h2>[[${trial.title}]]</h2>
+                                <h3>[[${trial.content}]]</h3>
                                 <dl>
-                                    <dt><i class="uil uil-clock-two"></i> 2023.01.10</dt>
+                                    <dt><i class="uil uil-clock-two"></i> [[${trial.writeDt}]]</dt>
                                     <dd>
-                                        <span><img src="https://i.pinimg.com/564x/b0/2e/50/b02e506b0a3e5f11fada6dd24c179132.jpg" width="100%" alt="" title="" /></span>
-                                        <em>홍길동만세</em>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </li>
-                        <li >
-                            <p><img src="https://i.pinimg.com/originals/bc/3d/fa/bc3dfa536dcbe996f7fe27db6edd88b9.gif" width="100%" alt="" title="" /></p>
-                            <div>
-                                <h2>안녕하세요. 반갑습니다.</h2>
-                                <h3>안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다....</h3>
-                                <dl>
-                                    <dt><i class="uil uil-clock-two"></i> 2023.01.10</dt>
-                                    <dd>
-                                        <span><img src="https://i.pinimg.com/564x/b0/2e/50/b02e506b0a3e5f11fada6dd24c179132.jpg" width="100%" alt="" title="" /></span>
-                                        <em>홍길동만세</em>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </li>
-                        <li >
-                            <p><img src="https://i.pinimg.com/originals/ba/12/28/ba12284310ac3bb48213f43577092310.gif" width="100%" alt="" title="" /></p>
-                            <div>
-                                <h2>안녕하세요. 반갑습니다.</h2>
-                                <h3>안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다....</h3>
-                                <dl>
-                                    <dt><i class="uil uil-clock-two"></i> 2023.01.10</dt>
-                                    <dd>
-                                        <span><img src="https://i.pinimg.com/564x/b0/2e/50/b02e506b0a3e5f11fada6dd24c179132.jpg" width="100%" alt="" title="" /></span>
-                                        <em>홍길동만세</em>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </li>
-                        <li>
-                            <p><img src="https://i.pinimg.com/564x/53/7f/ee/537fee1351057a3b3e77b9b7457920b4.jpg" width="100%" alt="" title="" /></p>
-                            <div>
-                                <h2>안녕하세요. 반갑습니다.</h2>
-                                <h3>안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다....</h3>
-                                <dl>
-                                    <dt><i class="uil uil-clock-two"></i> 2023.01.10</dt>
-                                    <dd>
-                                        <span><img src="https://i.pinimg.com/564x/b0/2e/50/b02e506b0a3e5f11fada6dd24c179132.jpg" width="100%" alt="" title="" /></span>
-                                        <em>홍길동만세</em>
+                                        <th:block th:if="${trial.profile != null}">
+                                            <span><img th:src="${trial.profile}" width="100%" alt="" title="" /></span>
+                                        </th:block>
+                                        <em>[[${trial.writer}]]</em>
                                     </dd>
                                 </dl>
                             </div>
@@ -102,144 +67,30 @@
                     <h2>포지션 게시판</h2>
                     <h3>매일 매일 쌓이는 이야기 포지션 게시판!!</h3>
                     <p>
-                        <button class="active">탑</button>
-                        <button>정글</button>
-                        <button>미드</button>
-                        <button>원딜</button>
-                        <button>서폿</button>
+                        <button class="filter-button active" data-linetype="0">탑</button>
+                        <button class="filter-button" data-linetype="1">정글</button>
+                        <button class="filter-button" data-linetype="2">미드</button>
+                        <button class="filter-button" data-linetype="3">원딜</button>
+                        <button class="filter-button" data-linetype="4">서폿</button>
                     </p>
                     <div class="swiper-area swiper">
                         <div class="swiper-wrapper">
-                            <div class="active swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
+                            <div class="swiper-slide" th:each="board:${boards}" th:data-linetype="${board.lineType}">
+                                <p><span th:text="${board.tag}"></span></p>
+                                <h2 th:text="${board.title}"></h2>
+                                <div th:text="${board.content}"></div>
                                 <dl>
                                     <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
+                                        <i class="uis uis-heart color-pink"></i> [[${board.recommendCount}]]
+                                        <i class="uil uil-eye"></i> [[${board.view}]]
                                     </dt>
                                     <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
+                                        <i class="uil uil-clock-nine"></i> [[${board.writeDt}]]
                                     </dd>
                                 </dl>
                             </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-slide">
-                                <p><span>탑</span></p>
-                                <h2>여러분 안녕하세요.</h2>
-                                <div>
-                                    안녕하세요. 판결 좀 부탁드립니다. 제가 노틸서폿이고요. 라인전에서 누구의 잘못이 큰지 영상보고 판결 부탁드립니다 ....
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <i class="uis uis-heart color-pink"></i> 24
-                                        <i class="uil uil-eye"></i> 680
-                                    </dt>
-                                    <dd>
-                                        <i class="uil uil-clock-nine"></i> 2023.01.10
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="swiper-pagination" slot="pagination"></div>
                         </div>
+                        <div class="swiper-pagination" ></div>
                     </div>
                 </div>
             </div>
@@ -256,11 +107,11 @@
                         <h2><span>HOT</span> ISSUE</h2>
                         <h3>로우지지에서 리그오브레전드에 대한 핫이슈!를 소개합니다.</h3>
                         <ul>
-                            <li><a>게임플레이에 대한 단상 : 13.7</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
-                            <li><a href="#">리그오브레전드 13.1 패치 상점소식</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
-                            <li><a href="#">[라이엇 스토어] 2023 LCK SPRING 결승 진출전 & 결승전 라이엇 스토어 운영 안내</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
-                            <li><a href="#">13.7 전략적 팀 전투 패치 노트</a></li>
-                            <li><a href="#">리그오브레전드 13.1 패치 상점소식</a></li>
+                            <li style="cursor: pointer"><a>게임플레이에 대한 단상 : 13.7</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
+                            <li style="cursor: pointer"><a>리그오브레전드 13.1 패치 상점소식</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
+                            <li style="cursor: pointer"><a>[라이엇 스토어] 2023 LCK SPRING 결승 진출전 & 결승전 라이엇 스토어 운영 안내</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
+                            <li style="cursor: pointer"><a>13.7 전략적 팀 전투 패치 노트</a></li>
+                            <li style="cursor: pointer"><a>리그오브레전드 13.1 패치 상점소식</a></li>
                         </ul>
                         <p><button class="btn-line-gray-m w100">More <i class="uil uil-arrow-right"></i></button></p>
                     </dd>

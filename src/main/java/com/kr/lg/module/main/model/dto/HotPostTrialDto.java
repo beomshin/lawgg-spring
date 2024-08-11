@@ -1,5 +1,6 @@
 package com.kr.lg.module.main.model.dto;
 
+import com.kr.lg.common.utils.CommonUtils;
 import com.kr.lg.db.entities.TrialTb;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,8 +25,8 @@ public class HotPostTrialDto implements MainPost {
 
     public HotPostTrialDto(TrialTb trialTb) {
         this.id = trialTb.getTrialId();
-        this.title = trialTb.getTitle();
-        this.content = trialTb.getContent();
+        this.title = CommonUtils.subString(trialTb.getTitle(), 15);
+        this.content = CommonUtils.subString(trialTb.getContent(), 30);
         this.playVideo = trialTb.getPlayVideo();
     }
 }

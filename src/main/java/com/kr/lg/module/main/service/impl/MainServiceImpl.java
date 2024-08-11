@@ -17,6 +17,7 @@ import com.kr.lg.module.main.service.MainService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -36,6 +37,7 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
+    @Transactional
     public List<MainPost> getMainPostTrials() {
         log.info("▶ [메인 페에지] getMainPostTrials 메소드 실행");
 
