@@ -29,7 +29,7 @@ import java.sql.Timestamp;
         }
 )
 @Getter
-@ToString(exclude = {"tierId", "lawFirmId"})
+@ToString(exclude = {"tierTb", "lawFirmTb"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

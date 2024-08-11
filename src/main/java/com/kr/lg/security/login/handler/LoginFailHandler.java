@@ -68,11 +68,11 @@ public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
         } else if (code == AuthResultCode.UN_MATCHED_PASSWORD) {
             message = "비밀번호를 다시 확인해주세요.";
         } else if (code == AuthResultCode.LOCK_LOGIN_ID) {
-            message = "정지된 계정입니다.\n계정 확인을 위해서는 관리자에게 문의해주세요.";
+            message = "정지된 계정입니다. 계정 확인을 위해서는 관리자에게 문의해주세요.";
         } else if (code == AuthResultCode.DELETE_LOGIN_ID) {
             message = "삭제된 계정입니다.";
         } else {
-            message = "로그인에 실패하였습니다.\n잠시 후 진행해주세요.";
+            message = "로그인에 실패하였습니다. 잠시 후 진행해주세요.";
         }
         return URLEncoder.encode(message, "UTF-8");
     }

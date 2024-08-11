@@ -103,7 +103,7 @@
                             <em><img th:src="${position.profile}" width="100%" height="100%" alt="" title="" /></em>
                         </th:block>
 
-                        <a th:href="@{/board}">[[${position.title}]]</a>
+                        <a th:href="@{/position/{boardId}(boardId=${position.boardId})}">[[${position.title}]]</a>
                         <i class="uil uil-comment-lines"></i> <span>([[${position.commentCount}]])</span>
                         <th:block th:if="${position.isWithinLastHour}">
                             <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />

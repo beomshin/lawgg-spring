@@ -57,7 +57,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
             throw new UsernameNotFoundException("삭제 아이디", new SecurityException(AuthResultCode.DELETE_LOGIN_ID));
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
     @Override

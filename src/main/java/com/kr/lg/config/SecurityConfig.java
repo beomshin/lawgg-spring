@@ -11,6 +11,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -70,6 +71,10 @@ public class SecurityConfig {
 
         http.cors().configurationSource(corsConfigurationSource);
 
+        http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+
         http.formLogin()
                         .loginPage("/login")
                         .loginProcessingUrl("/login/process")
@@ -86,7 +91,7 @@ public class SecurityConfig {
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .invalidateHttpSession(true)
+//                .invalidateHttpSession(true)
                 .logoutSuccessUrl("/") // 로그아웃 성공 핸들러
                 .deleteCookies("JSESSIONID", "remember-me");     // 로그아웃 후 쿠키 삭제
 
