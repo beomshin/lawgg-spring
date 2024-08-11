@@ -433,7 +433,8 @@ public class BoardServiceImpl implements BoardService {
      */
     private Sort getSort(int topic) {
         if (BoardTopic.HOT_TOPIC == BoardTopic.of(topic)) {
-            return BoardSort.notificationSortWithDesc().and(BoardSort.dateWithDesc()).and(BoardSort.hotDesc());
+//            return BoardSort.notificationSortWithDesc().and(BoardSort.dateWithDesc()).and(BoardSort.hotDesc()); // 현재는 게시글이 없기에 날짜 기준 제거
+            return BoardSort.notificationSortWithDesc().and(BoardSort.hotDesc()).and(BoardSort.dateTimeWithDesc());
         } else {
             return BoardSort.notificationSortWithDesc().and(BoardSort.dateTimeWithDesc());
         }

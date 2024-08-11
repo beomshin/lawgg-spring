@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "포지션 게시판 조회 Body")
 public class FindBoardRequest {
 
@@ -36,4 +35,11 @@ public class FindBoardRequest {
     @ApiModelProperty(value = "키워드")
     private String keyword;
 
+    public FindBoardRequest() {
+        this.page = 0;
+        this.type = 0;
+        this.pageNum = 30;
+        this.topic = 1;
+        this.subject = 1;
+    }
 }

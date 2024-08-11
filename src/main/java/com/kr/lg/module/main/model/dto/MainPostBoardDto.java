@@ -44,18 +44,7 @@ public class MainPostBoardDto implements MainPost {
         this.view = mainBoardTb.getView();
         this.recommendCount = mainBoardTb.getRecommendCount();
         this.lineType = mainBoardTb.getLineType().getCode();
-        this.tag = getTag(this.lineType);
-    }
-    
-    private String getTag(int type) {
-        switch (type) {
-            case 0: return "탑";
-            case 1: return "정글";
-            case 2: return "미드";
-            case 3: return "원딜";
-            case 4: return "서폿";
-        }
-        return "기타";
+        this.tag = CommonUtils.getLineTag(this.lineType);
     }
 
 

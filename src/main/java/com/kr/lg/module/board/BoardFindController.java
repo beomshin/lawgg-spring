@@ -22,35 +22,42 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class BoardFindController {
 
     private final BoardService boardService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @ApiOperation(value = "포지션 게시판 조회", notes = "포지션 게시판을 조회합니다.")
-    @GetMapping("/api/public/v1/find/boards")
-    public ResponseEntity<?> findBoards(@Valid FindBoardRequest request) throws BoardException {
-        Page<BoardEntry> boards = boardService.findBoards(request);
+    @ApiOperation(value = "포지션 게시판 페이지 호출", notes = "포지션 게시판 페이지를 호출합니다.")
 
-        AbstractSpec spec = FindBoardsResponse.builder()
-                .list(boards.getContent())
-                .totalElements(boards.getTotalElements())
-                .totalPage(boards.getTotalPages())
-                .curPage(boards.getNumber())
-                .build();
+    @GetMapping("/positions")
+    public ModelAndView positions(
+            @Valid @ModelAttribute FindBoardRequest request, ModelAndView modelAndView
+    ) throws BoardException {
+        Page<BoardEntry> positions = boardService.findBoards(request);
+        positions.getContent().forEach(BoardEntry::additionalContent); // 필요 정보 재세팅
 
-        return ResponseEntity.ok().body(spec);
+        modelAndView.addObject("positions", positions);
+        modelAndView.addObject("query", request);
+        modelAndView.addObject("maxPage", 10);
+
+        modelAndView.setViewName("view/position/list");
+        return modelAndView;
     }
+
 
     @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
     @GetMapping("/api/v1/find/my/boards")
