@@ -8,13 +8,13 @@ import org.springframework.data.domain.Page;
 
 public interface BoardService {
 
-    Page<BoardEntry> findBoards(FindBoardRequest request) throws BoardException;
+    Page<BoardEntry> findBoards(FindPositionRequest request) throws BoardException;
     Page<BoardEntry> findMyBoards(FindMyBoardRequest request, UserTb userTb) throws BoardException;
     Page<BoardEntry> findLawFirmBoards(FindLawFirmBoardRequest request) throws BoardException;
     BoardEntry findBoardWithNotLogin(long boardId) throws BoardException;
     BoardEntry findBoardWithLogin(long boardId, UserTb userTb) throws BoardException;
-    void enrollBoardWithNotLogin(EnrollBoardWithNotLoginRequest request, String ip) throws BoardException;
-    void enrollBoardWithLogin(EnrollBoardWithLoginRequest request, String ip, UserTb userTb) throws BoardException;
+    void enrollBoardWithNotLogin(EnrollPositionRequest request, String ip) throws BoardException;
+    void enrollBoardWithLogin(EnrollPositionRequest request, String ip, UserTb userTb) throws BoardException;
     void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException;
     void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException;
     void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException;

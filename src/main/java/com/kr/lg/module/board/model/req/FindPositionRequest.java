@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @ApiModel(value = "포지션 게시판 조회 Body")
-public class FindBoardRequest {
+public class FindPositionRequest {
 
     @ApiModelProperty(value = "페이지", required = true)
     @NotNull(message = "페이지가 입력되어있지않습니다.")
@@ -35,7 +35,7 @@ public class FindBoardRequest {
     @ApiModelProperty(value = "키워드")
     private String keyword;
 
-    public FindBoardRequest() {
+    public FindPositionRequest() {
         this.page = 0;
         this.type = 0;
         this.pageNum = 30;

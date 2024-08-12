@@ -70,7 +70,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
-    public Page<BoardEntry> findBoards(FindBoardRequest request) throws BoardException {
+    public Page<BoardEntry> findBoards(FindPositionRequest request) throws BoardException {
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
         MapperParam param = FindBoardsParamData.builder()
                 .type(request.getType())
@@ -161,7 +161,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void enrollBoardWithNotLogin(EnrollBoardWithNotLoginRequest request, String ip) throws BoardException {
+    public void enrollBoardWithNotLogin(EnrollPositionRequest request, String ip) throws BoardException {
         boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
 
         BoardEnrollDto board = BoardEnrollDto.builder()
@@ -191,14 +191,13 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void enrollBoardWithLogin(EnrollBoardWithLoginRequest request, String ip, UserTb userTb) throws BoardException {
+    public void enrollBoardWithLogin(EnrollPositionRequest request, String ip, UserTb userTb) throws BoardException {
         if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
-        boolean isEnrollLawFirm = request.getIsLawFirm() != null && request.getIsLawFirm() == 1;
         boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
 
         BoardEnrollDto board = BoardEnrollDto.builder()
                 .userTb(userTb)
-                .lawFirmTb(isEnrollLawFirm ? userTb.getLawFirmTb() : null)
+                .lawFirmTb(userTb.getLawFirmTb())
                 .postType(isEnrollFile ? PostType.IMAGE_TYPE : PostType.NORMAL_TYPE)
                 .title(request.getTitle())
                 .content(request.getContent())

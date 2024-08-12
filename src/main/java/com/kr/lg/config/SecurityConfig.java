@@ -73,7 +73,9 @@ public class SecurityConfig {
 
         http
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionFixation().newSession()
+                .maximumSessions(1);
 
         http.formLogin()
                         .loginPage("/login")

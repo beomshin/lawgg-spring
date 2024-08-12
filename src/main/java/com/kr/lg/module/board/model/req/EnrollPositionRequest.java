@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "비로그인 포지션 게시판 등록 요청 Body")
-public class EnrollBoardWithNotLoginRequest {
+public class EnrollPositionRequest {
 
     @ApiModelProperty(value = "아이디;", required = true)
     @NotBlank(message = "아이디 값이 입력되어있지않습니다.")
