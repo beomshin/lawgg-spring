@@ -21,6 +21,7 @@ import java.util.List;
 public class BoardEntry {
 
     private long boardId; // board 식별자
+    private Long userId; // 유저 식별자
     private long boardCommentId; // root comment 식별자
     private int postType; // 게시글 타입
     private String title; // 제목

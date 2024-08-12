@@ -42,15 +42,17 @@
                         <button class="btn-default-s bg-black"><i class="uit uit-megaphone"></i> 신고하기</button>
                     </dd>
                 </dl>
-                <div class="bv-content">
-                    [[${position.content}]]
+                <div class="bv-content" >
+                    <pre th:utext="${position.content}" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
                 </div>
                 <dl class="bv-btn">
-                    <dt>
-                        <a  class="btn-default-m bg-black">수정</a>
-                        &nbsp;
-                        <a  class="btn-default-m bg-black">삭제</a>
-                    </dt>
+                    <th:block th:if="${position.userId + '' == #authentication.name}">
+                        <dt>
+                            <a  class="btn-default-m bg-black">수정</a>
+                            &nbsp;
+                            <a  class="btn-default-m bg-black">삭제</a>
+                        </dt>
+                    </th:block>
                     <dd>
                         <a th:href="@{/positions}" class="btn-default-m bg-black">목록으로</a>
                     </dd>

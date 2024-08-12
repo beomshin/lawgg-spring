@@ -111,7 +111,7 @@
     <!-- 포지션 게시판 상세 조회 쿼리 -->
     <select id="findBoard" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.board.model.entry.BoardEntry">
         SELECT bt.boardId, bt.postType, bt.title, bt.writer, bt.writeDt, bt.view, bt.recommendCount, bt.commentCount, bt.writerType, bt.lineType, bt.status, bt.content, ut.profile,
-        (SELECT boardCommentId FROM BoardCommentTb bct WHERE bct.boardId = bt.boardId AND depth = '0') AS 'boardCommentId'
+        (SELECT boardCommentId FROM BoardCommentTb bct WHERE bct.boardId = bt.boardId AND depth = '0') AS 'boardCommentId', bt.userId
         <!-- 작성자 플래그 -->
         <if test="userId != null">
             , IF(bt.userId IS NOT NULL AND bt.userId = #{userId}, 1, 0) as 'created'

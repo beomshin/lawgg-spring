@@ -75,7 +75,8 @@
                     </p>
                     <div class="swiper-area swiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" th:each="board:${boards}" th:data-linetype="${board.lineType}">
+                            <div class="swiper-slide" th:each="board:${boards}" th:data-linetype="${board.lineType}"
+                                 th:onclick="|window.location.href='@{/position/{boardId}(boardId=${board.id})}'|" >
                                 <p><span th:text="${board.tag}"></span></p>
                                 <h2 th:text="${board.title}"></h2>
                                 <div th:text="${board.content}"></div>

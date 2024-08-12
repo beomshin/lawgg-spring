@@ -5,6 +5,7 @@ $(document).ready(function () {
         document.getElementById('searchForm').submit();
     });
 
+
     document.querySelectorAll('.sub-menu a').forEach((e, i) => {
         e.addEventListener('click', function () { // 라인 타입 변경 (탑, 정글, 미드, 원딜, 서폿)
 
