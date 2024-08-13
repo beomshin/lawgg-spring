@@ -16,10 +16,9 @@ public class DeleteBoardWithNotLoginRequest {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 누락 되었습니다.")
-    private Long id;
+    private Long boardId;
 
     @ApiModelProperty(value = "게시판 비밀번호", required = true)
-    @NotNull(message = "게시판 비밀번호가 누락 되었습니다.")
     private String password;
 
 }

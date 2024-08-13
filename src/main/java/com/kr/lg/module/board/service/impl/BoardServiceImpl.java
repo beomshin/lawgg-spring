@@ -311,8 +311,8 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterType.ANONYMOUS_TYPE, BoardStatus.NORMAL_STATUS);
-        if (boardTb.isPresent()) {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getBoardId(), WriterType.ANONYMOUS_TYPE, BoardStatus.NORMAL_STATUS);
+        if (boardTb.isPresent() && boardTb.get().getWriterType() == WriterType.ANONYMOUS_TYPE) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
             boardDeleteService.deleteBoard(boardTb.get().getBoardId());
         } else {
@@ -329,9 +329,9 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional
-    public void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getId(), WriterType.MEMBER_TYPE, BoardStatus.NORMAL_STATUS);
-        if (boardTb.isPresent()) {
+    public void deleteBoardWithLogin(DeleteBoardWithNotLoginRequest request, UserTb userTb) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getBoardId(), WriterType.MEMBER_TYPE, BoardStatus.NORMAL_STATUS);
+        if (boardTb.isPresent() && boardTb.get().getWriterType() == WriterType.MEMBER_TYPE) {
             boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostType.BEST_TYPE) || boardTb.get().getPostType().equals(PostType.RECOMMEND); // 베스트 or 추천 게시판 플래그
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER); // 작성자 체크
             else if (isBestOrRecommendBoard && !encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD); // 베스트 or 추천 게시판은 패스워드 검증

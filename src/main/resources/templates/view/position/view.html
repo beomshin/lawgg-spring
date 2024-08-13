@@ -50,7 +50,10 @@
                         <dt>
 <!--                            <a  class="btn-default-m bg-black">수정</a>-->
                             &nbsp;
-                            <a  class="btn-default-m bg-black">삭제</a>
+                            <form name="deleteComment" method="post" th:action="@{/position/delete}">
+                                <input name="boardId" type="hidden" th:value="${position.boardId}">
+                                <button type="submit" class="btn-default-m bg-black">삭제</button>
+                            </form>
                         </dt>
                     </th:block>
                     <dd>

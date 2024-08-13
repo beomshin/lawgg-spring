@@ -19,7 +19,7 @@ public interface BoardService {
     void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException;
     void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException;
     void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException;
-    void deleteBoardWithLogin(DeleteBoardWithLoginRequest request, UserTb userTb) throws BoardException;
+    void deleteBoardWithLogin(DeleteBoardWithNotLoginRequest request, UserTb userTb) throws BoardException;
     void reportBoard(ReportBoardRequest request, String ip) throws BoardException;
     void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException;
     void deleteRecommendBoard(DeleteRecommendBoardRequest request, UserTb userTb) throws BoardException;

@@ -78,7 +78,6 @@ public class BoardFindController {
             @RequestParam(value = "type", required = false, defaultValue = "0") int type,
             ModelAndView modelAndView
     ) {
-
         modelAndView.addObject("type", type);
         modelAndView.setViewName("view/position/write");
         return modelAndView;
