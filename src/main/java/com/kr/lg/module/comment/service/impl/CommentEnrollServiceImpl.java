@@ -39,7 +39,6 @@ public class CommentEnrollServiceImpl implements CommentEnrollService {
                     .password(StringUtils.isBlank(commentEnrollDto.getPassword()) ? null : encoder.encode(commentEnrollDto.getPassword()))
                     .writer(commentEnrollDto.getWriter())
                     .content(commentEnrollDto.getContent())
-                    .emoticon(commentEnrollDto.getEmoticon())
                     .ip(commentEnrollDto.getIp())
                     .build();
             boardCommentRepository.save(boardCommentTb);
@@ -63,7 +62,6 @@ public class CommentEnrollServiceImpl implements CommentEnrollService {
                     .password(StringUtils.isBlank(commentEnrollDto.getPassword()) ? null : encoder.encode(commentEnrollDto.getPassword()))
                     .writer(commentEnrollDto.getWriter())
                     .content(commentEnrollDto.getContent())
-                    .emoticon(commentEnrollDto.getEmoticon())
                     .ip(commentEnrollDto.getIp())
                     .build();
             trialCommentRepository.save(boardCommentTb);

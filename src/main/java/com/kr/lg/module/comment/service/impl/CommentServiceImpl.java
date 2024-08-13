@@ -2,6 +2,7 @@ package com.kr.lg.module.comment.service.impl;
 
 import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
 import com.kr.lg.common.enums.entity.status.CommentStatus;
+import com.kr.lg.common.enums.entity.type.WriterType;
 import com.kr.lg.db.entities.*;
 import com.kr.lg.db.repositories.BoardCommentRepository;
 import com.kr.lg.db.repositories.TrialCommentRepository;
@@ -21,8 +22,7 @@ import com.kr.lg.module.comment.model.req.UpdateBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.comment.model.req.UpdateBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentResultCode;
 import com.kr.lg.module.comment.model.dto.*;
-import com.kr.lg.module.comment.model.req.EnrollBoardCommentNotWithLoginRequest;
-import com.kr.lg.module.comment.model.req.EnrollBoardCommentWithLoginRequest;
+import com.kr.lg.module.comment.model.req.EnrollPositionCommentRequest;
 import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentDeleteService;
 import com.kr.lg.module.comment.service.CommentEnrollService;
@@ -46,26 +46,30 @@ public class CommentServiceImpl implements CommentService {
     private final CommentUpdateService commentUpdateService;
     private final CommentDeleteService commentDeleteService;
     private final ApplicationEventPublisher applicationEventPublisher;
-    private final BoardCommentRepository boardCommentRepository;;
+
+    private final BoardCommentRepository boardCommentRepository;
     private final TrialCommentRepository trialCommentRepository;
 
     private final BCryptPasswordEncoder encoder;
 
     @Override
     @Transactional
-    public void enrollBoardCommentNotWithLogin(EnrollBoardCommentNotWithLoginRequest request, String ip) throws CommentException {
+    public void enrollBoardCommentNotWithLogin(EnrollPositionCommentRequest request, String ip) throws CommentException {
+        Optional<BoardCommentTb> commentTb = boardCommentRepository.findByBoardTb_BoardIdAndDepth(request.getBoardId(), CommentDepthLevel.ROOT_COMMENT);
+        if (! commentTb.isPresent()) {
+            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD);
+        }
+
         CommentEnrollDto enrollDto = CommentEnrollDto.builder()
-                .id(request.getId())
-                .boardTb(BoardTb.builder().boardId(request.getId()).build())
-                .parentId(request.getParentId())
+                .id(request.getBoardId())
+                .boardTb(commentTb.get().getBoardTb())
+                .parentId(commentTb.get().getBoardCommentId())
                 .loginId(request.getLoginId())
                 .password(request.getPassword())
                 .writer(request.getLoginId())
                 .content(request.getContent())
                 .depth(CommentDepthLevel.of(request.getDepth()))
-                .emoticon(request.getEmoticon())
                 .ip(ip)
-                .boardCommentId(request.getBoardCommentId())
                 .build();
         commentEnrollService.enrollBoardComment(enrollDto); // 댓글 등록
         applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(enrollDto.getId(), 1)); // 게시판 댓글 수 증가
@@ -77,19 +81,22 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void enrollBoardCommentWithLogin(EnrollBoardCommentWithLoginRequest request, UserTb userTb, String ip) throws CommentException {
+    public void enrollBoardCommentWithLogin(EnrollPositionCommentRequest request, UserTb userTb, String ip) throws CommentException {
+        Optional<BoardCommentTb> commentTb = boardCommentRepository.findByBoardTb_BoardIdAndDepth(request.getBoardId(), CommentDepthLevel.ROOT_COMMENT);
+        if (! commentTb.isPresent()) {
+            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD);
+        }
+
         CommentEnrollDto enrollDto = CommentEnrollDto.builder()
-                .id(request.getId())
-                .boardTb(BoardTb.builder().boardId(request.getId()).build())
-                .parentId(request.getParentId())
+                .id(request.getBoardId())
+                .boardTb(commentTb.get().getBoardTb())
+                .parentId(commentTb.get().getBoardCommentId())
                 .loginId(userTb.getLoginId())
                 .writer(userTb.getNickName())
                 .content(request.getContent())
                 .depth(CommentDepthLevel.of(request.getDepth()))
                 .userTb(userTb)
-                .emoticon(request.getEmoticon())
                 .ip(ip)
-                .boardCommentId(request.getBoardCommentId())
                 .build();
         commentEnrollService.enrollBoardComment(enrollDto); // 댓글 등록
         applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(userTb, 1)); // 유저 댓글 개수 증가
@@ -143,11 +150,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteBoardCommentNotWithLogin(DeleteBoardCommentNotWithLoginRequest request) throws CommentException {
-        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
-        if (boardCommentTb.isPresent()) {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findByBoardCommentId(request.getCommentId());
+        if (boardCommentTb.isPresent() && boardCommentTb.get().getBoardTb().getWriterType() == WriterType.ANONYMOUS_TYPE) {
             if (boardCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
             else if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
-            commentDeleteService.deleteBoardComment(request.getId());
+            commentDeleteService.deleteBoardComment(request.getCommentId());
             applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(boardCommentTb.get().getBoardTb().getBoardId(), -1));
 
         } else {
@@ -157,12 +164,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void deleteBoardCommentWithLogin(DeleteBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
-        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
-        if (boardCommentTb.isPresent()) {
+    public void deleteBoardCommentWithLogin(DeleteBoardCommentNotWithLoginRequest request, UserTb userTb) throws CommentException {
+        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findByBoardCommentId(request.getCommentId());
+        if (boardCommentTb.isPresent() && boardCommentTb.get().getBoardTb().getWriterType() == WriterType.MEMBER_TYPE) {
             if (boardCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
             else if (!userTb.getUserId().equals(boardCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);
-            commentDeleteService.deleteBoardComment(request.getId());
+            commentDeleteService.deleteBoardComment(request.getCommentId());
             applicationEventPublisher.publishEvent(new BoardCommentCreateCountEvent(boardCommentTb.get().getBoardTb().getBoardId(), -1));
             applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(userTb, -1)); // 댓글 개수 감소
         } else {
