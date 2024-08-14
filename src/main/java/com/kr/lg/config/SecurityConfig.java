@@ -93,7 +93,7 @@ public class SecurityConfig {
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .invalidateHttpSession(true)
+                .invalidateHttpSession(true)
                 .logoutSuccessUrl("/") // 로그아웃 성공 핸들러
                 .deleteCookies("JSESSIONID", "remember-me");     // 로그아웃 후 쿠키 삭제
 

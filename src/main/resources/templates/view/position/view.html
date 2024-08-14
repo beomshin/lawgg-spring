@@ -4,9 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout/default_layout" lang="en">
 
+
     <th:block layout:fragment="content">
         <div class="content">
-
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
 
             <!-- 타이틀 -->
             <dl class="title">
@@ -37,9 +39,9 @@
                         </div>
                     </dt>
                     <dd>
-                        <button class="btn-default-s bg-pink"><i class="uit uit-thumbs-up"></i> 추천하기</button>
+                        <button class="btn-default-s bg-pink" onclick="recommend()"><i class="uit uit-thumbs-up"></i> 추천하기</button>
                         &nbsp;
-                        <button class="btn-default-s bg-black"><i class="uit uit-megaphone"></i> 신고하기</button>
+                        <button class="btn-default-s bg-black" onclick="report()"><i class="uit uit-megaphone"></i> 신고하기</button>
                     </dd>
                 </dl>
                 <div class="bv-content" >
@@ -143,8 +145,11 @@
 <!--            </div>-->
             <!-- 페이지넘버링 끝 -->
 
+            <script th:inline="javascript">
+                const boardId = /*[[${position.boardId}]]*/ null;
+            </script>
 
-
+            <script th:inline="javascript" th:src="@{/static/js/position/view.js}"></script>
         </div>
     </th:block>
 

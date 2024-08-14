@@ -1,6 +1,8 @@
 package com.kr.lg.module.board;
 
 import com.kr.lg.common.utils.ClientUtils;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.board.model.req.DeleteRecommendBoardRequest;
 import com.kr.lg.module.board.model.req.RecommendBoardRequest;
 import com.kr.lg.module.board.model.req.ReportBoardRequest;
@@ -65,9 +67,11 @@ public class BoardUpdateController {
     @ApiOperation(value = "포지션 게시판 추천", notes = "포지션 게시판을 추천합니다.")
     public ResponseEntity<?> recommendBoard(
             @RequestBody @Valid RecommendBoardRequest request,
-            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+            @AuthUser UserTb userTb
+//            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws BoardException {
-        boardService.recommendBoard(request, userAdapter.getUserTb());
+        log.info("{}", userTb);
+        boardService.recommendBoard(request, userTb);
         return ResponseEntity.ok(new SuccessResponse());
     }
 
