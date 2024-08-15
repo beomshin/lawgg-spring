@@ -51,17 +51,16 @@
                     <pre th:utext="${position.content}" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
                 </div>
                 <dl class="bv-btn">
-
-                        <dt style="display: flex">
-                            <th:block th:if="${position.userId + '' == #authentication.name}">
-                            <a th:href="@{/position/modify/{boardId}(boardId=${position.boardId})}" class="btn-default-m bg-black">수정</a>
-                            &nbsp;
-                            <form name="deleteComment" method="post" th:action="@{/position/delete}">
-                                <input name="boardId" type="hidden" th:value="${position.boardId}">
-                                <button type="submit" class="btn-default-m bg-black">삭제</button>
-                            </form>
-                            </th:block>
-                        </dt>
+                    <dt style="display: flex">
+                        <th:block th:if="${position.userId + '' == #authentication.name}">
+                        <a th:href="@{/position/modify/{boardId}(boardId=${position.boardId})}" class="btn-default-m bg-black">수정</a>
+                        &nbsp;
+                        <form name="deleteComment" method="post" th:action="@{/position/delete}">
+                            <input name="boardId" type="hidden" th:value="${position.boardId}">
+                            <button type="submit" class="btn-default-m bg-black">삭제</button>
+                        </form>
+                        </th:block>
+                    </dt>
                     <dd>
                         <a th:href="@{/positions}" class="btn-default-m bg-black">목록으로</a>
                     </dd>
@@ -79,7 +78,7 @@
 
             <!-- 댓글 -->
             <div class="board-comment">
-                    <h2><i class="uil uil-comment-message"></i> 총 댓글 <span th:text="${position.comments.size()}"></span>개</h2>
+                <h2><i class="uil uil-comment-message"></i> 총 댓글 <span th:text="${position.comments.size()}"></span>개</h2>
                 <form name="addComment" method="post" th:action="@{/position/comment/enroll}">
                     <div sec:authorize="isAnonymous()">
                         <input type="text" name="loginId" title="" value="" placeholder="아이디를 입력하세요." class="input-box w200" />
@@ -122,13 +121,13 @@
                                 </dl>
                             </dt>
                             <dd>
-    <!--                                <a  class="btn-line-gray-s">수정</a> &nbsp;-->
+<!--                                <a  class="btn-line-gray-s">수정</a> &nbsp;-->
                                 <form name="deleteComment" method="post" th:action="@{/position/comment/delete}">
                                     <input name="boardId" type="hidden" th:value="${position.boardId}">
                                     <input name="commentId" type="hidden" th:value="${comment.boardCommentId}">
                                     <button th:if="${comment.created == 1}" class="btn-line-gray-s">삭제</button> &nbsp;
                                 </form>
-    <!--                                <a  class="btn-line-gray-s">신고</a>-->
+<!--                                <a  class="btn-line-gray-s">신고</a>-->
                             </dd>
                         </dl>
                     </li>

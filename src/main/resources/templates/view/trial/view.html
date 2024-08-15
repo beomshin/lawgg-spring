@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
         <div class="content">
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
 
 
             <!-- 타이틀 -->
@@ -24,41 +27,36 @@
             <div class="board-view">
                 <dl class="bv-header">
                     <dt>
-                        <h2>로우지지에서는 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</h2>
+                        <h2>[[${trial.title}]]</h2>
                         <div>
-                            <i class="uit uit-user"></i> 작성자 : 홍길동
+                            <i class="uit uit-user"></i> 작성자 : [[${trial.writer}]] <span th:if="${trial.writer == 0}">([[${trial.ip}]])</span>
                             &nbsp; · &nbsp;
-                            <i class="uit uit-clock"></i> 2023.01.10 10:00
+                            <i class="uit uit-clock"></i> [[${trial.writeDt}]]
                             &nbsp; · &nbsp;
-                            <i class="uit uit-eye"></i> 조회수 : 1,232
+                            <i class="uit uit-eye"></i> 조회수 : [[${trial.view}]]
                             &nbsp; · &nbsp;
-                            <i class="uit uit-heart-sign"></i> 추천 : 1,232
+                            <i class="uit uit-heart-sign"></i> 추천 : [[${trial.recommendCount}]]
                         </div>
                     </dt>
                     <dd>
-                        <button class="btn-default-s bg-pink"><i class="uit uit-thumbs-up"></i> 추천하기</button>
+                        <button sec:authorize="isAuthenticated()" class="btn-default-s bg-pink" onclick="recommend()"><i class="uit uit-thumbs-up"></i> 추천하기</button>
                         &nbsp;
-                        <button class="btn-default-s bg-black"><i class="uit uit-megaphone"></i> 신고하기</button>
+                        <button class="btn-default-s bg-black" onclick="report()"><i class="uit uit-megaphone"></i> 신고하기</button>
                     </dd>
                 </dl>
                 <div class="bv-movie">
-                    <iframe width="100%" height="640" src="https://www.youtube.com/embed/Fzk15ysxfuY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe width="100%" height="640" th:src="${trial.playVideo}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
                 <div class="bv-content">
-                    [스포츠조선 고재완 기자] SBS '미운 우리 새끼'에서는 김준호♥김지민의 달콤살벌 캠핑장 데이트와 더불어 본격적인 준호의 수난일지(?)가 펼쳐진다.
-                    <br /><br />
-                    지난 주, 꽁냥꽁냥 케미로 화제가 됐던 준호♥지민 커플의 캠핑장 데이트 현장에서 이번에는 김종민이 준비한 '러브 젠가' 덕분에 아찔하고 달콤한 상황이 벌어졌다. '사진첩 공개' 미션에 준호♥지민의 세상 달달한 데이트 사진이 모두에게 공개되는가하면, 준호가 최초로 지민의 어머니와 통화하는 상황까지 펼쳐져 긴장감을 불러일으켰다. 특히 어색한 기류 속에서 이어진 준호의 무리수(?) 멘트에 스튜디오에서는 탄식이 이어졌는데, 과연 준호가 뭐라고 했을지 궁금증을 자아낸다.
-                    <br /><br />
-                    지난 주, 꽁냥꽁냥 케미로 화제가 됐던 준호♥지민 커플의 캠핑장 데이트 현장에서 이번에는 김종민이 준비한 '러브 젠가' 덕분에 아찔하고 달콤한 상황이 벌어졌다. '사진첩 공개' 미션에 준호♥지민의 세상 달달한 데이트 사진이 모두에게 공개되는가하면, 준호가 최초로 지민의 어머니와 통화하는 상황까지 펼쳐져 긴장감을 불러일으켰다. 특히 어색한 기류 속에서 이어진 준호의 무리수(?) 멘트에 스튜디오에서는 탄식이 이어졌는데, 과연 준호가 뭐라고 했을지 궁금증을 자아낸다.
-                    <br /><br />
-                    한편, 지난주 살벌한 진실공방을 펼쳤던 '미우새' 인사 청문회 2탄도 공개된다. 이번에는 이상민에 이어 '前 반장' 김준호의 자질 평가를 위한 혹독한 폭로전이 시작됐다. 회비 횡령(?) 의혹부터 부정선거 전적, 내부 분열 조장까지 그동안 있었던 그의 만행(?) 이 낱낱이 밝혀져 현장이 발칵 뒤집혔다. 곳곳에서 쏟아지는 맹공격에 준호는 "기억이 안 난다"며 모르쇠 태도로 일관해 폭소를 자아냈다.
-                    <br /><br />
-                    특히, 준호는 '미우새'를 지키기 위해 "김지민과 결혼하지 않겠다" 며 윗선의 불법 청탁까지 했던 사실이 밝혀져 청문회장은 물론 스튜디오가 아수라장이 됐다. 뿐만 아니라, 이날 청문회 자리에 누구도 예상치 못한 준호의 최측근이 증인으로 등장해 충격 발언을 이어갔다고 전해져 준호를 극대노하게 만든 증인의 정체가 누구일지 궁금증을 불러일으킨다.
+                    <th:block th:if="${trial.files != null && trial.files.size() > 0}">
+                        <img th:src="${file.path}" th:each="file:${trial.files}" style="max-width: 100%; height: auto"  />
+                    </th:block>
+                    <pre th:utext="${trial.content}" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
                 </div>
                 <div class="bv-lawer">
-                    <div><span>원고 :</span> 홍길동</div>
-                    <div><span>피고 :</span> 고길동</div>
-                    <div><span>판사 :</span> 김길동</div>
+                    <div><span>원고 :</span> [[${trial.plaintiff}]]</div>
+                    <div><span>피고 :</span> [[${trial.defendant}]]</div>
+<!--                    <div><span>판사 :</span> 김길동</div>-->
                 </div>
                 <div class="bv-poll">
                     <h2>누구의 판단이 맞는가?</h2>
@@ -67,28 +65,33 @@
                             <div>
                                 <span style="width:30%; background:#EC0745;"></span>
                             </div>
-                            <h2>한명이라도 살리게 적 정글한테 가는게 맞았다.</h2>
-                            <p><button class="btn-default-m bg-dark w100">A 투표</button></p>
+                            <h2>[[${trial.plaintiffOpinion}]]</h2>
+                            <p><button class="btn-default-m bg-dark w100">원고 투표</button></p>
                         </dt>
                         <dd>
                             <div>
                                 <span style="width:60%; background:#4F8EF8;"></span>
                             </div>
-                            <h2>그냥 아무것도 안하고 빼는게 맞았다.</h2>
-                            <p><button class="btn-default-m bg-dark w100">B 투표</button></p>
+                            <h2>[[${trial.defendantOpinion}]]</h2>
+                            <p><button class="btn-default-m bg-dark w100">피고 투표</button></p>
                         </dd>
                     </dl>
                     <div>
-                        <button class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
+                        <button sec:authorize="isAuthenticated()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
                         &nbsp;
                         <button class="btn-line-gray-m w170"><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
                     </div>
                 </div>
-                <dl class="bv-btn">
-                    <dt>
-                        <a  class="btn-default-m bg-black">수정</a>
-                        &nbsp;
-                        <a  class="btn-default-m bg-black">삭제</a>
+                <dl class="bv-btn" >
+                    <dt style="display: flex">
+                        <th:block th:if="${trial.userId + '' == #authentication.name}">
+                            <a th:href="@{/trial/modify/{trial}(trial=${trial.trialId})}" class="btn-default-m bg-black">수정</a>
+                            &nbsp;
+                            <form name="deleteComment" method="post" th:action="@{/trial/delete}">
+                                <input name="trialId" type="hidden" th:value="${trial.trialId}">
+                                <button type="submit" class="btn-default-m bg-black">삭제</button>
+                            </form>
+                        </th:block>
                     </dt>
                     <dd>
                         <a th:href="@{/trials}" class="btn-default-m bg-black">목록으로</a>
@@ -107,138 +110,56 @@
 
             <!-- 댓글 -->
             <div class="board-comment">
-                <h2><i class="uil uil-comment-message"></i> 총 댓글 <span>17</span>개</h2>
-                <form>
-                    <div>
-                        <input type="text" name="" title="" value="" placeholder="아이디를 입력하세요." class="input-box w200" />
+                <h2><i class="uil uil-comment-message"></i> 총 댓글 <span th:text="${trial.comments.size()}"></span>개</h2>
+                <form name="addComment" method="post" th:action="@{/trial/comment/enroll}">
+                    <div sec:authorize="isAnonymous()">
+                        <input type="text" name="loginId" title="" value="" placeholder="아이디를 입력하세요." class="input-box w200" />
                         &nbsp;
-                        <input type="password" name="" title="" value="" placeholder="비밀번호를 입력하세요." class="input-box w200" />
+                        <input type="password" name="password" title="" value="" placeholder="비밀번호를 입력하세요." class="input-box w200" />
                     </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <input name="loginId" type="hidden" class="input-box w100p" value="oauth" />
+                        <input name="password" type="hidden" class="input-box w100p" value="******" />
+                    </div>
+                    <input name="boardId" type="hidden" th:value="${trial.trialId}">
+                    <input name="depth" type="hidden" value="1">
                     <dl>
                         <dt>
-                            <textarea cols="" rows="" class="w100p h100"></textarea>
+                            <textarea name="content" cols="" rows="" class="w100p h100" wrap="hard"></textarea>
                         </dt>
                         <dd><button >댓글등록</button></dd>
                     </dl>
                 </form>
                 <ul>
-                    <li>
+                    <li th:each="comment:${trial.comments}" th:classappend="${comment.depth == 2} ? 'bc-cmt' : ''">
                         <dl>
                             <dt>
                                 <dl>
-                                    <dt><span class="bg-green">한</span></dt>
+                                    <th:block th:if="${comment.profile != null}">
+                                        <dt><span><img th:src="${comment.profile}" width="100%" alt="" title="" /></span></dt>
+                                    </th:block>
+                                    <th:block th:if="${comment.profile} == null">
+                                        <dt><span class="bg-green" th:text="${comment.writer.substring(0, 1)}"></span></dt>
+                                    </th:block>
                                     <dd>
-                                        <h2>햇병아리 Evnalro</h2>
+                                        <h2>[[${comment.writer}]]</h2>
                                         <div>
-                                            너무 좋은 내용이네요! 잘 읽었습니다.~
-                                            제 로우지지에 오시면 감사하겠습니다.~~^^ 감사하겠습니다.~~^^
+                                            [[${comment.content}]]
                                         </div>
                                         <p>
-                                            <i class="uit uit-clock"></i> 2021.10.19 15:00:00
+                                            <i class="uit uit-clock"></i> [[${comment.regDt}]]
                                         </p>
                                     </dd>
                                 </dl>
                             </dt>
                             <dd>
-                                <a  class="btn-line-gray-s">수정</a> &nbsp;
-                                <a  class="btn-line-gray-s">삭제</a> &nbsp;
-                                <a  class="btn-line-gray-s">신고</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li class="bc-cmt">
-                        <dl>
-                            <dt>
-                                <dl>
-                                    <dt><span><img src="https://i.pinimg.com/564x/b0/2e/50/b02e506b0a3e5f11fada6dd24c179132.jpg" width="100%" alt="" title="" /></span></dt>
-                                    <dd>
-                                        <h2>햇병아리 Evnalro</h2>
-                                        <div>
-                                            너무 좋은 내용이네요! 잘 읽었습니다.~
-                                            제 로우지지에 오시면 감사하겠습니다.~~^^ 감사하겠습니다.~~^^
-                                        </div>
-                                        <p>
-                                            <i class="uit uit-clock"></i> 2021.10.19 15:00:00
-                                        </p>
-                                    </dd>
-                                </dl>
-                            </dt>
-                            <dd>
-                                <a  class="btn-line-gray-s">수정</a> &nbsp;
-                                <a  class="btn-line-gray-s">삭제</a> &nbsp;
-                                <a  class="btn-line-gray-s">신고</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li class="bc-cmt">
-                        <dl>
-                            <dt>
-                                <dl>
-                                    <dt><span><img src="https://i.pinimg.com/564x/91/aa/d1/91aad1d2b2065286a60fd7ad7e31878c.jpg" width="100%" alt="" title="" /></span></dt>
-                                    <dd>
-                                        <h2>햇병아리 Evnalro</h2>
-                                        <div>
-                                            너무 좋은 내용이네요! 잘 읽었습니다.~
-                                            제 로우지지에 오시면 감사하겠습니다.~~^^ 감사하겠습니다.~~^^
-                                        </div>
-                                        <p>
-                                            <i class="uit uit-clock"></i> 2021.10.19 15:00:00
-                                        </p>
-                                    </dd>
-                                </dl>
-                            </dt>
-                            <dd>
-                                <a  class="btn-line-gray-s">수정</a> &nbsp;
-                                <a  class="btn-line-gray-s">삭제</a> &nbsp;
-                                <a  class="btn-line-gray-s">신고</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>
-                                <dl>
-                                    <dt><span><img src="https://i.pinimg.com/564x/6f/15/91/6f1591450f3e75ce481c2e15d95adfce.jpg" width="100%" alt="" title="" /></span></dt>
-                                    <dd>
-                                        <h2>햇병아리 Evnalro</h2>
-                                        <div>
-                                            너무 좋은 내용이네요! 잘 읽었습니다.~
-                                            제 로우지지에 오시면 감사하겠습니다.~~^^ 감사하겠습니다.~~^^
-                                        </div>
-                                        <p>
-                                            <i class="uit uit-clock"></i> 2021.10.19 15:00:00
-                                        </p>
-                                    </dd>
-                                </dl>
-                            </dt>
-                            <dd>
-                                <a  class="btn-line-gray-s">수정</a> &nbsp;
-                                <a  class="btn-line-gray-s">삭제</a> &nbsp;
-                                <a  class="btn-line-gray-s">신고</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>
-                                <dl>
-                                    <dt><span><img src="https://i.pinimg.com/564x/6f/15/91/6f1591450f3e75ce481c2e15d95adfce.jpg" width="100%" alt="" title="" /></span></dt>
-                                    <dd>
-                                        <h2>햇병아리 Evnalro</h2>
-                                        <div>
-                                            너무 좋은 내용이네요! 잘 읽었습니다.~
-                                            제 로우지지에 오시면 감사하겠습니다.~~^^ 감사하겠습니다.~~^^
-                                        </div>
-                                        <p>
-                                            <i class="uit uit-clock"></i> 2021.10.19 15:00:00
-                                        </p>
-                                    </dd>
-                                </dl>
-                            </dt>
-                            <dd>
-                                <a  class="btn-line-gray-s">수정</a> &nbsp;
-                                <a  class="btn-line-gray-s">삭제</a> &nbsp;
-                                <a  class="btn-line-gray-s">신고</a>
+<!--                                <a  class="btn-line-gray-s">수정</a> &nbsp;-->
+                                <form name="deleteComment" method="post" th:action="@{/trial/comment/delete}">
+                                    <input name="boardId" type="hidden" th:value="${trial.trialId}">
+                                    <input name="commentId" type="hidden" th:value="${comment.trialCommentId}">
+                                    <button th:if="${comment.created == 1}" class="btn-line-gray-s">삭제</button> &nbsp;
+                                </form>
+<!--                                <a  class="btn-line-gray-s">신고</a>-->
                             </dd>
                         </dl>
                     </li>
@@ -248,18 +169,22 @@
 
 
             <!-- 페이지넘버링 -->
-            <div class="paging-list">
-                <a ><i class="uil uil-angle-left-b"></i></a>
-                <a >1</a>
-                <a  class="active">2</a>
-                <a >3</a>
-                <a >4</a>
-                <a >5</a>
-                <a ><i class="uil uil-angle-right-b"></i></a>
-            </div>
+<!--            <div class="paging-list">-->
+<!--                <a ><i class="uil uil-angle-left-b"></i></a>-->
+<!--                <a >1</a>-->
+<!--                <a  class="active">2</a>-->
+<!--                <a >3</a>-->
+<!--                <a >4</a>-->
+<!--                <a >5</a>-->
+<!--                <a ><i class="uil uil-angle-right-b"></i></a>-->
+<!--            </div>-->
             <!-- 페이지넘버링 끝 -->
 
+            <script th:inline="javascript">
+                const trialId = /*[[${trial.trialId}]]*/ null;
+            </script>
 
+            <script th:inline="javascript" th:src="@{/static/js/trial/view.js}"></script>
         </div>
     </th:block>
 
