@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 @ToString
 public class MainPostBoardDto implements MainPost {
 
-    private Long id; // 식별자
+    private Long boardId; // 식별자
 
     private String title; // 제목
 
@@ -36,7 +36,7 @@ public class MainPostBoardDto implements MainPost {
 
     public MainPostBoardDto(MainBoardTb mainBoardTb) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        this.id = mainBoardTb.getBoardId();
+        this.boardId = mainBoardTb.getBoardId();
         this.title = CommonUtils.subString(mainBoardTb.getTitle(), 15);
         this.content = CommonUtils.subString(mainBoardTb.getContent(), 30);
         this.writer = mainBoardTb.getWriter();

@@ -1,6 +1,6 @@
 package com.kr.lg.security.login.detail;
 
-import com.kr.lg.common.enums.entity.status.UserStatus;
+import com.kr.lg.common.enums.entity.flag.JudgeUserFlag;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.auth.excpetion.AuthResultCode;
@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 
 @Service
@@ -42,7 +45,12 @@ public class UserDetailService implements  UserDetailsService {
         UserTb userTb = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new UsernameNotFoundException("로그인 아이디 미존재", new SecurityException(AuthResultCode.NOT_EXIST_USER)));
 
-        return new UserAdapter(userTb, Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))); // userDetails 반환
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        if (userTb.getJudgeFlag() == JudgeUserFlag.USE_STATUS) { // 재판 가능 권한 부여
+            authorities.add(new SimpleGrantedAuthority("ROLE_JUDGE"));
+        }
+
+        return new UserAdapter(userTb, authorities); // userDetails 반환
     }
 
 }

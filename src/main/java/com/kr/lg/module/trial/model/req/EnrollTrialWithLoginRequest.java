@@ -45,8 +45,8 @@ public class EnrollTrialWithLoginRequest {
     @NotNull(message = "내용이 입력되어있지않습니다.")
     private String content;
 
-    @NotNull
     @ApiModelProperty(value = "비디오")
+    @NotNull(message = "비디오가 입력되어있지않습니다.")
     private MultipartFile video;
 
 }

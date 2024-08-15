@@ -45,10 +45,11 @@
                                     <div class="input-file">
                                         <label>
                                             파일선택
-                                            <input type="file" name="video">
+                                            <input type="file" name="video" id="videoFileInput" onchange="handleFileUpload(event)" accept=".mp4,.avi,.wmv,.mpg,.mkv,.webm" >
                                         </label>
-                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="" class="input-box w100p" />
+                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="배심원들이 판단할수 있는 영상을 첨부해주세요." class="input-box w100p" />
                                     </div>
+                                    <ul class="bw-file" id="fileList"></ul>
                                 </dd>
                             </dl>
                         </div>
@@ -57,7 +58,7 @@
                         <h3>
                             <i class="uil uil-exclamation-triangle"></i>
                             <span>작성하는 법 : </span>
-                            우선 소제목에 어떤 부분에 대해 판결을 받고 싶은 지 적으세요. 그 후, 의견 A와 B에 각 대립하는 의견을 적어주시길 바랍니다.
+                            우선 소제목에 어떤 부분에 대해 판결을 받고 싶은 지 적으세요. 그 후, 원고 의견과 피고 의견에 각자의 의견을 적어주시길 바랍니다.
                         </h3>
                         <div class="mt20">
                             <dl>

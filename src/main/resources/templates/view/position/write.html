@@ -4,7 +4,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout/default_layout" lang="en">
 
-    <th:block layout:fragment="content">
+<script src="../../../static/js/position/write.js"></script>
+<th:block layout:fragment="content">
         <div class="content">
 
 
@@ -62,9 +63,9 @@
                                     <div class="input-file">
                                         <label>
                                             파일선택
-                                            <input type="file"  id="files" name="files"  multiple onchange="handleFileSelect(this)">
+                                            <input type="file"  id="files" name="files"  multiple onchange="handleFileSelect(this)" accept=".jpg,.jpeg,.png,.gif,.bmp" >
                                         </label>
-<!--                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="" class="input-box w100p" />-->
+                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="첨부할 파일들을 등록해주세요." class="input-box w100p" />
                                     </div>
                                     <ul class="bw-file"></ul>
                                 </dd>

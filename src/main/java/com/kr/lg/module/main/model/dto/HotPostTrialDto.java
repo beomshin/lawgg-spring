@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HotPostTrialDto implements MainPost {
 
-    private Long id; // 식별자
+    private Long trialId; // 식별자
 
     private String title; // 제목
 
@@ -24,7 +24,7 @@ public class HotPostTrialDto implements MainPost {
     private String playVideo; // 비디오 URL
 
     public HotPostTrialDto(TrialTb trialTb) {
-        this.id = trialTb.getTrialId();
+        this.trialId = trialTb.getTrialId();
         this.title = CommonUtils.subString(trialTb.getTitle(), 15);
         this.content = CommonUtils.subString(trialTb.getContent(), 30);
         this.playVideo = trialTb.getPlayVideo();

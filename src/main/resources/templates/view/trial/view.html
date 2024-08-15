@@ -79,13 +79,13 @@
                     <div sec:authorize="isAuthenticated()">
                         <button onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
                         &nbsp;
-                        <button th:if="${trial.liveType == 0}" class="btn-line-gray-m w170" ><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
+                        <button sec:authorize="hasAnyAuthority('ROLE_JUDGE')" th:if="${trial.liveType == 0}" class="btn-line-gray-m w170" ><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
                     </div>
                 </div>
                 <dl class="bv-btn" >
                     <dt style="display: flex">
                         <th:block th:if="${trial.userId + '' == #authentication.name}">
-                            <a th:href="@{/trial/modify/{trial}(trial=${trial.trialId})}" class="btn-default-m bg-black">수정</a>
+<!--                            <a th:href="@{/trial/modify/{trial}(trial=${trial.trialId})}" class="btn-default-m bg-black">수정</a>-->
                             &nbsp;
                             <form name="deleteComment" method="post" th:action="@{/trial/delete}" th:if="${trial.isCanDelete}">
                                 <input name="trialId" type="hidden" th:value="${trial.trialId}">
