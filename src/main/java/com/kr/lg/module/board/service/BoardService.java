@@ -16,15 +16,9 @@ public interface BoardService {
     BoardEntry findBoardWithLogin(long boardId, UserTb userTb) throws BoardException;
     void enrollBoardWithNotLogin(EnrollPositionRequest request, String ip) throws BoardException;
     void enrollBoardWithLogin(EnrollPositionRequest request, String ip, UserTb userTb) throws BoardException;
-    void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException;
-    void updateBoardWithNotLogin(UpdatePositionRequest request) throws BoardException;
     void updateBoardWithLogin(UpdatePositionRequest request, UserTb userTb) throws BoardException;
-    void deleteBoardWithNotLogin(DeletePositionRequest request) throws BoardException;
     void deleteBoardWithLogin(DeletePositionRequest request, UserTb userTb) throws BoardException;
-    void reportBoard(ReportBoardRequest request, String ip) throws BoardException;
-    void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException;
-    void deleteRecommendBoard(DeleteRecommendBoardRequest request, UserTb userTb) throws BoardException;
-    void loginBoardWithNotLogin(LoginBoardWithNotLoginRequest request) throws BoardException;
-    void loginBoardWithLogin(LoginBoardWithLoginRequest request, UserTb userTb) throws BoardException;
+    void reportBoard(ReportPositionRequest request, String ip) throws BoardException;
+    void recommendBoard(RecommendPositionRequest request, UserTb userTb) throws BoardException;
 
 }

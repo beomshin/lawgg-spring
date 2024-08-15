@@ -4,6 +4,7 @@ import com.kr.lg.model.dto.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,6 +38,6 @@ public class EnrollPositionRequest {
     private Integer lineType;
 
     @ApiModelProperty(value = "파일")
-    private List<FileDto> files;
+    private List<MultipartFile> files;
 
 }

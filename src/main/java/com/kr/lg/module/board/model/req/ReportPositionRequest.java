@@ -11,15 +11,11 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ApiModel(value = "비로그인 포지션 게시판 삭제 요청 Body")
-public class LoginBoardWithNotLoginRequest {
+@ApiModel(value = "포지션 게시판 신고 Body")
+public class ReportPositionRequest {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")
-    private Long id;
-
-    @ApiModelProperty(value = "패스워드", required = true)
-    @NotNull(message = "패스워드가 입력되어있지않습니다.")
-    private String password;
+    private Long boardId;
 
 }

@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ApiModel(value = "포지션 게시판 추천 삭제 요청 Body")
-public class DeleteRecommendBoardRequest {
+@ApiModel(value = "포지션 게시판 추천 요청 Body")
+public class RecommendPositionRequest {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")
-    private Long id;
+    private Long boardId;
 }

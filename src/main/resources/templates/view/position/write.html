@@ -22,7 +22,7 @@
 
 
             <!-- 등록/수정 -->
-            <form name="addForm" method="post" th:action="@{/position/enroll}">
+            <form name="addForm" id="addForm" method="post" th:action="@{/position/enroll}" enctype="multipart/form-data">
                 <fieldset>
                     <legend>등록/수정</legend>
                     <div class="board-write">
@@ -62,31 +62,14 @@
                                     <div class="input-file">
                                         <label>
                                             파일선택
-                                            <input type="file" onchange="javascript:document.getElementById('fileRoute').value=this.value">
+                                            <input type="file"  id="files" name="files"  multiple onchange="handleFileSelect(this)">
                                         </label>
-                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="" class="input-box w100p" />
+<!--                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="" class="input-box w100p" />-->
                                     </div>
-<!--                                    <ul class="bw-file">-->
-<!--                                        <li>-->
-<!--                                            <img th:src="@{/static/images/fileIcn/jpg.gif}" alt="" title="" /> 첨부파일.jpg-->
-<!--                                            <button><i class="uil uil-times"></i></button>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img th:src="@{/static/images/fileIcn/png.gif}" alt="" title="" /> 첨부파일.png-->
-<!--                                            <button><i class="uil uil-times"></i></button>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img th:src="@{/static/images/fileIcn/hwp.gif}" alt="" title="" /> 첨부파일.hwp-->
-<!--                                            <button><i class="uil uil-times"></i></button>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img th:src="@{/static/images/fileIcn/xls.gif}" alt="" title="" /> 첨부파일.xls-->
-<!--                                            <button><i class="uil uil-times"></i></button>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
+                                    <ul class="bw-file"></ul>
                                 </dd>
                             </dl>
-                            <div><textarea name="content" cols="" rows="" class="w100p h300" wrap="hard" maxlength="2000"></textarea></div>
+                            <div><textarea name="content" cols="" rows="" class="w100p h300" wrap="hard" maxlength="2000" placeholder="내용을 입력해주세요."></textarea></div>
                         </div>
                         <p class="bw-btn-two">
                             <button type="submit" class="btn-default bg-black w150">등록하기</button>
@@ -98,7 +81,7 @@
             </form>
             <!-- 등록/수정 끝 -->
 
-
+            <script th:inline="javascript" th:src="@{/static/js/position/write.js}"></script>
         </div>
     </th:block>
 

@@ -6,8 +6,8 @@ import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.model.common.ErrorResponse;
 import com.kr.lg.model.enums.GlobalResultCode;
 import com.kr.lg.module.board.exception.BoardResultCode;
-import com.kr.lg.module.board.model.req.RecommendBoardRequest;
-import com.kr.lg.module.board.model.req.ReportBoardRequest;
+import com.kr.lg.module.board.model.req.RecommendPositionRequest;
+import com.kr.lg.module.board.model.req.ReportPositionRequest;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.service.BoardService;
 import com.kr.lg.module.board.model.req.UpdatePositionRequest;
@@ -37,7 +37,7 @@ public class BoardUpdateController {
     @PostMapping("/position/recommend")
     @ApiOperation(value = "포지션 게시판 추천", notes = "포지션 게시판을 추천합니다.")
     public ResponseEntity<?> recommendBoard(
-            @RequestBody @Valid RecommendBoardRequest request,
+            @RequestBody @Valid RecommendPositionRequest request,
             @AuthUser UserTb userTb
     ) {
         try {
@@ -56,7 +56,7 @@ public class BoardUpdateController {
     @ApiOperation(value = "포지션 게시판 신고", notes = "포지션 게시판을 신고합니다.")
     public ResponseEntity<?> reportBoard(
             HttpServletRequest httpServletRequest,
-            @RequestBody @Valid ReportBoardRequest request
+            @RequestBody @Valid ReportPositionRequest request
     ) {
         try {
             boardService.reportBoard(request, ClientUtils.getRemoteIP(httpServletRequest));

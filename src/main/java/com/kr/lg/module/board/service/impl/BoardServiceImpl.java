@@ -13,6 +13,7 @@ import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardRecommendRepository;
 import com.kr.lg.db.repositories.BoardRepository;
 import com.kr.lg.db.repositories.ReportRepository;
+import com.kr.lg.model.dto.FileDto;
 import com.kr.lg.module.board.model.event.BoardRecommendEvent;
 import com.kr.lg.module.board.model.event.UserBoardCreateCountEvent;
 import com.kr.lg.module.board.model.req.*;
@@ -30,6 +31,7 @@ import com.kr.lg.module.board.sort.BoardSort;
 import com.kr.lg.model.mapper.MapperParam;
 import com.kr.lg.model.mapper.BoardParam;
 import com.kr.lg.module.board.model.mapper.FindBoardsParamData;
+import com.kr.lg.module.thirdparty.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -65,6 +67,8 @@ public class BoardServiceImpl implements BoardService {
 
     private final BCryptPasswordEncoder encoder;
     private final ApplicationEventPublisher applicationEventPublisher;
+
+    private final FileService<FileDto> fileService;
 
     /**
      * 포지션 게시판 조회 리스트
@@ -192,7 +196,7 @@ public class BoardServiceImpl implements BoardService {
         log.info("▶ [포지션 게시판] 포지션 게시판 등록(비로그인)");
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
         if (isEnrollFile) {
-            boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
+            boardEnrollService.enrollBoardFiles(boardTb, fileService.uploadMultiple(request.getFiles()));
         }
     }
 
@@ -224,71 +228,10 @@ public class BoardServiceImpl implements BoardService {
         BoardTb boardTb = boardEnrollService.enrollBoard(board);
         applicationEventPublisher.publishEvent(new UserBoardCreateCountEvent(userTb, 1));
         if (isEnrollFile) {
-            boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
+            boardEnrollService.enrollBoardFiles(boardTb, fileService.uploadMultiple(request.getFiles()));
         }
     }
 
-    /**
-     * 로펌 포지션 게시판 등록
-     * @param request
-     * @param ip
-     * @param userTb
-     * @throws BoardException
-     */
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void enrollBoardWithLawFirmLogin(EnrollBoardWithLawFirmLoginRequest request, String ip, UserTb userTb) throws BoardException {
-        if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER); // 로그인 필수
-        else if (userTb.getLawFirmTb() == null) throw new BoardException(BoardResultCode.NOT_EXIST_LAW_FIRM); // 로펌 필수
-        else if (!Objects.equals(userTb.getLawFirmTb().getLawFirmId(), request.getId())) throw new BoardException(BoardResultCode.UN_MATCHED_LAW_FIRM_USER);
-        boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
-
-        BoardEnrollDto board = BoardEnrollDto.builder()
-                .userTb(userTb)
-                .lawFirmTb(userTb.getLawFirmTb())
-                .postType(isEnrollFile ? PostType.IMAGE_TYPE : PostType.NORMAL_TYPE)
-                .title(request.getTitle())
-                .content(request.getContent())
-                .writer(userTb.getNickName())
-                .lineType(LineType.of(request.getLineType()))
-                .writerType(WriterType.LAW_FIRM_TYPE)
-                .ip(ip)
-                .build();
-
-        BoardTb boardTb = boardEnrollService.enrollBoard(board);
-        applicationEventPublisher.publishEvent(new UserBoardCreateCountEvent(userTb, 1));
-        if (isEnrollFile) {
-            boardEnrollService.enrollBoardFiles(boardTb, request.getFiles());
-        }
-
-    }
-
-    /**
-     * 비로그인 포지션 게시판 수정
-     * @param request
-     * @throws BoardException
-     */
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateBoardWithNotLogin(UpdatePositionRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getBoardId(), WriterType.ANONYMOUS_TYPE);
-        if (boardTb.isPresent()) {
-            if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
-            boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
-
-            boardUpdateService.updateBoard(BoardUpdateDto.builder()
-                            .boardId(boardTb.get().getBoardId())
-                            .title(request.getTitle())
-                            .content(request.getContent())
-                    .build());
-            if (isEnrollFile) {
-                boardEnrollService.enrollBoardFiles(boardTb.get(), request.getAddFiles());
-            }
-        } else {
-            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
-
-        }
-    }
 
     /**
      * 로그인 포지션 게시판 수정
@@ -312,23 +255,6 @@ public class BoardServiceImpl implements BoardService {
             if (isEnrollFile) {
                 boardEnrollService.enrollBoardFiles(boardTb.get(), request.getAddFiles());
             }
-        } else {
-            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
-
-        }
-    }
-
-    /**
-     * 비로그인 포지션 게시판 삭제
-     * @param request
-     * @throws BoardException
-     */
-    @Override
-    public void deleteBoardWithNotLogin(DeletePositionRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getBoardId(), WriterType.ANONYMOUS_TYPE, BoardStatus.NORMAL_STATUS);
-        if (boardTb.isPresent() && boardTb.get().getWriterType() == WriterType.ANONYMOUS_TYPE) {
-            if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
-            boardDeleteService.deleteBoard(boardTb.get().getBoardId());
         } else {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
 
@@ -365,7 +291,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional
-    public void reportBoard(ReportBoardRequest request, String ip) throws BoardException {
+    public void reportBoard(ReportPositionRequest request, String ip) throws BoardException {
         Optional<BoardTb> boardTb = boardRepository.findById(request.getBoardId());
         if (boardTb.isPresent()) {
             Optional<ReportTb> reportTb = reportRepository.findByBoardTbAndIp(boardTb.get(), ip);
@@ -385,61 +311,11 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional
-    public void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException {
+    public void recommendBoard(RecommendPositionRequest request, UserTb userTb) throws BoardException {
         Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getBoardId(), userTb.getUserId()); // 나의 추천 내역 조회
         if (boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_RECOMMEND_BOARD); // 중복 추천 방어코드
         boardRecommendService.recommendBoard(BoardTb.builder().boardId(request.getBoardId()).build(), userTb); // 게시판 추천
         applicationEventPublisher.publishEvent(new BoardRecommendEvent(request.getBoardId(), 1)); // 추천 수 증가
-    }
-
-    /**
-     * 포지션 게시판 추천 삭제
-     * @param request
-     * @param userTb
-     * @throws BoardException
-     */
-    @Override
-    public void deleteRecommendBoard(DeleteRecommendBoardRequest request, UserTb userTb) throws BoardException {
-        Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getId(), userTb.getUserId()); // 나의 추천 내역 조회
-        if (!boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_DELETE_RECOMMEND_BOARD); // 이미 추천 취소 처리
-        boardRecommendService.deleteRecommendBoard(request.getId(), userTb.getUserId()); // 게시판 추천 취소
-    }
-
-    /**
-     * 비로그인 게시판 로그인
-     * @param request
-     * @throws BoardException
-     */
-    @Override
-    public void loginBoardWithNotLogin(LoginBoardWithNotLoginRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.ANONYMOUS_TYPE);
-        if (boardTb.isPresent()) {
-            if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
-            log.info("▶ [포지션 게시판] 비로그인 포지션 게시판 로그인");
-        } else {
-            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
-        }
-
-    }
-
-    /**
-     * 로그인 게시판 로그인
-     * @param request
-     * @param userTb
-     * @throws BoardException
-     */
-    @Override
-    public void loginBoardWithLogin(LoginBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        log.info("▶ [포지션 게시판] loginBoardWithLogin 메소드 실행");
-
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.MEMBER_TYPE);
-        if (boardTb.isPresent()) {
-            if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
-            log.info("▶ [포지션 게시판] 로그인 포지션 게시판 로그인");
-        } else {
-            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
-        }
-
     }
 
     /**

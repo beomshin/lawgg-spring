@@ -63,8 +63,8 @@ function join() {
     move('/join/agree')
 }
 
-function boards() {
-    move('/boards')
+function positions() {
+    move('/positions')
 }
 
 function trials() {
