@@ -1,14 +1,10 @@
 package com.kr.lg.module.trial.service.impl;
 
-import com.kr.lg.common.enums.entity.status.TrialStatus;
 import com.kr.lg.db.entities.*;
 import com.kr.lg.db.repositories.*;
 import com.kr.lg.common.enums.entity.status.PrecedentStatus;
 import com.kr.lg.common.enums.logic.TrialTopic;
-import com.kr.lg.module.board.exception.BoardException;
-import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.trial.model.event.AlertTLEvent;
-import com.kr.lg.module.trial.model.event.AlertVideoEvent;
 import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
 import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
 import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
@@ -118,7 +114,7 @@ public class TrialServiceImpl implements TrialService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public TrialTb enrollTrialWithLogin(EnrollTrialWithLoginRequest request, UserTb userTb) throws TrialException {
+    public TrialTb enrollTrialWithLogin(EnrollTrialRequest request, UserTb userTb) throws TrialException {
         FileDto video = fileService.uploadVideo(request.getVideo());
 
         TrialEnrollDto enrollDto = TrialEnrollDto.builder()
@@ -134,26 +130,6 @@ public class TrialServiceImpl implements TrialService {
                 .build();
         TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
         applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, 1));
-        return trialTb;
-    }
-
-    @Override
-    @Transactional
-    public TrialTb enrollVideoWithLogin(EnrollVideoWithLoginRequest request, UserTb userTb) throws TrialException {
-        FileDto replay = null;
-        TrialTb trialTb = trialRepository.findLockTrial(request.getId());
-        FileDto video = fileService.uploadVideo(request.getPlayVideo());
-
-        if (request.getReplay() != null) replay = fileService.uploadReplay(request.getReplay());
-
-        trialEnrollService.enrollTrialFiles(trialTb, Arrays.asList(video, replay));
-        trialRepository.uploadVideoAndReply(trialTb.getTrialId(),
-                video != null ? video.getPath() : null,
-                replay != null ? replay.getPath() : null,
-                video == null ? TrialStatus.FAIL_STATUS : TrialStatus.NORMAL_STATUS
-        );
-        applicationEventPublisher.publishEvent(new AlertVideoEvent(trialTb));
-
         return trialTb;
     }
 
@@ -194,14 +170,6 @@ public class TrialServiceImpl implements TrialService {
         if (recommendTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_RECOMMEND_TRIAL); // 중복 추천 방어코드
         trialRecommendService.recommendTrial(TrialTb.builder().trialId(request.getTrialId()).build(), userTb);
         applicationEventPublisher.publishEvent(new TrialRecommendEvent(request.getTrialId(), 1));
-    }
-
-    @Override
-    @Transactional
-    public void deleteRecommendTrial(DeleteRecommendTrialRequest request, UserTb userTb) throws TrialException {
-        Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
-        if (!recommendTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_DELETE_RECOMMEND_TRIAL); // 이미 추천 취소 처리
-        trialRecommendService.deleteRecommendTrial(request.getId(), userTb.getUserId());
     }
 
     @Override

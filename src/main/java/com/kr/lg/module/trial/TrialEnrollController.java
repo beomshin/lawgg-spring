@@ -1,21 +1,15 @@
 package com.kr.lg.module.trial;
 
-import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
-import com.kr.lg.module.board.exception.BoardException;
-import com.kr.lg.module.board.model.req.EnrollPositionRequest;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.model.common.AbstractSpec;
-import com.kr.lg.module.trial.model.req.EnrollVideoWithLoginRequest;
-import com.kr.lg.module.trial.model.res.EnrollTrialWithLoginResponse;
 
-import com.kr.lg.module.trial.model.req.EnrollTrialWithLoginRequest;
+import com.kr.lg.module.trial.model.req.EnrollTrialRequest;
 import com.kr.lg.model.common.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -42,7 +35,7 @@ public class TrialEnrollController {
     @ApiOperation(value = "트라이얼 게시판 작성하기", notes = "트라이얼 게시판 작성합니다.")
     public ModelAndView enrollTrial(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @Valid @ModelAttribute EnrollTrialWithLoginRequest request,
+            @Valid @ModelAttribute EnrollTrialRequest request,
             ModelAndView modelAndView
     ) throws TrialException {
         TrialTb trialTb = trialService.enrollTrialWithLogin(request, userTb);

@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,6 +67,14 @@ public class TrialFindController {
 
         modelAndView.setViewName("view/trial/view");
         return modelAndView;
+    }
+
+    @Secured("ROLE_USER")
+    @GetMapping("/trial/write")
+    @ApiOperation(value = "트라이얼 게시판 작성 페이지 호출", notes = "트라이얼 게시판 작성 페이지를 호출합니다.")
+    public ModelAndView trialWrite(ModelAndView mav) {
+        mav.setViewName("view/trial/write");
+        return mav;
     }
 
     @GetMapping("/api/public/v1/find/law-firm/trials")

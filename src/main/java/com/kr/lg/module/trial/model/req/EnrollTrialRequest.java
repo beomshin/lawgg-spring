@@ -1,13 +1,11 @@
 package com.kr.lg.module.trial.model.req;
 
-import com.kr.lg.model.dto.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "로그인 트라이얼 게시판 등록 요청 Body")
-public class EnrollTrialWithLoginRequest {
+public class EnrollTrialRequest {
 
     @ApiModelProperty(value = "제목", required = true)
     @NotNull(message = "제목이 입력되어있지않습니다.")
@@ -49,4 +47,23 @@ public class EnrollTrialWithLoginRequest {
     @NotNull(message = "비디오가 입력되어있지않습니다.")
     private MultipartFile video;
 
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @ApiModel(value = "로그인 트라이얼 비디오,리플레이 등록 요청 Body")
+    public static class EnrollVideoWithLoginRequest {
+
+        @NotNull
+        @ApiModelProperty(value = "비디오")
+        private MultipartFile playVideo;
+
+        @ApiModelProperty(value = "리플레이")
+        private MultipartFile replay;
+
+        @ApiModelProperty(value = "트라이얼 아이디")
+        private Long id;
+
+    }
 }
