@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -74,12 +75,25 @@ public class BoardFindController {
 
     @ApiOperation(value = "포지션 게시판 작성 페이지 호출", notes = "포지션 게시판 작성 페이지를 호출합니다.")
     @GetMapping("/position/write")
-    public ModelAndView positionWrite(
+    public ModelAndView writePosition(
             @RequestParam(value = "type", required = false, defaultValue = "0") int type,
             ModelAndView modelAndView
     ) {
         modelAndView.addObject("type", type);
         modelAndView.setViewName("view/position/write");
+        return modelAndView;
+    }
+
+    @Secured("ROLE_USER")
+    @ApiOperation(value = "포지션 게시판 수정 페이지 호출", notes = "포지션 게시판 수정 페이지를 호출합니다.")
+    @GetMapping("/position/modify/{id}")
+    public ModelAndView modifyPosition(
+            ModelAndView modelAndView,
+            @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long boardId,
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb
+    ) throws BoardException {
+        modelAndView.addObject("position", boardService.findBoard(boardId, userTb));
+        modelAndView.setViewName("view/position/update");
         return modelAndView;
     }
 

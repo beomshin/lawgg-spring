@@ -14,20 +14,9 @@ public class UserAdapter extends User {
 
     private final UserTb userTb;
 
-    public UserAdapter(UserTb userTb) {
-        super(userTb.getLoginId(), userTb.getPassword() == null ? "" : userTb.getPassword(), authorities());
-        this.userTb = userTb;
-    }
-
     public UserAdapter(UserTb userTb, Collection<? extends GrantedAuthority>  authorities) {
         super(String.valueOf(userTb.getUserId()), userTb.getPassword(), authorities);
         this.userTb = userTb;
-    }
-
-    private static Collection<? extends GrantedAuthority> authorities() {
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        return authorities;
     }
 
 }

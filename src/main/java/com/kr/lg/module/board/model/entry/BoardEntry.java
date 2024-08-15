@@ -15,8 +15,10 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL) // NULL 제외 속성
 public class BoardEntry {
 

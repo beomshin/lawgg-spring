@@ -7,10 +7,12 @@ import com.kr.lg.common.enums.entity.type.WriterType;
 import com.kr.lg.common.enums.logic.BoardTopic;
 import com.kr.lg.db.entities.BoardRecommendTb;
 import com.kr.lg.db.entities.BoardTb;
+import com.kr.lg.db.entities.ReportTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.BoardAttachRepository;
 import com.kr.lg.db.repositories.BoardRecommendRepository;
 import com.kr.lg.db.repositories.BoardRepository;
+import com.kr.lg.db.repositories.ReportRepository;
 import com.kr.lg.module.board.model.event.BoardRecommendEvent;
 import com.kr.lg.module.board.model.event.UserBoardCreateCountEvent;
 import com.kr.lg.module.board.model.req.*;
@@ -57,6 +59,7 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardAttachRepository boardAttachRepository;
     private final BoardRecommendRepository boardRecommendRepository;
+    private final ReportRepository reportRepository;
     private final BoardRepository boardRepository;
     private final CommentMapper commentMapper;
 
@@ -117,6 +120,17 @@ public class BoardServiceImpl implements BoardService {
                 .build(); // mapper param 생성
 
         return boardFindService.findBoards(new BoardParam<>(param, pageable));
+    }
+
+    @Override
+    public BoardEntry findBoard(long boardId, UserTb userTb) throws BoardException {
+        MapperParam param = FindBoardParamData.builder()
+                .boardId(boardId)
+                .userId(userTb.getUserId())
+                .build();
+        BoardEntry board = this.findBoard(param);
+        if (!Objects.equals(board.getUserId(), userTb.getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
+        return board;
     }
 
     /**
@@ -256,8 +270,8 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateBoardWithNotLogin(UpdateBoardWithNotLoginRequest request) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.ANONYMOUS_TYPE);
+    public void updateBoardWithNotLogin(UpdatePositionRequest request) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getBoardId(), WriterType.ANONYMOUS_TYPE);
         if (boardTb.isPresent()) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
             boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
@@ -284,8 +298,8 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateBoardWithLogin(UpdateBoardWithLoginRequest request, UserTb userTb) throws BoardException {
-        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getId(), WriterType.MEMBER_TYPE);
+    public void updateBoardWithLogin(UpdatePositionRequest request, UserTb userTb) throws BoardException {
+        Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getBoardId(), WriterType.MEMBER_TYPE);
         if (boardTb.isPresent()) {
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
             boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
@@ -310,7 +324,7 @@ public class BoardServiceImpl implements BoardService {
      * @throws BoardException
      */
     @Override
-    public void deleteBoardWithNotLogin(DeleteBoardWithNotLoginRequest request) throws BoardException {
+    public void deleteBoardWithNotLogin(DeletePositionRequest request) throws BoardException {
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getBoardId(), WriterType.ANONYMOUS_TYPE, BoardStatus.NORMAL_STATUS);
         if (boardTb.isPresent() && boardTb.get().getWriterType() == WriterType.ANONYMOUS_TYPE) {
             if (!encoder.matches(request.getPassword(), boardTb.get().getPassword())) throw new BoardException(BoardResultCode.UN_MATCH_PASSWORD);
@@ -329,7 +343,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     @Transactional
-    public void deleteBoardWithLogin(DeleteBoardWithNotLoginRequest request, UserTb userTb) throws BoardException {
+    public void deleteBoardWithLogin(DeletePositionRequest request, UserTb userTb) throws BoardException {
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterTypeAndStatus(request.getBoardId(), WriterType.MEMBER_TYPE, BoardStatus.NORMAL_STATUS);
         if (boardTb.isPresent() && boardTb.get().getWriterType() == WriterType.MEMBER_TYPE) {
             boolean isBestOrRecommendBoard = boardTb.get().getPostType().equals(PostType.BEST_TYPE) || boardTb.get().getPostType().equals(PostType.RECOMMEND); // 베스트 or 추천 게시판 플래그
@@ -352,12 +366,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void reportBoard(ReportBoardRequest request, String ip) throws BoardException {
-        BoardReportDto reportDto = BoardReportDto.builder()
-                .ip(ip)
-                .content(request.getContent())
-                .boardTb(BoardTb.builder().boardId(request.getId()).build())
-                .build();
-        boardReportService.reportBoard(reportDto);
+        Optional<BoardTb> boardTb = boardRepository.findById(request.getBoardId());
+        if (boardTb.isPresent()) {
+            Optional<ReportTb> reportTb = reportRepository.findByBoardTbAndIp(boardTb.get(), ip);
+            if (reportTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_REPORT_BOARD); // 신고 완료 상태
+            BoardReportDto reportDto = BoardReportDto.builder().ip(ip).boardTb(boardTb.get()).build();
+            boardReportService.reportBoard(reportDto);
+        } else {
+            throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재
+        }
     }
 
     /**
@@ -369,10 +386,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void recommendBoard(RecommendBoardRequest request, UserTb userTb) throws BoardException {
-        Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getId(), userTb.getUserId()); // 나의 추천 내역 조회
+        Optional<BoardRecommendTb> boardRecommendTb = boardRecommendRepository.findByBoardTb_BoardIdAndUserTb_UserId(request.getBoardId(), userTb.getUserId()); // 나의 추천 내역 조회
         if (boardRecommendTb.isPresent()) throw new BoardException(BoardResultCode.ALREADY_RECOMMEND_BOARD); // 중복 추천 방어코드
-        boardRecommendService.recommendBoard(BoardTb.builder().boardId(request.getId()).build(), userTb); // 게시판 추천
-        applicationEventPublisher.publishEvent(new BoardRecommendEvent(request.getId(), 1)); // 추천 수 증가
+        boardRecommendService.recommendBoard(BoardTb.builder().boardId(request.getBoardId()).build(), userTb); // 게시판 추천
+        applicationEventPublisher.publishEvent(new BoardRecommendEvent(request.getBoardId(), 1)); // 추천 수 증가
     }
 
     /**

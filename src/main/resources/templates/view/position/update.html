@@ -22,31 +22,40 @@
 
 
             <!-- 등록/수정 -->
-            <form name="addForm" method="post" action="">
+            <form name="addForm" method="post" th:action="@{/position/update}">
                 <fieldset>
                     <legend>등록/수정</legend>
                     <div class="board-write">
                         <div>
-                            <dl>
-                                <dt>작성자 <span>*</span></dt>
-                                <dd>
-                                    <div>
-                                        <input name="" type="text" class="input-box w100p" placeholder="아이디를 입력하세요." />
-                                        <input name="" type="password" class="input-box w100p" placeholder="비밀번호를 입력하세요." />
-                                    </div>
-                                </dd>
-                            </dl>
+<!--                            <dl>-->
+<!--                                <dt>작성자 <span>*</span></dt>-->
+<!--                                <dd>-->
+<!--                                    <div>-->
+<!--                                        <input name="" type="text" class="input-box w100p" placeholder="아이디를 입력하세요." />-->
+<!--                                        <input name="" type="password" class="input-box w100p" placeholder="비밀번호를 입력하세요." />-->
+<!--                                    </div>-->
+<!--                                </dd>-->
+<!--                            </dl>-->
+                            <div>
+                                <input name="boardId" type="hidden" class="input-box w100p" th:value="${position.boardId}" />
+                                <input name="id" type="hidden" class="input-box w100p" value="oauth" />
+                                <input name="password" type="hidden" class="input-box w100p" value="******" />
+                            </div>
                             <dl>
                                 <dt>카테고리 <span>*</span></dt>
                                 <dd>
-                                    <select name="name" title="" class="w100p">
-                                        <option value="" selected="selected">선택</option>
+                                    <select name="lineType" title="" class="w100p" disabled>
+                                        <option value="0" th:selected="${position.lineType == 0}">Top</option>
+                                        <option value="1" th:selected="${position.lineType == 1}">JG</option>
+                                        <option value="2" th:selected="${position.lineType == 2}">Mid</option>
+                                        <option value="3" th:selected="${position.lineType == 3}">Bot</option>
+                                        <option value="4" th:selected="${position.lineType == 4}">Spt</option>
                                     </select>
                                 </dd>
                             </dl>
                             <dl>
                                 <dt>제목 <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                                <dd><input name="title" type="text" class="input-box w100p" placeholder="" maxlength="256" th:value="${position.title}"/></dd>
                             </dl>
                             <dl>
                                 <dt>첨부파일</dt>
@@ -58,32 +67,32 @@
                                         </label>
                                         <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="" class="input-box w100p" />
                                     </div>
-                                    <ul class="bw-file">
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/jpg.gif}" alt="" title="" /> 첨부파일.jpg
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/png.gif}" alt="" title="" /> 첨부파일.png
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/hwp.gif}" alt="" title="" /> 첨부파일.hwp
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/xls.gif}" alt="" title="" /> 첨부파일.xls
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                    </ul>
+<!--                                    <ul class="bw-file">-->
+<!--                                        <li>-->
+<!--                                            <img th:src="@{/static/images/fileIcn/jpg.gif}" alt="" title="" /> 첨부파일.jpg-->
+<!--                                            <button><i class="uil uil-times"></i></button>-->
+<!--                                        </li>-->
+<!--                                        <li>-->
+<!--                                            <img th:src="@{/static/images/fileIcn/png.gif}" alt="" title="" /> 첨부파일.png-->
+<!--                                            <button><i class="uil uil-times"></i></button>-->
+<!--                                        </li>-->
+<!--                                        <li>-->
+<!--                                            <img th:src="@{/static/images/fileIcn/hwp.gif}" alt="" title="" /> 첨부파일.hwp-->
+<!--                                            <button><i class="uil uil-times"></i></button>-->
+<!--                                        </li>-->
+<!--                                        <li>-->
+<!--                                            <img th:src="@{/static/images/fileIcn/xls.gif}" alt="" title="" /> 첨부파일.xls-->
+<!--                                            <button><i class="uil uil-times"></i></button>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
                                 </dd>
                             </dl>
-                            <div><textarea cols="" rows="" class="w100p h300"></textarea></div>
+                            <div><textarea name="content" cols="" rows="" class="w100p h300" wrap="hard" maxlength="2000" th:text="${position.content}"></textarea></div>
                         </div>
                         <p class="bw-btn-two">
-                            <button  class="btn-default bg-black w150">등록하기</button>
+                            <button type="submit"  class="btn-default bg-black w150">수정하기</button>
                             &nbsp;
-                            <a th:href="@{/positions}" class="btn-default bg-gray w150">목록으로</a>
+                            <a th:href="@{/position/{boardId}(boardId=${position.boardId})}" class="btn-default bg-gray w150">목록으로</a>
                         </p>
                     </div>
                 </fieldset>

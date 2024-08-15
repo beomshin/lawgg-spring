@@ -2,7 +2,7 @@ package com.kr.lg.module.trial;
 
 
 import com.kr.lg.common.utils.ClientUtils;
-import com.kr.lg.module.board.model.req.ReportTrialRequest;
+import com.kr.lg.module.trial.model.req.ReportTrialRequest;
 import com.kr.lg.module.trial.model.req.DeleteRecommendTrialRequest;
 import com.kr.lg.module.trial.model.req.RecommendTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;

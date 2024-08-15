@@ -4,7 +4,7 @@ import com.kr.lg.db.entities.TrialTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
-import com.kr.lg.module.board.model.req.ReportTrialRequest;
+import com.kr.lg.module.trial.model.req.ReportTrialRequest;
 import com.kr.lg.module.trial.model.req.*;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;

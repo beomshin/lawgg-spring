@@ -31,7 +31,3 @@ function changeTopic(e, topic) { // 토빅 변경 (전체, 핫포지션)
     document.getElementById('topic').value = topic;
     document.getElementById('searchForm').submit();
 }
-
-function pageMove(page) {
-
-}

@@ -54,9 +54,9 @@
                                     <option value="50" th:selected="${query.pageNum == 50}">50개</option>
                                     <option value="100" th:selected="${query.pageNum == 100}">100개</option>
                                 </select>
-                                <input type="hidden" name="type" th:value="${query.type == null} ? 0 : ${query.type}" >
-                                <input type="hidden" name="page" th:value="${query.page == null} ? 0 : ${query.page}" >
-                                <input type="hidden" name="topic" th:value="${query.topic == null} ? 1 : ${query.topic}" >
+                                <input type="hidden" name="type" id="type" th:value="${query.type == null} ? 0 : ${query.type}" >
+                                <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                <input type="hidden" name="topic" id="topic" th:value="${query.topic == null} ? 1 : ${query.topic}" >
                                 <input type="text" name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
                                 <a class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</a>
                             </div>

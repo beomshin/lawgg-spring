@@ -16,7 +16,6 @@ public class ReportBoardRequest {
 
     @ApiModelProperty(value = "게시판 아이디", required = true)
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")
-    private Long id;
+    private Long boardId;
 
-    private String content;
 }

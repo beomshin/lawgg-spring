@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,15 +19,16 @@ import javax.validation.Valid;
 
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class BoardEnrollController {
 
     private final BoardService boardService;
 
-    @ApiOperation(value = "포지션 게시판 작성하기", notes = "포지션 게시판 작성합니다.")
+
     @PostMapping("/position/enroll")
-    public ModelAndView positionEnroll(
+    @ApiOperation(value = "포지션 게시판 작성하기", notes = "포지션 게시판 작성합니다.")
+    public ModelAndView enrollPosition(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute EnrollPositionRequest request,
             ModelAndView modelAndView,

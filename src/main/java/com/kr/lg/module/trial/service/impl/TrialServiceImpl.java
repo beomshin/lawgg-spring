@@ -17,7 +17,7 @@ import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
 import com.kr.lg.module.trial.model.event.TrialRecommendEvent;
 import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
-import com.kr.lg.module.board.model.req.ReportTrialRequest;
+import com.kr.lg.module.trial.model.req.ReportTrialRequest;
 import com.kr.lg.module.trial.model.dto.TrialReportDto;
 import com.kr.lg.module.trial.model.dto.TrialUpdateDto;
 import com.kr.lg.module.trial.model.dto.TrialVoteDto;

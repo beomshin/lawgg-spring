@@ -1,4 +1,4 @@
-package com.kr.lg.module.board.model.req;
+package com.kr.lg.module.trial.model.req;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

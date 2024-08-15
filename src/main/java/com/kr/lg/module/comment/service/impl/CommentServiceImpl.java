@@ -11,8 +11,7 @@ import com.kr.lg.module.comment.model.event.TrialCommentCreateAlertToTrialWriter
 import com.kr.lg.module.comment.model.event.TrialCommentCreateCountEvent;
 import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
 import com.kr.lg.module.comment.model.req.EnrollCommentTrialRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardCommentNotWithLoginRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardCommentWithLoginRequest;
+import com.kr.lg.module.comment.model.req.DeleteBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateCountEvent;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateAlertToBoardWriterEvent;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateAlertToWriterEvent;

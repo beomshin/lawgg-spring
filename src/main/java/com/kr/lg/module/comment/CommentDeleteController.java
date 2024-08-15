@@ -1,14 +1,11 @@
 package com.kr.lg.module.comment;
 
-import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardCommentNotWithLoginRequest;
-import com.kr.lg.module.board.model.req.DeleteBoardCommentWithLoginRequest;
+import com.kr.lg.module.comment.model.req.DeleteBoardCommentNotWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentException;
-import com.kr.lg.module.comment.model.req.EnrollPositionCommentRequest;
 import com.kr.lg.module.comment.service.CommentService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.common.SuccessResponse;

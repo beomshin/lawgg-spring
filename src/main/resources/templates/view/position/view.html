@@ -39,7 +39,7 @@
                         </div>
                     </dt>
                     <dd>
-                        <button class="btn-default-s bg-pink" onclick="recommend()"><i class="uit uit-thumbs-up"></i> 추천하기</button>
+                        <button sec:authorize="isAuthenticated()" class="btn-default-s bg-pink" onclick="recommend()"><i class="uit uit-thumbs-up"></i> 추천하기</button>
                         &nbsp;
                         <button class="btn-default-s bg-black" onclick="report()"><i class="uit uit-megaphone"></i> 신고하기</button>
                     </dd>
@@ -49,8 +49,8 @@
                 </div>
                 <dl class="bv-btn">
                     <th:block th:if="${position.userId + '' == #authentication.name}">
-                        <dt>
-<!--                            <a  class="btn-default-m bg-black">수정</a>-->
+                        <dt style="display: flex">
+                            <a th:href="@{/position/modify/{boardId}(boardId=${position.boardId})}" class="btn-default-m bg-black">수정</a>
                             &nbsp;
                             <form name="deleteComment" method="post" th:action="@{/position/delete}">
                                 <input name="boardId" type="hidden" th:value="${position.boardId}">
