@@ -245,7 +245,7 @@ public class BoardServiceImpl implements BoardService {
         Optional<BoardTb> boardTb = boardRepository.findByBoardIdAndWriterType(request.getBoardId(), WriterType.MEMBER_TYPE);
         if (boardTb.isPresent()) {
             if (!userTb.getUserId().equals(boardTb.get().getUserTb().getUserId())) throw new BoardException(BoardResultCode.UN_MATCHED_USER);
-            boolean isEnrollFile = request.getAddFiles() != null && !request.getAddFiles().isEmpty();
+            boolean isEnrollFile = request.getFiles() != null && !request.getFiles().isEmpty();
 
             boardUpdateService.updateBoard(BoardUpdateDto.builder()
                     .boardId(boardTb.get().getBoardId())
@@ -253,7 +253,7 @@ public class BoardServiceImpl implements BoardService {
                     .content(request.getContent())
                     .build());
             if (isEnrollFile) {
-                boardEnrollService.enrollBoardFiles(boardTb.get(), request.getAddFiles());
+                boardEnrollService.enrollBoardFiles(boardTb.get(), fileService.uploadMultiple(request.getFiles()));
             }
         } else {
             throw new BoardException(BoardResultCode.NOT_EXIST_BOARD); // 게시판 미존재

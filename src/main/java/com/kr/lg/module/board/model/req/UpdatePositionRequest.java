@@ -1,9 +1,9 @@
 package com.kr.lg.module.board.model.req;
 
-import com.kr.lg.model.dto.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -32,7 +32,7 @@ public class UpdatePositionRequest {
     private String content;
 
     @ApiModelProperty(value = "추가 파일")
-    private List<FileDto> addFiles;
+    private List<MultipartFile> files;
 
 
 }

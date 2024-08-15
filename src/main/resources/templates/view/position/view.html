@@ -45,6 +45,9 @@
                     </dd>
                 </dl>
                 <div class="bv-content" >
+                    <th:block th:if="${position.files != null && position.files.size() > 0}">
+                        <img th:src="${file.path}" th:each="file:${position.files}" style="max-width: 100%; height: auto"  />
+                    </th:block>
                     <pre th:utext="${position.content}" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
                 </div>
                 <dl class="bv-btn">

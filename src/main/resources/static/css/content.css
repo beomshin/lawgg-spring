@@ -548,6 +548,7 @@
 .board-view .bv-poll > dl p {margin-top:20px;}
 .board-view .bv-poll > div {margin-top:50px; padding:30px; text-align:center; border-radius:8px; background:#f5f5f5;}
 .board-view .bv-content {padding:40px 0;}
+.board-view .bv-img {padding:40px 0;}
 .board-view .bv-btn {display:flex; justify-content:space-between; align-items:center; padding-top:40px; border-top:#e5e5e5 1px solid;}
 
 @media all and (max-width:479px) {
