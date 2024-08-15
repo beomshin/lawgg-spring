@@ -51,16 +51,17 @@
                     <pre th:utext="${position.content}" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
                 </div>
                 <dl class="bv-btn">
-                    <th:block th:if="${position.userId + '' == #authentication.name}">
+
                         <dt style="display: flex">
+                            <th:block th:if="${position.userId + '' == #authentication.name}">
                             <a th:href="@{/position/modify/{boardId}(boardId=${position.boardId})}" class="btn-default-m bg-black">수정</a>
                             &nbsp;
                             <form name="deleteComment" method="post" th:action="@{/position/delete}">
                                 <input name="boardId" type="hidden" th:value="${position.boardId}">
                                 <button type="submit" class="btn-default-m bg-black">삭제</button>
                             </form>
+                            </th:block>
                         </dt>
-                    </th:block>
                     <dd>
                         <a th:href="@{/positions}" class="btn-default-m bg-black">목록으로</a>
                     </dd>

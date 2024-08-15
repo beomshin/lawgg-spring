@@ -40,6 +40,6 @@ public class FindPositionRequest {
         this.type = 0;
         this.pageNum = 30;
         this.topic = 1;
-        this.subject = 1;
+        this.subject = 1; // 현재 고정
     }
 }

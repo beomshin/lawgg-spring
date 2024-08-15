@@ -2,6 +2,8 @@ package com.kr.lg.module.trial.model.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kr.lg.common.utils.CommonUtils;
+import com.kr.lg.common.utils.DateUtils;
 import com.kr.lg.module.comment.model.entry.TrialCommentEntry;
 import lombok.*;
 
@@ -43,6 +45,8 @@ public class TrialEntry {
     private Long trialCommentId;
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp  liveDt;
+    private String formattedDate; // 포맷 데이트
+    private boolean isWithinLastHour; // 한시간 이내
     private String replay;
     private Integer plaintiffCount;
     private Integer defendantCount;
@@ -51,5 +55,13 @@ public class TrialEntry {
     private Integer isVote;
     private List<TrialAttachEntry> files;
     private List<TrialCommentEntry> comments; // 댓글 리스트
+
+    public void additionalContent() {
+        this.formattedDate = DateUtils.formatDateTime(this.writeDt); // 오늘이면 시간, 이외 날짜
+        this.title = CommonUtils.subString(this.title, 30); // 30자 처리
+        this.writer = CommonUtils.subString(this.writer, 6); // 6자 처리
+        this.isWithinLastHour = DateUtils.isWithinLastHour(this.writeDt); // 등록 1시간 이내 플래그
+    }
+
 
 }

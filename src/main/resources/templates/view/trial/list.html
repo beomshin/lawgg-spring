@@ -30,19 +30,23 @@
             <!-- 구분 및 옵션 -->
             <dl class="board-sort-option">
                 <dt>
-                    <button class="active"><i class="uit uit-check-square"></i> 전체</button>
-                    <button><i class="uit uit-check-square"></i> 실시간</button>
+                    <button onclick="changeTopic(event,0)" th:classappend="${query.topic == 0} ? 'active' : ''"><i class="uit uit-check-square"></i> 전체</button>
+                    <button onclick="changeTopic(event, 1)" th:classappend="${query.topic == null || query.topic == 1} ? 'active' : ''"><i class="uit uit-check-square"></i> 실시간</button>
                 </dt>
-                <form name="searchForm" method="post" action="">
+                <form id="searchForm" method="get" th:action="@{/trials}">
                     <fieldset>
                         <legend>게시물 검색</legend>
                         <dd class="sso-two">
                             <div>
-                                <select name="" class="w80">
-                                    <option value="">30개</option>
+                                <select name="pageNum" class="w80">
+                                    <option value="30" th:selected="${query.pageNum == null || query.pageNum == 30}">30개</option>
+                                    <option value="50" th:selected="${query.pageNum == 50}">50개</option>
+                                    <option value="100" th:selected="${query.pageNum == 100}">100개</option>
                                 </select>
-                                <input type="text" name="Sstring" title="검색어" value="" placeholder="검색어를 입력하세요." class="input-box w300" />
-                                <a class="btn-default bg-black"><i class="uit uit-search"></i> 검색</a>
+                                <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                <input type="hidden" name="topic" id="topic" th:value="${query.topic == null} ? 1 : ${query.topic}" >
+                                <input type="text" name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                <a class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</a>
                             </div>
                             <p>
                                 <a th:href="@{/trial/write}" class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 글쓰기</a>
@@ -64,249 +68,59 @@
                     <li>추천</li>
                     <li>조회</li>
                 </ol>
-                <ul class="bl-default">
-                    <li><label class="label-default bg-red w50">공지</label></li>
+                <ul class="bl-default" th:each="trial : ${trials}">
                     <li>
-                        <label class="label-default bg-red w50">공지</label>
-                        <em><img src="https://i.pinimg.com/564x/87/d6/80/87d68022d2bbae70b4601a5dbde3860d.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                        <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                        <th:block th:switch="${trial.postType}">
+                            <label th:case="99" class="label-default bg-red w50">공지</label>
+                            <label th:case="98" class="label-default bg-teal w50">이벤트</label>
+                            <label th:case="2" class="label-default bg-purple w50">추천</label>
+                            <label th:case="3" class="label-default bg-green w50">베스트</label>
+                            <span th:case="*">[[${trial.trialId}]]</span>
+                        </th:block>
+
                     </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li><label class="label-default bg-teal w50">이벤트</label></li>
+
                     <li>
-                        <label class="label-default bg-teal w50">이벤트</label>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                        <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                        <th:block th:switch="${trial.postType}">
+                            <label th:case="99" class="label-default bg-red w50">공지</label>
+                            <label th:case="98" class="label-default bg-teal w50">이벤트</label>
+                            <label th:case="2" class="label-default bg-purple w50">추천</label>
+                            <label th:case="3" class="label-default bg-green w50">베스트</label>
+                        </th:block>
+
+                        <th:block th:if="${trial.profile != null}">
+                            <em><img th:src="${trial.profile}" width="100%" height="100%" alt="" title="" /></em>
+                        </th:block>
+
+                        <a th:href="@{/trial/{trialId}(trialId=${trial.trialId})}">[[${trial.title}]]</a>
+
+                        <i class="uil uil-comment-lines"></i> <span>([[${trial.commentCount}]])</span>
+                        <th:block th:if="${trial.isWithinLastHour}">
+                            <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                        </th:block>
                     </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li><label class="label-default bg-green w50">베스트</label></li>
-                    <li>
-                        <label class="label-default bg-green w50">베스트</label>
-                        <em><img src="https://i.pinimg.com/564x/6c/96/49/6c9649814ee5aec01d599c6d3b8ae9bc.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                        <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li><label class="label-default bg-purple w50">추천</label></li>
-                    <li>
-                        <label class="label-default bg-red w50">추천</label>
-                        <em><img src="https://i.pinimg.com/564x/87/d6/80/87d68022d2bbae70b4601a5dbde3860d.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                        <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/87/d6/80/87d68022d2bbae70b4601a5dbde3860d.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                        <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                        <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
-                </ul>
-                <ul class="bl-default">
-                    <li>1.</li>
-                    <li>
-                        <em><img src="https://i.pinimg.com/564x/8c/bb/7f/8cbb7f9a2029863e27fc1a5b84a703c2.jpg" width="100%" height="100%" alt="" title="" /></em>
-                        <a th:href="@{/trial}">로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                        <i class="uil uil-comment-lines"></i> <span>(0)</span>
-                    </li>
-                    <li><font>작성자 : </font> 홍길동</li>
-                    <li><font>작성일 : </font> 2022-07-01</li>
-                    <li><font>추천 : </font> 254</li>
-                    <li><font>조회 : </font> 1,254</li>
+                    <li><font>작성자 : </font> [[${trial.writer}]]</li>
+                    <li><font>작성일 : </font> [[${trial.formattedDate}]]</li>
+                    <li><font>추천 : </font> [[${trial.recommendCount}]]</li>
+                    <li><font>조회 : </font> [[${trial.view}]]</li>
                 </ul>
             </div>
             <!-- 리스트 끝 -->
 
 
             <!-- 페이지넘버링 -->
-            <div class="paging-list">
-                <a ><i class="uil uil-angle-left-b"></i></a>
-                <a >1</a>
-                <a  class="active">2</a>
-                <a >3</a>
-                <a >4</a>
-                <a >5</a>
-                <a ><i class="uil uil-angle-right-b"></i></a>
+            <div class="paging-list" th:with="start=${(trials.number/maxPage)*maxPage + 1}, end=(${(trials.totalPages == 0) ? 1 : (start + (maxPage - 1) < trials.totalPages ? start + (maxPage - 1) : trials.totalPages)})">
+                <a th:if="${start > 1}" th:href="@{/trials(page=${start - maxPage - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}" ><i class="uil uil-angle-left-b"></i></a>
+
+                <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                    <a th:text="${page}" th:href="@{/trials(page=${page - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}" th:classappend="${page == query.page + 1} ? 'active' : ''"></a>
+                </th:block>
+
+                <a th:if="${end < trials.totalPages}" th:href="@{/trials(page=${start + maxPage - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
             </div>
             <!-- 페이지넘버링 끝 -->
 
-
+            <script th:inline="javascript" th:src="@{/static/js/trial/list.js}"></script>
         </div>
     </th:block>
 

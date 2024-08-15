@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class ViewController {
 
-    @GetMapping("/trials")
-    public String trials() {
-        return "view/trial/list";
-    }
-
     @GetMapping("/trial")
     public String trial() {
         return "view/trial/view";

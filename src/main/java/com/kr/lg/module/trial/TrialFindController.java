@@ -4,7 +4,6 @@ import com.kr.lg.module.trial.model.event.TrialCountEvent;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.model.res.FindTrialWithNotLoginResponse;
-import com.kr.lg.module.trial.model.res.FindTrialsResponse;
 import com.kr.lg.module.trial.model.res.FindLawFirmTrialsResponse;
 import com.kr.lg.module.trial.model.res.FindTrialWithLoginResponse;
 import com.kr.lg.module.trial.service.TrialService;
@@ -21,14 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class TrialFindController {
@@ -36,19 +37,20 @@ public class TrialFindController {
     private final TrialService trialService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @GetMapping("/api/public/v1/find/trials")
-    @ApiOperation(value = "트라이얼 게시판 조회", notes = "트라이얼 게시판을 조회합니다.")
-    public ResponseEntity<?> findTrials(
-            @Valid FindTrialsRequest request
+    @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
+    @GetMapping("/trials")
+    public ModelAndView trials(
+            @Valid @ModelAttribute FindTrialsRequest request, ModelAndView modelAndView
     ) throws TrialException {
         Page<TrialEntry> trials = trialService.findTrials(request);
-        AbstractSpec spec = FindTrialsResponse.builder()
-                .list(trials.getContent())
-                .totalElements(trials.getTotalElements())
-                .totalPage(trials.getTotalPages())
-                .curPage(trials.getNumber())
-                .build();
-        return ResponseEntity.ok(spec);
+        trials.getContent().forEach(TrialEntry::additionalContent); // 필요 정보 재세팅
+
+        modelAndView.addObject("trials", trials);
+        modelAndView.addObject("query", request);
+        modelAndView.addObject("maxPage", 10);
+
+        modelAndView.setViewName("view/trial/list");
+        return modelAndView;
     }
 
     @GetMapping("/api/public/v1/find/law-firm/trials")
