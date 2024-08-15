@@ -42,6 +42,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -116,8 +117,10 @@ public class TrialServiceImpl implements TrialService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public TrialTb enrollTrialWithLogin(EnrollTrialWithLoginRequest request, UserTb userTb) throws TrialException {
+        FileDto video = fileService.uploadVideo(request.getVideo());
+
         TrialEnrollDto enrollDto = TrialEnrollDto.builder()
                 .userTb(userTb)
                 .title(request.getTitle())
@@ -127,10 +130,9 @@ public class TrialServiceImpl implements TrialService {
                 .plaintiffOpinion(request.getPlaintiffOpinion())
                 .defendantOpinion(request.getDefendantOpinion())
                 .content(request.getContent())
-                .lawFirmTb(request.getIsLawFirm() != null && request.getIsLawFirm() == 1 ? userTb.getLawFirmTb() : null)
+                .playVideo(video.getPath())
                 .build();
         TrialTb trialTb = trialEnrollService.enrollTrial(enrollDto);
-        trialEnrollService.enrollTrialFiles(trialTb, request.getFiles());
         applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, 1));
         return trialTb;
     }

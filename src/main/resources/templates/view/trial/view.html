@@ -76,10 +76,10 @@
                             <p><button class="btn-default-m bg-dark w100">피고 투표</button></p>
                         </dd>
                     </dl>
-                    <div>
-                        <button sec:authorize="isAuthenticated()" onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
+                    <div sec:authorize="isAuthenticated()">
+                        <button onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
                         &nbsp;
-                        <button th:if="trial.liveType == 0" class="btn-line-gray-m w170" onclick="report()"><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
+                        <button th:if="${trial.liveType == 0}" class="btn-line-gray-m w170" ><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
                     </div>
                 </div>
                 <dl class="bv-btn" >
@@ -87,7 +87,7 @@
                         <th:block th:if="${trial.userId + '' == #authentication.name}">
                             <a th:href="@{/trial/modify/{trial}(trial=${trial.trialId})}" class="btn-default-m bg-black">수정</a>
                             &nbsp;
-                            <form name="deleteComment" method="post" th:action="@{/trial/delete}">
+                            <form name="deleteComment" method="post" th:action="@{/trial/delete}" th:if="${trial.isCanDelete}">
                                 <input name="trialId" type="hidden" th:value="${trial.trialId}">
                                 <button type="submit" class="btn-default-m bg-black">삭제</button>
                             </form>

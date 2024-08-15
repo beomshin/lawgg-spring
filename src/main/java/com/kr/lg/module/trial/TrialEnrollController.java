@@ -1,6 +1,11 @@
 package com.kr.lg.module.trial;
 
+import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.TrialTb;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.model.annotation.AuthUser;
+import com.kr.lg.module.board.exception.BoardException;
+import com.kr.lg.module.board.model.req.EnrollPositionRequest;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
@@ -21,7 +26,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -31,27 +38,16 @@ public class TrialEnrollController {
 
     private final TrialService trialService;
 
-    @PostMapping("/api/v1/enroll/trial")
-    @ApiOperation(value = "회원 트라이얼 게시판 등록", notes = "회원 트라이얼 게시판을 등록합니다.")
-    public ResponseEntity<?> enrollTrialWithLogin(
-            @RequestBody @Valid EnrollTrialWithLoginRequest request,
-            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+    @PostMapping("/trial/enroll")
+    @ApiOperation(value = "트라이얼 게시판 작성하기", notes = "트라이얼 게시판 작성합니다.")
+    public ModelAndView enrollTrial(
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @Valid @ModelAttribute EnrollTrialWithLoginRequest request,
+            ModelAndView modelAndView
     ) throws TrialException {
-        TrialTb trialTb = trialService.enrollTrialWithLogin(request, userAdapter.getUserTb());
-        AbstractSpec spec = EnrollTrialWithLoginResponse.builder()
-                .id(trialTb.getTrialId())
-                .build();
-        return ResponseEntity.ok(spec);
-    }
-
-    @PostMapping("/api/v1/enroll/video")
-    @ApiOperation(value = "회원 트라이얼 게시판 비디오 파일 등록", notes = "회원 트라이얼 게시판 비디오 파일을 등록합니다.")
-    public ResponseEntity<?> enrollVideoWithLogin(
-            @ModelAttribute @Valid EnrollVideoWithLoginRequest request,
-            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws TrialException {
-        TrialTb trialTb = trialService.enrollVideoWithLogin(request, userAdapter.getUserTb());
-        return ResponseEntity.ok().body(new SuccessResponse());
+        TrialTb trialTb = trialService.enrollTrialWithLogin(request, userTb);
+        modelAndView.setViewName("redirect:/trials");
+        return modelAndView;
     }
 
     @PostMapping("/api/v1/vote/trial")

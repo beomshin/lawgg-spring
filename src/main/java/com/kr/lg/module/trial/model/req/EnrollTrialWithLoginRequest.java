@@ -4,6 +4,7 @@ import com.kr.lg.model.dto.FileDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -44,10 +45,8 @@ public class EnrollTrialWithLoginRequest {
     @NotNull(message = "내용이 입력되어있지않습니다.")
     private String content;
 
-    @ApiModelProperty(value = "파일")
-    private List<FileDto> files;
-
-    @ApiModelProperty(value = "로펌게시판여부")
-    private Integer isLawFirm;
+    @NotNull
+    @ApiModelProperty(value = "비디오")
+    private MultipartFile video;
 
 }

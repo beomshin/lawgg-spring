@@ -1,6 +1,7 @@
 package com.kr.lg.module.trial.service.impl;
 
 import com.kr.lg.common.enums.entity.status.AttachStatus;
+import com.kr.lg.common.enums.entity.status.TrialStatus;
 import com.kr.lg.db.entities.*;
 import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.common.enums.entity.level.CommentDepthLevel;
@@ -48,6 +49,8 @@ public class TrialEnrollServiceImpl implements TrialEnrollService {
                     .defendantOpinion(enrollDto.getDefendantOpinion())
                     .plaintiff(enrollDto.getPlaintiff())
                     .defendant(enrollDto.getDefendant())
+                    .playVideo(enrollDto.getPlayVideo())
+                    .status(TrialStatus.NORMAL_STATUS)
                     .build();
             TrialCommentTb commentTb = TrialCommentTb.builder() // 게실글 루트 댓글 엔티티 생성
                     .trialTb(trialTb)

@@ -21,52 +21,34 @@
 
 
             <!-- 등록/수정 -->
-            <form name="addForm" method="post" action="">
+            <form name="addForm" id="addForm" method="post" th:action="@{/trial/enroll}" enctype="multipart/form-data">
                 <fieldset>
                     <legend>등록/수정</legend>
                     <div class="board-write">
                         <div>
                             <dl>
                                 <dt>제목 <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                                <dd><input name="title" type="text" class="input-box w100p" placeholder="제목을 입력해주세요." /></dd>
                             </dl>
                             <dl>
                                 <dt>원고/피고 <span>*</span></dt>
                                 <dd>
                                     <div>
-                                        <input name="" type="text" class="input-box w100p" placeholder="원고" />
-                                        <input name="" type="text" class="input-box w100p" placeholder="피고" />
+                                        <input name="plaintiff" type="text" class="input-box w100p" placeholder="원고 닉네임을 입력해주세요." />
+                                        <input name="defendant" type="text" class="input-box w100p" placeholder="피고 닉네임을 입력해주세요." />
                                     </div>
                                 </dd>
                             </dl>
                             <dl>
-                                <dt>동영상 첨부</dt>
+                                <dt>동영상 첨부 <span>*</span></dt>
                                 <dd>
                                     <div class="input-file">
                                         <label>
                                             파일선택
-                                            <input type="file" onchange="javascript:document.getElementById('fileRoute').value=this.value">
+                                            <input type="file" name="video">
                                         </label>
                                         <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="" class="input-box w100p" />
                                     </div>
-                                    <ul class="bw-file">
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/jpg.gif}" alt="" title="" /> 첨부파일.jpg
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/png.gif}" alt="" title="" /> 첨부파일.png
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/hwp.gif}" alt="" title="" /> 첨부파일.hwp
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                        <li>
-                                            <img th:src="@{/static/images/fileIcn/xls.gif}" alt="" title="" /> 첨부파일.xls
-                                            <button><i class="uil uil-times"></i></button>
-                                        </li>
-                                    </ul>
                                 </dd>
                             </dl>
                         </div>
@@ -80,20 +62,20 @@
                         <div class="mt20">
                             <dl>
                                 <dt>투표 소제목 <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                                <dd><input name="subheading" type="text" class="input-box w100p" placeholder="소제목을 입력해주세요." /></dd>
                             </dl>
                             <dl>
-                                <dt>의견A <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                                <dt>원고의견 <span>*</span></dt>
+                                <dd><input name="plaintiffOpinion" type="text" class="input-box w100p" placeholder="원고의 의견을 입력해주세요." /></dd>
                             </dl>
                             <dl>
-                                <dt>의견B <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                                <dt>피고의견 <span>*</span></dt>
+                                <dd><input name="defendantOpinion" type="text" class="input-box w100p" placeholder="피고의 의견을 입력해주세요." /></dd>
                             </dl>
                         </div>
 
                         <div class="mt20">
-                            <div><textarea cols="" rows="" class="w100p h300"></textarea></div>
+                            <div><textarea name="content" cols="" rows="" class="w100p h300" wrap="hard" placeholder="내용을 입력해주세요."></textarea></div>
                         </div>
 
                         <dl>
@@ -102,18 +84,18 @@
                             </dt>
                             <dd>
                                 <div class="radio-box">
-                                    <input type="radio" name="opt" id="chk1" checked />
+                                    <input type="radio" name="opt" id="chk1" value="on" checked />
                                     <label for="chk1">예</label>
                                 </div>
                                 <div class="radio-box ml20">
-                                    <input type="radio" name="opt" id="chk2" />
+                                    <input type="radio" name="opt" id="chk2" value="off" />
                                     <label for="chk2">아니오</label>
                                 </div>
                             </dd>
                         </dl>
 
                         <p class="bw-btn-two">
-                            <button  class="btn-default bg-black w150">등록하기</button>
+                            <button type="submit"  class="btn-default bg-black w150">등록하기</button>
                             &nbsp;
                             <a th:href="@{/trials}" class="btn-default bg-gray w150">목록으로</a>
                         </p>
@@ -122,7 +104,7 @@
             </form>
             <!-- 등록/수정 끝 -->
 
-
+            <script th:inline="javascript" th:src="@{/static/js/trial/write.js}"></script>
         </div>
     </th:block>
 
