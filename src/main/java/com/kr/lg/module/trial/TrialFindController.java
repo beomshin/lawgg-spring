@@ -2,17 +2,11 @@ package com.kr.lg.module.trial;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
-import com.kr.lg.module.board.exception.BoardException;
-import com.kr.lg.module.board.model.event.BoardCountEvent;
 import com.kr.lg.module.trial.model.event.TrialCountEvent;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
-import com.kr.lg.module.trial.model.res.FindTrialWithNotLoginResponse;
 import com.kr.lg.module.trial.model.res.FindLawFirmTrialsResponse;
-import com.kr.lg.module.trial.model.res.FindTrialWithLoginResponse;
 import com.kr.lg.module.trial.service.TrialService;
-import com.kr.lg.model.annotation.UserPrincipal;
-import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
@@ -59,14 +53,15 @@ public class TrialFindController {
 
     @ApiOperation(value = "트라이얼 게시판 상세 페이지 호출", notes = "트라이얼 게시판 상세 페이지를 호출합니다.")
     @GetMapping("/trial/{id}")
-    public ModelAndView position(
+    public ModelAndView trial(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @ApiParam(value = "트라이얼 아이디", required = true) @PathVariable("id") Long id,
             ModelAndView modelAndView,
             HttpServletRequest request
     ) throws TrialException {
-        modelAndView.addObject("trial", userTb == null ?
-                trialService.findTrialWithNotLogin(id) : trialService.findTrialWithLogin(id, userTb));
+        TrialEntry trialEntry = userTb == null ? trialService.findTrialWithNotLogin(id) : trialService.findTrialWithLogin(id, userTb);
+        trialEntry.additionalContent2();
+        modelAndView.addObject("trial", trialEntry);
         applicationEventPublisher.publishEvent(new TrialCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가
 
         modelAndView.setViewName("view/trial/view");

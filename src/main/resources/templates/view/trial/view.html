@@ -44,8 +44,8 @@
                         <button class="btn-default-s bg-black" onclick="report()"><i class="uit uit-megaphone"></i> 신고하기</button>
                     </dd>
                 </dl>
-                <div class="bv-movie">
-                    <iframe width="100%" height="640" th:src="${trial.playVideo}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="bv-movie" th:if="${trial.playVideo != null}">
+                    <iframe width="100%" height="640" th:src="${trial.playVideo}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
                 <div class="bv-content">
                     <th:block th:if="${trial.files != null && trial.files.size() > 0}">
@@ -56,7 +56,7 @@
                 <div class="bv-lawer">
                     <div><span>원고 :</span> [[${trial.plaintiff}]]</div>
                     <div><span>피고 :</span> [[${trial.defendant}]]</div>
-<!--                    <div><span>판사 :</span> 김길동</div>-->
+                    <div th:if="${trial.judgeName}"><span>판사 :</span> [[${trial.judgeName}]]</div>
                 </div>
                 <div class="bv-poll">
                     <h2>누구의 판단이 맞는가?</h2>
@@ -77,9 +77,9 @@
                         </dd>
                     </dl>
                     <div>
-                        <button sec:authorize="isAuthenticated()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
+                        <button sec:authorize="isAuthenticated()" onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
                         &nbsp;
-                        <button class="btn-line-gray-m w170"><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
+                        <button th:if="trial.liveType == 0" class="btn-line-gray-m w170" onclick="report()"><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
                     </div>
                 </div>
                 <dl class="bv-btn" >
@@ -101,7 +101,7 @@
             <!-- 상세내용 끝 -->
 
 
-            <!-- 베너 -->
+            <!-- 베너 -->ㅅ
             <div class="banner-area01">
                 <img th:src="@{/static/images/banner_img04.png}" alt="" title="" />
             </div>

@@ -63,5 +63,11 @@ public class TrialEntry {
         this.isWithinLastHour = DateUtils.isWithinLastHour(this.writeDt); // 등록 1시간 이내 플래그
     }
 
+    public void additionalContent2() {
+        this.plaintiff = CommonUtils.subString(this.plaintiff, 6); // 6자 처리
+        this.defendant = CommonUtils.subString(this.defendant, 6); // 6자 처리
+        this.judgeName = CommonUtils.subString(this.judgeName, 6); // 6자 처리
+    }
+
 
 }

@@ -4,7 +4,7 @@ function recommend() {
     var header = $("meta[name='_csrf_header']").attr("content");
     $.ajax({
         type: 'POST',
-        url: `${contextPath}/position/recommend`,
+        url: `${contextPath}/trial/recommend`,
         contentType: 'application/json',
         data: JSON.stringify({trialId}),
         xhrFields: {
@@ -14,9 +14,8 @@ function recommend() {
             xhr.setRequestHeader(header, token);
         },
         success: function (response) {
-            console.log(response)
-            // alert('추천 성공하였습니다.')
-            // window.location.reload()
+            alert('추천 성공하였습니다.')
+            window.location.reload()
         },
         error: function (error) {
             if (error.status === 403) {
@@ -36,7 +35,7 @@ function report() {
     var header = $("meta[name='_csrf_header']").attr("content");
     $.ajax({
         type: 'POST',
-        url: `${contextPath}/position/report`,
+        url: `${contextPath}/trial/report`,
         contentType: 'application/json',
         data: JSON.stringify({trialId}),
         xhrFields: {

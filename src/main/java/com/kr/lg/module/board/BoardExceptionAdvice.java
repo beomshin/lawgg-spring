@@ -32,7 +32,7 @@ public class BoardExceptionAdvice {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ModelAndView handle(MethodArgumentNotValidException e, HttpServletRequest request) {
-        log.error("[BoardException] 오류 발생", e);
+        log.error("[MethodArgumentNotValidException] 오류 발생", e);
         ModelAndView mav = new ModelAndView("redirect:" + request.getHeader("Referer"));
         mav.addObject("error", new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
         return mav;

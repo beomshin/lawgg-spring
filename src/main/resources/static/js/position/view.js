@@ -14,9 +14,8 @@ function recommend() {
             xhr.setRequestHeader(header, token);
         },
         success: function (response) {
-            console.log(response)
-            // alert('추천 성공하였습니다.')
-            // window.location.reload()
+            alert('추천 성공하였습니다.')
+            window.location.reload()
         },
         error: function (error) {
             if (error.status === 403) {

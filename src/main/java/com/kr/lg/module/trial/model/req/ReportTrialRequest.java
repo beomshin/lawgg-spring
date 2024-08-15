@@ -16,8 +16,6 @@ public class ReportTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디", required = true)
     @NotNull(message = "트라이얼 아이디가 입력되어있지않습니다.")
-    private Long id;
+    private Long trialId;
 
-    @ApiModelProperty(value = "내용", required = true)
-    private String content;
 }

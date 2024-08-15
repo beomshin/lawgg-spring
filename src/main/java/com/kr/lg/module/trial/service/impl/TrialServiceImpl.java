@@ -1,16 +1,12 @@
 package com.kr.lg.module.trial.service.impl;
 
 import com.kr.lg.common.enums.entity.status.TrialStatus;
-import com.kr.lg.db.entities.TrialRecommendTb;
-import com.kr.lg.db.entities.TrialTb;
-import com.kr.lg.db.entities.TrialVoteTb;
-import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.db.repositories.TrialAttachRepository;
-import com.kr.lg.db.repositories.TrialRecommendRepository;
-import com.kr.lg.db.repositories.TrialRepository;
-import com.kr.lg.db.repositories.TrialVoteRepository;
+import com.kr.lg.db.entities.*;
+import com.kr.lg.db.repositories.*;
 import com.kr.lg.common.enums.entity.status.PrecedentStatus;
 import com.kr.lg.common.enums.logic.TrialTopic;
+import com.kr.lg.module.board.exception.BoardException;
+import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.trial.model.event.AlertTLEvent;
 import com.kr.lg.module.trial.model.event.AlertVideoEvent;
 import com.kr.lg.module.trial.model.event.TrialCreateCountEvent;
@@ -70,6 +66,7 @@ public class TrialServiceImpl implements TrialService {
     private final TrialRecommendRepository trialRecommendRepository;
     private final TrialVoteRepository trialVoteRepository;
     private final TrialAttachRepository trialAttachRepository;
+    private final ReportRepository reportRepository;
     private final CommentMapper commentMapper;
     private final BCryptPasswordEncoder encoder;
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -191,10 +188,10 @@ public class TrialServiceImpl implements TrialService {
     @Override
     @Transactional
     public void recommendTrial(RecommendTrialRequest request, UserTb userTb) throws TrialException {
-        Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        Optional<TrialRecommendTb> recommendTb = trialRecommendRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getTrialId(), userTb.getUserId());
         if (recommendTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_RECOMMEND_TRIAL); // 중복 추천 방어코드
-        trialRecommendService.recommendTrial(TrialTb.builder().trialId(request.getId()).build(), userTb);
-        applicationEventPublisher.publishEvent(new TrialRecommendEvent(request.getId(), 1));
+        trialRecommendService.recommendTrial(TrialTb.builder().trialId(request.getTrialId()).build(), userTb);
+        applicationEventPublisher.publishEvent(new TrialRecommendEvent(request.getTrialId(), 1));
     }
 
     @Override
@@ -207,11 +204,15 @@ public class TrialServiceImpl implements TrialService {
 
     @Override
     public void reportTrial(ReportTrialRequest request, String ip) throws TrialException {
-        trialReportService.reportTrial(TrialReportDto.builder()
-                        .ip(ip)
-                        .content(request.getContent())
-                        .trialTb(TrialTb.builder().trialId(request.getId()).build())
-                .build());
+        Optional<TrialTb> trialTb = trialRepository.findById(request.getTrialId());
+        if (trialTb.isPresent()) {
+            Optional<ReportTb> reportTb = reportRepository.findByTrialTbAndIp(trialTb.get(), ip);
+            if (reportTb.isPresent()) throw new TrialException(TrialResultCode.ALREADY_REPORT_BOARD); // 신고 완료 상태
+            TrialReportDto reportDto = TrialReportDto.builder().ip(ip).trialTb(trialTb.get()).build();
+            trialReportService.reportTrial(reportDto);
+        } else {
+            throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
+        }
     }
 
     @Override
@@ -234,9 +235,8 @@ public class TrialServiceImpl implements TrialService {
     @Override
     @Transactional
     public void deleteTrial(DeleteTrialRequest request, UserTb userTb) throws TrialException {
-        Optional<TrialTb> trialTb = trialRepository.findByTrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        Optional<TrialTb> trialTb = trialRepository.findByTrialIdAndUserTb_UserId(request.getTrialId(), userTb.getUserId());
         if (trialTb.isPresent()) {
-            if (!encoder.matches(request.getPassword(), userTb.getPassword())) throw new TrialException(TrialResultCode.UN_MATCH_PASSWORD); // 비밀번호 불일치
             trialDeleteService.deleteTrial(trialTb.get().getTrialId());
             applicationEventPublisher.publishEvent(new TrialCreateCountEvent(userTb, -1));
         } else {
