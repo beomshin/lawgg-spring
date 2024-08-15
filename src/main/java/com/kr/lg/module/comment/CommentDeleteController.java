@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ public class CommentDeleteController {
 
     @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
     @PostMapping("/position/comment/delete")
-    public ModelAndView positionCommentEnroll(
+    public ModelAndView positionCommentDelete(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute DeleteBoardCommentNotWithLoginRequest request,
             ModelAndView modelAndView
@@ -47,14 +48,17 @@ public class CommentDeleteController {
         return modelAndView;
     }
 
-
-    @PostMapping("/api/v1/delete/trial/comment")
-    @ApiOperation(value = "로그인 트라이얼 게시판 댓글 삭제", notes = "로그인 트라이얼 게시판 댓글 삭제를합니다.")
-    public ResponseEntity<?> deleteCommentTrial(
-            @RequestBody DeleteCommentTrialRequest request,
-            @ApiParam(value = "회원 토큰", required = true, hidden = true) @UserPrincipal UserAdapter userAdapter
-    ) throws  CommentException {
-        commentService.deleteTrialCommentWithLogin(request, userAdapter.getUserTb());
-        return ResponseEntity.ok().body(new SuccessResponse());
+    @Secured("ROLE_USER")
+    @PostMapping("/trial/comment/delete")
+    @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
+    public ModelAndView trialCommentDelete(
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @Valid @ModelAttribute DeleteCommentTrialRequest request,
+            ModelAndView modelAndView
+    ) throws CommentException {
+        commentService.deleteTrialCommentWithLogin(request, userTb);
+        modelAndView.setViewName("redirect:/trial/" + request.getTrialId());
+        return modelAndView;
     }
+
 }

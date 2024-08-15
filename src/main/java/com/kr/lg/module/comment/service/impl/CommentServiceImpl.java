@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -52,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
     private final BCryptPasswordEncoder encoder;
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void enrollBoardCommentNotWithLogin(EnrollPositionCommentRequest request, String ip) throws CommentException {
         Optional<BoardCommentTb> commentTb = boardCommentRepository.findByBoardTb_BoardIdAndDepth(request.getBoardId(), CommentDepthLevel.ROOT_COMMENT);
         if (! commentTb.isPresent()) {
@@ -79,7 +80,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void enrollBoardCommentWithLogin(EnrollPositionCommentRequest request, UserTb userTb, String ip) throws CommentException {
         Optional<BoardCommentTb> commentTb = boardCommentRepository.findByBoardTb_BoardIdAndDepth(request.getBoardId(), CommentDepthLevel.ROOT_COMMENT);
         if (! commentTb.isPresent()) {
@@ -147,7 +148,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBoardCommentNotWithLogin(DeleteBoardCommentNotWithLoginRequest request) throws CommentException {
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findByBoardCommentId(request.getCommentId());
         if (boardCommentTb.isPresent() && boardCommentTb.get().getBoardTb().getWriterType() == WriterType.ANONYMOUS_TYPE) {
@@ -162,7 +163,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBoardCommentWithLogin(DeleteBoardCommentNotWithLoginRequest request, UserTb userTb) throws CommentException {
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findByBoardCommentId(request.getCommentId());
         if (boardCommentTb.isPresent() && boardCommentTb.get().getBoardTb().getWriterType() == WriterType.MEMBER_TYPE) {
@@ -177,20 +178,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void enrollTrialCommentWithLogin(EnrollCommentTrialRequest request, UserTb userTb, String ip) throws CommentException {
+        Optional<TrialCommentTb> commentTb = trialCommentRepository.findByTrialTb_TrialIdAndDepth(request.getTrialId(), CommentDepthLevel.ROOT_COMMENT);
+        if (! commentTb.isPresent()) {
+            throw new CommentException(CommentResultCode.FAIL_FIND_TRIAL);
+        }
+
         CommentEnrollDto enrollDto = CommentEnrollDto.builder()
+                .id(request.getTrialId())
+                .loginId(userTb.getLoginId())
                 .userTb(userTb)
-                .trialTb(TrialTb.builder().trialId(request.getId()).build())
-                .parentId(request.getParentId())
+                .trialTb(commentTb.get().getTrialTb())
+                .parentId(commentTb.get().getTrialCommentId())
                 .content(request.getContent())
-                .emoticon(request.getEmoticon())
                 .depth(CommentDepthLevel.of(request.getDepth()))
-                .trialCommentId(request.getTrialCommentId())
+                .writer(userTb.getNickName())
                 .ip(ip)
                 .build();
+
         commentEnrollService.enrollTrialComment(enrollDto);
-        applicationEventPublisher.publishEvent(new TrialCommentCreateCountEvent(request.getId(), 1)); // 트라이얼 답글 개수 증가
+        applicationEventPublisher.publishEvent(new TrialCommentCreateCountEvent(request.getTrialId(), 1)); // 트라이얼 답글 개수 증가
         applicationEventPublisher.publishEvent(new UserCommentCreateCountEvent(userTb, 1)); // 댓글 개수 증가
         switch (enrollDto.getDepth()) {
             case PARENT_COMMENT: applicationEventPublisher.publishEvent(new TrialCommentCreateAlertToTrialWriterEvent(enrollDto)); break;
@@ -199,9 +207,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteTrialCommentWithLogin(DeleteCommentTrialRequest request, UserTb userTb) throws CommentException {
-        Optional<TrialCommentTb> trialCommentTb = trialCommentRepository.findById(request.getId());
+        Optional<TrialCommentTb> trialCommentTb = trialCommentRepository.findById(request.getCommentId());
         if (trialCommentTb.isPresent()) {
             if (trialCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_TRIAL_COMMENT);
             else if (!userTb.getUserId().equals(trialCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);

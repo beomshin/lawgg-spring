@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,16 +50,19 @@ public class CommentEnrollController {
         return modelAndView;
     }
 
-    @PostMapping("/api/v1/enroll/trial/comment")
-    @ApiOperation(value = "로그인 트라이얼 게시판 댓글 등록", notes = "로그인 트라이얼 게시판 댓글을 등록합니다.")
-    public ResponseEntity<?> enrollCommentTrial(
-            HttpServletRequest servletRequest,
-            @RequestBody @Valid EnrollCommentTrialRequest request,
-            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+    @Secured("ROLE_USER")
+    @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
+    @PostMapping("/trial/comment/enroll")
+    public ModelAndView trialCommentEnroll(
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @Valid @ModelAttribute EnrollCommentTrialRequest request,
+            ModelAndView modelAndView,
+            HttpServletRequest servletRequest
     ) throws CommentException {
-        commentService.enrollTrialCommentWithLogin(request,userAdapter.getUserTb(), ClientUtils.getRemoteIP(servletRequest));
-        return ResponseEntity.ok(new SuccessResponse());
-    }
+        commentService.enrollTrialCommentWithLogin(request, userTb, ClientUtils.getRemoteIP(servletRequest));
 
+        modelAndView.setViewName("redirect:/trial/" + request.getTrialId());
+        return modelAndView;
+    }
 
 }

@@ -16,23 +16,15 @@ public class EnrollCommentTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디", required = true)
     @NotNull(message = "트라이얼 아이디가 입력되어있지않습니다.")
-    private Long id;
-
-    @ApiModelProperty(value = "부모 댓글 아이디(트라이얼 댓글)")
-    private Long parentId;
+    private Long trialId;
 
     @ApiModelProperty(value = "내용", required = true)
     @NotNull(message = "내용이 입력되어있지않습니다.")
     private String content;
 
-    @ApiModelProperty(value = "이모티콘")
-    private String emoticon;
-
     @ApiModelProperty(value = "댓글 레벨", required = true)
     @NotNull(message = "댓글 레벨이 입력되어있지않습니다.")
     private int depth;
 
-    @ApiModelProperty(value = "부모 댓글 아이디(대댓글)")
-    private Long trialCommentId;
 
 }

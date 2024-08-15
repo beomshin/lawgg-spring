@@ -111,17 +111,10 @@
             <!-- 댓글 -->
             <div class="board-comment">
                 <h2><i class="uil uil-comment-message"></i> 총 댓글 <span th:text="${trial.comments.size()}"></span>개</h2>
-                <form name="addComment" method="post" th:action="@{/trial/comment/enroll}">
-                    <div sec:authorize="isAnonymous()">
-                        <input type="text" name="loginId" title="" value="" placeholder="아이디를 입력하세요." class="input-box w200" />
-                        &nbsp;
-                        <input type="password" name="password" title="" value="" placeholder="비밀번호를 입력하세요." class="input-box w200" />
-                    </div>
-                    <div sec:authorize="isAuthenticated()">
-                        <input name="loginId" type="hidden" class="input-box w100p" value="oauth" />
-                        <input name="password" type="hidden" class="input-box w100p" value="******" />
-                    </div>
-                    <input name="boardId" type="hidden" th:value="${trial.trialId}">
+                <form name="addComment" method="post" th:action="@{/trial/comment/enroll}" sec:authorize="isAuthenticated()">
+                    <input name="loginId" type="hidden" class="input-box w100p" value="oauth" />
+                    <input name="password" type="hidden" class="input-box w100p" value="******" />
+                    <input name="trialId" type="hidden" th:value="${trial.trialId}">
                     <input name="depth" type="hidden" value="1">
                     <dl>
                         <dt>
@@ -155,7 +148,7 @@
                             <dd>
 <!--                                <a  class="btn-line-gray-s">수정</a> &nbsp;-->
                                 <form name="deleteComment" method="post" th:action="@{/trial/comment/delete}">
-                                    <input name="boardId" type="hidden" th:value="${trial.trialId}">
+                                    <input name="trialId" type="hidden" th:value="${trial.trialId}">
                                     <input name="commentId" type="hidden" th:value="${comment.trialCommentId}">
                                     <button th:if="${comment.created == 1}" class="btn-line-gray-s">삭제</button> &nbsp;
                                 </form>

@@ -18,7 +18,6 @@ public class DeleteBoardCommentNotWithLoginRequest {
     @NotNull(message = "댓글 아이디가 입력되어있지않습니다.")
     private Long boardId;
 
-
     @ApiModelProperty(value = "댓글 아이디", required = true)
     @NotNull(message = "댓글 아이디가 입력되어있지않습니다.")
     private Long commentId;
