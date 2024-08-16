@@ -50,8 +50,8 @@ public class TrialEntry {
     private String formattedDate; // 포맷 데이트
     private boolean isWithinLastHour; // 한시간 이내
     private String replay;
-    private Integer plaintiffCount;
-    private Integer defendantCount;
+    private int plaintiffCount;
+    private int defendantCount;
     private Integer created;
     private Integer isRecommend;
     private Integer isVote;

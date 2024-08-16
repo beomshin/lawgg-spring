@@ -63,14 +63,24 @@
                     <dl>
                         <dt>
                             <div>
-                                <span th:style="'width:' + (${trial.plaintiffCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#EC0745;'"></span>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} != 0">
+                                    <span th:style="'width:' + (${trial.plaintiffCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#EC0745;'"></span>
+                                </th:block>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} == 0">
+                                    <span style="width: 0%; background:#EC0745;"></span>
+                                </th:block>
                             </div>
                             <h2>[[${trial.plaintiffOpinion}]]([[${trial.plaintiffCount}]]표)</h2>
                             <p><button class="btn-default-m bg-dark w100" onclick="vote(0)" th:disabled="${!#authorization.expression('isAuthenticated()')}" >원고 투표</button></p>
                         </dt>
                         <dd>
                             <div>
-                                <span th:style="'width:' + (${trial.defendantCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#4F8EF8;'"></span>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} != 0">
+                                    <span th:style="'width:' + (${trial.defendantCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#4F8EF8;'"></span>
+                                </th:block>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} == 0">
+                                    <span style="width: 0%; background:#4F8EF8;"></span>
+                                </th:block>
                             </div>
                             <h2>([[${trial.defendantCount}]]표) [[${trial.defendantOpinion}]]</h2>
                             <p><button class="btn-default-m bg-dark w100" onclick="vote(1)" th:disabled="${!#authorization.expression('isAuthenticated()')}">피고 투표</button></p>
