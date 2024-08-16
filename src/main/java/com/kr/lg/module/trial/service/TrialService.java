@@ -16,8 +16,8 @@ public interface TrialService {
     TrialEntry findTrialWithNotLogin(long id) throws TrialException;
     TrialEntry findTrialWithLogin(long id, UserTb userTb) throws TrialException;
     TrialTb enrollTrialWithLogin(EnrollTrialRequest request, UserTb userTb) throws TrialException;
-    void trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException;
-    void trialEndLive(UpdateEndTrialRequest request, UserTb userTb) throws TrialException;
+    void trialStartLive(StartTrialRequest request, UserTb userTb) throws TrialException;
+    void trialEndLive(EndTrialRequest request, UserTb userTb) throws TrialException;
     void recommendTrial(RecommendTrialRequest request, UserTb userTb) throws TrialException;
     void reportTrial(ReportTrialRequest request, String ip) throws TrialException;
     void voteTrial(VoteTrialRequest request, UserTb userTb) throws TrialException;

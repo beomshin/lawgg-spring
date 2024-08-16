@@ -63,23 +63,25 @@
                     <dl>
                         <dt>
                             <div>
-                                <span style="width:30%; background:#EC0745;"></span>
+                                <span th:style="'width:' + (${trial.plaintiffCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#EC0745;'"></span>
                             </div>
-                            <h2>[[${trial.plaintiffOpinion}]]</h2>
-                            <p><button class="btn-default-m bg-dark w100">원고 투표</button></p>
+                            <h2>[[${trial.plaintiffOpinion}]]([[${trial.plaintiffCount}]]표)</h2>
+                            <p><button class="btn-default-m bg-dark w100" onclick="vote(0)" th:disabled="${!#authorization.expression('isAuthenticated()')}" >원고 투표</button></p>
                         </dt>
                         <dd>
                             <div>
-                                <span style="width:60%; background:#4F8EF8;"></span>
+                                <span th:style="'width:' + (${trial.defendantCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#4F8EF8;'"></span>
                             </div>
-                            <h2>[[${trial.defendantOpinion}]]</h2>
-                            <p><button class="btn-default-m bg-dark w100">피고 투표</button></p>
+                            <h2>([[${trial.defendantCount}]]표) [[${trial.defendantOpinion}]]</h2>
+                            <p><button class="btn-default-m bg-dark w100" onclick="vote(1)" th:disabled="${!#authorization.expression('isAuthenticated()')}">피고 투표</button></p>
                         </dd>
                     </dl>
-                    <div sec:authorize="isAuthenticated()">
-                        <button onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
+                    <div style="display: flex; justify-content: center">
+                        <button sec:authorize="isAuthenticated()" onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
                         &nbsp;
-                        <button sec:authorize="hasAnyAuthority('ROLE_JUDGE')" th:if="${trial.liveType == 0}" class="btn-line-gray-m w170" ><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
+                        <button sec:authorize="hasAnyAuthority('ROLE_JUDGE')" th:if="${trial.liveType == 0 && trial.endingType == 0}" class="btn-line-gray-m w170" onclick="start()"><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
+                        <button sec:authorize="hasAnyAuthority('ROLE_JUDGE')" th:if="${trial.liveType == 1 && trial.endingType == 0}" class="btn-line-gray-m w170" onclick="end()"><i class="uil uil-notebooks"></i> 실시간 재판 종료</button>
+                        <button disabled th:if="${trial.endingType == 1}" class="btn-line-gray-m w170" ><i class="uil uil-notebooks"></i> 판결 완료</button>
                     </div>
                 </div>
                 <dl class="bv-btn" >

@@ -135,13 +135,12 @@ public class TrialServiceImpl implements TrialService {
 
     @Override
     @Transactional
-    public void trialStartLive(UpdateLiveTrialRequest request, UserTb userTb) throws TrialException {
-        Optional<TrialTb> trialTb = trialRepository.findById(request.getId());
+    public void trialStartLive(StartTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialTb> trialTb = trialRepository.findById(request.getTrialId());
         if (trialTb.isPresent()) {
             trialUpdateService.updateLiveStartTrial(TrialUpdateDto.builder()
-                    .trialId(request.getId())
+                    .trialId(request.getTrialId())
                     .userTb(userTb)
-                    .url(request.getUrl())
                     .build());
             applicationEventPublisher.publishEvent(new AlertTLEvent(trialTb.get()));
         } else {
@@ -151,12 +150,14 @@ public class TrialServiceImpl implements TrialService {
 
     @Override
     @Transactional
-    public void trialEndLive(UpdateEndTrialRequest request, UserTb userTb) throws TrialException {
-        Optional<TrialTb> trialTb = trialRepository.findById(request.getId());
+    public void trialEndLive(EndTrialRequest request, UserTb userTb) throws TrialException {
+        Optional<TrialTb> trialTb = trialRepository.findById(request.getTrialId());
         if (trialTb.isPresent()) {
+            MapperParam param = FindTrialParamData.builder().trialId(request.getTrialId()).build();
+            TrialVoteEntry vote = trialFindService.findVotePercent(param);
             trialUpdateService.updateEndTrial(TrialUpdateDto.builder()
-                    .trialId(request.getId())
-                    .precedent(PrecedentStatus.of(request.getPrecedent()))
+                    .trialId(request.getTrialId())
+                    .precedent(vote.whoWin())
                     .build());
         } else {
             throw new TrialException(TrialResultCode.NOT_EXIST_TRIAL); // 트라이얼 미존재
@@ -187,7 +188,7 @@ public class TrialServiceImpl implements TrialService {
 
     @Override
     public void voteTrial(VoteTrialRequest request, UserTb userTb) throws TrialException {
-        Optional<TrialVoteTb> trialVoteTb = trialVoteRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getId(), userTb.getUserId());
+        Optional<TrialVoteTb> trialVoteTb = trialVoteRepository.findByTrialTb_TrialIdAndUserTb_UserId(request.getTrialId(), userTb.getUserId());
         if (trialVoteTb.isPresent()) {
             trialVoteService.changeVoteTrial(TrialVoteDto.builder()
                             .precedent(PrecedentStatus.of(request.getPrecedent()))
@@ -196,7 +197,7 @@ public class TrialServiceImpl implements TrialService {
         } else {
             trialVoteService.voteTrial(TrialVoteDto.builder()
                             .precedent(PrecedentStatus.of(request.getPrecedent()))
-                            .trialTb(TrialTb.builder().trialId(request.getId()).build())
+                            .trialTb(TrialTb.builder().trialId(request.getTrialId()).build())
                             .userTb(userTb)
                     .build());
         }

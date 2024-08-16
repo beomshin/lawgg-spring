@@ -6,8 +6,6 @@ import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.trial.model.req.VoteTrialRequest;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
-import com.kr.lg.model.annotation.UserPrincipal;
-import com.kr.lg.model.annotation.UserAdapter;
 
 import com.kr.lg.module.trial.model.req.EnrollTrialRequest;
 import com.kr.lg.model.common.SuccessResponse;
@@ -16,6 +14,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,18 +37,19 @@ public class TrialEnrollController {
             @Valid @ModelAttribute EnrollTrialRequest request,
             ModelAndView modelAndView
     ) throws TrialException {
-        TrialTb trialTb = trialService.enrollTrialWithLogin(request, userTb);
+        trialService.enrollTrialWithLogin(request, userTb);
         modelAndView.setViewName("redirect:/trials");
         return modelAndView;
     }
 
-    @PostMapping("/api/v1/vote/trial")
+    @Secured("ROLE_USER")
+    @PostMapping("/trial/vote")
     @ApiOperation(value = "트라이얼 투표", notes = "트라이얼 투표를 합니다.")
     public ResponseEntity<?> voteTrial(
             @RequestBody @Valid VoteTrialRequest request,
-            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb
     ) throws TrialException {
-        trialService.voteTrial(request, userAdapter.getUserTb());
+        trialService.voteTrial(request, userTb);
         return ResponseEntity.ok().body(new SuccessResponse());
     }
 }
