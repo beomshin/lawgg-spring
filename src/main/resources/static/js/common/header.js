@@ -100,3 +100,12 @@ $(document).ready(function () {
         }
     });
 })
+
+function search() {
+    var form = document.getElementById("searchForm");
+    form.submit();
+}
+function search2() {
+    var form = document.getElementById("searchForm2");
+    form.submit();
+}

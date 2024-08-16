@@ -38,7 +38,12 @@
                 <div class="header-search">
                     <div class="input-search-line">
                         <p><i class="uit uit-search"></i></p>
-                        <div><input type="text" title="keywords" placeholder="검색어를 입력하세요." /></div>
+                        <form id="searchForm2" th:action="@{/trials}" method="get">
+                            <div>
+                                <input type="text" name="keyword" title="keywords" placeholder="검색어를 입력하세요."
+                                       onkeydown="if (event.key === 'Enter') { search2(); }" />
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -64,7 +69,13 @@
                     <div class="hsm-search">
                         <div class="input-search-line-mobile">
                             <p><i class="uil uil-search"></i></p>
-                            <div><input type="text" name="" title="keywords" placeholder="검색어를 입력하세요." /></div>
+                            <form id="searchForm" th:action="@{/trials}" method="get">
+                                <div>
+                                    <input type="text" name="keyword" title="keywords" placeholder="검색어를 입력하세요."
+                                           onkeydown="if (event.key === 'Enter') { search(); }" />
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                     <div class="hsm-menu">
