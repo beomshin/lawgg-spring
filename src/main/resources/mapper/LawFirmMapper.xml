@@ -95,4 +95,74 @@
             ) A
     </select>
 
+    <select id="findLawFirmBoard" parameterType="com.kr.lg.model.mapper.LawFirmParam" resultType="com.kr.lg.module.lawfirm.model.entry.LawFirmBoardEntry">
+        SELECT A.*, ut.profile
+        FROM (
+            SELECT tt.trialId AS 'id', 0 as 'type',tt.postType, tt.title, tt.writer, tt.writeDt,  tt.`view`, tt.recommendCount,  tt.commentCount,  null as 'lineType', tt.userId, tt.status, tt.lawFirmId
+            FROM  TrialTb tt
+            <where>
+                AND tt.lawFirmId = #{data.lawFirmId} AND tt.status = 1
+            </where>
+            UNION ALL
+            SELECT bt.boardId AS 'id', 1 as 'type', bt.postType, bt.title, bt.writer,bt.writeDt, bt.`view`, bt.recommendCount,bt.commentCount, bt.lineType, bt.userId , bt.status, bt.lawFirmId
+            FROM BoardTb bt
+            <where>
+                AND bt.lawFirmId = #{data.lawFirmId} AND bt.status = 1
+            </where>
+        ) A
+        LEFT JOIN UserTb ut ON(A.userId = ut.userId)
+
+        <where>
+            <!-- 검색조건 타입 -->
+            <if test="data.subject != null and data.keyword != null and data.keyword.length() > 0">
+                <choose>
+
+                    <!-- 로펌 제목 조회 -->
+                    <when test="data.subject == 1">
+                        AND A.title LIKE CONCAT('%', #{data.keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+
+        <if test="pageable.sort != null and !pageable.sort.isEmpty()">
+            ORDER BY
+            <foreach collection="pageable.sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+    </select>
+
+    <select id="findLawFirmBoardCnt" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="long">
+        SELECT COUNT(*)
+        FROM (
+        SELECT tt.trialId AS 'id', 0 as 'type',tt.postType, tt.title, tt.writer, tt.writeDt,  tt.`view`, tt.recommendCount,  tt.commentCount,  null as 'lineType', tt.userId, tt.status, tt.lawFirmId
+        FROM  TrialTb tt
+        <where>
+            AND tt.lawFirmId = #{lawFirmId} AND tt.status = 1
+        </where>
+        UNION ALL
+        SELECT bt.boardId AS 'id', 1 as 'type', bt.postType, bt.title, bt.writer,bt.writeDt,bt.`view`, bt.recommendCount,bt.commentCount, bt.lineType, bt.userId , bt.status, bt.lawFirmId
+        FROM BoardTb bt
+        <where>
+            AND bt.lawFirmId = #{lawFirmId} AND bt.status = 1
+        </where>
+        ) A
+
+        <where>
+            <!-- 검색조건 타입 -->
+            <if test="subject != null and keyword != null and keyword.length() > 0">
+                <choose>
+
+                    <!-- 로펌 제목 조회 -->
+                    <when test="subject == 1">
+                        AND A.title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
 </mapper>

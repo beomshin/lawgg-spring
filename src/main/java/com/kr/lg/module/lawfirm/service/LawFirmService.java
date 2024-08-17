@@ -1,12 +1,10 @@
 package com.kr.lg.module.lawfirm.service;
 
 import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.module.lawfirm.model.entry.LawFirmBoardEntry;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
-import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
+import com.kr.lg.module.lawfirm.model.req.*;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
-import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
-import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
-import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
 import org.springframework.data.domain.Page;
 
 public interface LawFirmService {
@@ -17,4 +15,5 @@ public interface LawFirmService {
     Page<LawFirmEntry> findLawFirms(FindLawFirmsRequest request) throws LawFirmException;
     LawFirmEntry findLawFirmWithNotLogin(long id) throws LawFirmException;
     LawFirmEntry findLawFirmWithLogin(long id, UserTb userTb) throws LawFirmException;
+    Page<LawFirmBoardEntry> findLawFirmBoard(FindLawFirmsBoardRequest request, long lawFirmId) throws LawFirmException;
 }

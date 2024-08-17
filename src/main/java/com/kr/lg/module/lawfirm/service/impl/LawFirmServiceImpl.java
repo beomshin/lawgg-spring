@@ -1,5 +1,7 @@
 package com.kr.lg.module.lawfirm.service.impl;
 
+import com.kr.lg.common.enums.logic.LawFirmTopic;
+import com.kr.lg.common.enums.logic.TrialTopic;
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
@@ -7,13 +9,11 @@ import com.kr.lg.common.enums.entity.status.ApplyStatus;
 import com.kr.lg.common.enums.entity.status.LawFirmStatus;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
 import com.kr.lg.module.lawfirm.model.dto.LawFirmEnrollDto;
+import com.kr.lg.module.lawfirm.model.entry.LawFirmBoardEntry;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
 import com.kr.lg.module.lawfirm.model.mapper.FindLawFirmParamData;
-import com.kr.lg.module.lawfirm.model.req.ApplyLawFirmRequest;
+import com.kr.lg.module.lawfirm.model.req.*;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
-import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
-import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
-import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
 import com.kr.lg.module.lawfirm.service.LawFirmDeleteService;
 import com.kr.lg.module.lawfirm.service.LawFirmEnrollService;
 import com.kr.lg.module.lawfirm.service.LawFirmFindService;
@@ -21,11 +21,13 @@ import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.module.lawfirm.sort.LawFirmSort;
 import com.kr.lg.model.mapper.LawFirmParam;
 import com.kr.lg.model.mapper.MapperParam;
+import com.kr.lg.module.trial.sort.TrialSort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -120,4 +122,23 @@ public class LawFirmServiceImpl implements LawFirmService {
         return entry;
     }
 
+    @Override
+    public Page<LawFirmBoardEntry> findLawFirmBoard(FindLawFirmsBoardRequest request, long lawFirmId) throws LawFirmException {
+        Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
+        MapperParam param = FindLawFirmParamData.builder()
+                .lawFirmId(lawFirmId)
+                .keyword(request.getKeyword())
+                .build();
+        return lawFirmFindService.findLawFirmBoard(new LawFirmParam<>(param, pageable));
+    }
+
+    private Sort getSort(int topic) {
+        if (LawFirmTopic.NEW_TOPIC == LawFirmTopic.of(topic)) {
+            return LawFirmSort.writeDtDesc();
+        } else if (LawFirmTopic.VIEW_TOPIC == LawFirmTopic.of(topic)) {
+            return LawFirmSort.viewDesc();
+        }  else {
+            return LawFirmSort.hotDesc();
+        }
+    }
 }

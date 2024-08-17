@@ -4,6 +4,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
+import com.kr.lg.module.lawfirm.model.req.FindLawFirmsBoardRequest;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,10 +48,12 @@ public class LawFirmFindController {
     public ModelAndView lawFirmPost(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @ApiParam(value = "로펌 아이디", required = true) @PathVariable("id") Long lawfirmId,
+            @Valid @ModelAttribute FindLawFirmsBoardRequest request,
             ModelAndView mav
     ) throws LawFirmException {
         mav.addObject("lawFirm", userTb == null ?
                 lawFirmService.findLawFirmWithNotLogin(lawfirmId) : lawFirmService.findLawFirmWithLogin(lawfirmId, userTb));
+        mav.addObject("lawFirmBoards", lawFirmService.findLawFirmBoard(request, lawfirmId));
         mav.setViewName("view/lawfirm/list");
         return mav;
     }
