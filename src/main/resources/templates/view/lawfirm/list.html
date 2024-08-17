@@ -6,7 +6,8 @@
 
     <th:block layout:fragment="content">
         <div class="content">
-
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
 
             <!-- 타이틀 -->
             <dl class="title">
@@ -49,17 +50,17 @@
                     </dd>
                     <dt sec:authorize="isAuthenticated()">
                         <th:block th:if="${lawFirm.isMyLawFirmFlag == 1}">  <!-- 나의 가입 로펌 -->
-                            <a class="btn-default bg-red w120"  ><i class="uil uil-user-square"></i> 탈퇴하기</a>
+                            <a class="btn-default bg-red w120"  onclick="quit()"><i class="uil uil-user-square"></i> 탈퇴하기</a>
                         </th:block>
                         <th:block th:if="${lawFirm.isMyLawFirmFlag == 0}">
                             <th:block th:if="${lawFirm.isSignLawFirmFlag == 1}" > <!-- 내 로펌여부 -->
-                                <a class="btn-default bg-teal w120" ><i class="uil uil-user-square"></i>내로펌가기</a>
+                                <a class="btn-default bg-teal w120" th:href="@{/law-firm/{myLawFirmId}(myLawFirmId=${lawFirm.myLawFirmId} )}" ><i class="uil uil-user-square"></i>내로펌가기</a>
                             </th:block>
                             <th:block th:if="${lawFirm.isSignLawFirmFlag == 0 && lawFirm.applyFlag == 0}" > <!-- 로펌 가입여부 -->
-                                <a class="btn-default bg-pink w120"><i class="uil uil-user-circle"></i> 가입하기</a>
+                                <a class="btn-default bg-pink w120" onclick="apply()"><i class="uil uil-user-circle"></i> 가입하기</a>
                             </th:block>
                             <th:block th:if="${lawFirm.isSignLawFirmFlag == 0 && lawFirm.applyFlag == 1}" > <!-- 로펌 지원여부 -->
-                                <a class="btn-default bg-teal w120" ><i class="uil uil-user-square"></i> 취소하기</a>
+                                <a class="btn-default bg-teal w120" onclick="cancelApply()"><i class="uil uil-user-square"></i> 취소하기</a>
                             </th:block>
                         </th:block>
                     </dt>
@@ -93,9 +94,9 @@
                                 <input type="text" name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
                                 <button class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</button>
                             </div>
-<!--                            <p>-->
-<!--                                <a th:href="@{/law-firm/write}" class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 글쓰기</a>-->
-<!--                            </p>-->
+                            <p>
+                                <a th:href="@{/trial/write}" class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 글쓰기</a>
+                            </p>
                         </dd>
                     </fieldset>
                 </form>
@@ -170,6 +171,11 @@
                 <a th:if="${end < lawFirmBoards.totalPages}" th:href="@{/law-firm/{lawfirmId}(lawfirmId=${lawfirmId}, page=${start + maxPage - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
             </div>
             <!-- 페이지넘버링 끝 -->
+
+            <script th:inline="javascript">
+                const lawfirmId = /*[[${lawfirmId}]]*/ null;
+            </script>
+
 
             <script th:inline="javascript" th:src="@{/static/js/lawFirm/list.js}"></script>
 

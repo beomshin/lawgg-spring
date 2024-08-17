@@ -48,13 +48,11 @@ public class LawFirmServiceImpl implements LawFirmService {
         log.info("▶ [로펌] applyLawFirm 메소드 실행");
 
         if (userTb.getLawFirmTb() != null) throw new LawFirmException(LawFirmResultCode.ALREADY_JOIN_USER); // 이미 로펌을 가지고 있는 경우
-        int isApply = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(request.getId(), userTb.getUserId(), ApplyStatus.APPLY_STATUS);
+        int isApply = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(request.getLawfirmId(), userTb.getUserId(), ApplyStatus.APPLY_STATUS);
         if (isApply > 0) throw new LawFirmException(LawFirmResultCode.ALREADY_APPLY_USER); // 이미 로펌을 가지고 있는 경우
         LawFirmEnrollDto enrollDto =  LawFirmEnrollDto.builder()
-                .lawFirmTb(LawFirmTb.builder().lawFirmId(request.getId()).build())
+                .lawFirmTb(LawFirmTb.builder().lawFirmId(request.getLawfirmId()).build())
                 .userTb(userTb)
-                .title(request.getTitle())
-                .introduction(request.getIntroduction())
                 .build();
         lawFirmEnrollService.saveLawFirmApply(enrollDto); // 로펌 신청
     }
@@ -64,7 +62,7 @@ public class LawFirmServiceImpl implements LawFirmService {
     public void quitLawFirm(QuitLawFirmRequest request, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] quitLawFirm 메소드 실행");
 
-        if (userTb.getLawFirmTb() == null || !Objects.equals(userTb.getLawFirmTb().getLawFirmId(), request.getId())) {
+        if (userTb.getLawFirmTb() == null || !Objects.equals(userTb.getLawFirmTb().getLawFirmId(), request.getLawfirmId())) {
             throw new LawFirmException(LawFirmResultCode.FAIL_QUIT_LAW_FIRM);
         }
         lawFirmDeleteService.quitLawFirm(userTb.getUserId());
@@ -75,7 +73,7 @@ public class LawFirmServiceImpl implements LawFirmService {
     public void cancelApplyLawFirm(CancelApplyLawFirmRequest request, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] cancelApplyLawFirm 메소드 실행");
 
-        lawFirmDeleteService.cancelApplyLawFirm(request.getId(), userTb.getUserId());
+        lawFirmDeleteService.cancelApplyLawFirm(request.getLawfirmId(), userTb.getUserId());
     }
 
     @Override
