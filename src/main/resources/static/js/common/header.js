@@ -102,10 +102,10 @@ $(document).ready(function () {
 })
 
 function search() {
-    var form = document.getElementById("searchForm");
+    var form = document.getElementById("searchTrialMobile");
     form.submit();
 }
 function search2() {
-    var form = document.getElementById("searchForm2");
+    var form = document.getElementById("searchTrial");
     form.submit();
 }

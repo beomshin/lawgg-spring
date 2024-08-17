@@ -39,17 +39,17 @@ public class TrialFindController {
     @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
     @GetMapping("/trials")
     public ModelAndView trials(
-            @Valid @ModelAttribute FindTrialsRequest request, ModelAndView modelAndView
+            @Valid @ModelAttribute FindTrialsRequest request, ModelAndView mav
     ) throws TrialException {
         Page<TrialEntry> trials = trialService.findTrials(request);
         trials.getContent().forEach(TrialEntry::additionalContent); // 필요 정보 재세팅
 
-        modelAndView.addObject("trials", trials);
-        modelAndView.addObject("query", request);
-        modelAndView.addObject("maxPage", 10);
+        mav.addObject("trials", trials);
+        mav.addObject("query", request);
+        mav.addObject("maxPage", 10);
 
-        modelAndView.setViewName("view/trial/list");
-        return modelAndView;
+        mav.setViewName("view/trial/list");
+        return mav;
     }
 
     @ApiOperation(value = "트라이얼 게시판 상세 페이지 호출", notes = "트라이얼 게시판 상세 페이지를 호출합니다.")
@@ -57,16 +57,16 @@ public class TrialFindController {
     public ModelAndView trial(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @ApiParam(value = "트라이얼 아이디", required = true) @PathVariable("id") Long id,
-            ModelAndView modelAndView,
+            ModelAndView mav,
             HttpServletRequest request
     ) throws TrialException {
         TrialEntry trialEntry = userTb == null ? trialService.findTrialWithNotLogin(id) : trialService.findTrialWithLogin(id, userTb);
         trialEntry.additionalContent2();
-        modelAndView.addObject("trial", trialEntry);
+        mav.addObject("trial", trialEntry);
         applicationEventPublisher.publishEvent(new TrialCountEvent(id, ClientUtils.getRemoteIP(request))); // 조회수 증가
 
-        modelAndView.setViewName("view/trial/view");
-        return modelAndView;
+        mav.setViewName("view/trial/view");
+        return mav;
     }
 
     @Secured("ROLE_USER")

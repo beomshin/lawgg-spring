@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
@@ -26,31 +27,44 @@
                     <dt>
                         <ul>
                             <li>
-                                <h2>438</h2>
+                                <h2 th:text="${lawFirm.trialTotalCount}"></h2>
                                 <h3>참여 재판 수</h3>
                             </li>
                             <li>
-                                <h2>298</h2>
+                                <h2 th:text="${lawFirm.trialCount}"></h2>
                                 <h3>누적 요청</h3>
                             </li>
                             <li>
-                                <h2>85%</h2>
+                                <h2>[[${lawFirm.winRate}]]%</h2>
                                 <h3>선고율</h3>
                             </li>
                         </ul>
                     </dt>
                     <dd>
-                        <div style="background:url('https://i.pinimg.com/564x/98/19/56/9819560be56ed3a766e98d3523e5fc8c.jpg'); background-size:cover;">
+                        <div th:style="'background:url(' + ${lawFirm.profile} +'); background-size:cover;'">
                             <span></span>
                         </div>
-                        <h2>
-                            로우지지 로펌
-                        </h2>
-                        <h3>로우지지를 사랑하는 모임</h3>
+                        <h2 th:text="${lawFirm.name}"></h2>
+                        <h3 th:text="${lawFirm.introduction}"></h3>
                     </dd>
-                    <dt>
+                    <dt sec:authorize="isAuthenticated()">
+                        <th:block th:if="${lawFirm.isMyLawFirmFlag == 1}">  <!-- 나의 가입 로펌 -->
+                            <a class="btn-default-a bg-red w120"  ><i class="uil uil-user-square"></i> 탈퇴하기</a>
+                        </th:block>
+                        <th:block th:if="${lawFirm.isMyLawFirmFlag == 0}">
+                            <th:block th:if="${lawFirm.isSignLawFirmFlag == 1}" > <!-- 내 로펌여부 -->
+                                <a class="btn-default-a bg-teal w120" ><i class="uil uil-user-square"></i>내로펌가기</a>
+                            </th:block>
+                            <th:block th:if="${lawFirm.isSignLawFirmFlag == 0 && lawFirm.applyFlag == 0}" > <!-- 로펌 가입여부 -->
+                                <a class="btn-default bg-pink w120"><i class="uil uil-user-circle"></i> 가입하기</a>
+                            </th:block>
+                            <th:block th:if="${lawFirm.isSignLawFirmFlag == 0 && lawFirm.applyFlag == 1}" > <!-- 로펌 지원여부 -->
+                                <a class="btn-default-a bg-teal w120" ><i class="uil uil-user-square"></i> 취소하기</a>
+                            </th:block>
+                        </th:block>
+                    </dt>
+                    <dt sec:authorize="isAnonymous()">
                         <a class="btn-default bg-pink w120"><i class="uil uil-user-circle"></i> 가입하기</a>
-                        <!-- <a class="btn-default bg-teal w120"><i class="uil uil-user-square"></i> 기압중</a> -->
                     </dt>
                 </dl>
             </div>

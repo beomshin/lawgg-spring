@@ -13,21 +13,6 @@ public class ViewController {
         return "view/lck/list";
     }
 
-    @GetMapping("/law-firms")
-    public String lawFirms() {
-        return "view/lawfirm/index";
-    }
-
-    @GetMapping("/law-firm")
-    public String lawFirm() {
-        return "view/lawfirm/list";
-    }
-
-    @GetMapping("/law-firm/{id}")
-    public String lawFirmPost() {
-        return "view/lawfirm/view";
-    }
-
     @GetMapping("/law-firm/write")
     public String lawFirmWrite() {
         return "view/lawfirm/write";
