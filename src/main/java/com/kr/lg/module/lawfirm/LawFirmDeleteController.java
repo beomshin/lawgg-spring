@@ -5,8 +5,6 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
-import com.kr.lg.model.annotation.UserPrincipal;
-import com.kr.lg.model.annotation.UserAdapter;
 import com.kr.lg.module.lawfirm.model.req.QuitLawFirmRequest;
 import com.kr.lg.module.lawfirm.model.req.CancelApplyLawFirmRequest;
 import com.kr.lg.model.common.SuccessResponse;

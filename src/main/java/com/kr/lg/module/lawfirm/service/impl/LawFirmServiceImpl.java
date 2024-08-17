@@ -7,6 +7,7 @@ import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
 import com.kr.lg.common.enums.entity.status.ApplyStatus;
 import com.kr.lg.common.enums.entity.status.LawFirmStatus;
+import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
 import com.kr.lg.module.lawfirm.model.dto.LawFirmEnrollDto;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmBoardEntry;
@@ -21,13 +22,17 @@ import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.module.lawfirm.sort.LawFirmSort;
 import com.kr.lg.model.mapper.LawFirmParam;
 import com.kr.lg.model.mapper.MapperParam;
-import com.kr.lg.module.trial.sort.TrialSort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,12 +47,15 @@ public class LawFirmServiceImpl implements LawFirmService {
     private final LawFirmDeleteService lawFirmDeleteService;
     private final LawFirmFindService lawFirmFindService;
     private final LawFirmApplyRepository lawFirmApplyRepository;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
     @Override
     public void applyLawFirm(ApplyLawFirmRequest request, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] applyLawFirm 메소드 실행");
 
-        if (userTb.getLawFirmTb() != null) throw new LawFirmException(LawFirmResultCode.ALREADY_JOIN_USER); // 이미 로펌을 가지고 있는 경우
+        UserTb userTb1 = userRepository.findByUserId(userTb.getUserId()).get();
+        if (userTb1.getLawFirmTb() != null) throw new LawFirmException(LawFirmResultCode.ALREADY_JOIN_USER); // 이미 로펌을 가지고 있는 경우
         int isApply = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(request.getLawfirmId(), userTb.getUserId(), ApplyStatus.APPLY_STATUS);
         if (isApply > 0) throw new LawFirmException(LawFirmResultCode.ALREADY_APPLY_USER); // 이미 로펌을 가지고 있는 경우
         LawFirmEnrollDto enrollDto =  LawFirmEnrollDto.builder()
@@ -62,10 +70,15 @@ public class LawFirmServiceImpl implements LawFirmService {
     public void quitLawFirm(QuitLawFirmRequest request, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] quitLawFirm 메소드 실행");
 
-        if (userTb.getLawFirmTb() == null || !Objects.equals(userTb.getLawFirmTb().getLawFirmId(), request.getLawfirmId())) {
+        UserTb userTb1 = userRepository.findByUserId(userTb.getUserId()).get();
+        if (userTb1.getLawFirmTb() == null || !Objects.equals(userTb1.getLawFirmTb().getLawFirmId(), request.getLawfirmId())) {
             throw new LawFirmException(LawFirmResultCode.FAIL_QUIT_LAW_FIRM);
         }
+
         lawFirmDeleteService.quitLawFirm(userTb.getUserId());
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userTb.getLoginId(), userTb.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @Override
@@ -109,7 +122,8 @@ public class LawFirmServiceImpl implements LawFirmService {
         LawFirmEntry entry = lawFirmFindService.findLawFirm(param);
         int result = lawFirmApplyRepository.countByLawFirmTb_LawFirmIdAndUserTb_UserIdAndStatus(id, userTb.getUserId(), ApplyStatus.APPLY_STATUS);
         entry.setApplyFlag(result > 0 ? 1 : 0); // 지원 여부
-        LawFirmTb lawFirmTb = userTb.getLawFirmTb();
+        UserTb userTb1 = userRepository.findByUserId(userTb.getUserId()).get();
+        LawFirmTb lawFirmTb = userTb1.getLawFirmTb();
         if (lawFirmTb != null && lawFirmTb.getStatus() == LawFirmStatus.NORMAL_STATUS) { // 로그인 유저 가입 로펌이 있는 경우
             entry.setMyLawFirmId(lawFirmTb.getLawFirmId()); // 내로펌가기 (id 제공)
             entry.setIsSignLawFirmFlag(1); // 다른 로펌 가입여부 (0: 미가입, 1:가입)
