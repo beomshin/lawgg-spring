@@ -24,8 +24,8 @@ public class LawFirmEnrollServiceImpl implements LawFirmEnrollService {
             LawFirmApplyTb applyTb = LawFirmApplyTb.builder()
                     .lawFirmTb(enrollDto.getLawFirmTb())
                     .userTb(enrollDto.getUserTb())
-                    .title(enrollDto.getTitle())
-                    .introduction(enrollDto.getIntroduction())
+                    .title("[로펌 신청]")
+                    .introduction("[로펌 신청]")
                     .build();
             lawFirmApplyRepository.save(applyTb); // 로펌 신청
         } catch (Exception e) {
