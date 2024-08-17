@@ -3,6 +3,7 @@ package com.kr.lg.module.lawfirm;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
+import com.kr.lg.module.lawfirm.model.entry.LawFirmBoardEntry;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
 import com.kr.lg.module.lawfirm.model.req.FindLawFirmsBoardRequest;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
@@ -53,14 +54,16 @@ public class LawFirmFindController {
     ) throws LawFirmException {
         mav.addObject("lawFirm", userTb == null ?
                 lawFirmService.findLawFirmWithNotLogin(lawfirmId) : lawFirmService.findLawFirmWithLogin(lawfirmId, userTb));
-        mav.addObject("lawFirmBoards", lawFirmService.findLawFirmBoard(request, lawfirmId));
+
+        Page<LawFirmBoardEntry> lawFirmBoards = lawFirmService.findLawFirmBoard(request, lawfirmId);
+        lawFirmBoards.getContent().forEach(LawFirmBoardEntry::additionalContent); // 필요 정보 재세팅
+        mav.addObject("lawFirmBoards", lawFirmBoards);
+        mav.addObject("query", request);
+        mav.addObject("lawfirmId", lawfirmId);
+        mav.addObject("maxPage", 10);
+
         mav.setViewName("view/lawfirm/list");
         return mav;
-    }
-
-    @GetMapping("/law-firm")
-    public String lawFirm() {
-        return "view/lawfirm/view";
     }
 
 }

@@ -119,6 +119,7 @@ public class TrialServiceImpl implements TrialService {
 
         TrialEnrollDto enrollDto = TrialEnrollDto.builder()
                 .userTb(userTb)
+                .lawFirmTb(userTb.getLawFirmTb())
                 .title(request.getTitle())
                 .plaintiff(request.getPlaintiff())
                 .defendant(request.getDefendant())

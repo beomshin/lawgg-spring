@@ -5,19 +5,15 @@ import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.trial.model.event.TrialCountEvent;
 import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.model.entry.TrialEntry;
-import com.kr.lg.module.trial.model.res.FindLawFirmTrialsResponse;
 import com.kr.lg.module.trial.service.TrialService;
-import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
-import com.kr.lg.module.trial.model.req.FindLawFirmTrialsRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,21 +71,6 @@ public class TrialFindController {
     public ModelAndView trialWrite(ModelAndView mav) {
         mav.setViewName("view/trial/write");
         return mav;
-    }
-
-    @GetMapping("/api/public/v1/find/law-firm/trials")
-    @ApiOperation(value = "로펌 트라이얼 게시판 조회", notes = "로펌 트라이얼 게시판을 조회합니다.")
-    public ResponseEntity<?> findLawFirmTrials(
-            @Valid FindLawFirmTrialsRequest request
-    ) throws TrialException {
-        Page<TrialEntry> trials = trialService.findLawFirmTrials(request);
-        AbstractSpec spec = FindLawFirmTrialsResponse.builder()
-                .list(trials.getContent())
-                .totalElements(trials.getTotalElements())
-                .totalPage(trials.getTotalPages())
-                .curPage(trials.getNumber())
-                .build();
-        return ResponseEntity.ok(spec);
     }
 
 }

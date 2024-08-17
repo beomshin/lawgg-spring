@@ -13,11 +13,6 @@ public class ViewController {
         return "view/lck/list";
     }
 
-    @GetMapping("/law-firm/write")
-    public String lawFirmWrite() {
-        return "view/lawfirm/write";
-    }
-
     @GetMapping("/join/agree")
     public String joinAgree() {
         return "view/member/joinAgree";

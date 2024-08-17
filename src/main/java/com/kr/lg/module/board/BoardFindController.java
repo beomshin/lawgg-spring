@@ -9,9 +9,7 @@ import com.kr.lg.module.board.model.event.BoardCountEvent;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.model.req.FindPositionRequest;
-import com.kr.lg.module.board.model.req.FindLawFirmBoardRequest;
 import com.kr.lg.module.board.model.req.FindMyBoardRequest;
-import com.kr.lg.module.board.model.res.FindLawFirmBoardsResponse;
 import com.kr.lg.module.board.model.res.FindMyBoardsResponse;
 import com.kr.lg.module.board.service.BoardService;
 import com.kr.lg.model.common.AbstractSpec;
@@ -107,23 +105,6 @@ public class BoardFindController {
         Page<BoardEntry> boards = boardService.findMyBoards(request, userAdapter.getUserTb());
 
         AbstractSpec spec = FindMyBoardsResponse.builder()
-                .list(boards.getContent())
-                .totalElements(boards.getTotalElements())
-                .totalPage(boards.getTotalPages())
-                .curPage(boards.getNumber())
-                .build();
-
-        return ResponseEntity.ok().body(spec);
-    }
-
-    @ApiOperation(value = "로펌 포지션 게시판 조회", notes = "로펌 포지션 게시판을 조회합니다.")
-    @GetMapping("/api/public/v1/find/law-firm/boards")
-    public ResponseEntity<?> findLawFirmBoards(
-            @Valid FindLawFirmBoardRequest request
-    ) throws BoardException {
-        Page<BoardEntry> boards = boardService.findLawFirmBoards(request);
-
-        AbstractSpec spec = FindLawFirmBoardsResponse.builder()
                 .list(boards.getContent())
                 .totalElements(boards.getTotalElements())
                 .totalPage(boards.getTotalPages())

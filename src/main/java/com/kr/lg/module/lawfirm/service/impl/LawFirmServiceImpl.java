@@ -101,6 +101,7 @@ public class LawFirmServiceImpl implements LawFirmService {
     }
 
     @Override
+    @Transactional
     public LawFirmEntry findLawFirmWithLogin(long id, UserTb userTb) throws LawFirmException {
         log.info("▶ [로펌] findLawFirmWithLogin 메소드 실행");
 
@@ -128,6 +129,7 @@ public class LawFirmServiceImpl implements LawFirmService {
         MapperParam param = FindLawFirmParamData.builder()
                 .lawFirmId(lawFirmId)
                 .keyword(request.getKeyword())
+                .subject(request.getSubject())
                 .build();
         return lawFirmFindService.findLawFirmBoard(new LawFirmParam<>(param, pageable));
     }
