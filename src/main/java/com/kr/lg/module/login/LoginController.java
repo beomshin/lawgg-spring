@@ -52,7 +52,7 @@ public class LoginController {
         return mav;
     }
 
-    @GetMapping(value = "/api/public/google/login")
+    @GetMapping(value = "/google/login")
     @ApiOperation(value = "로우지지 구글 로그인", notes = "로우지지 구글 로그인을 합니다.")
     public RedirectView googleLogin() {
         RedirectView redirectView = new RedirectView();
@@ -61,7 +61,7 @@ public class LoginController {
         return redirectView;
     }
 
-    @GetMapping(value = "/api/public/kakao/login")
+    @GetMapping(value = "/kakao/login")
     @ApiOperation(value = "로우지지 카카오 로그인", notes = "로우지지 카카오 로그인을 합니다.")
     public RedirectView kakaoLogin() {
         RedirectView redirectView = new RedirectView();
@@ -70,7 +70,7 @@ public class LoginController {
         return redirectView;
     }
 
-    @GetMapping(value = "/api/public/naver/login")
+    @GetMapping(value = "/naver/login")
     @ApiOperation(value = "로우지지 네이버 로그인", notes = "로우지지 네이버 로그인을 합니다.")
     public RedirectView naverLogin() {
         RedirectView redirectView = new RedirectView();
