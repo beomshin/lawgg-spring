@@ -81,7 +81,7 @@
 
 
 /* 상단영역 - [드롭다운] 메세지 */
-.header-message-dropdown .v-dropdown-menu__container {min-width:400px; margin:30px 0 0 -400px;}
+.header-message-dropdown .v-dropdown-menu__container {min-width:400px; margin:-10px 0 0 -460px; position: absolute; top: 100%; overflow: hidden; background-color: #fff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px 0 rgba(82, 70, 70, .2); z-index: 994;}
 .header-message {width:100%;}
 .header-message > dl {display:flex; justify-content:space-between; align-items:center; padding:20px; border-bottom:#e5e5e5 1px solid;}
 .header-message > dl > dt {font-weight:500; font-size:18px; line-height:18px; color:#333; letter-spacing:-1px;}
@@ -105,10 +105,10 @@
 .header-message > p a:hover {color:#EC0745;}
 
 @media all and (max-width:479px) {
-  .header-message-dropdown .v-dropdown-menu__container {min-width:320px; margin:20px 0 0 -320px;}
+  .header-message-dropdown .v-dropdown-menu__container {min-width:320px; margin:-10px 0 0 -320px;}
 }
 @media all and (min-width:480px) and (max-width:767px) {
-  .header-message-dropdown .v-dropdown-menu__container {min-width:320px; margin:20px 0 0 -320px;}
+  .header-message-dropdown .v-dropdown-menu__container {min-width:320px; margin:-10px 0 0 -320px;}
 }
 @media all and (min-width:768px) and (max-width:991px) {
 
@@ -122,12 +122,12 @@
 
 
 /* 상단영역 - [드롭다운] 내정보 */
-.header-myinfo-dropdown .v-dropdown-menu__container {min-width:250px; margin:30px 0 0 -250px;}
+.header-myinfo-dropdown .v-dropdown-menu__container {min-width:250px; margin:-10px 0 0 -250px; position: absolute; top: 100%; overflow: hidden; background-color: #fff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px 0 rgba(82, 70, 70, .2); z-index: 994;}
 .header-myinfo {width:100%; padding:20px;}
 .header-myinfo > dl {display:flex; align-items:center;}
 .header-myinfo > dl dt span {display:inline-block; width:60px; height:60px; border-radius:50%;}
 .header-myinfo > dl dd {margin-left:15px;}
-.header-myinfo > dl dd h2 {font-weight:500; font-size:15px; line-height:15px; color:#333; word-break: break-word;}
+.header-myinfo > dl dd h2 {font-weight:500; font-size:15px; line-height:15px; color:#333;}
 .header-myinfo > dl dd h3 {margin-top:3px;}
 .header-myinfo > div {margin-top:20px; padding-top:20px; border-top:#e5e5e5 1px solid;}
 .header-myinfo > div h2 {font-weight:500; color:#999;}
@@ -140,10 +140,10 @@
 .header-myinfo > p {margin-top:20px;}
 
 @media all and (max-width:479px) {
-  .header-myinfo-dropdown .v-dropdown-menu__container {min-width:250px; margin:20px 0 0 -250px;}
+  .header-myinfo-dropdown .v-dropdown-menu__container {min-width:250px; margin:-10px 0 0 -250px;}
 }
 @media all and (min-width:480px) and (max-width:767px) {
-  .header-myinfo-dropdown .v-dropdown-menu__container {min-width:250px; margin:20px 0 0 -250px;}
+  .header-myinfo-dropdown .v-dropdown-menu__container {min-width:250px; margin: -10px 0 0 -250px;}
 }
 @media all and (min-width:768px) and (max-width:991px) {
 
@@ -212,7 +212,7 @@
 
 @media all and (max-width:479px) {
   .sub-menu {width:90%; margin:-10px auto 0 auto; padding-bottom:30px;}
-  .sub-menu a {padding:10px 8px; font-size:13px; line-height:13px;}
+  .sub-menu a {padding:12px 10px; font-size:13px; line-height:13px;}
 }
 @media all and (min-width:480px) and (max-width:767px) {
   .sub-menu {width:470px; margin:-10px auto 0 auto; padding-bottom:30px;}

@@ -3,6 +3,8 @@ package com.kr.lg.module.board.model.entry;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kr.lg.common.enums.entity.status.BoardStatus;
+import com.kr.lg.common.utils.CommonUtils;
+import com.kr.lg.common.utils.DateUtils;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.comment.model.entry.BoardCommentEntry;
@@ -13,18 +15,23 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL) // NULL 제외 속성
 public class BoardEntry {
 
     private long boardId; // board 식별자
+    private Long userId; // 유저 식별자
     private long boardCommentId; // root comment 식별자
     private int postType; // 게시글 타입
     private String title; // 제목
     private String writer; // 작성자
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp writeDt; // 작성일
+    private String formattedDate; // 포맷 데이트
+    private boolean isWithinLastHour; // 한시간 이내
     private int view; // 조회수
     private int recommendCount; // 추천수
     private int commentCount; // 댓글수
@@ -49,6 +56,13 @@ public class BoardEntry {
         else {
             return false; // 미존재 상태 처리
         }
+    }
+
+    public void additionalContent() {
+        this.formattedDate = DateUtils.formatDateTime(this.writeDt); // 오늘이면 시간, 이외 날짜
+        this.title = CommonUtils.subString(this.title, 30); // 30자 처리
+        this.writer = CommonUtils.subString(this.writer, 6); // 6자 처리
+        this.isWithinLastHour = DateUtils.isWithinLastHour(this.writeDt); // 등록 1시간 이내 플래그
     }
 
 }

@@ -1,24 +1,24 @@
 package com.kr.lg.security.login.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kr.lg.module.auth.excpetion.AuthResultCode;
+import com.kr.lg.security.exception.SecurityResultCode;
 import com.kr.lg.security.exception.SecurityException;
-import com.kr.lg.model.common.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @Slf4j
 @Component
-public class LoginFailHandler implements AuthenticationFailureHandler {
+public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
     /**
      * 로그인 실패 핸들러
@@ -30,10 +30,10 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
      */
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws ServletException, IOException {
         log.error("▶ [Spring Security 로그인][LoginFailHandler] 로그인 실패");
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE); // content-type json
-        new ObjectMapper().writeValue(response.getOutputStream(), new ErrorResponse(getFailCode(exception))); // 응답 body
+        setDefaultFailureUrl("/login?error=true&message=" + getFailMessage(getFailCode(exception)));
+        super.onAuthenticationFailure(request, response, exception);
     }
 
     /**
@@ -41,13 +41,13 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
      * @param exception
      * @return
      */
-    private AuthResultCode getFailCode(AuthenticationException exception) {
+    private SecurityResultCode getFailCode(AuthenticationException exception) {
         if (exception instanceof AuthenticationServiceException) { // 로그인 정보 누락 && 로그인 아이디 미존재
             log.error("▶ [Spring Security 로그인][LoginFailHandler] 미존재 아이디");
-            return AuthResultCode.NOT_EXIST_USER;
+            return SecurityResultCode.NOT_EXIST_USER;
         } else if(exception instanceof BadCredentialsException) { // 비밀번호 불일치 에러
             log.error("▶ [Spring Security 로그인][LoginFailHandler] 비밀번호 불일치");
-            return AuthResultCode.UN_MATCHED_PASSWORD;
+            return SecurityResultCode.UN_MATCHED_PASSWORD;
         } else if (exception instanceof UsernameNotFoundException) {
 
             if (exception.getCause() instanceof SecurityException) {
@@ -58,6 +58,22 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
 
         }
 
-        return AuthResultCode.FAIL_LOGIN; // 사유 확인 필요 로그인 실패
+        return SecurityResultCode.FAIL_LOGIN; // 사유 확인 필요 로그인 실패
+    }
+
+    private String getFailMessage(SecurityResultCode code) throws UnsupportedEncodingException {
+        String message = "";
+        if (code == SecurityResultCode.NOT_EXIST_USER) {
+            message = "아이디를 다시 확인해주세요.";
+        } else if (code == SecurityResultCode.UN_MATCHED_PASSWORD) {
+            message = "비밀번호를 다시 확인해주세요.";
+        } else if (code == SecurityResultCode.LOCK_LOGIN_ID) {
+            message = "정지된 계정입니다. 계정 확인을 위해서는 관리자에게 문의해주세요.";
+        } else if (code == SecurityResultCode.DELETE_LOGIN_ID) {
+            message = "삭제된 계정입니다.";
+        } else {
+            message = "로그인에 실패하였습니다. 잠시 후 진행해주세요.";
+        }
+        return URLEncoder.encode(message, "UTF-8");
     }
 }

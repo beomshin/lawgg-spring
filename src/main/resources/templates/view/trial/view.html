@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content">
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
+
+
+            <!-- 타이틀 -->
+            <dl class="title">
+                <dt>
+                    <h2>트라이얼</h2>
+                    <h3>
+                        트라이얼에 관한 다양한 이야기를 할 수 있는 게시판입니다.<br />
+                        클린한 커뮤니케이션을 위해 비방하는 게시물은 자제해주세요.
+                    </h3>
+                </dt>
+            </dl>
+            <!-- 타이틀 끝 -->
+
+
+            <!-- 상세내용 -->
+            <div class="board-view">
+                <dl class="bv-header">
+                    <dt>
+                        <h2>[[${trial.title}]]</h2>
+                        <div>
+                            <i class="uit uit-user"></i> 작성자 : [[${trial.writer}]] <span th:if="${trial.writer == 0}">([[${trial.ip}]])</span>
+                            &nbsp; · &nbsp;
+                            <i class="uit uit-clock"></i> [[${#dates.format(trial.writeDt, 'yyyy-MM-dd HH:mm')}]]
+                            &nbsp; · &nbsp;
+                            <i class="uit uit-eye"></i> 조회수 : [[${trial.view}]]
+                            &nbsp; · &nbsp;
+                            <i class="uit uit-heart-sign"></i> 추천 : [[${trial.recommendCount}]]
+                        </div>
+                    </dt>
+                    <dd>
+                        <button sec:authorize="isAuthenticated()" class="btn-default-s bg-pink" onclick="recommend()"><i class="uit uit-thumbs-up"></i> 추천하기</button>
+                        &nbsp;
+                        <button class="btn-default-s bg-black" onclick="report()"><i class="uit uit-megaphone"></i> 신고하기</button>
+                    </dd>
+                </dl>
+                <div class="bv-movie" th:if="${trial.playVideo != null}">
+                    <iframe width="100%" height="640" th:src="${trial.playVideo}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <div class="bv-content">
+                    <th:block th:if="${trial.files != null && trial.files.size() > 0}">
+                        <img th:src="${file.path}" th:each="file:${trial.files}" style="max-width: 100%; height: auto"  />
+                    </th:block>
+                    <pre th:utext="${trial.content}" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
+                </div>
+                <div class="bv-lawer">
+                    <div><span>원고 :</span> [[${trial.plaintiff}]]</div>
+                    <div><span>피고 :</span> [[${trial.defendant}]]</div>
+                    <div th:if="${trial.judgeName}"><span>판사 :</span> [[${trial.judgeName}]]</div>
+                </div>
+                <div class="bv-poll">
+                    <h2>누구의 판단이 맞는가?</h2>
+                    <dl>
+                        <dt>
+                            <div>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} != 0">
+                                    <span th:style="'width:' + (${trial.plaintiffCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#EC0745;'"></span>
+                                </th:block>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} == 0">
+                                    <span style="width: 0%; background:#EC0745;"></span>
+                                </th:block>
+                            </div>
+                            <h2>[[${trial.plaintiffOpinion}]]([[${trial.plaintiffCount}]]표)</h2>
+                            <p><button class="btn-default-m bg-dark w100" onclick="vote(0)" th:disabled="${!#authorization.expression('isAuthenticated()')}" >원고 투표</button></p>
+                        </dt>
+                        <dd>
+                            <div>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} != 0">
+                                    <span th:style="'width:' + (${trial.defendantCount} * 100 / (${trial.plaintiffCount} + ${trial.defendantCount})) + '%; background:#4F8EF8;'"></span>
+                                </th:block>
+                                <th:block th:if="${trial.plaintiffCount} + ${trial.defendantCount} == 0">
+                                    <span style="width: 0%; background:#4F8EF8;"></span>
+                                </th:block>
+                            </div>
+                            <h2>([[${trial.defendantCount}]]표) [[${trial.defendantOpinion}]]</h2>
+                            <p><button class="btn-default-m bg-dark w100" onclick="vote(1)" th:disabled="${!#authorization.expression('isAuthenticated()')}">피고 투표</button></p>
+                        </dd>
+                    </dl>
+                    <div style="display: flex; justify-content: center">
+                        <button sec:authorize="isAuthenticated()" onclick="recommend()" class="btn-line-gray-m w170"><i class="uil uil-thumbs-up"></i> 추천</button>
+                        &nbsp;
+                        <button sec:authorize="hasAnyAuthority('ROLE_JUDGE')" th:if="${trial.liveType == 0 && trial.endingType == 0}" class="btn-line-gray-m w170" onclick="start()"><i class="uil uil-notebooks"></i> 실시간 재판 시작</button>
+                        <button sec:authorize="hasAnyAuthority('ROLE_JUDGE')" th:if="${trial.liveType == 1 && trial.endingType == 0}" class="btn-line-gray-m w170" onclick="end()"><i class="uil uil-notebooks"></i> 실시간 재판 종료</button>
+                        <button disabled th:if="${trial.endingType == 1}" class="btn-line-gray-m w170" ><i class="uil uil-notebooks"></i> 판결 완료</button>
+                    </div>
+                </div>
+                <dl class="bv-btn" >
+                    <dt style="display: flex">
+                        <th:block th:if="${trial.userId + '' == #authentication.name}">
+<!--                            <a th:href="@{/trial/modify/{trial}(trial=${trial.trialId})}" class="btn-default-m bg-black">수정</a>-->
+                            &nbsp;
+                            <form name="deleteComment" method="post" th:action="@{/trial/delete}" th:if="${trial.isCanDelete}">
+                                <input name="trialId" type="hidden" th:value="${trial.trialId}">
+                                <button type="submit" class="btn-default-m bg-black">삭제</button>
+                            </form>
+                        </th:block>
+                    </dt>
+                    <dd>
+                        <a th:href="@{/trials}" class="btn-default-m bg-black">목록으로</a>
+                    </dd>
+                </dl>
+            </div>
+            <!-- 상세내용 끝 -->
+
+
+            <!-- 베너 -->ㅅ
+            <div class="banner-area01">
+                <img th:src="@{/static/images/banner_img04.png}" alt="" title="" />
+            </div>
+            <!-- 베너 끝 -->
+
+
+            <!-- 댓글 -->
+            <div class="board-comment">
+                <h2><i class="uil uil-comment-message"></i> 총 댓글 <span th:text="${trial.comments.size()}"></span>개</h2>
+                <form name="addComment" method="post" th:action="@{/trial/comment/enroll}" sec:authorize="isAuthenticated()">
+                    <input name="loginId" type="hidden" class="input-box w100p" value="oauth" />
+                    <input name="password" type="hidden" class="input-box w100p" value="******" />
+                    <input name="trialId" type="hidden" th:value="${trial.trialId}">
+                    <input name="depth" type="hidden" value="1">
+                    <dl>
+                        <dt>
+                            <textarea name="content" cols="" rows="" class="w100p h100" wrap="hard"></textarea>
+                        </dt>
+                        <dd><button >댓글등록</button></dd>
+                    </dl>
+                </form>
+                <ul>
+                    <li th:each="comment:${trial.comments}" th:classappend="${comment.depth == 2} ? 'bc-cmt' : ''">
+                        <dl>
+                            <dt>
+                                <dl>
+                                    <th:block th:if="${comment.profile != null}">
+                                        <dt><span><img th:src="${comment.profile}" width="100%" alt="" title="" /></span></dt>
+                                    </th:block>
+                                    <th:block th:if="${comment.profile} == null">
+                                        <dt><span class="bg-green" th:text="${comment.writer.substring(0, 1)}"></span></dt>
+                                    </th:block>
+                                    <dd>
+                                        <h2>[[${comment.writer}]]</h2>
+                                        <div>
+                                            [[${comment.content}]]
+                                        </div>
+                                        <p>
+                                            <i class="uit uit-clock"></i> [[${#dates.format(comment.regDt, 'yyyy-MM-dd HH:mm')}]]
+                                        </p>
+                                    </dd>
+                                </dl>
+                            </dt>
+                            <dd>
+<!--                                <a  class="btn-line-gray-s">수정</a> &nbsp;-->
+                                <form name="deleteComment" method="post" th:action="@{/trial/comment/delete}">
+                                    <input name="trialId" type="hidden" th:value="${trial.trialId}">
+                                    <input name="commentId" type="hidden" th:value="${comment.trialCommentId}">
+                                    <button th:if="${comment.created == 1}" class="btn-line-gray-s">삭제</button> &nbsp;
+                                </form>
+<!--                                <a  class="btn-line-gray-s">신고</a>-->
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <!-- 댓글 끝 -->
+
+
+            <!-- 페이지넘버링 -->
+<!--            <div class="paging-list">-->
+<!--                <a ><i class="uil uil-angle-left-b"></i></a>-->
+<!--                <a >1</a>-->
+<!--                <a  class="active">2</a>-->
+<!--                <a >3</a>-->
+<!--                <a >4</a>-->
+<!--                <a >5</a>-->
+<!--                <a ><i class="uil uil-angle-right-b"></i></a>-->
+<!--            </div>-->
+            <!-- 페이지넘버링 끝 -->
+
+            <script th:inline="javascript">
+                const trialId = /*[[${trial.trialId}]]*/ null;
+            </script>
+
+            <script th:inline="javascript" th:src="@{/static/js/trial/view.js}"></script>
+        </div>
+    </th:block>
+
+</html>

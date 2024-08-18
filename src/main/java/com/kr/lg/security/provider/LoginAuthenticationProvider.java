@@ -1,5 +1,10 @@
 package com.kr.lg.security.provider;
 
+import com.kr.lg.common.enums.entity.status.UserStatus;
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.model.annotation.UserAdapter;
+import com.kr.lg.security.exception.SecurityResultCode;
+import com.kr.lg.security.exception.SecurityException;
 import com.kr.lg.security.login.detail.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,8 +14,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -34,17 +42,24 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        log.info("▶ [Spring Security 로그인][LoginAuthenticationProvider] 2. 로그인 Provider 진입");
+        log.info("▶ [Spring Security 로그인][LoginAuthenticationProvider] 1. 로그인 Provider 진입");
         UserDetails userDetails = userDetailService.loadUserByUsername(authentication.getName());
+        UserTb userTb = ((UserAdapter) userDetails).getUserTb();
 
-        log.info("▶ [Spring Security 로그인][LoginAuthenticationProvider] 4. 패스워드 검증 시작");
+        log.info("▶ [Spring Security 로그인][LoginAuthenticationProvider] 3. 패스워드 검증 시작");
         String rawPassword = authentication.getCredentials().toString(); // 요청 비밀번호
         String oriPassword = userDetails.getPassword(); // 원본 비밀번호
-        if (!encoder.matches(rawPassword, oriPassword)) {
+        if (!Objects.equals(rawPassword, oriPassword) && !encoder.matches(rawPassword, oriPassword)) {
             throw new BadCredentialsException("비밀번호 불일치");
+        } else if (userTb.getStatus() == UserStatus.REPORT) { // 아이디 상태 검사 정지
+            log.error("▶ [Spring Security 로그인][UserDetailService] 아이디 정지 상태");
+            throw new UsernameNotFoundException("정지 아이디", new SecurityException(SecurityResultCode.LOCK_LOGIN_ID));
+        } else if (userTb.getStatus() == UserStatus.DELETE) { // 아이디 상태 검사 삭제
+            log.error("▶ [Spring Security 로그인][UserDetailService] 아이디 삭제 상태");
+            throw new UsernameNotFoundException("삭제 아이디", new SecurityException(SecurityResultCode.DELETE_LOGIN_ID));
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
     @Override

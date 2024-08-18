@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 
 <div th:fragment="headerFragment">
     <div class="header">
@@ -8,25 +10,25 @@
                 <!-- 로고/메뉴 -->
                 <div class="header-logo-menu">
                     <p>
-                        <i class="uit uit-bars"  style="cursor: pointer" onclick="open()" ></i>
-                        <a ><img th:src="@{/static/images/logo.svg}" width="50" alt="" title="" /></a>
+                        <i class="uit uit-bars" style="cursor: pointer" id="sideBarOpen"></i>
+                        <a th:href="@{/}"><img th:src="@{/static/images/logo.svg}" width="50" alt="" title="" /></a>
                     </p>
                     <ul>
                         <li>
-                            <a >포지션게시판</a>
+                            <a th:href="@{/positions}">포지션게시판</a>
                         </li>
                         <li>
-                            <a >트라이얼</a>
+                            <a th:href="@{/trials}">트라이얼</a>
                         </li>
                         <li>
-                            <a >로펌</a>
+                            <a th:href="@{/law-firms}">로펌</a>
                         </li>
                           <li>
-                            <a >LCK</a>
+                            <a th:href="@{/lck}">LCK</a>
                           </li>
-                        <li>
-                            <a >자유게시판</a>
-                        </li>
+<!--                        <li>-->
+<!--                            <a >자유게시판</a>-->
+<!--                        </li>-->
                     </ul>
                 </div>
                 <!-- 로고/메뉴 끝 -->
@@ -36,39 +38,170 @@
                 <div class="header-search">
                     <div class="input-search-line">
                         <p><i class="uit uit-search"></i></p>
-                        <div><input type="text" title="keywords" placeholder="검색어를 입력하세요." /></div>
+                        <form id="searchTrial" th:action="@{/trials}" method="get">
+                            <div>
+                                <input type="text" name="keyword" title="keywords"  placeholder="검색어를 입력하세요." th:value="${query == null ? '' : query.keyword}"
+                                       onkeydown="if (event.key === 'Enter') { search2(); }" />
+                            </div>
+                        </form>
                     </div>
                 </div>
 
-<!--                <div class="header-login-join">-->
-<!--                    <button class="btn-line-gray-m w80 mr5" ><i class="uit uit-padlock"></i> 로그인</button>-->
-<!--                    <button class="btn-default-m bg-black w100" ><i class="uit uit-user"></i> 회원가입</button>-->
-<!--                </div>-->
-
-                <div class="header-info">
-                    <div >
-                        <i class="uit uit-bell"></i>
-                        <span ></span>
+                <th:block sec:authorize="isAnonymous()">
+                    <div class="header-login-join">
+                        <button class="btn-line-gray-m w80 mr5" th:onclick="|window.location.href='@{/login}'|" ><i class="uit uit-padlock"></i> 로그인</button>
+                        <button class="btn-default-m bg-black w100"  th:onclick="|window.location.href='@{/join/agree}'|" ><i class="uit uit-user"></i> 회원가입</button>
                     </div>
-                    <p >홍</p>
-                </div>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="header-info">
+                        <div id="alert">
+                            <i class="uit uit-bell"></i>
+                            <span ></span>
+                        </div>
+                        <p id="myInfo" th:text="${userTb.nickName.substring(0, 1)}"></p>
+                    </div>
+                </th:block>
 
                 <div class="header-side-mobile" id="headerSideMobile">
-                    <div class="hsm-close"><i class="uil uil-times" onclick="close()"></i></div>
+                    <div class="hsm-close"><i class="uil uil-times" id="sideBarClose"></i></div>
                     <div class="hsm-search">
                         <div class="input-search-line-mobile">
                             <p><i class="uil uil-search"></i></p>
-                            <div><input type="text" name="" title="keywords" placeholder="검색어를 입력하세요." /></div>
+                            <form id="searchTrialMobile" th:action="@{/trials}" method="get">
+                                <div>
+                                    <input type="text" name="keyword" title="keywords" placeholder="검색어를 입력하세요."
+                                           onkeydown="if (event.key === 'Enter') { search(); }" />
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                     <div class="hsm-menu">
-                        <a style="cursor: pointer"><i class="uil uil-comment"></i> 포지션 게시판</a>
-                        <a style="cursor: pointer"><i class="uil uil-notes"></i> 트라이얼</a>
-                        <a style="cursor: pointer"><i class="uil uil-book-open"></i> 로펌</a>
-                        <a style="cursor: pointer"><i class="uil uil-book-alt"></i> 자유 게시판</a>
+                        <a style="cursor: pointer" th:href="@{/positions}"><i class="uil uil-comment"></i> 포지션 게시판</a>
+                        <a style="cursor: pointer" th:href="@{/trials}"><i class="uil uil-notes"></i> 트라이얼</a>
+                        <a style="cursor: pointer" th:href="@{/law-firms}"><i class="uil uil-book-open"></i> 로펌</a>
+                        <a style="cursor: pointer" th:href="@{/lck}"><i class="uil uil-book-alt"></i> LCK</a>
                     </div>
                 </div>
-                <div class="header-side-bg-mobile" id="headerSideBgMobile" onclick="close()">&nbsp;</div>
+                <div class="header-side-bg-mobile" id="headerSideBgMobile">&nbsp;</div>
+
+                <!-- 알림 -->
+                <div  class="header-message-dropdown" style="display: none;">
+                    <div class="v-dropdown-menu__container">
+                        <div class="header-message">
+                            <dl>
+                                <dt>새알림</dt>
+                                <dd>
+                                    <a>
+                                        <i class="uil uil-comment-alt"></i>
+                                        <span></span>
+                                        <em>전부읽음</em>
+                                    </a>
+                                </dd>
+                            </dl>
+                            <ul>
+                                <li class="active">
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 10시간전</h2>
+                                            <p></p>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 10시간전</h2>
+                                            <p></p>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 2일전</h2>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 1개월전</h2>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <h2>쿵쿵딱 로우지지 로우지지</h2>
+                                            <h3>폼생폼사 로우지지 고수 모임에 가입해주셔서 감사합니다.</h3>
+                                        </dt>
+                                        <dd>
+                                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 3년전</h2>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <p><a th:href="@{/my/alerts}">전체보기</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-myinfo-dropdown" style="display: none;" sec:authorize="authenticated">
+                    <div class="v-dropdown-menu__container">
+                        <div class="header-myinfo">
+                            <dl>
+                                <th:block th:if="${userTb.profile != null}">
+                                    <dt><span th:style="'background:url(' + ${userTb.profile} +  '); background-size:cover;'"></span></dt>
+                                </th:block>
+                                <th:block th:if="${userTb.profile == null}">
+                                    <dt><span style="background:url('https://i.pinimg.com/564x/d4/22/11/d42211cf93c61dc4d231f036c9c711c5.jpg'); background-size:cover;"></span></dt>
+                                </th:block>
+                                <dd>
+                                    <h2 th:text="${userTb.loginId}"></h2>
+                                    <h3 th:text="${userTb.nickName}"></h3>
+                                    <div>가입일 : [[${#dates.format(userTb.regDt, 'yyyy-MM-dd')}]]</div>
+                                </dd>
+                            </dl>
+                            <div>
+                                <h2>내 활동내역</h2>
+                                <ul>
+                                    <li th:if="${tierTb != null}"><i class="uil uil-diamond"></i> [[${tierTb.name}]] <span th:text="${tierTb.level}"></span></li>
+                                    <li th:if="${lawFirmTb != null}"><i class="uil uil-book-open"></i> <span th:text="${lawFirmTb.name}"></span> 로펌</li>
+                                    <li><i class="uil uil-clipboard"></i> 글 <span th:text="${userTb.boardCount + userTb.trialCount}"></span></li>
+                                    <li><i class="uil uil-comment"></i> 댓글 <span th:text="${userTb.commentCount}"></span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h2>마이페이지</h2>
+                                <div>
+                                    <a th:href="@{/my/info}"><i class="uil uil-user-circle"></i> 회원정보수정</a>
+                                    <a th:href="@{/my/alerts}"><i class="uil uil-bell"></i> 알림함</a>
+                                    <a th:href="@{/my/boards}"><i class="uil uil-clipboard-notes"></i> 글목록</a>
+                                </div>
+                            </div>
+                            <p><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></p>
+                        </div>
+                    </div>
+                </div>
 
             </dd>
         </dl>
@@ -76,104 +209,24 @@
 
     <div class="footer-mobile-menu">
         <ul>
-            <li>
+            <li th:onclick="|window.location.href='@{/positions}'|">
                 <p><i class="uil uil-comment"></i></p>
                 <h2>포지션게시판</h2>
             </li>
-            <li>
+            <li th:onclick="|window.location.href='@{/trials}'|" >
                 <p><i class="uil uil-notes"></i></p>
                 <h2>트라이얼</h2>
             </li>
-            <li>
+            <li th:onclick="|window.location.href='@{/law-firms}'|" >
                 <p><i class="uil uil-book-open"></i></p>
                 <h2>로펌</h2>
             </li>
-            <li>
+            <li th:onclick="|window.location.href='@{/lck}'|" >
                 <p><i class="uil uil-book-alt"></i></p>
-                <h2>자유게시판</h2>
+                <h2>LCK</h2>
             </li>
         </ul>
     </div>
 
-<!--    <div class="header-message-dropdown">-->
-<!--        <div class="header-message">-->
-<!--            <dl>-->
-<!--                <dt>새알림</dt>-->
-<!--                <dd>-->
-<!--                    <a style="cursor: pointer" >-->
-<!--                        <i class="uil uil-comment-alt"></i>-->
-<!--&lt;!&ndash;                        <span ></span>&ndash;&gt;-->
-<!--                        <em>전부읽음</em>-->
-<!--                    </a>-->
-<!--                </dd>-->
-<!--            </dl>-->
-<!--            <ul>-->
-<!--                <li>-->
-<!--                    <dl>-->
-<!--                        <dt>-->
-<!--                            <h2>타이틀</h2>-->
-<!--                            <h3>내용</h3>-->
-<!--                        </dt>-->
-<!--                        <dd>-->
-<!--                            <h2><i class="uis uis-clock" style="color:#c1c1c1;"></i> 2024-08-01</h2>-->
-<!--    &lt;!&ndash;                                <p ></p>&ndash;&gt;-->
-<!--                        </dd>-->
-<!--                    </dl>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--            <p>-->
-<!--                <a style="cursor: pointer">전체보기</a>-->
-<!--            </p>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--        <div class="header-myinfo">-->
-<!--            <dl>-->
-<!--                <dt><span style="cursor: pointer"></span></dt>-->
-<!--                <dd>-->
-<!--                    <h2>홍길동 님</h2>-->
-<!--                    <h3>포인트 : 0 p</h3>-->
-<!--                    <div>가입일 : 2024-08-04</div>-->
-<!--                </dd>-->
-<!--            </dl>-->
-<!--            <div>-->
-<!--                <h2>내 활동내역</h2>-->
-<!--                <ul>-->
-<!--                    <li><i class="uil uil-diamond"></i> 브론즈 <span>5</span></li>-->
-<!--                    <li><i class="uil uil-book-open"></i>-->
-<!--&lt;!&ndash;                        <template >&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span>길동</span> 로펌&ndash;&gt;-->
-<!--&lt;!&ndash;                        </template>&ndash;&gt;-->
-<!--                            로펌 <span>미가입</span>-->
-<!--                    </li>-->
-<!--                    <li><i class="uil uil-clipboard"></i> 게시글 <span>1</span></li>-->
-<!--                    <li><i class="uil uil-clipboard"></i> 트라이얼 <span>2</span></li>-->
-<!--                    <li><i class="uil uil-comment"></i> 댓글 <span>3</span></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <h2>마이페이지</h2>-->
-<!--                <div>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-user-circle" ></i> 회원정보수정</a>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-bell"></i> 알림함</a>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-clipboard-notes"></i> 글목록</a>-->
-<!--                    <a style="cursor: pointer"><i class="uil uil-bell"></i> 쪽지함</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <p><a class="btn-default-m bg-black w100p" >로그아웃</a></p>-->
-<!--        </div>-->
-
-    <script>
-        function open() {
-            document.getElementById("headerSideMobile").style.left = "0";
-            document.getElementById("headerSideBgMobile").style.display = "block";
-            document.body.style.overflow = "hidden";
-        }
-
-        function close() {
-            document.getElementById("headerSideMobile").style.left = "-305px";
-            document.getElementById("headerSideBgMobile").style.display = "none";
-            document.body.style.overflow = "visible";
-        }
-    </script>
+    <script th:inline="javascript" th:src="@{/static/js/common/header.js}"></script>
 </div>

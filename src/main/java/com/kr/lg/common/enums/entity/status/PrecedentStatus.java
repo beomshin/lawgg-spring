@@ -12,6 +12,7 @@ public enum PrecedentStatus implements EnumEntry {
 
     PLAINTIFF(0),
     DEFENDANT(1),
+    DRAW(2),
     PROCEEDING(9),
     ;
 

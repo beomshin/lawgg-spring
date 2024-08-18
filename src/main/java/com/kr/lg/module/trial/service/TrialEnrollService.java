@@ -9,6 +9,5 @@ import java.util.List;
 public interface TrialEnrollService {
 
     TrialTb enrollTrial(TrialEnrollDto enrollDto) throws TrialException;
-    <T> void enrollTrialFiles(TrialTb trialTb, List<T> files) throws TrialException;
 
 }

@@ -29,7 +29,7 @@ import java.util.Enumeration;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
-@WebFilter(urlPatterns = "/api/*")
+@WebFilter(urlPatterns = "/*")
 public class DefaultHttpLoggingFilter extends OncePerRequestFilter {
   private final Gson gson = new GsonBuilder().create();
 
@@ -209,6 +209,6 @@ public class DefaultHttpLoggingFilter extends OncePerRequestFilter {
    * @return {@code true} 로깅을 하지 않음
    */
   private boolean isIgnore(HttpServletRequest request) {
-    return false;
+    return request.getRequestURI().contains("/static");
   }
 }

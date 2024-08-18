@@ -39,7 +39,6 @@ public class CommentEnrollServiceImpl implements CommentEnrollService {
                     .password(StringUtils.isBlank(commentEnrollDto.getPassword()) ? null : encoder.encode(commentEnrollDto.getPassword()))
                     .writer(commentEnrollDto.getWriter())
                     .content(commentEnrollDto.getContent())
-                    .emoticon(commentEnrollDto.getEmoticon())
                     .ip(commentEnrollDto.getIp())
                     .build();
             boardCommentRepository.save(boardCommentTb);
@@ -55,15 +54,13 @@ public class CommentEnrollServiceImpl implements CommentEnrollService {
         try {
             log.info("▶ [트라이얼 댓글] 댓글 등록");
             TrialCommentTb boardCommentTb = TrialCommentTb.builder()
+                    .id(commentEnrollDto.getLoginId())
+                    .parentId(commentEnrollDto.getParentId())
                     .userTb(commentEnrollDto.getUserTb())
                     .trialTb(commentEnrollDto.getTrialTb())
-                    .parentId(commentEnrollDto.getParentId())
                     .depth(commentEnrollDto.getDepth())
-                    .id(commentEnrollDto.getLoginId())
-                    .password(StringUtils.isBlank(commentEnrollDto.getPassword()) ? null : encoder.encode(commentEnrollDto.getPassword()))
                     .writer(commentEnrollDto.getWriter())
                     .content(commentEnrollDto.getContent())
-                    .emoticon(commentEnrollDto.getEmoticon())
                     .ip(commentEnrollDto.getIp())
                     .build();
             trialCommentRepository.save(boardCommentTb);

@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "트라이얼 게시판 리스트 조회 요청 Body")
 public class FindTrialsRequest {
 
@@ -32,4 +31,10 @@ public class FindTrialsRequest {
     @ApiModelProperty(value = "키워드")
     private String keyword;
 
+    public FindTrialsRequest() {
+        this.page = 0;
+        this.pageNum = 30;
+        this.topic = 1;
+        this.subject = 1; // 현재 고정
+    }
 }

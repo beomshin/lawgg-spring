@@ -1,6 +1,7 @@
 package com.kr.lg.module.trial.model.entry;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kr.lg.common.enums.entity.status.PrecedentStatus;
 import lombok.*;
 
 
@@ -15,5 +16,11 @@ public class TrialVoteEntry {
     private Integer plaintiffCount; // 원고 투표 퍼센트
     private Integer defendantCount; // 피고 투표 퍼센트
 
+    public PrecedentStatus whoWin() {
+        int p = plaintiffCount;
+        int d = defendantCount;
+        if (p == d) return PrecedentStatus.DRAW;
+        return p > d ? PrecedentStatus.PLAINTIFF : PrecedentStatus.DEFENDANT;
+    }
 
 }

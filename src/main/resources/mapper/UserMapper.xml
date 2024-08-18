@@ -9,22 +9,23 @@
         SELECT *
         FROM
         (
-            SELECT bt.boardId AS 'id', bt.userId,  bt.lawFirmId, bt.title,  bt.content,  bt.writer, bt.writeDt, bt.postType, bt.commentCount, bt.recommendCount, bt.`view`, bt.report, 0 as `type`, bt.status
+            SELECT bt.boardId AS 'id', 0 AS `type`, bt.userId,  bt.lawFirmId, bt.title,  bt.content,  bt.writer, bt.writeDt, bt.postType, bt.commentCount, bt.recommendCount, bt.`view`, bt.report, bt.status
             FROM BoardTb bt
             WHERE bt.userId = #{data.userId} and bt.status = 1
-            <if test="data.keyword != null and data.keyword.length > 0">
-                 and (bt.title like concat('%', #{data.keyword}, '%') or bt.content like concat('%', #{data.keyword}, '%') or bt.writer like concat('%', #{data.keyword}, '%'))
-            </if>
-
             UNION ALL
-
-            SELECT tt.trialId AS 'id', tt.userId, tt.lawFirmId, tt.title, tt.content, tt.writer, tt.writeDt, tt.postType, tt.commentCount, tt.recommendCount, tt.`view`, tt.report, 1 as `type`, tt.status
+            SELECT tt.trialId AS 'id', 1 AS `type`, tt.userId, tt.lawFirmId, tt.title, tt.content, tt.writer, tt.writeDt, tt.postType, tt.commentCount, tt.recommendCount, tt.`view`, tt.report, tt.status
             FROM TrialTb tt
             WHERE tt.userId = #{data.userId} and (tt.status = 1 or tt.status = 3 or tt.status = 4)
-            <if test="data.keyword != null and data.keyword.length > 0">
-                and (tt.title like concat('%', #{data.keyword}, '%') or tt.content like concat('%', #{data.keyword}, '%') or tt.writer like concat('%', #{data.keyword}, '%'))
-            </if>
         ) A
+
+        <where>
+
+            <if test="data.keyword != null and data.keyword.length > 0">
+                AND A.title like concat('%', #{data.keyword}, '%')
+            </if>
+
+        </where>
+
         <if test="pageable.sort != null and !pageable.sort.isEmpty()">
             ORDER BY
             <foreach collection="pageable.sort" item="order" separator=",">
@@ -42,39 +43,20 @@
             SELECT bt.boardId AS 'id', bt.userId,  bt.lawFirmId, bt.title,  bt.content,  bt.writer, bt.writeDt, bt.postType, bt.commentCount, bt.recommendCount, bt.`view`, bt.report, 0 as `type`, bt.status
             FROM BoardTb bt
             WHERE bt.userId = #{userId} and bt.status = 1
-            <if test="keyword != null and keyword.length > 0">
-                and (bt.title like concat('%', #{keyword}, '%') or bt.content like concat('%', #{keyword}, '%') or bt.writer like concat('%', #{keyword}, '%'))
-            </if>
-
             UNION ALL
-
             SELECT tt.trialId AS 'id', tt.userId, tt.lawFirmId, tt.title, tt.content, tt.writer, tt.writeDt, tt.postType, tt.commentCount, tt.recommendCount, tt.`view`, tt.report, 1 as `type`, tt.status
             FROM TrialTb tt
             WHERE tt.userId = #{userId} and (tt.status = 1 or tt.status = 3 or tt.status = 4)
-            <if test="keyword != null and keyword.length > 0">
-                and (tt.title like concat('%', #{keyword}, '%') or tt.content like concat('%', #{keyword}, '%') or tt.writer like concat('%', #{keyword}, '%'))
-            </if>
         ) A
-    </select>
 
-    <select id="findUserIds" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserIdEntry">
-        SELECT ut.loginId, ut.profile, ut.nickName, ut.delFlag, ut.status, ut.regDt, ut.snsType
-        FROM UserTb ut
         <where>
-            ut.snsType = '0'
-            AND ut.ci = #{ci}
-        </where>
-    </select>
 
-    <select id="findUser" parameterType="com.kr.lg.model.mapper.MapperParam" resultType="com.kr.lg.module.user.model.entry.UserEntry">
-        SELECT ut.userId, ut.loginId, ut.nickName, ut.name, ut.profile, ut.email, ut.boardCount, ut.commentCount, ut.trialCount, ut.personalPeriod, ut.regDt, ut.phone,
-               ut.authFlag, ut.snsType, ut.judgeFlag, ut.gender, ut.birth, ut.`point`, lft.name AS 'lawFirmName', tt.name AS 'tierName', tt.`level` AS 'tireLevel'
-        FROM UserTb ut
-                 LEFT JOIN LawFirmTb lft ON(ut.lawFirmId = lft.lawFirmId)
-                 LEFT JOIN TierTb tt ON (ut.tierId = tt.tierId)
-        <where>
-            ut.userId = #{userId}
+            <if test="keyword != null and keyword.length > 0">
+                and A.title like concat('%', #{keyword}, '%')
+            </if>
+
         </where>
+
     </select>
 
     <select id="findUserAlerts" parameterType="com.kr.lg.model.mapper.UserParam" resultType="com.kr.lg.module.user.model.entry.UserAlertEntry">

@@ -7,7 +7,7 @@ import com.kr.lg.module.message.exception.MessageResultCode;
 import com.kr.lg.module.message.model.dto.MessageEnrollDto;
 import com.kr.lg.module.message.model.entry.MessageEntry;
 import com.kr.lg.module.message.model.mapper.FindMessageParamData;
-import com.kr.lg.module.message.model.req.FindReceiveMessagesRequest;
+import com.kr.lg.module.message.model.req.FindMessagesRequest;
 import com.kr.lg.module.message.model.req.SendMessageRequest;
 import com.kr.lg.module.message.service.MessageEnrollService;
 import com.kr.lg.module.message.service.MessageFindService;
@@ -36,7 +36,7 @@ public class MessageServiceImpl implements MessageService {
     private final UserRepository userRepository;
 
     @Override
-    public Page<MessageEntry> findReceiveMessages(FindReceiveMessagesRequest request, UserTb userTb) throws MessageException {
+    public Page<MessageEntry> findReceiveMessages(FindMessagesRequest request, UserTb userTb) throws MessageException {
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), MessageSort.idDesc()); // pageable 생성
         MapperParam param = FindMessageParamData.builder()
                 .receiverId(userTb.getUserId())

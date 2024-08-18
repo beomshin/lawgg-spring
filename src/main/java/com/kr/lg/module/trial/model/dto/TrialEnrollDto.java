@@ -23,5 +23,6 @@ public class TrialEnrollDto {
     private String defendantOpinion; // 피고 의견
     private String plaintiff; // 원고
     private String defendant; // 피고
+    private String playVideo; // 영상
 
 }

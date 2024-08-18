@@ -20,7 +20,7 @@
         ) fnc JOIN BoardCommentTb bc ON fnc.id = bc.boardCommentId ) A
         WHERE (A.depth = 2 AND A.`status` = 1) OR (A.depth = 1 AND A.`status` = 1) OR
         (A.depth = 1 AND A.`status` = 2 AND EXISTS ( SELECT 1 FROM BoardCommentTb bc2 WHERE bc2.parentId = A.boardCommentId AND bc2.`status` = 1 ))
-        order by order_num asc
+        order by order_num desc
     </select>
 
     <select id="findBoardCommentsWithLogin" parameterType="long" resultType="com.kr.lg.module.comment.model.entry.BoardCommentEntry">
@@ -38,7 +38,7 @@
         ) fnc JOIN BoardCommentTb bc ON fnc.id = bc.boardCommentId ) A
         WHERE (A.depth = 2 AND A.`status` = 1) OR (A.depth = 1 AND A.`status` = 1) OR
         (A.depth = 1 AND A.`status` = 2 AND EXISTS ( SELECT 1 FROM BoardCommentTb bc2 WHERE bc2.parentId = A.boardCommentId AND bc2.`status` = 1 ))
-        order by order_num asc
+        order by order_num desc
     </select>
 
     <select id="findTrialCommentsWithNotLogin" parameterType="long" resultType="com.kr.lg.module.comment.model.entry.TrialCommentEntry">

@@ -29,7 +29,7 @@ import java.sql.Timestamp;
         }
 )
 @Getter
-@ToString(exclude = {"tierId", "lawFirmId"})
+@ToString(exclude = {"tierTb", "lawFirmTb"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -81,7 +81,6 @@ public class UserTb { // 관리자 테이블
     private String name;
 
     @Column(name = "email")
-    @Convert(converter = DataBaseAESCryptConverter.class)
     private String email;
 
     @Column(name = "hashEmail")
@@ -144,5 +143,10 @@ public class UserTb { // 관리자 테이블
     @Column(name = "modDt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp modDt; // 수정일
+
+    public void quitLawFirm() {
+        this.lawFirmEnrollDt = null;
+        this.lawFirmTb = null;
+    }
 
 }

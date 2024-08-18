@@ -11,8 +11,6 @@ import java.util.List;
 public interface UserMapper {
     List<UserBoardEntry> findBoards(UserParam<?> param);
     long findBoardsCnt(MapperParam param);
-    List<UserIdEntry> findUserIds(MapperParam param);
-    UserEntry findUser(MapperParam param);
     List<UserAlertEntry> findUserAlerts(UserParam<?> param);
     long findUserAlertsCnt(MapperParam param);
     List<UserAlertsEntry> findTop5Alert(UserParam<?> param);

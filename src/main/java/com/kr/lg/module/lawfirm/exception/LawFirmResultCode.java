@@ -13,7 +13,7 @@ public enum LawFirmResultCode {
     FAIL_QUIT_LAW_FIRM("5003", "로펌 탈퇴에 실패했습니다."),
     FAIL_FIND_LAW_FIRMS("5004", "로펌 리스트 조회 실패."),
     FAIL_FIND_LAW_FIRM("5005", "로펌 조회 실패."),
-
+    FAIL_FIND_LAW_FIRMS_BOARD("5006", "로펌 게시판 리스트 조회 실패."),
     ;
 
     private final String code;

@@ -1,13 +1,12 @@
 package com.kr.lg.module.user;
 
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.user.excpetion.UserException;
-import com.kr.lg.module.user.model.res.UpdateUPResponse;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.module.user.model.req.UpdateUserAlertRequest;
-import com.kr.lg.module.user.model.req.UpdateUserInfoRequest;
 import com.kr.lg.module.user.model.req.UpdateUserPasswordRequest;
 import com.kr.lg.module.user.model.req.UpdateUserProfileRequest;
 import com.kr.lg.model.common.SuccessResponse;
@@ -16,13 +15,14 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +31,31 @@ public class UserUpdateController {
 
     private final UserService userService;
 
+    @Secured("ROLE_USER")
+    @PostMapping("/my/update/password")
+    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
+    public ModelAndView updatePassword(
+            @ModelAttribute @Valid UpdateUserPasswordRequest request,
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+            ModelAndView mav
+    ) throws UserException {
+        userService.updateUserPassword(request, userTb);
+        mav.setViewName("redirect:/my/info");
+        return mav;
+    }
+
+    @Secured("ROLE_USER")
+    @PostMapping("/my/update/profile")
+    @ApiOperation(value = "회원 프로필 업데이트", notes = "회원 프로필 업데이트합니다.")
+    public ResponseEntity<?> updateUserProfile(
+            @ModelAttribute @Valid UpdateUserProfileRequest request,
+            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+    ) throws  UserException {
+        userService.updateUserProfile(request, userAdapter.getUserTb());
+        return ResponseEntity.ok(new SuccessResponse());
+    }
+
+
     @PostMapping("/api/v1/update/read/user/alerts")
     @ApiOperation(value = "회원 알림 리스트 업데이트", notes = "회원 알림 리스트를 업데이트합니다.")
     public ResponseEntity<?> updateUserAlertAll(
@@ -38,38 +63,6 @@ public class UserUpdateController {
     ) throws UserException {
         userService.updateReadUserAlerts(userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());
-    }
-
-    @PostMapping("/api/public/v1/update/user/password")
-    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
-    public ResponseEntity<?> updateUserPassword(
-            @RequestBody @Valid UpdateUserPasswordRequest request
-    ) throws UserException {
-        userService.updateUserPassword(request);
-        return ResponseEntity.ok(new SuccessResponse());
-    }
-
-    @PostMapping("/api/v1/update/user/info")
-    @ApiOperation(value = "회원 정보 수정", notes = "회원 정보를 수정합니다.")
-    public ResponseEntity<?> updateUserInfo(
-            @RequestBody @Valid UpdateUserInfoRequest request,
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws UserException, NoSuchAlgorithmException {
-        userService.updateUserInfo(request, userAdapter.getUserTb());
-        return ResponseEntity.ok(new SuccessResponse());
-    }
-
-    @PostMapping("/api/V1/update/user/profile")
-    @ApiOperation(value = "회원 프로필 수정", notes = "회원 프로필 정보를 수정합니다.")
-    public ResponseEntity<?> updateUserProfile(
-            @ModelAttribute @Valid UpdateUserProfileRequest request,
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws  UserException {
-        String profile = userService.updateUserProfile(request, userAdapter.getUserTb());
-        AbstractSpec spec = UpdateUPResponse.builder()
-                .profile(profile)
-                .build();
-        return ResponseEntity.ok(spec);
     }
 
     @PostMapping("/api/v1/update/user/alert")
