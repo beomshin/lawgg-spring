@@ -1,6 +1,7 @@
 package com.kr.lg.module.login;
 
 import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.login.model.dto.LoginDto;
 import com.kr.lg.module.login.model.google.GoogleLoginDto;
 import com.kr.lg.module.login.model.dto.GoogleLoginRequestDto;
@@ -14,6 +15,7 @@ import com.kr.lg.module.login.model.naver.NaverProp;
 import com.kr.lg.module.login.service.*;
 import com.kr.lg.module.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,19 +39,23 @@ public class LoginController {
 
     private final UserService userService;
     private final OAuthService oAuthService;
-    private final LoginService loginService;
 
     @GetMapping("/login")
     public ModelAndView login(
             @RequestParam(value = "error", required = false) Boolean error, // 로그인 실패
             @RequestParam(value = "message", required = false) String message, // 로그인 실패 메세지
             @CookieValue(value = "savedLoginId", required = false) String savedLoginId, // 아이디 저장
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             ModelAndView mav
     ) {
         mav.addObject("savedLoginId", savedLoginId);
         mav.addObject("error", error);
         mav.addObject("message", message);
-        mav.setViewName("view/member/login");
+        if (userTb != null) {
+            mav.setViewName("redirect:/");
+        } else {
+            mav.setViewName("view/member/login");
+        }
         return mav;
     }
 
