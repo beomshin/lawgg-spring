@@ -12,13 +12,15 @@
                     <!-- 내정보 -->
                     <div class="mypage-info">
                         <div class="mi-info">
-                            <p>
-                                <img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" />
-                                <button>편집</button>
-                            </p>
+                            <th:block th:if="${user.profile != null}">
+                                <p><img th:src="${user.profile}" width="100%" alt="" title="" /><button>편집</button></p>
+                            </th:block>
+                            <th:block th:if="${user.profile == null}">
+                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /><button>편집</button></p>
+                            </th:block>
                             <div>
-                                <h2><i class="uil uil-user"></i> 홍길동 (lawggididid)</h2>
-                                <h3><i class="uil uil-calendar-alt"></i> 가입일 (2023.10.10)</h3>
+                                <h2><i class="uil uil-user" ></i> [[${user.loginId}]] ([[${user.nickName}]])</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(user.regDt, 'yyyy.MM.dd')}]])</h3>
                                 <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
                             </div>
                         </div>
@@ -40,17 +42,17 @@
 
                     <!-- 개인정보수정 -->
                     <div class="mypage-info-modify">
-                        <dl>
-                            <dt>본인인증 <span>*</span></dt>
-                            <dd><button class="btn-default bg-black">본인인증</button></dd>
-                        </dl>
+<!--                        <dl>-->
+<!--                            <dt>본인인증 <span>*</span></dt>-->
+<!--                            <dd><button class="btn-default bg-black">본인인증</button></dd>-->
+<!--                        </dl>-->
                         <dl>
                             <dt>아이디 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.loginId}" disabled /></dd>
                         </dl>
                         <dl>
                             <dt>로펌 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.lawFirmName == null ? '' : user.lawFirmName}" disabled/></dd>
                         </dl>
                         <dl>
                             <dt>비밀번호 <span>*</span></dt>
@@ -62,23 +64,31 @@
                         </dl>
                         <dl>
                             <dt>닉네임 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.nickName}"/></dd>
                         </dl>
                         <dl>
                             <dt>이메일 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
+                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.email}"/></dd>
                         </dl>
                         <dl>
                             <dt>개인정보 유효기간 <span>*</span></dt>
                             <dd>
                                 <div class="mt10 mb10">
                                     <div class="radio-box">
-                                        <input type="radio" name="pwRadio" id="pwRadio1" checked />
+                                        <input type="radio" name="pwRadio" id="pwRadio1" th:checked="${user.personalPeriod == 99}" disabled/>
                                         <label for="pwRadio1">탈퇴시까지</label>
                                     </div>
                                     <div class="radio-box pl30">
-                                        <input type="radio" name="pwRadio" id="pwRadio2" />
+                                        <input type="radio" name="pwRadio" id="pwRadio2" th:checked="${user.personalPeriod == 1}" disabled/>
                                         <label for="pwRadio2">1년</label>
+                                    </div>
+                                    <div class="radio-box pl30">
+                                        <input type="radio" name="pwRadio" id="pwRadio3" th:checked="${user.personalPeriod == 3}" disabled/>
+                                        <label for="pwRadio3">3년</label>
+                                    </div>
+                                    <div class="radio-box pl30">
+                                        <input type="radio" name="pwRadio" id="pwRadio4" th:checked="${user.personalPeriod == 5}" disabled/>
+                                        <label for="pwRadio4">5년</label>
                                     </div>
                                 </div>
                             </dd>

@@ -45,7 +45,7 @@ public class UserFindController {
     @GetMapping("/my/boards")
     public ModelAndView findMyBoards(
             @Valid FindUserBoardsRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws  UserException { // 미사용 기능
         Page<UserBoardEntry> boards = userService.findUserBoards(request, userTb);
@@ -65,12 +65,11 @@ public class UserFindController {
     @GetMapping("/my/alerts")
     public ModelAndView findUserAlert(
             @Valid FindUserAlertRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws UserException {
         Page<UserAlertEntry> alerts = userService.findUserAlerts(request, userTb);
         alerts.stream().forEach(UserAlertEntry::additionalContent);
-
 
         mav.addObject("user", userTb);
         mav.addObject("alerts", alerts);
@@ -78,6 +77,19 @@ public class UserFindController {
         mav.addObject("maxPage", 10);
 
         mav.setViewName("view/mypage/alerts");
+        return mav;
+    }
+
+    @Secured("ROLE_USER")
+    @GetMapping("/my/info")
+    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+    public ModelAndView findUserInfo(
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+            ModelAndView mav
+    ) throws UserException {
+        UserEntry user = userService.findUser(userTb);
+        mav.addObject("user", user);
+        mav.setViewName("view/mypage/myInfo");
         return mav;
     }
 
@@ -110,18 +122,6 @@ public class UserFindController {
     ) throws UserException {
         userService.verifyPassword(request, userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());
-    }
-
-    @PostMapping("/api/v1/find/user/info")
-    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
-    public ResponseEntity<?> findUserInfo(
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws UserException {
-        UserEntry user = userService.findUser(userAdapter.getUserTb());
-        AbstractSpec spec = FindUserInfoResponse.builder()
-                .user(user)
-                .build();
-        return ResponseEntity.ok(spec);
     }
 
     @GetMapping("/api/public/v1/check/overlap/id")
