@@ -24,7 +24,7 @@ public interface UserService {
     Page<UserAlertEntry> findUserAlerts(FindUserAlertRequest request, UserTb userTb) throws UserException;
     void updateReadUserAlerts(UserTb userTb) throws UserException;
     void updateReadUserAlert(UpdateUserAlertRequest request, UserTb userTb) throws UserException;
-    void updateUserPassword(UpdateUserPasswordRequest request) throws  UserException;
+    void updateUserPassword(UpdateUserPasswordRequest request, UserTb userTb) throws  UserException;
     void updateUserInfo(UpdateUserInfoRequest request, UserTb userTb) throws UserException, NoSuchAlgorithmException;
     String updateUserProfile(UpdateUserProfileRequest request, UserTb userTb) throws  UserException;
     UserTb enrollUser(EnrollUserRequest request) throws UserException;

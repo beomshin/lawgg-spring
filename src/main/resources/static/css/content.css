@@ -1199,7 +1199,7 @@
 .mypage-info-modify {margin-top:30px; padding:15px 0;}
 .mypage-info-modify > dl {display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; width:100%; padding:15px 0; border-bottom:#e9e9e9 1px solid;}
 .mypage-info-modify > dl:last-child {border-bottom:none;}
-.mypage-info-modify > dl > dt {width:20%; padding-left:10px; font-weight:bold; font-size:14px; line-height:14px; color:#333; letter-spacing:-0.5px; background:url('/assets/images/icn_dot01.gif') 0 5px no-repeat;}
+.mypage-info-modify > dl > dt {width:20%; padding-left:10px; font-weight:bold; font-size:14px; line-height:14px; color:#333; letter-spacing:-0.5px; background:url('../images/icn_dot01.gif') 0 5px no-repeat;}
 .mypage-info-modify > dl > dt span {color:#dc3545;}
 .mypage-info-modify > dl > dd {width:80%; padding-left:20px; color:#222;}
 .mypage-info-modify > dl > dd > div {display:flex; align-items:center; gap:15px;}

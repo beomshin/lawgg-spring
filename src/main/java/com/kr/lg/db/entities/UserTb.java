@@ -81,7 +81,6 @@ public class UserTb { // 관리자 테이블
     private String name;
 
     @Column(name = "email")
-    @Convert(converter = DataBaseAESCryptConverter.class)
     private String email;
 
     @Column(name = "hashEmail")

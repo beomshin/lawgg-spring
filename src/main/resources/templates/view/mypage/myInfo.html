@@ -41,64 +41,66 @@
                     <!-- 마이페이지 - 타이틀 끝 -->
 
                     <!-- 개인정보수정 -->
-                    <div class="mypage-info-modify">
-<!--                        <dl>-->
-<!--                            <dt>본인인증 <span>*</span></dt>-->
-<!--                            <dd><button class="btn-default bg-black">본인인증</button></dd>-->
-<!--                        </dl>-->
-                        <dl>
-                            <dt>아이디 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.loginId}" disabled /></dd>
-                        </dl>
-                        <dl>
-                            <dt>로펌 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.lawFirmName == null ? '' : user.lawFirmName}" disabled/></dd>
-                        </dl>
-                        <dl>
-                            <dt>비밀번호 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
-                        </dl>
-                        <dl>
-                            <dt>비밀번호 확인 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" /></dd>
-                        </dl>
-                        <dl>
-                            <dt>닉네임 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.nickName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt>이메일 <span>*</span></dt>
-                            <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.email}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt>개인정보 유효기간 <span>*</span></dt>
-                            <dd>
-                                <div class="mt10 mb10">
-                                    <div class="radio-box">
-                                        <input type="radio" name="pwRadio" id="pwRadio1" th:checked="${user.personalPeriod == 99}" disabled/>
-                                        <label for="pwRadio1">탈퇴시까지</label>
+                    <form name="searchForm" id="searchForm" method="post" th:action="@{/my/update/password}">
+                        <div class="mypage-info-modify">
+                            <!--                        <dl>-->
+                            <!--                            <dt>본인인증 <span>*</span></dt>-->
+                            <!--                            <dd><button class="btn-default bg-black">본인인증</button></dd>-->
+                            <!--                        </dl>-->
+                            <dl>
+                                <dt>아이디 <span>*</span></dt>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.loginId}" disabled /></dd>
+                            </dl>
+                            <dl>
+                                <dt>로펌 <span>*</span></dt>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.lawFirmName == null ? '' : user.lawFirmName}" disabled/></dd>
+                            </dl>
+                            <dl>
+                                <dt>기존 비밀번호 <span>*</span></dt>
+                                <dd><input name="oldPassword" type="password" class="input-box w100p" placeholder="" /></dd>
+                            </dl>
+                            <dl>
+                                <dt>새비밀번호 <span>*</span></dt>
+                                <dd><input name="newPassword" type="password" class="input-box w100p" placeholder="" /></dd>
+                            </dl>
+                            <dl>
+                                <dt>닉네임 <span>*</span></dt>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.nickName}" disabled/></dd>
+                            </dl>
+                            <dl>
+                                <dt>이메일 <span>*</span></dt>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.email}" disabled/></dd>
+                            </dl>
+                            <dl>
+                                <dt>개인정보 유효기간 <span>*</span></dt>
+                                <dd>
+                                    <div class="mt10 mb10">
+                                        <div class="radio-box" th:if="${user.personalPeriod == 99}">
+                                            <input type="radio" id="pwRadio1" th:checked="${user.personalPeriod == 99}" disabled/>
+                                            <label for="pwRadio1">탈퇴시까지</label>
+                                        </div>
+                                        <div class="radio-box pl30" th:if="${user.personalPeriod == 1}">
+                                            <input type="radio" id="pwRadio2" th:checked="${user.personalPeriod == 1}" disabled/>
+                                            <label for="pwRadio2">1년</label>
+                                        </div>
+                                        <div class="radio-box pl30" th:if="${user.personalPeriod == 3}">
+                                            <input type="radio" id="pwRadio3" th:checked="${user.personalPeriod == 3}" disabled/>
+                                            <label for="pwRadio3">3년</label>
+                                        </div>
+                                        <div class="radio-box pl30" th:if="${user.personalPeriod == 5}">
+                                            <input type="radio"  id="pwRadio4" th:checked="${user.personalPeriod == 5}" disabled/>
+                                            <label for="pwRadio4">5년</label>
+                                        </div>
                                     </div>
-                                    <div class="radio-box pl30">
-                                        <input type="radio" name="pwRadio" id="pwRadio2" th:checked="${user.personalPeriod == 1}" disabled/>
-                                        <label for="pwRadio2">1년</label>
-                                    </div>
-                                    <div class="radio-box pl30">
-                                        <input type="radio" name="pwRadio" id="pwRadio3" th:checked="${user.personalPeriod == 3}" disabled/>
-                                        <label for="pwRadio3">3년</label>
-                                    </div>
-                                    <div class="radio-box pl30">
-                                        <input type="radio" name="pwRadio" id="pwRadio4" th:checked="${user.personalPeriod == 5}" disabled/>
-                                        <label for="pwRadio4">5년</label>
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-                        <div style="display: flex">
-                            <a  class="btn-default-b bg-pink w49p">정보수정</a>
-                            &nbsp;
-                            <a  class="btn-default-b bg-black w49p">취소</a>
+                                </dd>
+                            </dl>
+                            <div style="display: flex">
+                                <button type="submit"  class="btn-default-b bg-pink w49p">비밀번호 수정</button>
+                                &nbsp;
+                                <a th:href="@{/trials}" class="btn-default-b bg-black w49p">트라이얼 보러가기</a>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     <!-- 개인정보수정 끝 -->
                 </dd>
             </dl>

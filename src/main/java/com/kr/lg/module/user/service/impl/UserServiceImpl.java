@@ -166,11 +166,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUserPassword(UpdateUserPasswordRequest request) throws UserException {
-        Optional<UserTb> userTb = userRepository.findByLoginId(request.getLoginId());
-        if (userTb.isPresent()) {
-            if (!encoder.matches(request.getPassword(), userTb.get().getPassword())) throw new UserException(UserResultCode.UN_MATCH_PASSWORD);
-            userUpdateService.updateUserPassword(userTb.get(), request.getPassword());
+    public void updateUserPassword(UpdateUserPasswordRequest request, UserTb userTb) throws UserException {
+        Optional<UserTb> userTb1 = userRepository.findById(userTb.getUserId());
+        if (userTb1.isPresent()) {
+            if (!encoder.matches(request.getOldPassword(), userTb1.get().getPassword())) throw new UserException(UserResultCode.UN_MATCH_PASSWORD);
+            userUpdateService.updateUserPassword(userTb1.get(), request.getNewPassword());
         } else {
             throw new UserException(UserResultCode.NOT_EXIST_USER);
         }
