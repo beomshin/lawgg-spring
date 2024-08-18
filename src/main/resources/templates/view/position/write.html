@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="layout/default_layout" lang="en">
+
+<script src="../../../static/js/position/write.js"></script>
+<th:block layout:fragment="content">
+        <div class="content">
+
+
+            <!-- 타이틀 -->
+            <dl class="title">
+                <dt>
+                    <h2>포지션 게시판</h2>
+                    <h3>
+                        각 포지션에서 다양한 이야기를 할 수 있는 자유게시판입니다.<br />
+                        클린한 커뮤니케이션을 위해 비방하는 게시물은 자제해주세요.
+                    </h3>
+                </dt>
+            </dl>
+            <!-- 타이틀 끝 -->
+
+
+            <!-- 등록/수정 -->
+            <form name="addForm" id="addForm" method="post" th:action="@{/position/enroll}" enctype="multipart/form-data">
+                <fieldset>
+                    <legend>등록/수정</legend>
+                    <div class="board-write">
+                        <div>
+                            <dl sec:authorize="isAnonymous()">
+                                <dt>작성자 <span>*</span></dt>
+                                <dd>
+                                    <div>
+                                        <input name="id" type="text" class="input-box w100p" placeholder="아이디를 입력하세요." />
+                                        <input name="password" type="password" class="input-box w100p" placeholder="비밀번호를 입력하세요." />
+                                    </div>
+                                </dd>
+                            </dl>
+                            <div sec:authorize="isAuthenticated()">
+                                <input name="id" type="hidden" class="input-box w100p" value="oauth" />
+                                <input name="password" type="hidden" class="input-box w100p" value="******" />
+                            </div>
+                            <dl>
+                                <dt>카테고리 <span>*</span></dt>
+                                <dd>
+                                    <select name="lineType" title="" class="w100p">
+                                        <option value="0" th:selected="${type == 0}">Top</option>
+                                        <option value="1" th:selected="${type == 1}">JG</option>
+                                        <option value="2" th:selected="${type == 2}">Mid</option>
+                                        <option value="3" th:selected="${type == 3}">Bot</option>
+                                        <option value="4" th:selected="${type == 4}">Spt</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>제목 <span>*</span></dt>
+                                <dd><input name="title" type="text" class="input-box w100p" placeholder="제목을 입력해주세요." maxlength="256" /></dd>
+                            </dl>
+                            <dl>
+                                <dt>첨부파일</dt>
+                                <dd>
+                                    <div class="input-file">
+                                        <label>
+                                            파일선택
+                                            <input type="file"  id="files" name="files"  multiple onchange="handleFileSelect(this)" accept=".jpg,.jpeg,.png,.gif,.bmp" >
+                                        </label>
+                                        <input type="text" readonly="readonly" title="File Route" id="fileRoute" placeholder="첨부할 파일들을 등록해주세요." class="input-box w100p" />
+                                    </div>
+                                    <ul class="bw-file"></ul>
+                                </dd>
+                            </dl>
+                            <div><textarea name="content" cols="" rows="" class="w100p h300" wrap="hard" maxlength="2000" placeholder="내용을 입력해주세요."></textarea></div>
+                        </div>
+                        <p class="bw-btn-two">
+                            <button type="submit" class="btn-default bg-black w150">등록하기</button>
+                            &nbsp;
+                            <a th:href="@{/positions}" class="btn-default bg-gray w150">목록으로</a>
+                        </p>
+                    </div>
+                </fieldset>
+            </form>
+            <!-- 등록/수정 끝 -->
+
+            <script th:inline="javascript" th:src="@{/static/js/position/write.js}"></script>
+        </div>
+    </th:block>
+
+</html>

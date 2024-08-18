@@ -1,5 +1,6 @@
 package com.kr.lg.module.main.model.dto;
 
+import com.kr.lg.common.utils.CommonUtils;
 import com.kr.lg.db.entities.TrialTb;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,9 +13,9 @@ import lombok.ToString;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class HotPostTrialDto implements MainPost {
+public class HotPostTrialDto {
 
-    private Long id; // 식별자
+    private Long trialId; // 식별자
 
     private String title; // 제목
 
@@ -23,9 +24,9 @@ public class HotPostTrialDto implements MainPost {
     private String playVideo; // 비디오 URL
 
     public HotPostTrialDto(TrialTb trialTb) {
-        this.id = trialTb.getTrialId();
-        this.title = trialTb.getTitle();
-        this.content = trialTb.getContent();
+        this.trialId = trialTb.getTrialId();
+        this.title = CommonUtils.subString(trialTb.getTitle(), 15);
+        this.content = CommonUtils.subString(trialTb.getContent(), 30);
         this.playVideo = trialTb.getPlayVideo();
     }
 }

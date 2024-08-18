@@ -16,13 +16,15 @@ public enum TrialResultCode {
     FAIL_UPDATE_LIVE_END_TRIAL("6005", "트라이얼 재판 종료 실패"),
     FAIL_RECOMMEND_TRIAL("6006", "트라이얼 추천 실패"),
     FAIL_DELETE_RECOMMEND_TRIAL("6007", "트라이얼 추천 취소 실패"),
-    ALREADY_RECOMMEND_TRIAL("6008", "중복 추천 방지"),
+    ALREADY_RECOMMEND_TRIAL("6008", "이미 추천을 완료하였습니다."),
     ALREADY_DELETE_RECOMMEND_TRIAL("6009", "추천 내역 미존재로인한 취소 실패"),
     FAIL_REPORT_TRIAL("6010", "트라이얼 신고 실패"),
     FAIL_VOTE_TRIAL("6011", "트라이얼 투표 실패"),
     FAIL_CHANGE_VOTE_TRIAL("6012", "트라이얼 투표 변경 실패"),
-    UN_MATCH_PASSWORD("6013", "비밀번호 불일치"),
-    FAIL_DELETE_TRIAL("6014", "트라이얼 삭제 실패"),
+    FAIL_DELETE_TRIAL("6013", "트라이얼 삭제 실패"),
+    NOT_EXIST_USER("6014", "로그인 필수"),
+    ALREADY_REPORT_BOARD("6015", "이미 신고를 완료하였습니다."),
+
     ;
 
     private final String code;

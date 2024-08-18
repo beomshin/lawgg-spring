@@ -16,11 +16,11 @@ public class UpdateUserPasswordRequest {
 
     @ApiModelProperty(value = "로그인 아이디", required = true)
     @NotBlank(message = "loginId 값이 입력되어있지않습니다.")
-    private String loginId;
+    private String oldPassword;
 
     @ApiModelProperty(value = "패스워드", required = true)
     @NotBlank(message = "패스워드 값이 입력되어있지않습니다.")
-    private String password;
+    private String newPassword;
 
 
 }

@@ -8,50 +8,69 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestControllerAdvice(basePackages = "com.kr.lg.module.comment")
+import javax.servlet.http.HttpServletRequest;
+
+@ControllerAdvice(basePackages = "com.kr.lg.module.comment")
 @RequiredArgsConstructor
 @Slf4j
 public class CommentExceptionAdvice {
 
     // 커스텀 CommentException
     @ExceptionHandler(value = CommentException.class)
-    public ResponseEntity<?> handle(CommentException e) {
+    public ModelAndView handle(CommentException e, HttpServletRequest request) {
         log.error("[CommentException] 오류 발생", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getResultCode()));
+        ModelAndView mav = new ModelAndView("redirect:" + request.getHeader("Referer"));
+        mav.addObject("error", new ErrorResponse(e.getResultCode()));
+        return mav;
     }
 
     // @Validate 실패시
-    @ExceptionHandler
-    public ResponseEntity<?> handle(MethodArgumentNotValidException e) {
-        log.error("[MethodArgumentNotValidException]: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ModelAndView handle(MethodArgumentNotValidException e, HttpServletRequest request) {
+        log.error("[BoardException] 오류 발생", e);
+        ModelAndView mav = new ModelAndView("redirect:" + request.getHeader("Referer"));
+        mav.addObject("error", new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
+        return mav;
     }
 
     // 쿼리 파라미터의 유효성이 실패할경우의 예외에 대한 처리 코드
-    @ExceptionHandler
-    public ResponseEntity<?> handle(BindException e) {
-        log.error("[BindException]: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView handle(BindException e, HttpServletRequest request) {
+        log.error("[BindException] 오류 발생", e);
+        ModelAndView mav = new ModelAndView("redirect:" + request.getHeader("Referer"));
+        mav.addObject("error", new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
+        return mav;
     }
 
     // @RequestBody 어노테이션이 붙은 매개변수에 대해 HTTP 요청의 본문이 없거나 잘못된 형식으로 인식되었을 때 나타나는 에러
-    @ExceptionHandler
-    public ResponseEntity<?> handle(HttpMessageNotReadableException e) {
-        log.error("[HttpMessageNotReadableException]: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ModelAndView handle(HttpMessageNotReadableException e, HttpServletRequest request) {
+        log.error("[BindException] 오류 발생", e);
+        ModelAndView mav = new ModelAndView("redirect:" + request.getHeader("Referer"));
+        mav.addObject("error", new ErrorResponse(GlobalResultCode.PARAMETER_ERROR));
+        return mav;
     }
 
 
-    @ExceptionHandler
-    public ResponseEntity<?> handle(RuntimeException e) {
-        log.error("[RuntimeException]", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(GlobalResultCode.SYSTEM_ERROR));
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ResponseEntity<?> handle(AccessDeniedException e) {
+        log.error("[AccessDeniedException] 오류 발생", e);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(GlobalResultCode.ACCESS_DENIED_ERROR));
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    public ModelAndView handle(RuntimeException e, HttpServletRequest request) {
+        log.error("[RuntimeException] 오류 발생", e);
+        ModelAndView mav = new ModelAndView("redirect:" + request.getHeader("Referer"));
+        mav.addObject("error", new ErrorResponse(GlobalResultCode.SYSTEM_ERROR));
+        return mav;
+    }
 
 }

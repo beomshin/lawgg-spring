@@ -38,15 +38,14 @@ spring:
     open-in-view: false
     show-sql: true
   thymeleaf:
-    prefix: classpath:/static/
+    prefix: classpath:/templates/
     suffix: .html
-  web:
-    resources:
-      static-locations: classpath:/static/
   data:
     redis:
       repositories:
         enabled: false
+
+
 
 mybatis:
   type-aliases-package: com.kr.lg.mapper

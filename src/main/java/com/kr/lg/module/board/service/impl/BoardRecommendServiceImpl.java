@@ -35,16 +35,4 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
         }
     }
 
-    @Override
-    @Transactional
-    public void deleteRecommendBoard(long boardId, long userId) throws BoardException {
-        try {
-            log.info("▶ [포지션 게시판] 포지션 게시판 추천 삭제");
-            boardRecommendRepository.deleteRecommendBoard(boardId, userId);
-        } catch (Exception e) {
-            log.error("", e);
-            throw new BoardException(BoardResultCode.FAIL_DELETE_RECOMMEND_BOARD);
-        }
-    }
-
 }

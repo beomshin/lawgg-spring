@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="main-content">
+
+
+            <!-- 비주얼 영역 -->
+            <div class="main-visual">
+                <dl>
+                    <dt>
+                        <h2>당신의 티어를 제대로 한번 올리고 싶다면?</h2>
+                        <h3>오늘의 <span>HOT</span> 트라이얼</h3>
+                        <h4>제목 : [[${hotTrial.title}]]</h4>
+                        <div>
+                            [[${hotTrial.content}]]
+                        </div>
+                        <p><button style="cursor: pointer" th:onclick="|window.location.href='@{/trial/{trialId}(trialId=${hotTrial.trialId})}'|">More <i class="uil uil-arrow-right"></i></button></p>
+                    </dt>
+                    <dd>
+                        <iframe width="100%" height="300"
+                                th:src="${hotTrial.playVideo}"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                        </iframe>
+                    </dd>
+                </dl>
+            </div>
+            <!-- 비주얼 영역 끝 -->
+
+
+            <!-- 트라이얼 -->
+            <div class="main-trial">
+                <div>
+                    <h2>트라이얼</h2>
+                    <h3>전문가들이 알려주는 제대로된 트라이얼!!</h3>
+                    <ul>
+                        <li th:each="trial:${trials}"
+                            th:onclick="|window.location.href='@{/trial/{trialId}(trialId=${trial.trialId})}'|">
+                            <p><img th:src="${trial.thumbnail}" width="100%" alt="" title="" /></p>
+                            <div>
+                                <h2>[[${trial.title}]]</h2>
+                                <h3>[[${trial.content}]]</h3>
+                                <dl>
+                                    <dt><i class="uil uil-clock-two"></i> [[${#dates.format(trial.writeDt, 'yyyy-MM-dd')}]]</dt>
+                                    <dd>
+                                        <th:block th:if="${trial.profile != null}">
+                                            <span><img th:src="${trial.profile}" width="100%" alt="" title="" /></span>
+                                        </th:block>
+                                        <em>[[${trial.writer}]]</em>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 트라이얼 끝 -->
+
+
+            <!-- 포지션 게시판 -->
+            <div class="main-position">
+                <div>
+                    <h2>포지션 게시판</h2>
+                    <h3>매일 매일 쌓이는 이야기 포지션 게시판!!</h3>
+                    <p>
+                        <button class="filter-button active" data-linetype="0">탑</button>
+                        <button class="filter-button" data-linetype="1">정글</button>
+                        <button class="filter-button" data-linetype="2">미드</button>
+                        <button class="filter-button" data-linetype="3">원딜</button>
+                        <button class="filter-button" data-linetype="4">서폿</button>
+                    </p>
+                    <div class="swiper-area swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="board:${boards}" th:data-linetype="${board.lineType}"
+                                 th:onclick="|window.location.href='@{/position/{boardId}(boardId=${board.boardId})}'|" >
+                                <p><span th:text="${board.tag}"></span></p>
+                                <h2 th:text="${board.title}"></h2>
+                                <div th:text="${board.content}"></div>
+                                <dl>
+                                    <dt>
+                                        <i class="uis uis-heart color-pink"></i> [[${board.recommendCount}]]
+                                        <i class="uil uil-eye"></i> [[${board.view}]]
+                                    </dt>
+                                    <dd>
+                                        <i class="uil uil-clock-nine"></i> [[${#dates.format(board.writeDt, 'yyyy-MM-dd')}]]
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination" ></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 포지션 게시판 끝 -->
+
+
+            <!-- 핫 이슈 -->
+            <div class="main-issue">
+                <dl>
+                    <dt>
+                        <img th:src="@{/static/images/main_issue_img.jpg}" width="100%" alt="" title="" />
+                    </dt>
+                    <dd>
+                        <h2><span>HOT</span> ISSUE</h2>
+                        <h3>로우지지에서 리그오브레전드에 대한 핫이슈!를 소개합니다.</h3>
+                        <ul>
+                            <li style="cursor: pointer"><a>게임플레이에 대한 단상 : 13.7</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
+                            <li style="cursor: pointer"><a>리그오브레전드 13.1 패치 상점소식</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
+                            <li style="cursor: pointer"><a>[라이엇 스토어] 2023 LCK SPRING 결승 진출전 & 결승전 라이엇 스토어 운영 안내</a> <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" /></li>
+                            <li style="cursor: pointer"><a>13.7 전략적 팀 전투 패치 노트</a></li>
+                            <li style="cursor: pointer"><a>리그오브레전드 13.1 패치 상점소식</a></li>
+                        </ul>
+                        <p><button class="btn-line-gray-m w100">More <i class="uil uil-arrow-right"></i></button></p>
+                    </dd>
+                </dl>
+            </div>
+            <!-- 핫 이슈 끝 -->
+
+
+            <!-- 베너 -->
+            <div class="banner-area01">
+                <img th:src="@{/static/images/banner_img01.png}" alt="" title="" />
+            </div>
+            <!-- 베너 끝 -->
+
+            <script th:src="@{/static/js/home.js}"></script>
+        </div>
+    </th:block>
+
+</html>

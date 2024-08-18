@@ -17,6 +17,8 @@ public enum CommentResultCode {
     ALREADY_DELETE_BOARD_COMMENT("4007", "이미 삭제된 게시판 댓글"),
     FAIL_FIND_TRIAL_COMMENT("4008", "트라이얼 댓글 조회 실패."),
     ALREADY_DELETE_TRIAL_COMMENT("4009", "이미 삭제된 트라이얼 댓글"),
+    FAIL_FIND_BOARD("4010", "포지션 게시판 조회 실패"),
+    FAIL_FIND_TRIAL("4011", "트라이얼 게시판 조회 실패"),
     ;
 
     private final String code;

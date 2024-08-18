@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content" sec:authorize="authenticated">
+
+
+            <dl class="mypage-layout">
+                <dt>
+                    <!-- 내정보 -->
+                    <div class="mypage-info">
+                        <div class="mi-info">
+                            <th:block th:if="${userTb.profile != null}">
+                                <p><img th:src="${userTb.profile}" width="100%" alt="" title="" /></p>
+                            </th:block>
+                            <th:block th:if="${userTb.profile == null}">
+                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            </th:block>
+                            <div>
+                                <h2><i class="uil uil-user" ></i> [[${userTb.loginId}]] ([[${userTb.nickName}]])</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(userTb.regDt, 'yyyy.MM.dd')}]])</h3>
+                                <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
+                            </div>
+                        </div>
+                        <div class="mi-menu">
+                            <a th:href="@{/my/info}" >- 개인정보수정</a>
+                            <a th:href="@{/my/alerts}" class="active">- 알림함</a>
+                            <a th:href="@{/my/boards}">- 글목록</a>
+                        </div>
+                    </div>
+                    <!-- 내정보 끝 -->
+                </dt>
+                <dd>
+                    <!-- 마이페이지 - 타이틀 -->
+                    <div class="mypage-title">
+                        <h2>알림함</h2>
+                        <h3>로우지지 회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                    </div>
+                    <!-- 마이페이지 - 타이틀 끝 -->
+
+                    <!-- 구분 및 옵션 -->
+                    <dl class="board-sort-option w100p">
+                        <dt>
+                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>[[${messages.totalElements}]]</strong> 개의 알림</div>
+                        </dt>
+                        <dd class="sso-two">
+                            <div>
+                                <form id="searchForm" method="get" th:action="@{/my/messages}">
+                                    <select name="pageNum" class="w80">
+                                        <option value="10" th:selected="${query.pageNum == null || query.pageNum == 10}">10개</option>
+                                        <option value="30" th:selected="${query.pageNum == 30}">30개</option>
+                                        <option value="50" th:selected="${query.pageNum == 50}">50개</option>
+                                    </select>
+                                    <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                    <input type="text"  name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                    <button class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</button>
+                                </form>
+                            </div>
+                            <p>
+                                <button class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 알림작성</button>
+                            </p>
+                        </dd>
+                    </dl>
+                    <!-- 구분 및 옵션 끝 -->
+
+                    <!-- 리스트 -->
+                    <div class="board-list w100p">
+                        <ol class="bl-message">
+                            <li>번호</li>
+                            <li>제목</li>
+                            <li>작성자</li>
+                            <li>작성일</li>
+                        </ol>
+                        <ul class="bl-message" th:each="message :${messages}">
+                            <li th:text="${message.messageId}"></li>
+                            <li >
+                                <a >[[${message.title}]]</a>
+                                <th:block th:if="${message.isWithinLastHour}">
+                                    <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                                </th:block>
+                            </li>
+                            <li><font>발신인 : </font> 홍길동</li>
+                            <li><font>수신일 : </font> [[${#dates.format(message.regDt, 'yyyy-MM-dd')}]]</li>
+                        </ul>
+                    </div>
+                    <!-- 리스트 끝 -->
+
+
+                    <!-- 페이지넘버링 -->
+                    <div class="paging-list" th:with="start=${(messages.number/maxPage)*maxPage + 1}, end=(${(messages.totalPages == 0) ? 1 : (start + (maxPage - 1) < messages.totalPages ? start + (maxPage - 1) : messages.totalPages)})">
+                        <a th:if="${start > 1}" th:href="@{/my/messages(page=${start - maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" ><i class="uil uil-angle-left-b"></i></a>
+
+                        <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:text="${page}" th:href="@{/my/messages(page=${page - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" th:classappend="${page == query.page + 1} ? 'active' : ''"></a>
+                        </th:block>
+
+                        <a th:if="${end < messages.totalPages}" th:href="@{/my/messages(page=${start + maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
+                    </div>
+                    <!-- 페이지넘버링 끝 -->
+                </dd>
+            </dl>
+
+
+            <!-- 모달 - 알림 내용 -->
+<!--            <modal class="modal-area" name="modalMessageView" width="90%"  height="auto" :maxWidth="650" :adaptive="true" :scrollable="true">-->
+<!--                <dl class="ma-header">-->
+<!--                    <dt>알림 내용</dt>-->
+<!--                    <dd><i class="uil uil-times"></i></dd>-->
+<!--                </dl>-->
+
+<!--                <div class="ma-message-view">-->
+<!--                    <h2>로우지지에 대해서 너무 너무 궁금합니다.</h2>-->
+<!--                    <div>-->
+<!--                        로우지지에 대해서 너무 너무 궁급합니다. 로우지지에 대해서 너무 너무 궁급합니다. 로우지지에 대해서 너무 너무 궁급합니다.-->
+<!--                        <br /><br />-->
+<!--                        로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.<br />로우지지에 대해서 너무 너무 궁급합니다.-->
+<!--                    </div>-->
+<!--                    <p>-->
+<!--                        <button class="btn-default-m bg-pink w100">답하기</button>-->
+<!--                        &nbsp;-->
+<!--                        <button class="btn-default-m bg-black w100">닫기</button>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </modal>-->
+            <!-- 모달 - 알림 내용 끝 -->
+
+
+            <!-- 모달 - 알림 작성 -->
+<!--            <modal class="modal-area" name="modalMessageWrite" width="90%"  height="auto" :maxWidth="650" :adaptive="true" :scrollable="true">-->
+<!--                <dl class="ma-header">-->
+<!--                    <dt>알림 작성</dt>-->
+<!--                    <dd ><i class="uil uil-times"></i></dd>-->
+<!--                </dl>-->
+
+<!--                <div class="ma-message-write">-->
+<!--                    <ul>-->
+<!--                        <li>-->
+<!--                            <input type="text" name="" title="" placeholder="수신인" class="input-box w100p h60" />-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <input type="text" name="" title="" placeholder="제목" class="input-box w100p h60" />-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <textarea cols="" rows="" placeholder="내용" class="w100p h200"></textarea>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <p>-->
+<!--                        <button class="btn-default-m bg-pink w100">전송하기</button>-->
+<!--                        &nbsp;-->
+<!--                        <button class="btn-default-m bg-black w100">닫기</button>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </modal>-->
+            <!-- 모달 - 알림 작성 끝 -->
+
+            <script th:inline="javascript" th:src="@{/static/js/mypage/message.js}"></script>
+        </div>
+    </th:block>
+
+</html>

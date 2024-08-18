@@ -1,6 +1,5 @@
 package com.kr.lg.security.exception;
 
-import com.kr.lg.module.auth.excpetion.AuthResultCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SecurityException extends Exception {
 
-	private AuthResultCode resultCode;
+	private SecurityResultCode resultCode;
 
-	public SecurityException(AuthResultCode resultCode) {
+	public SecurityException(SecurityResultCode resultCode) {
 		super(resultCode.getMsg());
 		this.resultCode = resultCode;
 	}

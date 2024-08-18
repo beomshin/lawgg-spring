@@ -16,9 +16,8 @@ public class DeleteTrialRequest {
 
     @ApiModelProperty(value = "트라이얼 아이디")
     @NotNull(message = "게시판아이디가 입력되어있지않습니다.")
-    private Long id;
+    private Long trialId;
 
     @ApiModelProperty(value = "패스워드")
-    @NotNull(message = "패스워드가 입력되어있지않습니다.")
     private String password;
 }

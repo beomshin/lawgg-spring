@@ -3,7 +3,6 @@ package com.kr.lg.module.user.service.impl;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.excpetion.UserResultCode;
 import com.kr.lg.module.user.model.entry.*;
-import com.kr.lg.model.mapper.MapperParam;
 import com.kr.lg.model.mapper.UserParam;
 import com.kr.lg.module.user.mapper.UserMapper;
 import com.kr.lg.module.user.service.UserFindService;
@@ -23,34 +22,12 @@ public class UserFindServiceImpl implements UserFindService {
     private final UserMapper userMapper;
 
     @Override
-    public UserEntry findUser(MapperParam param) throws UserException {
-        try {
-            log.info("▶ [유저] 유저 조회");
-            return userMapper.findUser(param);
-        } catch (Exception e) {
-            log.error("", e);
-            throw new UserException(UserResultCode.FAIL_FIND_USER);
-        }
-    }
-
-    @Override
     public Page<UserBoardEntry> findUserBoard(UserParam<?> param) throws UserException {
         try {
             log.info("▶ [유저] 유저 포지션 게시판 조회");
             List<UserBoardEntry> content = userMapper.findBoards(param);
             long count = userMapper.findBoardsCnt(param.getData()); // board 개수 조회
             return new PageImpl<>(content, param.getPageable(), count); // pageable 생성
-        } catch (Exception e) {
-            log.error("", e);
-            throw new UserException(UserResultCode.FAIL_FIND_USER_BOARDS);
-        }
-    }
-
-    @Override
-    public List<UserIdEntry> findUserIds(MapperParam param) throws UserException {
-        try {
-            log.info("▶ [유저] 유저 포지션 아이디 조회");
-            return userMapper.findUserIds(param);
         } catch (Exception e) {
             log.error("", e);
             throw new UserException(UserResultCode.FAIL_FIND_USER_BOARDS);

@@ -22,10 +22,10 @@ public enum BoardResultCode {
     FAIL_DELETE_BOARD("3012", "게시판 삭제 실패"),
     FAIL_REPORT_BOARD("3013", "게시판 신고 실패"),
     FAIL_RECOMMEND_BOARD("3014", "게시판 추천 실패"),
-    ALREADY_RECOMMEND_BOARD("3015", "중복 추천 방지"),
+    ALREADY_RECOMMEND_BOARD("3015", "이미 추천을 완료하였습니다."),
     FAIL_DELETE_RECOMMEND_BOARD("3016", "게시판 추천 취소 실패"),
     ALREADY_DELETE_RECOMMEND_BOARD("3017", "추천 내역 미존재로인한 취소 실패"),
-
+    ALREADY_REPORT_BOARD("3018", "이미 신고를 완료하였습니다."),
 
     ;
 

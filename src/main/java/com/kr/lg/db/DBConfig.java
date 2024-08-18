@@ -1,6 +1,5 @@
 package com.kr.lg.db;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
@@ -85,9 +84,5 @@ public class DBConfig {
         return transactionManager;
     }
 
-    @Bean
-    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
-        return new JPAQueryFactory(entityManager);
-    }
 
 }

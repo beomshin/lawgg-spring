@@ -16,5 +16,5 @@ public class QuitLawFirmRequest {
 
     @ApiModelProperty(value = "로펌 아이디", required = true)
     @NotNull(message = "로펌 아이디가 입력되어있지않습니다.")
-    private Long id;
+    private Long lawfirmId;
 }

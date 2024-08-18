@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content">
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
+
+            <!-- 타이틀 -->
+            <dl class="title">
+                <dt>
+                    <h2>로펌</h2>
+                    <h3>
+                        로펌에 관한 다양한 이야기를 할 수 있는 게시판입니다.<br />
+                        클린한 커뮤니케이션을 위해 비방하는 게시물은 자제해주세요.
+                    </h3>
+                </dt>
+            </dl>
+            <!-- 타이틀 끝 -->
+
+
+            <!-- 로펌 - 정보 -->
+            <div class="lawfirm-info lawfirm-background" >
+                <dl>
+                    <dt>
+                        <ul>
+                            <li>
+                                <h2 th:text="${lawFirm.trialTotalCount}"></h2>
+                                <h3>참여 재판 수</h3>
+                            </li>
+                            <li>
+                                <h2 th:text="${lawFirm.trialCount}"></h2>
+                                <h3>누적 요청</h3>
+                            </li>
+                            <li>
+                                <h2>[[${lawFirm.winRate}]]%</h2>
+                                <h3>선고율</h3>
+                            </li>
+                        </ul>
+                    </dt>
+                    <dd>
+                        <div th:style="'background:url(' + ${lawFirm.profile} +'); background-size:cover;'">
+                            <span></span>
+                        </div>
+                        <h2 th:text="${lawFirm.name}"></h2>
+                        <h3 th:text="${lawFirm.introduction}"></h3>
+                    </dd>
+                    <dt sec:authorize="isAuthenticated()">
+                        <th:block th:if="${lawFirm.isMyLawFirmFlag == 1}">  <!-- 나의 가입 로펌 -->
+                            <a class="btn-default bg-red w120"  onclick="quit()"><i class="uil uil-user-square"></i> 탈퇴하기</a>
+                        </th:block>
+                        <th:block th:if="${lawFirm.isMyLawFirmFlag == 0}">
+                            <th:block th:if="${lawFirm.isSignLawFirmFlag == 1}" > <!-- 내 로펌여부 -->
+                                <a class="btn-default bg-teal w120" th:href="@{/law-firm/{myLawFirmId}(myLawFirmId=${lawFirm.myLawFirmId} )}" ><i class="uil uil-user-square"></i>내로펌가기</a>
+                            </th:block>
+                            <th:block th:if="${lawFirm.isSignLawFirmFlag == 0 && lawFirm.applyFlag == 0}" > <!-- 로펌 가입여부 -->
+                                <a class="btn-default bg-pink w120" onclick="apply()"><i class="uil uil-user-circle"></i> 가입하기</a>
+                            </th:block>
+                            <th:block th:if="${lawFirm.isSignLawFirmFlag == 0 && lawFirm.applyFlag == 1}" > <!-- 로펌 지원여부 -->
+                                <a class="btn-default bg-teal w120" onclick="cancelApply()"><i class="uil uil-user-square"></i> 취소하기</a>
+                            </th:block>
+                        </th:block>
+                    </dt>
+                    <dt sec:authorize="isAnonymous()">
+                        <a class="btn-default bg-pink w120"><i class="uil uil-user-circle"></i> 가입하기</a>
+                    </dt>
+                </dl>
+            </div>
+            <!-- 로펌 - 정보 끝 -->
+
+
+            <!-- 구분 및 옵션 -->
+            <dl class="board-sort-option">
+                <dt>
+                    <button onclick="changeTopic(event,0)" th:classappend="${query.topic == 0} ? 'active' : ''"><i class="uit uit-check-square"></i> 최신순</button>
+                    <button onclick="changeTopic(event, 1)" th:classappend="${query.topic == null || query.topic == 1} ? 'active' : ''"><i class="uit uit-check-square"></i> 추천순</button>
+                    <button onclick="changeTopic(event,2)" th:classappend="${query.topic == 2} ? 'active' : ''"><i class="uit uit-check-square"></i> 조회순</button>
+                </dt>
+                <form name="searchForm" id="searchForm" method="get" th:action="@{/law-firm/{lawfirmId}(lawfirmId=${lawfirmId})}">
+                    <fieldset>
+                        <legend>게시물 검색</legend>
+                        <dd class="sso-two">
+                            <div>
+                                <select name="pageNum" class="w80">
+                                    <option value="30" th:selected="${query.pageNum == null || query.pageNum == 30}">30개</option>
+                                    <option value="50" th:selected="${query.pageNum == 50}">50개</option>
+                                    <option value="100" th:selected="${query.pageNum == 100}">100개</option>
+                                </select>
+                                <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                <input type="hidden" name="topic" id="topic" th:value="${query.topic == null} ? 1 : ${query.topic}" >
+                                <input type="text" name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                <button class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</button>
+                            </div>
+                            <p>
+                                <a th:href="@{/trial/write}" class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 글쓰기</a>
+                            </p>
+                        </dd>
+                    </fieldset>
+                </form>
+            </dl>
+            <!-- 구분 및 옵션 끝 -->
+
+
+            <!-- 리스트 -->
+            <div class="board-list">
+                <ol class="bl-default">
+                    <li>번호</li>
+                    <li>제목</li>
+                    <li>작성자</li>
+                    <li>작성일</li>
+                    <li>추천</li>
+                    <li>조회</li>
+                </ol>
+                <ul class="bl-default" th:each="trial :${trials}">
+                    <li>
+                        <th:block th:switch="${trial.postType}">
+                            <label th:case="99" class="label-default bg-red w50">공지</label>
+                            <label th:case="98" class="label-default bg-teal w50">이벤트</label>
+                            <label th:case="2" class="label-default bg-purple w50">추천</label>
+                            <label th:case="3" class="label-default bg-green w50">베스트</label>
+                            <span th:case="*">[[${trial.trialId}]]</span>
+                        </th:block>
+                        
+                    </li>
+                    <li>
+                        <th:block th:switch="${trial.postType}">
+                            <label th:case="99" class="label-default bg-red w50">공지</label>
+                            <label th:case="98" class="label-default bg-teal w50">이벤트</label>
+                            <label th:case="2" class="label-default bg-purple w50">추천</label>
+                            <label th:case="3" class="label-default bg-green w50">베스트</label>
+                        </th:block>
+
+                        <th:block th:if="${trial.profile != null}">
+                            <em><img th:src="${trial.profile}" width="100%" height="100%" alt="" title="" /></em>
+                        </th:block>
+
+                        <a th:href="@{/trial/{trialId}(trialId=${trial.trialId})}">[[${trial.title}]]</a>
+
+                        <i class="uil uil-comment-lines"></i> <span>([[${trial.commentCount}]])</span>
+                        <th:block th:if="${trial.isWithinLastHour}">
+                            <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                        </th:block>
+                    </li>
+                    <li><font>작성자 : </font> [[${trial.writer}]]</li>
+                    <li><font>작성일 : </font> [[${trial.formattedDate}]]</li>
+                    <li><font>추천 : </font> [[${trial.recommendCount}]]</li>
+                    <li><font>조회 : </font> [[${trial.view}]]</li>
+                </ul>
+            </div>
+            <!-- 리스트 끝 -->
+
+
+            <!-- 페이지넘버링 -->
+            <div class="paging-list" th:with="start=${(trials.number/maxPage)*maxPage + 1}, end=(${(trials.totalPages == 0) ? 1 : (start + (maxPage - 1) < trials.totalPages ? start + (maxPage - 1) : trials.totalPages)})">
+                <a th:if="${start > 1}" th:href="@{/law-firm/{lawfirmId}(lawfirmId=${lawfirmId}, page=${start - maxPage - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}" ><i class="uil uil-angle-left-b"></i></a>
+
+                <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                    <a th:text="${page}" th:href="@{/law-firm/{lawfirmId}(lawfirmId=${lawfirmId}, page=${page - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}" th:classappend="${page == query.page + 1} ? 'active' : ''"></a>
+                </th:block>
+
+                <a th:if="${end < trials.totalPages}" th:href="@{/law-firm/{lawfirmId}(lawfirmId=${lawfirmId}, page=${start + maxPage - 1}, pageNum=${query.pageNum}, topic=${query.topic}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
+            </div>
+            <!-- 페이지넘버링 끝 -->
+
+            <script th:inline="javascript">
+                const lawfirmId = /*[[${lawfirmId}]]*/ null;
+            </script>
+
+
+            <script th:inline="javascript" th:src="@{/static/js/lawFirm/list.js}"></script>
+
+        </div>
+    </th:block>
+
+</html>

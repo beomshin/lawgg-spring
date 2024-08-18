@@ -6,5 +6,4 @@ import com.kr.lg.module.trial.exception.TrialException;
 
 public interface TrialRecommendService {
     void recommendTrial(TrialTb trialTb, UserTb userTb) throws TrialException;
-    void deleteRecommendTrial(long trialId, long userId) throws TrialException;
 }

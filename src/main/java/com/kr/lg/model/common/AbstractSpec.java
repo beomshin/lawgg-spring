@@ -17,8 +17,8 @@ public abstract class AbstractSpec {
     public boolean success = true; // API 성공 여부
 
     public AbstractSpec(String code, String msg, boolean success) {
-        this.resultMsg = code;
-        this.resultCode = msg;
+        this.resultCode = code;
+        this.resultMsg = msg;
         this.success = success;
     }
 
