@@ -146,12 +146,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserTb enrollUser(LoginDto loginDto) throws UserException {
         Optional<UserTb> userTb = userRepository.findBySnsIdAndSnsType(loginDto.getSnsId(), loginDto.getSnsType());
         if (!userTb.isPresent()) {
             TierTb tierTb = tierRepository.findByKey("Bronze_3");
             return userEnrollService.enrollUser(EnrollUserDto.builder()
                     .loginId(LoginUtils.getLoginId(loginDto.getSnsType()))
+                    .password("123456")
                     .snsId(loginDto.getSnsId())
                     .nickName(loginDto.getNickname())
                     .email(loginDto.getEmail())
@@ -163,6 +165,7 @@ public class UserServiceImpl implements UserService {
         } else {
             return userTb.get();
         }
+
     }
 
     @Override

@@ -19,7 +19,6 @@ public class LoginDto {
     private String email;
     private SnsType snsType;
     private String profile;
-    private String loginId;
 
     public LoginDto(GoogleLoginDto googleLoginDto) {
         this.nickname = googleLoginDto.getName();

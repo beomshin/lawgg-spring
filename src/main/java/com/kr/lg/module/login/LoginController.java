@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,41 +80,44 @@ public class LoginController {
         return redirectView;
     }
 
-    @GetMapping(value = "/api/public/google/login/redirect")
+    @GetMapping(value = "/google/login/callback")
     @ApiOperation(value = "구글 로그인 결과 콜백", notes = "구글 로그인 결과를 콜백합니다.")
-    public RedirectView redirectGoogleLogin(
-            @RequestParam(value = "code") String code
+    public ModelAndView redirectGoogleLogin(
+            @RequestParam(value = "code") String code,
+            ModelAndView mav
     ) throws Exception{
-        RedirectView redirectView = new RedirectView();
         GoogleLoginDto googleLoginDto = oAuthService.googleOAuth(new GoogleLoginRequestDto(googleProp, code));
         UserTb userTb = userService.enrollUser(new LoginDto(googleLoginDto));
-        redirectView.setUrl(loginService.redirect(userTb));
-        return redirectView;
+        userService.updateSessionUserTb(userTb);
+        mav.setViewName("redirect:/");
+        return mav;
     }
 
-    @GetMapping(value = "/api/public/kakao/login/redirect")
+    @GetMapping(value = "/kakao/login/callback")
     @ApiOperation(value = "카카오 결과 콜백", notes = "카카오 로그인 결과를 콜백합니다.")
-    public RedirectView redirectKakaoLogin(
-            @RequestParam(value = "code") String code
+    public ModelAndView redirectKakaoLogin(
+            @RequestParam(value = "code") String code,
+            ModelAndView mav
     ) throws Exception {
-        RedirectView redirectView = new RedirectView();
         KakaoLoginDto kakaoLoginDto = oAuthService.kakaoOAuth(new KakaoLoginRequestDto(kakaoProp, code));
         UserTb userTb = userService.enrollUser(new LoginDto(kakaoLoginDto));
-        redirectView.setUrl(loginService.redirect(userTb));
-        return redirectView;
+        userService.updateSessionUserTb(userTb);
+        mav.setViewName("redirect:/");
+        return mav;
     }
 
-    @GetMapping(value = "/api/public/naver/login/redirect")
+    @GetMapping(value = "/naver/login/callback")
     @ApiOperation(value = "네이버 로그인 결과 콜백", notes = "네이버 로그인 결과를 콜백합니다.")
-    public RedirectView redirectNaverLogin(
+    public ModelAndView redirectNaverLogin(
             @RequestParam(value = "code") String code,
-            @RequestParam(value = "state") String state
+            @RequestParam(value = "state") String state,
+            ModelAndView mav
     ) throws Exception {
-        RedirectView redirectView = new RedirectView();
         NaverLoginDto naverLoginDto = oAuthService.naverOAuth(new NaverLoginRequestDto(naverProp, code, state));
         UserTb userTb = userService.enrollUser(new LoginDto(naverLoginDto));
-        redirectView.setUrl(loginService.redirect(userTb));
-        return redirectView;
+        userService.updateSessionUserTb(userTb);
+        mav.setViewName("redirect:/");
+        return mav;
     }
 
 }
