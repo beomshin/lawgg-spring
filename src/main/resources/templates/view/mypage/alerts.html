@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="en">
+
+    <th:block layout:fragment="content">
+        <div class="content">
+
+
+            <dl class="mypage-layout">
+                <dt>
+                    <!-- 내정보 -->
+                    <div class="mypage-info">
+                        <div class="mi-info">
+                            <th:block th:if="${user.profile != null}">
+                                <p><img th:src="${user.profile}" width="100%" alt="" title="" /></p>
+                            </th:block>
+                            <th:block th:if="${user.profile == null}">
+                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            </th:block>
+                            <div>
+                                <h2><i class="uil uil-user" ></i> [[${user.loginId}]] ([[${user.nickName}]])</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(user.regDt, 'yyyy.MM.dd')}]])</h3>
+                                <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
+                            </div>
+                        </div>
+                        <div class="mi-menu">
+                            <a th:href="@{/my/info}" >- 개인정보수정</a>
+                            <a th:href="@{/my/alerts}" class="active">- 알림함</a>
+                            <a th:href="@{/my/boards}">- 글목록</a>
+                        </div>
+                    </div>
+                    <!-- 내정보 끝 -->
+                </dt>
+                <dd>
+                    <!-- 마이페이지 - 타이틀 -->
+                    <div class="mypage-title">
+                        <h2>알림함</h2>
+                        <h3>로우지지 회원가입시 다양한 혜택과 서비스를 이용하실 수 있습니다.</h3>
+                    </div>
+                    <!-- 마이페이지 - 타이틀 끝 -->
+
+                    <!-- 구분 및 옵션 -->
+                    <dl class="board-sort-option w100p">
+                        <dt>
+                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>[[${alerts.totalElements}]]</strong> 개의 알림</div>
+                        </dt>
+                        <dd class="sso-two">
+                            <div>
+                                <form id="searchForm" method="get" th:action="@{/my/alerts}">
+                                    <select name="pageNum" class="w80">
+                                        <option value="10" th:selected="${query.pageNum == null || query.pageNum == 10}">10개</option>
+                                        <option value="30" th:selected="${query.pageNum == 30}">30개</option>
+                                        <option value="50" th:selected="${query.pageNum == 50}">50개</option>
+                                    </select>
+                                    <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                    <input type="text"  name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                    <button class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</button>
+                                </form>
+                            </div>
+                        </dd>
+                    </dl>
+                    <!-- 구분 및 옵션 끝 -->
+
+                    <!-- 리스트 -->
+                    <div class="board-list w100p">
+                        <ol class="bl-message">
+                            <li>번호</li>
+                            <li>제목</li>
+                            <li>종류</li>
+                            <li>수신일</li>
+                        </ol>
+                        <ul class="bl-message" th:each="alert :${alerts}">
+                            <li th:text="${alert.alertId}"></li>
+                            <li >
+                                <th:block th:if="${alert.type == 0}">
+                                    <a th:href="@{/position/{boardId}(boardId=${alert.boardId})}">[[${alert.title}]]</a>
+                                </th:block>
+                                <th:block th:if="${alert.type == 1}">
+                                    <a th:href="@{/trial/{trialId}(trialId=${alert.trialId})}">[[${alert.title}]]</a>
+                                </th:block>
+                                <th:block th:if="${alert.isWithinLastHour}">
+                                    <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                                </th:block>
+                            </li>
+                            <li><font>종류 : </font> [[${alert.type == 0 ? '포지션게시판' : '트라이얼'}]]</li>
+                            <li><font>수신일 : </font> [[${#dates.format(alert.regDt, 'yyyy-MM-dd')}]]</li>
+                        </ul>
+                    </div>
+                    <!-- 리스트 끝 -->
+
+
+                    <!-- 페이지넘버링 -->
+                    <div class="paging-list" th:with="start=${(alerts.number/maxPage)*maxPage + 1}, end=(${(alerts.totalPages == 0) ? 1 : (start + (maxPage - 1) < alerts.totalPages ? start + (maxPage - 1) : alerts.totalPages)})">
+                        <a th:if="${start > 1}" th:href="@{/my/alerts(page=${start - maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" ><i class="uil uil-angle-left-b"></i></a>
+
+                        <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:text="${page}" th:href="@{/my/alerts(page=${page - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" th:classappend="${page == query.page + 1} ? 'active' : ''"></a>
+                        </th:block>
+
+                        <a th:if="${end < alerts.totalPages}" th:href="@{/my/alerts(page=${start + maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
+                    </div>
+                    <!-- 페이지넘버링 끝 -->
+                </dd>
+            </dl>
+
+            <script th:inline="javascript" th:src="@{/static/js/mypage/alerts.js}"></script>
+        </div>
+    </th:block>
+
+</html>

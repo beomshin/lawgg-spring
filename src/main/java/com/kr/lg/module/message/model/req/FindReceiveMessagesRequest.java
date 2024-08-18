@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "수신 메세지 리스트 조회 요청 Body")
 public class FindReceiveMessagesRequest {
 
@@ -22,4 +21,10 @@ public class FindReceiveMessagesRequest {
     private Integer subject;
 
     private String keyword;
+
+    public FindReceiveMessagesRequest() {
+        this.page = 0;
+        this.pageNum = 10;
+        this.subject = 1;
+    }
 }

@@ -2,6 +2,8 @@ package com.kr.lg.module.user.model.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kr.lg.common.utils.CommonUtils;
+import com.kr.lg.common.utils.DateUtils;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -22,5 +24,11 @@ public class UserAlertEntry {
     private Integer readFlag; // 읽음여부
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp regDt; // 등록일
+    private boolean isWithinLastHour; // 한시간 이내
 
+    public void additionalContent() {
+        this.title = CommonUtils.subString(this.title, 30); // 30자 처리
+        this.content = CommonUtils.subString(this.content, 30); // 30자 처리
+        this.isWithinLastHour = DateUtils.isWithinLastHour(this.regDt); // 등록 1시간 이내 플래그
+    }
 }

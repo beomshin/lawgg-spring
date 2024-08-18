@@ -3,6 +3,7 @@ package com.kr.lg.module.user;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
+import com.kr.lg.module.message.model.entry.MessageEntry;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
 import com.kr.lg.module.user.model.entry.UserBoardEntry;
@@ -59,6 +60,27 @@ public class UserFindController {
         return mav;
     }
 
+    @Secured("ROLE_USER")
+    @ApiOperation(value = "나의 알림 조회", notes = "나의 알림을 조회합니다.")
+    @GetMapping("/my/alerts")
+    public ModelAndView findUserAlert(
+            @Valid FindUserAlertRequest request,
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            ModelAndView mav
+    ) throws UserException {
+        Page<UserAlertEntry> alerts = userService.findUserAlerts(request, userTb);
+        alerts.stream().forEach(UserAlertEntry::additionalContent);
+
+
+        mav.addObject("user", userTb);
+        mav.addObject("alerts", alerts);
+        mav.addObject("query", request);
+        mav.addObject("maxPage", 10);
+
+        mav.setViewName("view/mypage/alerts");
+        return mav;
+    }
+
     @PostMapping("/api/public/v1/find/user/id")
     @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디 정보를 조회합니다.")
     public ResponseEntity<?> findUserId(
@@ -67,22 +89,6 @@ public class UserFindController {
         List<UserIdEntry> ids = userService.findUserId(request);
         AbstractSpec spec = FindUserIdResponse.builder()
                 .ids(ids)
-                .build();
-        return ResponseEntity.ok(spec);
-    }
-
-    @GetMapping("/api/v1/find/find/user/boards")
-    @ApiOperation(value = "회원 게시판 조회", notes = "회원 게시판을 조회합니다.")
-    public ResponseEntity<?> findUserBoards(
-            @Valid FindUserBoardsRequest requestDto,
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws UserException {
-        Page<UserBoardEntry> boards = userService.findUserBoards(requestDto, userAdapter.getUserTb());
-        AbstractSpec spec = FindUserBoardsResponse.builder()
-                .list(boards.getContent())
-                .totalElements(boards.getTotalElements())
-                .curPage(boards.getNumber())
-                .totalPage(boards.getTotalPages())
                 .build();
         return ResponseEntity.ok(spec);
     }
@@ -114,22 +120,6 @@ public class UserFindController {
         UserEntry user = userService.findUser(userAdapter.getUserTb());
         AbstractSpec spec = FindUserInfoResponse.builder()
                 .user(user)
-                .build();
-        return ResponseEntity.ok(spec);
-    }
-
-    @GetMapping("/api/v1/find/user/alerts")
-    @ApiOperation(value = "유저 알림 리스트 조회", notes = "유저 알림 리스트 정보를 조회합니다.")
-    public ResponseEntity<?> findUserAlert(
-            FindUserAlertRequest request,
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws UserException {
-        Page<UserAlertEntry> alerts = userService.findUserAlerts(request, userAdapter.getUserTb());
-        AbstractSpec spec = FindUserAlertResponse.builder()
-                .list(alerts.getContent())
-                .totalElements(alerts.getTotalElements())
-                .totalPage(alerts.getTotalPages())
-                .curPage(alerts.getNumber())
                 .build();
         return ResponseEntity.ok(spec);
     }

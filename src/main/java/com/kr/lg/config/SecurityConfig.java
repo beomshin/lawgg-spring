@@ -99,7 +99,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/") // 로그아웃 성공 핸들러
                 .deleteCookies("JSESSIONID", "remember-me");     // 로그아웃 후 쿠키 삭제
 
-        String[] paths = {"/my/info", "/my/message", "/my/boards", "/trial/write", "/law-firm/write"};
+        String[] paths = {"/my/info", "/my/alerts", "/my/messages", "/my/boards", "/trial/write", "/law-firm/write"};
 
         http.authorizeHttpRequests()
                 .antMatchers(paths).hasRole("USER")

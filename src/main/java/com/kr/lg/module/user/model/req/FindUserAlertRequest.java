@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "회원 알림 리스트 조회 요청 Body")
 public class FindUserAlertRequest {
 
@@ -24,5 +23,10 @@ public class FindUserAlertRequest {
 
     @ApiModelProperty(value = "키워드")
     private String keyword;
+
+    public FindUserAlertRequest() {
+        this.page = 0;
+        this.pageNum = 10;
+    }
 
 }

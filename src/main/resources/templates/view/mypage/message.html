@@ -12,16 +12,21 @@
                     <!-- 내정보 -->
                     <div class="mypage-info">
                         <div class="mi-info">
-                            <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            <th:block th:if="${user.profile != null}">
+                                <p><img th:src="${user.profile}" width="100%" alt="" title="" /></p>
+                            </th:block>
+                            <th:block th:if="${user.profile == null}">
+                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            </th:block>
                             <div>
-                                <h2><i class="uil uil-user"></i> 홍길동 (lawggididid)</h2>
-                                <h3><i class="uil uil-calendar-alt"></i> 가입일 (2023.10.10)</h3>
+                                <h2><i class="uil uil-user" ></i> [[${user.loginId}]] ([[${user.nickName}]])</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(user.regDt, 'yyyy.MM.dd')}]])</h3>
                                 <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
                             </div>
                         </div>
                         <div class="mi-menu">
                             <a th:href="@{/my/info}" >- 개인정보수정</a>
-                            <a th:href="@{/my/message}" class="active">- 알림함</a>
+                            <a th:href="@{/my/alerts}" class="active">- 알림함</a>
                             <a th:href="@{/my/boards}">- 글목록</a>
                         </div>
                     </div>
@@ -38,15 +43,20 @@
                     <!-- 구분 및 옵션 -->
                     <dl class="board-sort-option w100p">
                         <dt>
-                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>1,324</strong> 개의 알림</div>
+                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>[[${messages.totalElements}]]</strong> 개의 알림</div>
                         </dt>
                         <dd class="sso-two">
                             <div>
-                                <select name="" class="w80">
-                                    <option value="">30개</option>
-                                </select>
-                                <input type="text" name="Sstring" title="검색어" value="" placeholder="검색어를 입력하세요." class="input-box w300" />
-                                <button class="btn-default bg-black"><i class="uit uit-search"></i> 검색</button>
+                                <form id="searchForm" method="get" th:action="@{/my/messages}">
+                                    <select name="pageNum" class="w80">
+                                        <option value="10" th:selected="${query.pageNum == null || query.pageNum == 10}">10개</option>
+                                        <option value="30" th:selected="${query.pageNum == 30}">30개</option>
+                                        <option value="50" th:selected="${query.pageNum == 50}">50개</option>
+                                    </select>
+                                    <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                    <input type="text"  name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                    <button class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</button>
+                                </form>
                             </div>
                             <p>
                                 <button class="btn-default bg-black"><i class="uit uit-edit-alt"></i> 알림작성</button>
@@ -63,109 +73,30 @@
                             <li>작성자</li>
                             <li>작성일</li>
                         </ol>
-                        <ul class="bl-message">
-                            <li>1.</li>
+                        <ul class="bl-message" th:each="message :${messages}">
+                            <li th:text="${message.messageId}"></li>
                             <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                                <a >[[${message.title}]]</a>
+                                <th:block th:if="${message.isWithinLastHour}">
+                                    <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                                </th:block>
                             </li>
                             <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
-                        </ul>
-                        <ul class="bl-message">
-                            <li>1.</li>
-                            <li >
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>발신인 : </font> 홍길동</li>
-                            <li><font>수신일 : </font> 2022-07-01</li>
+                            <li><font>수신일 : </font> [[${#dates.format(message.regDt, 'yyyy-MM-dd')}]]</li>
                         </ul>
                     </div>
                     <!-- 리스트 끝 -->
 
 
                     <!-- 페이지넘버링 -->
-                    <div class="paging-list">
-                        <a ><i class="uil uil-angle-left-b"></i></a>
-                        <a >1</a>
-                        <a  class="active">2</a>
-                        <a >3</a>
-                        <a >4</a>
-                        <a >5</a>
-                        <a ><i class="uil uil-angle-right-b"></i></a>
+                    <div class="paging-list" th:with="start=${(messages.number/maxPage)*maxPage + 1}, end=(${(messages.totalPages == 0) ? 1 : (start + (maxPage - 1) < messages.totalPages ? start + (maxPage - 1) : messages.totalPages)})">
+                        <a th:if="${start > 1}" th:href="@{/my/messages(page=${start - maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" ><i class="uil uil-angle-left-b"></i></a>
+
+                        <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:text="${page}" th:href="@{/my/messages(page=${page - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" th:classappend="${page == query.page + 1} ? 'active' : ''"></a>
+                        </th:block>
+
+                        <a th:if="${end < messages.totalPages}" th:href="@{/my/messages(page=${start + maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
                     </div>
                     <!-- 페이지넘버링 끝 -->
                 </dd>
@@ -176,7 +107,7 @@
 <!--            <modal class="modal-area" name="modalMessageView" width="90%"  height="auto" :maxWidth="650" :adaptive="true" :scrollable="true">-->
 <!--                <dl class="ma-header">-->
 <!--                    <dt>알림 내용</dt>-->
-<!--                    <dd @click="$modal.hide('modalMessageView')"><i class="uil uil-times"></i></dd>-->
+<!--                    <dd><i class="uil uil-times"></i></dd>-->
 <!--                </dl>-->
 
 <!--                <div class="ma-message-view">-->
@@ -189,7 +120,7 @@
 <!--                    <p>-->
 <!--                        <button class="btn-default-m bg-pink w100">답하기</button>-->
 <!--                        &nbsp;-->
-<!--                        <button class="btn-default-m bg-black w100" @click="$modal.hide('modalMessageView')">닫기</button>-->
+<!--                        <button class="btn-default-m bg-black w100">닫기</button>-->
 <!--                    </p>-->
 <!--                </div>-->
 <!--            </modal>-->
@@ -200,7 +131,7 @@
 <!--            <modal class="modal-area" name="modalMessageWrite" width="90%"  height="auto" :maxWidth="650" :adaptive="true" :scrollable="true">-->
 <!--                <dl class="ma-header">-->
 <!--                    <dt>알림 작성</dt>-->
-<!--                    <dd @click="$modal.hide('modalMessageWrite')"><i class="uil uil-times"></i></dd>-->
+<!--                    <dd ><i class="uil uil-times"></i></dd>-->
 <!--                </dl>-->
 
 <!--                <div class="ma-message-write">-->
@@ -218,13 +149,13 @@
 <!--                    <p>-->
 <!--                        <button class="btn-default-m bg-pink w100">전송하기</button>-->
 <!--                        &nbsp;-->
-<!--                        <button class="btn-default-m bg-black w100" @click="$modal.hide('modalMessageWrite')">닫기</button>-->
+<!--                        <button class="btn-default-m bg-black w100">닫기</button>-->
 <!--                    </p>-->
 <!--                </div>-->
 <!--            </modal>-->
             <!-- 모달 - 알림 작성 끝 -->
 
-
+            <script th:inline="javascript" th:src="@{/static/js/mypage/message.js}"></script>
         </div>
     </th:block>
 

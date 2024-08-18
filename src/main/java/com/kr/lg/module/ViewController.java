@@ -48,12 +48,6 @@ public class ViewController {
         return "view/member/idSearchResult";
     }
 
-    @GetMapping("/my/message")
-    public String myMessage() {
-        return "view/mypage/message";
-    }
-
-
     @GetMapping("/my/info")
     public String myInfo() {
         return "view/mypage/myInfo";
