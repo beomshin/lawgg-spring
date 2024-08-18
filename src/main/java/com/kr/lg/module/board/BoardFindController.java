@@ -95,24 +95,5 @@ public class BoardFindController {
         return modelAndView;
     }
 
-
-    @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
-    @GetMapping("/api/v1/find/my/boards")
-    public ResponseEntity<?> findMyBoards(
-            @Valid FindMyBoardRequest request,
-            @ApiParam(value = "회원 토큰", required = true) @UserPrincipal UserAdapter userAdapter
-    ) throws BoardException { // 미사용 기능
-        Page<BoardEntry> boards = boardService.findMyBoards(request, userAdapter.getUserTb());
-
-        AbstractSpec spec = FindMyBoardsResponse.builder()
-                .list(boards.getContent())
-                .totalElements(boards.getTotalElements())
-                .totalPage(boards.getTotalPages())
-                .curPage(boards.getNumber())
-                .build();
-
-        return ResponseEntity.ok().body(spec);
-    }
-
 }
 

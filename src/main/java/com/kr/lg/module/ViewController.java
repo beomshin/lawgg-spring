@@ -53,10 +53,6 @@ public class ViewController {
         return "view/mypage/message";
     }
 
-    @GetMapping("/my/boards")
-    public String myBoards() {
-        return "view/mypage/myBoard";
-    }
 
     @GetMapping("/my/info")
     public String myInfo() {

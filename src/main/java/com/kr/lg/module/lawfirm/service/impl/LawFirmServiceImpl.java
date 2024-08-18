@@ -152,7 +152,7 @@ public class LawFirmServiceImpl implements LawFirmService {
         } else if (LawFirmTopic.VIEW_TOPIC == LawFirmTopic.of(topic)) {
             return LawFirmSort.viewDesc();
         }  else {
-            return LawFirmSort.hotDesc();
+            return LawFirmSort.hotDesc().and(LawFirmSort.recommendDesc());
         }
     }
 }

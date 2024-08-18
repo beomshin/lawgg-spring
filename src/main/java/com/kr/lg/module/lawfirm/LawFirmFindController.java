@@ -52,12 +52,12 @@ public class LawFirmFindController {
             @Valid @ModelAttribute FindLawFirmsBoardRequest request,
             ModelAndView mav
     ) throws LawFirmException {
-        mav.addObject("lawFirm", userTb == null ?
-                lawFirmService.findLawFirmWithNotLogin(lawfirmId) : lawFirmService.findLawFirmWithLogin(lawfirmId, userTb));
+        LawFirmEntry lawFirm = userTb == null ? lawFirmService.findLawFirmWithNotLogin(lawfirmId) : lawFirmService.findLawFirmWithLogin(lawfirmId, userTb);
+        Page<LawFirmBoardEntry> trials = lawFirmService.findLawFirmBoard(request, lawfirmId);
+        trials.getContent().forEach(LawFirmBoardEntry::additionalContent); // 필요 정보 재세팅
 
-        Page<LawFirmBoardEntry> lawFirmBoards = lawFirmService.findLawFirmBoard(request, lawfirmId);
-        lawFirmBoards.getContent().forEach(LawFirmBoardEntry::additionalContent); // 필요 정보 재세팅
-        mav.addObject("lawFirmBoards", lawFirmBoards);
+        mav.addObject("lawFirm", lawFirm);
+        mav.addObject("trials", trials);
         mav.addObject("query", request);
         mav.addObject("lawfirmId", lawfirmId);
         mav.addObject("maxPage", 10);

@@ -19,6 +19,10 @@ public class LawFirmSort {
     }
 
     public static Sort viewDesc() { // 식별자 내림차순
-        return Sort.by("A.view").descending();
+        return Sort.by("tt.view").descending();
+    }
+
+    public static Sort recommendDesc() {
+        return Sort.by("recommendCount").descending();
     }
 }

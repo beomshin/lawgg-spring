@@ -2,9 +2,12 @@ package com.kr.lg.module.user.model.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kr.lg.common.utils.CommonUtils;
+import com.kr.lg.common.utils.DateUtils;
 import lombok.*;
 
 import java.sql.Timestamp;
+
 
 @Getter
 @Setter
@@ -13,19 +16,28 @@ import java.sql.Timestamp;
 @JsonInclude(JsonInclude.Include.NON_NULL) // NULL 제외 속성
 public class UserBoardEntry {
 
-    private long id; // 게시판 식별자
-    private long userId; // 유저 아이디
-    private long lawFirmId; // 로펌 아이디
-    private String title; // 제목
+    private long id;
+    private Long lawFirmId;
+    private Long userId; // 유저 식별자
+    private int type;
+    private int postType;
+    private String title;
     private String writer; // 작성자
-    private String content; // 게시판 내용
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp writeDt; // 작성일
-    private int postType; // 게시글 타입
+    private int view; // 조회수
     private int recommendCount; // 추천수
     private int commentCount; // 댓글수
-    private int view; // 조회수
-    private int report; // 신고수
-    private int type; // 게시글 타입 (0: 포지션 게시판, 1: 트라이얼)
-    private int status; // 상태
+    private Integer lineType; // 라인타입
+    private int status; // 게시판 상태
+    private String profile; // 프로필 url
+    private String formattedDate; // 포맷 데이트
+    private boolean isWithinLastHour; // 한시간 이내
+
+    public void additionalContent() {
+        this.formattedDate = DateUtils.formatDateTime(this.writeDt); // 오늘이면 시간, 이외 날짜
+        this.title = CommonUtils.subString(this.title, 30); // 30자 처리
+        this.writer = CommonUtils.subString(this.writer, 6); // 6자 처리
+        this.isWithinLastHour = DateUtils.isWithinLastHour(this.writeDt); // 등록 1시간 이내 플래그
+    }
 }

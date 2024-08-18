@@ -1,5 +1,8 @@
 package com.kr.lg.module.user;
 
+
+import com.kr.lg.db.entities.UserTb;
+import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
 import com.kr.lg.module.user.model.entry.UserBoardEntry;
@@ -21,17 +24,40 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class UserFindController {
 
     private final UserService userService;
+
+    @Secured("ROLE_USER")
+    @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
+    @GetMapping("/my/boards")
+    public ModelAndView findMyBoards(
+            @Valid FindUserBoardsRequest request,
+            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            ModelAndView mav
+    ) throws  UserException { // 미사용 기능
+        Page<UserBoardEntry> boards = userService.findUserBoards(request, userTb);
+        boards.stream().forEach(UserBoardEntry::additionalContent);
+
+        mav.addObject("user", userTb);
+        mav.addObject("boards", boards);
+        mav.addObject("query", request);
+        mav.addObject("maxPage", 10);
+
+        mav.setViewName("view/mypage/myBoard");
+        return mav;
+    }
 
     @PostMapping("/api/public/v1/find/user/id")
     @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디 정보를 조회합니다.")

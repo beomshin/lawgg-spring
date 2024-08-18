@@ -12,10 +12,15 @@
                     <!-- 내정보 -->
                     <div class="mypage-info">
                         <div class="mi-info">
-                            <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            <th:block th:if="${user.profile != null}">
+                                <p><img th:src="${user.profile}" width="100%" alt="" title="" /></p>
+                            </th:block>
+                            <th:block th:if="${user.profile == null}">
+                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
+                            </th:block>
                             <div>
-                                <h2><i class="uil uil-user"></i> 홍길동 (lawggididid)</h2>
-                                <h3><i class="uil uil-calendar-alt"></i> 가입일 (2023.10.10)</h3>
+                                <h2><i class="uil uil-user" ></i> [[${user.loginId}]] ([[${user.nickName}]])</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(user.regDt, 'yyyy.MM.dd')}]])</h3>
                                 <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
                             </div>
                         </div>
@@ -38,18 +43,22 @@
                     <!-- 구분 및 옵션 -->
                     <dl class="board-sort-option w100p">
                         <dt>
-                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>1,324</strong> 개의 글</div>
+                            <div><i class="uil uil-notebooks"></i>&nbsp; 총 <strong>[[${boards.totalElements}]]</strong> 개의 글</div>
                         </dt>
-                        <form name="searchForm" method="post" action="">
+                        <form name="searchForm" id="searchForm" method="get" th:action="@{/my/boards}">
                             <fieldset>
                                 <legend>게시물 검색</legend>
                                 <dd class="sso-two">
                                     <div>
-                                        <select name="" class="w80">
-                                            <option value="">30개</option>
+                                        <select name="pageNum" class="w80">
+                                            <option value="10" th:selected="${query.pageNum == null || query.pageNum == 10}">10개</option>
+                                            <option value="30" th:selected="${query.pageNum == 30}">30개</option>
+                                            <option value="50" th:selected="${query.pageNum == 50}">50개</option>
                                         </select>
-                                        <input type="text" name="Sstring" title="검색어" value="" placeholder="검색어를 입력하세요." class="input-box w300" />
-                                        <button class="btn-default bg-black"><i class="uit uit-search"></i> 검색</button>
+                                        <input type="hidden" name="page" id="page" th:value="${query.page == null} ? 0 : ${query.page}" >
+                                        <input type="hidden" name="topic" id="topic" th:value="${query.topic == null} ? 1 : ${query.topic}" >
+                                        <input type="text"  name="keyword" id="keyword" title="검색어" th:value="${query.keyword}" placeholder="검색어를 입력하세요." class="input-box w300" />
+                                        <button class="btn-default bg-black" id="submitButton"><i class="uit uit-search"></i> 검색</button>
                                     </div>
                                 </dd>
                             </fieldset>
@@ -66,135 +75,45 @@
                             <li>추천</li>
                             <li>조회</li>
                         </ol>
-                        <ul class="bl-board">
-                            <li>1.</li>
+                        <ul class="bl-board" th:each="board :${boards}">
+                            <li th:text="${board.id}"></li>
                             <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                                <th:block th:if="${board.type == 0}">
+                                    <a th:href="@{/position/{boardId}(boardId=${board.id})}">[[${board.title}]]</a>
+                                </th:block>
+
+                                <th:block th:if="${board.type == 1}">
+                                    <a th:href="@{/trial/{trialId}(trialId=${board.id})}">[[${board.title}]]</a>
+                                </th:block>
+
+                                <i class="uil uil-comment-lines"></i> <span>([[${board.commentCount}]])</span>
+                                <th:block th:if="${board.isWithinLastHour}">
+                                    <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
+                                </th:block>
                             </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
-                        </ul>
-                        <ul class="bl-board">
-                            <li>1.</li>
-                            <li>
-                                <a >로우지지 항상 보다 나은 서비스를 위해 최선을 다하고 있습니다.</a>
-                                <i class="uil uil-comment-lines"></i> <span>(23)</span>
-                                <img th:src="@{/static/images/icn_new02.png}" height="17" alt="" title="" />
-                            </li>
-                            <li><font>작성일 : </font> 2022-07-01</li>
-                            <li><font>추천 : </font> 254</li>
-                            <li><font>조회 : </font> 1,254</li>
+                            <li><font>작성일 : </font> [[${board.formattedDate}]]</li>
+                            <li><font>추천 : </font> [[${board.recommendCount}]]</li>
+                            <li><font>조회 : </font> [[${board.view}]]</li>
                         </ul>
                     </div>
                     <!-- 리스트 끝 -->
 
 
                     <!-- 페이지넘버링 -->
-                    <div class="paging-list">
-                        <a ><i class="uil uil-angle-left-b"></i></a>
-                        <a >1</a>
-                        <a  class="active">2</a>
-                        <a >3</a>
-                        <a >4</a>
-                        <a >5</a>
-                        <a ><i class="uil uil-angle-right-b"></i></a>
+                    <div class="paging-list" th:with="start=${(boards.number/maxPage)*maxPage + 1}, end=(${(boards.totalPages == 0) ? 1 : (start + (maxPage - 1) < boards.totalPages ? start + (maxPage - 1) : boards.totalPages)})">
+                        <a th:if="${start > 1}" th:href="@{/my/boards(page=${start - maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" ><i class="uil uil-angle-left-b"></i></a>
+
+                        <th:block th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:text="${page}" th:href="@{/my/boards(page=${page - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}" th:classappend="${page == query.page + 1} ? 'active' : ''"></a>
+                        </th:block>
+
+                        <a th:if="${end < boards.totalPages}" th:href="@{/my/boards(page=${start + maxPage - 1}, pageNum=${query.pageNum}, keyword=${query.keyword})}"><i class="uil uil-angle-right-b"></i></a>
                     </div>
                     <!-- 페이지넘버링 끝 -->
                 </dd>
             </dl>
 
-
+            <script th:inline="javascript" th:src="@{/static/js/mypage/board.js}"></script>
         </div>
     </th:block>
 

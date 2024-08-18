@@ -19,10 +19,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL) // NULL 제외 속성
 public class LawFirmBoardEntry {
 
-    private long id;
+    private long trialId;
     private Long lawFirmId;
     private Long userId; // 유저 식별자
-    private int type;
     private int postType;
     private String title;
     private String writer; // 작성자
