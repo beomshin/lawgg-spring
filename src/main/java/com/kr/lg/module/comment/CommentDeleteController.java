@@ -2,8 +2,8 @@ package com.kr.lg.module.comment;
 
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
-import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
-import com.kr.lg.module.comment.model.req.DeleteBoardCommentNotWithLoginRequest;
+import com.kr.lg.module.comment.model.req.DeleteTrialCommentRequest;
+import com.kr.lg.module.comment.model.req.DeletePositionCommentRequest;
 import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentService;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +30,8 @@ public class CommentDeleteController {
     @PostMapping("/position/comment/delete")
     public ModelAndView positionCommentDelete(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @Valid @ModelAttribute DeleteBoardCommentNotWithLoginRequest request,
-            ModelAndView modelAndView
+            @Valid @ModelAttribute DeletePositionCommentRequest request,
+            ModelAndView mav
     ) throws CommentException {
         if (userTb == null) {
             commentService.deleteBoardCommentNotWithLogin(request);
@@ -39,21 +39,21 @@ public class CommentDeleteController {
             commentService.deleteBoardCommentWithLogin(request, userTb);
         }
 
-        modelAndView.setViewName("redirect:/position/" + request.getBoardId());
-        return modelAndView;
+        mav.setViewName("redirect:/position/" + request.getBoardId());
+        return mav;
     }
 
     @Secured("ROLE_USER")
     @PostMapping("/trial/comment/delete")
     @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
     public ModelAndView trialCommentDelete(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @Valid @ModelAttribute DeleteCommentTrialRequest request,
-            ModelAndView modelAndView
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+            @Valid @ModelAttribute DeleteTrialCommentRequest request,
+            ModelAndView mav
     ) throws CommentException {
         commentService.deleteTrialCommentWithLogin(request, userTb);
-        modelAndView.setViewName("redirect:/trial/" + request.getTrialId());
-        return modelAndView;
+        mav.setViewName("redirect:/trial/" + request.getTrialId());
+        return mav;
     }
 
 }

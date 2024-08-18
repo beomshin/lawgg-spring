@@ -1,7 +1,6 @@
 package com.kr.lg.module.login.service.impl;
 
 import com.kr.lg.db.entities.UserTb;
-import com.kr.lg.module.auth.service.JwtService;
 import com.kr.lg.module.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-    private final JwtService jwtService;
 
     @Value("${lg.redirect.url.home}")
     String lgRedirectHomeUrl;
@@ -25,7 +23,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     @Transactional
     public String redirect(UserTb userTb) {
-        String refreshToken = jwtService.createRefreshToken(String.valueOf(userTb.getUserId()), "/", Arrays.asList("ROLE_USER"));
+        String refreshToken = null;
         Map<String, Object> params = new HashMap<>();
         params.put("token", refreshToken);
 

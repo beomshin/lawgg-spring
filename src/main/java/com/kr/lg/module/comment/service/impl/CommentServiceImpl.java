@@ -9,16 +9,13 @@ import com.kr.lg.db.repositories.TrialCommentRepository;
 import com.kr.lg.module.comment.model.event.TrialCommentCreateAlertToWriterEvent;
 import com.kr.lg.module.comment.model.event.TrialCommentCreateAlertToTrialWriterEvent;
 import com.kr.lg.module.comment.model.event.TrialCommentCreateCountEvent;
-import com.kr.lg.module.comment.model.req.DeleteCommentTrialRequest;
-import com.kr.lg.module.comment.model.req.EnrollCommentTrialRequest;
-import com.kr.lg.module.comment.model.req.DeleteBoardCommentNotWithLoginRequest;
+import com.kr.lg.module.comment.model.req.DeleteTrialCommentRequest;
+import com.kr.lg.module.comment.model.req.EnrollTrialCommentRequest;
+import com.kr.lg.module.comment.model.req.DeletePositionCommentRequest;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateCountEvent;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateAlertToBoardWriterEvent;
 import com.kr.lg.module.comment.model.event.BoardCommentCreateAlertToWriterEvent;
 import com.kr.lg.module.comment.model.event.UserCommentCreateCountEvent;
-import com.kr.lg.module.comment.model.req.ReportBoardCommentRequest;
-import com.kr.lg.module.comment.model.req.UpdateBoardCommentNotWithLoginRequest;
-import com.kr.lg.module.comment.model.req.UpdateBoardCommentWithLoginRequest;
 import com.kr.lg.module.comment.exception.CommentResultCode;
 import com.kr.lg.module.comment.model.dto.*;
 import com.kr.lg.module.comment.model.req.EnrollPositionCommentRequest;
@@ -26,7 +23,6 @@ import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentDeleteService;
 import com.kr.lg.module.comment.service.CommentEnrollService;
 import com.kr.lg.module.comment.service.CommentService;
-import com.kr.lg.module.comment.service.CommentUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,7 +39,6 @@ import java.util.Optional;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentEnrollService commentEnrollService;
-    private final CommentUpdateService commentUpdateService;
     private final CommentDeleteService commentDeleteService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -108,48 +103,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
-    public void updateBoardCommentNotWithLogin(UpdateBoardCommentNotWithLoginRequest request) throws CommentException {
-        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
-        if (boardCommentTb.isPresent()) {
-            if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
-            commentUpdateService.updateBoardComment(CommentUpdateDto.builder()
-                            .boardCommentId(request.getId())
-                            .content(request.getContent())
-                    .build());
-        }
-    }
-
-    @Override
-    @Transactional
-    public void updateBoardCommentWithLogin(UpdateBoardCommentWithLoginRequest request, UserTb userTb) throws CommentException {
-        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
-        if (boardCommentTb.isPresent()) {
-            if (!encoder.matches(request.getPassword(), boardCommentTb.get().getPassword())) throw new CommentException(CommentResultCode.UN_MATCH_PASSWORD);
-            else if (!userTb.getUserId().equals(boardCommentTb.get().getUserTb().getUserId())) throw new CommentException(CommentResultCode.UN_MATCHED_USER);
-            commentUpdateService.updateBoardComment(CommentUpdateDto.builder()
-                    .boardCommentId(request.getId())
-                    .content(request.getContent())
-                    .build());
-        } else {
-            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD_COMMENT);
-        }
-    }
-
-    @Override
-    @Transactional
-    public void reportBoardComment(ReportBoardCommentRequest request) throws CommentException {
-        Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findById(request.getId());
-        if (boardCommentTb.isPresent()) {
-            commentUpdateService.reportBoardComment(request.getId());
-        } else {
-            throw new CommentException(CommentResultCode.FAIL_FIND_BOARD_COMMENT);
-        }
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteBoardCommentNotWithLogin(DeleteBoardCommentNotWithLoginRequest request) throws CommentException {
+    public void deleteBoardCommentNotWithLogin(DeletePositionCommentRequest request) throws CommentException {
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findByBoardCommentId(request.getCommentId());
         if (boardCommentTb.isPresent() && boardCommentTb.get().getBoardTb().getWriterType() == WriterType.ANONYMOUS_TYPE) {
             if (boardCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
@@ -164,7 +119,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteBoardCommentWithLogin(DeleteBoardCommentNotWithLoginRequest request, UserTb userTb) throws CommentException {
+    public void deleteBoardCommentWithLogin(DeletePositionCommentRequest request, UserTb userTb) throws CommentException {
         Optional<BoardCommentTb> boardCommentTb = boardCommentRepository.findByBoardCommentId(request.getCommentId());
         if (boardCommentTb.isPresent() && boardCommentTb.get().getBoardTb().getWriterType() == WriterType.MEMBER_TYPE) {
             if (boardCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_BOARD_COMMENT);
@@ -179,7 +134,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void enrollTrialCommentWithLogin(EnrollCommentTrialRequest request, UserTb userTb, String ip) throws CommentException {
+    public void enrollTrialCommentWithLogin(EnrollTrialCommentRequest request, UserTb userTb, String ip) throws CommentException {
         Optional<TrialCommentTb> commentTb = trialCommentRepository.findByTrialTb_TrialIdAndDepth(request.getTrialId(), CommentDepthLevel.ROOT_COMMENT);
         if (! commentTb.isPresent()) {
             throw new CommentException(CommentResultCode.FAIL_FIND_TRIAL);
@@ -208,7 +163,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteTrialCommentWithLogin(DeleteCommentTrialRequest request, UserTb userTb) throws CommentException {
+    public void deleteTrialCommentWithLogin(DeleteTrialCommentRequest request, UserTb userTb) throws CommentException {
         Optional<TrialCommentTb> trialCommentTb = trialCommentRepository.findById(request.getCommentId());
         if (trialCommentTb.isPresent()) {
             if (trialCommentTb.get().getStatus().equals(CommentStatus.DELETE_STATUS)) throw new CommentException(CommentResultCode.ALREADY_DELETE_TRIAL_COMMENT);

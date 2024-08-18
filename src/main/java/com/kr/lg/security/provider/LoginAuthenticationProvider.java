@@ -3,7 +3,7 @@ package com.kr.lg.security.provider;
 import com.kr.lg.common.enums.entity.status.UserStatus;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.module.auth.excpetion.AuthResultCode;
+import com.kr.lg.security.exception.SecurityResultCode;
 import com.kr.lg.security.exception.SecurityException;
 import com.kr.lg.security.login.detail.UserDetailService;
 import lombok.RequiredArgsConstructor;
@@ -53,10 +53,10 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("비밀번호 불일치");
         } else if (userTb.getStatus() == UserStatus.REPORT) { // 아이디 상태 검사 정지
             log.error("▶ [Spring Security 로그인][UserDetailService] 아이디 정지 상태");
-            throw new UsernameNotFoundException("정지 아이디", new SecurityException(AuthResultCode.LOCK_LOGIN_ID));
+            throw new UsernameNotFoundException("정지 아이디", new SecurityException(SecurityResultCode.LOCK_LOGIN_ID));
         } else if (userTb.getStatus() == UserStatus.DELETE) { // 아이디 상태 검사 삭제
             log.error("▶ [Spring Security 로그인][UserDetailService] 아이디 삭제 상태");
-            throw new UsernameNotFoundException("삭제 아이디", new SecurityException(AuthResultCode.DELETE_LOGIN_ID));
+            throw new UsernameNotFoundException("삭제 아이디", new SecurityException(SecurityResultCode.DELETE_LOGIN_ID));
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());

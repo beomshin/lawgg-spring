@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MainPostTrialDto implements MainPost {
+public class MainPostTrialDto {
 
     private Long trialId; // 관리자 식별자
 

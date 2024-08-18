@@ -4,7 +4,7 @@ import com.kr.lg.common.enums.entity.flag.JudgeUserFlag;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.module.auth.excpetion.AuthResultCode;
+import com.kr.lg.security.exception.SecurityResultCode;
 import com.kr.lg.security.exception.SecurityException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -33,7 +32,7 @@ public class RememberDetailService implements  UserDetailsService {
 
         log.info("▶ [Spring Security 로그인][UserDetailService] 2. 유저 조회 및 상태 체크: userId - [{}]", userId);
         UserTb userTb = userRepository.findById(Long.parseLong(userId))
-                .orElseThrow(() -> new UsernameNotFoundException("로그인 아이디 미존재", new SecurityException(AuthResultCode.NOT_EXIST_USER)));
+                .orElseThrow(() -> new UsernameNotFoundException("로그인 아이디 미존재", new SecurityException(SecurityResultCode.NOT_EXIST_USER)));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
         if (userTb.getJudgeFlag() == JudgeUserFlag.USE_STATUS) { // 재판 가능 권한 부여
             authorities.add(new SimpleGrantedAuthority("ROLE_JUDGE"));

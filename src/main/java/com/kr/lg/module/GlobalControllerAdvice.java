@@ -15,7 +15,7 @@ public class GlobalControllerAdvice {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserAdapter) {
             UserAdapter userAdapter = (UserAdapter) authentication.getPrincipal();
-            model.addAttribute("user", userAdapter.getUserTb());
+            model.addAttribute("userTb", userAdapter.getUserTb());
             model.addAttribute("lawFirmTb", userAdapter.getLawFirmTb());
             model.addAttribute("tierTb", userAdapter.getTierTb());
         }

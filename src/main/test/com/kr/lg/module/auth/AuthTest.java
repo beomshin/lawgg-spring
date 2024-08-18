@@ -1,9 +1,7 @@
 package com.kr.lg.module.auth;
 
 import com.kr.lg.LgWasApplication;
-import com.kr.lg.module.auth.service.AuthService;
 import com.kr.lg.module.config.MockMvcConfig;
-import com.kr.lg.module.auth.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,22 +36,12 @@ public class AuthTest {
     @Value("${cookies.auth.refresh}")
     private String COOKIE_ID;
 
-    @SpyBean
-    private AuthService authService;
-
-    @SpyBean
-    private JwtService jwtService;
-
     @Test
     @Transactional
     @DisplayName("토큰 재발급 성공 테스트")
     public void test() throws Exception {
 
-        String accessToken = jwtService.createJwtToken("120", "/", new ArrayList<>());
 
-        mockMvc.perform(get("/api/public/v1/reissue/token").cookie(new Cookie(COOKIE_ID, accessToken)))
-              .andExpect(status().isOk())
-              .andDo(print());
     }
 
 

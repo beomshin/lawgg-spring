@@ -30,16 +30,17 @@ public class TrialEnrollController {
 
     private final TrialService trialService;
 
+    @Secured("ROLE_USER")
     @PostMapping("/trial/enroll")
     @ApiOperation(value = "트라이얼 게시판 작성하기", notes = "트라이얼 게시판 작성합니다.")
     public ModelAndView enrollTrial(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
             @Valid @ModelAttribute EnrollTrialRequest request,
-            ModelAndView modelAndView
+            ModelAndView mav
     ) throws TrialException {
         trialService.enrollTrialWithLogin(request, userTb);
-        modelAndView.setViewName("redirect:/trials");
-        return modelAndView;
+        mav.setViewName("redirect:/trials");
+        return mav;
     }
 
     @Secured("ROLE_USER")

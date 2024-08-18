@@ -30,11 +30,11 @@ public class BoardDeleteController {
     public ModelAndView deletePosition(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute DeletePositionRequest request,
-            ModelAndView modelAndView
+            ModelAndView mav
     ) throws BoardException {
         boardService.deleteBoardWithLogin(request, userTb);
-        modelAndView.setViewName("redirect:/positions");
-        return modelAndView;
+        mav.setViewName("redirect:/positions");
+        return mav;
     }
 
 }

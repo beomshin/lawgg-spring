@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.kr.lg.module.main.model.dto.HotPostTrialDto;
-import com.kr.lg.module.main.model.dto.MainPost;
 import org.springframework.stereotype.Service;
 
 import com.kr.lg.db.entities.TrialTb;
@@ -29,7 +28,7 @@ public class MainServiceImpl implements MainService {
     private final TrialRepository trialRepository;
 
     @Override
-    public List<MainPost> getMainPostBoards() {
+    public List<MainPostBoardDto> getMainPostBoards() {
         log.info("▶ [메인 페에지] getMainPostBoards 메소드 실행");
 
         log.info("▶ [메인 페에지] 포지션 게시판 리스트 조회");
@@ -38,7 +37,7 @@ public class MainServiceImpl implements MainService {
 
     @Override
     @Transactional
-    public List<MainPost> getMainPostTrials() {
+    public List<MainPostTrialDto> getMainPostTrials() {
         log.info("▶ [메인 페에지] getMainPostTrials 메소드 실행");
 
         log.info("▶ [메인 페에지] 트라이얼 리스트 조회");
@@ -46,7 +45,7 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public MainPost getHotPostTrial() {
+    public HotPostTrialDto getHotPostTrial() {
         log.info("▶ [메인 페에지] getHotPostTrial 메소드 실행");
 
         log.info("▶ [메인 페에지] HOT 트라이얼 조회");

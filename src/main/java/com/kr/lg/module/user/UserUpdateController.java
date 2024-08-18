@@ -3,13 +3,10 @@ package com.kr.lg.module.user;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.user.excpetion.UserException;
-import com.kr.lg.module.user.model.res.UpdateUPResponse;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
-import com.kr.lg.model.common.AbstractSpec;
 import com.kr.lg.module.user.model.req.UpdateUserAlertRequest;
-import com.kr.lg.module.user.model.req.UpdateUserInfoRequest;
 import com.kr.lg.module.user.model.req.UpdateUserPasswordRequest;
 import com.kr.lg.module.user.model.req.UpdateUserProfileRequest;
 import com.kr.lg.model.common.SuccessResponse;
@@ -26,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,11 +51,8 @@ public class UserUpdateController {
             @ModelAttribute @Valid UpdateUserProfileRequest request,
             @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
     ) throws  UserException {
-        String profile = userService.updateUserProfile(request, userAdapter.getUserTb());
-        AbstractSpec spec = UpdateUPResponse.builder()
-                .profile(profile)
-                .build();
-        return ResponseEntity.ok(spec);
+        userService.updateUserProfile(request, userAdapter.getUserTb());
+        return ResponseEntity.ok(new SuccessResponse());
     }
 
 

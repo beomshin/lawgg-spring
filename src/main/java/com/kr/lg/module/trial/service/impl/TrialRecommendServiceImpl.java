@@ -35,15 +35,4 @@ public class TrialRecommendServiceImpl implements TrialRecommendService {
         }
     }
 
-    @Override
-    @Transactional
-    public void deleteRecommendTrial(long trialId, long userId) throws TrialException {
-        try {
-            log.info("▶ [트라이얼] 트라이얼 추천 삭제");
-            trialRecommendRepository.deleteRecommendTrial(trialId, userId);
-        } catch (Exception e) {
-            log.error("", e);
-            throw new TrialException(TrialResultCode.FAIL_DELETE_RECOMMEND_TRIAL);
-        }
-    }
 }

@@ -49,8 +49,8 @@
 
                 <th:block sec:authorize="isAnonymous()">
                     <div class="header-login-join">
-                        <button class="btn-line-gray-m w80 mr5" onclick="login()"><i class="uit uit-padlock"></i> 로그인</button>
-                        <button class="btn-default-m bg-black w100" onclick="join()"><i class="uit uit-user"></i> 회원가입</button>
+                        <button class="btn-line-gray-m w80 mr5" th:onclick="|window.location.href='@{/login}'|" ><i class="uit uit-padlock"></i> 로그인</button>
+                        <button class="btn-default-m bg-black w100"  th:onclick="|window.location.href='@{/join/agree}'|" ><i class="uit uit-user"></i> 회원가입</button>
                     </div>
                 </th:block>
 
@@ -60,7 +60,7 @@
                             <i class="uit uit-bell"></i>
                             <span ></span>
                         </div>
-                        <p id="myInfo" th:text="${user.nickName.substring(0, 1)}"></p>
+                        <p id="myInfo" th:text="${userTb.nickName.substring(0, 1)}"></p>
                     </div>
                 </th:block>
 
@@ -169,16 +169,16 @@
                     <div class="v-dropdown-menu__container">
                         <div class="header-myinfo">
                             <dl>
-                                <th:block th:if="${user.profile != null}">
-                                    <dt><span th:style="'background:url(' + ${user.profile} +  '); background-size:cover;'"></span></dt>
+                                <th:block th:if="${userTb.profile != null}">
+                                    <dt><span th:style="'background:url(' + ${userTb.profile} +  '); background-size:cover;'"></span></dt>
                                 </th:block>
-                                <th:block th:if="${user.profile == null}">
+                                <th:block th:if="${userTb.profile == null}">
                                     <dt><span style="background:url('https://i.pinimg.com/564x/d4/22/11/d42211cf93c61dc4d231f036c9c711c5.jpg'); background-size:cover;"></span></dt>
                                 </th:block>
                                 <dd>
-                                    <h2 th:text="${user.loginId}"></h2>
-                                    <h3 th:text="${user.nickName}"></h3>
-                                    <div>가입일 : [[${#dates.format(user.regDt, 'yyyy-MM-dd')}]]</div>
+                                    <h2 th:text="${userTb.loginId}"></h2>
+                                    <h3 th:text="${userTb.nickName}"></h3>
+                                    <div>가입일 : [[${#dates.format(userTb.regDt, 'yyyy-MM-dd')}]]</div>
                                 </dd>
                             </dl>
                             <div>
@@ -186,8 +186,8 @@
                                 <ul>
                                     <li th:if="${tierTb != null}"><i class="uil uil-diamond"></i> [[${tierTb.name}]] <span th:text="${tierTb.level}"></span></li>
                                     <li th:if="${lawFirmTb != null}"><i class="uil uil-book-open"></i> <span th:text="${lawFirmTb.name}"></span> 로펌</li>
-                                    <li><i class="uil uil-clipboard"></i> 글 <span th:text="${user.boardCount + user.trialCount}"></span></li>
-                                    <li><i class="uil uil-comment"></i> 댓글 <span th:text="${user.commentCount}"></span></li>
+                                    <li><i class="uil uil-clipboard"></i> 글 <span th:text="${userTb.boardCount + userTb.trialCount}"></span></li>
+                                    <li><i class="uil uil-comment"></i> 댓글 <span th:text="${userTb.commentCount}"></span></li>
                                 </ul>
                             </div>
                             <div>
@@ -209,19 +209,19 @@
 
     <div class="footer-mobile-menu">
         <ul>
-            <li onclick="positions()">
+            <li th:onclick="|window.location.href='@{/positions}'|">
                 <p><i class="uil uil-comment"></i></p>
                 <h2>포지션게시판</h2>
             </li>
-            <li onclick="trials()">
+            <li th:onclick="|window.location.href='@{/trials}'|" >
                 <p><i class="uil uil-notes"></i></p>
                 <h2>트라이얼</h2>
             </li>
-            <li onclick="lawFirms()">
+            <li th:onclick="|window.location.href='@{/law-firms}'|" >
                 <p><i class="uil uil-book-open"></i></p>
                 <h2>로펌</h2>
             </li>
-            <li onclick="lck()">
+            <li th:onclick="|window.location.href='@{/lck}'|" >
                 <p><i class="uil uil-book-alt"></i></p>
                 <h2>LCK</h2>
             </li>

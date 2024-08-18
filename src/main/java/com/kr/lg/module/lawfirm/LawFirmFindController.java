@@ -5,7 +5,7 @@ import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.lawfirm.exception.LawFirmException;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmBoardEntry;
 import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
-import com.kr.lg.module.lawfirm.model.req.FindLawFirmsBoardRequest;
+import com.kr.lg.module.lawfirm.model.req.FindLawFirmRequest;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class LawFirmFindController {
     @GetMapping("/law-firms")
     @ApiOperation(value = "로펌 리스트 페이지 호출", notes = "로펌 리스트 페이지를 호출합니다.")
     public ModelAndView lawFirms(
-            @Valid FindLawFirmsRequest request,
+            @Valid @ModelAttribute FindLawFirmsRequest request,
             ModelAndView mav
     ) throws LawFirmException {
         Page<LawFirmEntry> lawFirms = lawFirmService.findLawFirms(request);
@@ -46,10 +46,10 @@ public class LawFirmFindController {
     }
 
     @GetMapping("/law-firm/{id}")
-    public ModelAndView lawFirmPost(
+    public ModelAndView lawFirm(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @ApiParam(value = "로펌 아이디", required = true) @PathVariable("id") Long lawfirmId,
-            @Valid @ModelAttribute FindLawFirmsBoardRequest request,
+            @Valid @ModelAttribute FindLawFirmRequest request,
             ModelAndView mav
     ) throws LawFirmException {
         LawFirmEntry lawFirm = userTb == null ? lawFirmService.findLawFirmWithNotLogin(lawfirmId) : lawFirmService.findLawFirmWithLogin(lawfirmId, userTb);

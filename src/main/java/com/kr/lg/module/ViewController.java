@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class ViewController {
 
-    @GetMapping("/lck")
-    public String lck() {
-        return "view/lck/list";
-    }
-
     @GetMapping("/join/agree")
     public String joinAgree() {
         return "view/member/joinAgree";

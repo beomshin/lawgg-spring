@@ -17,13 +17,13 @@ public class MainController {
 
     @ApiOperation(value = "메인 페이지 호출", notes = "메인 페이지를 호출합니다.")
     @GetMapping("/")
-    public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.addObject("boards", mainService.getMainPostBoards());
-        modelAndView.addObject("trials", mainService.getMainPostTrials());
-        modelAndView.addObject("hotTrial", mainService.getHotPostTrial());
+    public ModelAndView home(ModelAndView mav) {
+        mav.addObject("boards", mainService.getMainPostBoards());
+        mav.addObject("trials", mainService.getMainPostTrials());
+        mav.addObject("hotTrial", mainService.getHotPostTrial());
 
-        modelAndView.setViewName("view/home");
-        return modelAndView;
+        mav.setViewName("view/home");
+        return mav;
     }
 
 }

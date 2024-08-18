@@ -43,13 +43,13 @@ public class LoginController {
             @RequestParam(value = "error", required = false) Boolean error, // 로그인 실패
             @RequestParam(value = "message", required = false) String message, // 로그인 실패 메세지
             @CookieValue(value = "savedLoginId", required = false) String savedLoginId, // 아이디 저장
-            ModelAndView modelAndView
+            ModelAndView mav
     ) {
-        modelAndView.addObject("savedLoginId", savedLoginId);
-        modelAndView.addObject("error", error);
-        modelAndView.addObject("message", message);
-        modelAndView.setViewName("view/member/login");
-        return modelAndView;
+        mav.addObject("savedLoginId", savedLoginId);
+        mav.addObject("error", error);
+        mav.addObject("message", message);
+        mav.setViewName("view/member/login");
+        return mav;
     }
 
     @GetMapping(value = "/api/public/google/login")

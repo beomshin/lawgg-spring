@@ -23,14 +23,4 @@ public interface BoardCommentRepository extends JpaRepository<BoardCommentTb, Lo
     @Query(value = "UPDATE BoardCommentTb SET status = :status WHERE boardCommentId = :boardCommentId")
     void updateBoardCommentStatus(@Param("boardCommentId") long boardCommentId, @Param("status") CommentStatus status);
 
-    @Modifying
-    @Query(value = "UPDATE BoardCommentTb SET content = :content WHERE boardCommentId = :boardCommentId")
-    void updateBoardComment(@Param("boardCommentId") long boardCommentId, @Param("content") String content);
-
-    @Modifying
-    @Query(value = "UPDATE BoardCommentTb SET report = report + 1  WHERE boardCommentId = :boardCommentId")
-    void reportBoardComment(@Param("boardCommentId") long boardCommentId);
-
-
-
 }

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class HotPostTrialDto implements MainPost {
+public class HotPostTrialDto {
 
     private Long trialId; // 식별자
 

@@ -88,44 +88,6 @@ public class BoardServiceImpl implements BoardService {
         return boardFindService.findBoards(new BoardParam<>(param, pageable));
     }
 
-    /**
-     * 나의 포지션 게시판 리스트 조회 메소드
-     * @param request
-     * @param userTb
-     * @return
-     * @throws BoardException
-     */
-    @Override
-    public Page<BoardEntry> findMyBoards(FindMyBoardRequest request, UserTb userTb) throws BoardException {
-        Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
-        MapperParam param = FindBoardsParamData.builder()
-                .type(request.getType())
-                .subject(request.getSubject())
-                .keyword(request.getKeyword())
-                .userId(userTb.getUserId())
-                .build(); // mapper param 생성
-
-        return boardFindService.findBoards(new BoardParam<>(param, pageable));
-    }
-
-    /**
-     * 로펌 포지션 게시판 리스트 조회 메소드
-     * @param request
-     * @return
-     * @throws BoardException
-     */
-    @Override
-    public Page<BoardEntry> findLawFirmBoards(FindLawFirmBoardRequest request) throws BoardException {
-        Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
-        MapperParam param = FindBoardsParamData.builder()
-                .subject(request.getSubject())
-                .keyword(request.getKeyword())
-                .lawFirmId(request.getId())
-                .build(); // mapper param 생성
-
-        return boardFindService.findBoards(new BoardParam<>(param, pageable));
-    }
-
     @Override
     public BoardEntry findBoard(long boardId, UserTb userTb) throws BoardException {
         MapperParam param = FindBoardParamData.builder()

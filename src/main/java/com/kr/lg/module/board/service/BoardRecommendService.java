@@ -6,5 +6,4 @@ import com.kr.lg.module.board.exception.BoardException;
 
 public interface BoardRecommendService {
     void recommendBoard(BoardTb boardTb, UserTb userTb) throws BoardException;
-    void deleteRecommendBoard(long boardId, long userId) throws BoardException;
 }

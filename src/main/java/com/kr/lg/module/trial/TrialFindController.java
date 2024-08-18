@@ -32,10 +32,11 @@ public class TrialFindController {
     private final TrialService trialService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
     @GetMapping("/trials")
+    @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
     public ModelAndView trials(
-            @Valid @ModelAttribute FindTrialsRequest request, ModelAndView mav
+            @Valid @ModelAttribute FindTrialsRequest request,
+            ModelAndView mav
     ) throws TrialException {
         Page<TrialEntry> trials = trialService.findTrials(request);
         trials.getContent().forEach(TrialEntry::additionalContent); // 필요 정보 재세팅

@@ -18,7 +18,6 @@ public interface UserRepository extends JpaRepository<UserTb, Long> {
     @EntityGraph(attributePaths = {"tierTb", "lawFirmTb"})
     Optional<UserTb> findByUserId(Long userId);
     Optional<UserTb> findByNickName(String nickName);
-    Optional<UserTb> findByLoginIdAndCi(String loginId, String ci);
     Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
 
     @Modifying

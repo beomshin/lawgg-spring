@@ -25,7 +25,7 @@ public class EmailController {
     private final EmailService emailService;
     private final MailService mailService;
 
-    @PostMapping("/api/public/v1/send/email")
+    @PostMapping("/send/email")
     @ApiOperation(value = "이메일 인증번호 전송", notes = "이메일 인증번호를 전송합니다.")
     public ResponseEntity<?> sendEmail(
             @RequestBody SendEmailRequest request
@@ -38,7 +38,7 @@ public class EmailController {
         return ResponseEntity.ok(spec);
     }
 
-    @GetMapping("/api/public/v1/verify/email/{txId}")
+    @GetMapping("/verify/email/{txId}")
     @ApiOperation(value = "이메일 인증번호 확인", notes = "이메일 인증번호를 확인합니다.")
     public ResponseEntity<?> verifyEmail(
             @ApiParam(value = "이메일 인증 트랜잭션 아이디", required = true) @PathVariable("txId") String txId,

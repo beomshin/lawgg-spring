@@ -13,15 +13,15 @@
                     <!-- 내정보 -->
                     <div class="mypage-info">
                         <div class="mi-info">
-                            <th:block th:if="${user.profile != null}">
-                                <p><img th:src="${user.profile}" width="100%" alt="" title="" /></p>
+                            <th:block th:if="${userTb.profile != null}">
+                                <p><img th:src="${userTb.profile}" width="100%" alt="" title="" /></p>
                             </th:block>
-                            <th:block th:if="${user.profile == null}">
+                            <th:block th:if="${userTb.profile == null}">
                                 <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /></p>
                             </th:block>
                             <div>
-                                <h2><i class="uil uil-user" ></i> [[${user.loginId}]] ([[${user.nickName}]])</h2>
-                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(user.regDt, 'yyyy.MM.dd')}]])</h3>
+                                <h2><i class="uil uil-user" ></i> [[${userTb.loginId}]] ([[${userTb.nickName}]])</h2>
+                                <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(userTb.regDt, 'yyyy.MM.dd')}]])</h3>
                                 <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
                             </div>
                         </div>

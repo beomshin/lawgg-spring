@@ -79,17 +79,6 @@ public class TrialServiceImpl implements TrialService {
     }
 
     @Override
-    public Page<TrialEntry> findLawFirmTrials(FindLawFirmTrialsRequest request) throws TrialException {
-        Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), this.getSort(request.getTopic()));
-        MapperParam param = FindTrialParamData.builder()
-                .lawFirmId(request.getId())
-                .subject(request.getSubject())
-                .keyword(request.getKeyword())
-                .build();
-        return trialFindService.findTrials(new TrialParam<>(param, pageable));
-    }
-
-    @Override
     public TrialEntry findTrialWithNotLogin(long id) throws TrialException {
         MapperParam param = FindTrialParamData.builder().trialId(id).build();
         TrialEntry trial = this.findTrial(param);

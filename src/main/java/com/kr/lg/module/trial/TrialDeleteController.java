@@ -28,13 +28,13 @@ public class TrialDeleteController {
     @PostMapping("/trial/delete")
     @ApiOperation(value = "트라이얼 게시판 삭제하기", notes = "트라이얼 게시판 삭제합니다.")
     public ModelAndView deletePosition(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
             @Valid @ModelAttribute DeleteTrialRequest request,
-            ModelAndView modelAndView
+            ModelAndView mav
     ) throws TrialException {
         trialService.deleteTrial(request, userTb);
-        modelAndView.setViewName("redirect:/trials");
-        return modelAndView;
+        mav.setViewName("redirect:/trials");
+        return mav;
     }
 
 }

@@ -1,11 +1,11 @@
-package com.kr.lg.module.auth.excpetion;
+package com.kr.lg.security.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum AuthResultCode {
+public enum SecurityResultCode {
 
     NOT_EXIST_JWT_TOKEN("2000", "토큰 누락"),
     FAIL_VALIDATE_JWT_TOKEN("2001", "토큰 유효성 검사 실패"),

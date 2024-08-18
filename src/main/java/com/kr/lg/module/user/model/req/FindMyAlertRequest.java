@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @ApiModel(value = "회원 알림 리스트 조회 요청 Body")
-public class FindUserAlertRequest {
+public class FindMyAlertRequest {
 
     @ApiModelProperty(value = "페이지", required = true)
     @NotNull(message = "페이지가 입력되어있지않습니다.")
@@ -24,7 +24,7 @@ public class FindUserAlertRequest {
     @ApiModelProperty(value = "키워드")
     private String keyword;
 
-    public FindUserAlertRequest() {
+    public FindMyAlertRequest() {
         this.page = 0;
         this.pageNum = 10;
     }

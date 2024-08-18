@@ -3,7 +3,7 @@ package com.kr.lg.module.comment;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
-import com.kr.lg.module.comment.model.req.EnrollCommentTrialRequest;
+import com.kr.lg.module.comment.model.req.EnrollTrialCommentRequest;
 import com.kr.lg.module.comment.model.req.EnrollPositionCommentRequest;
 import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentService;
@@ -32,7 +32,7 @@ public class CommentEnrollController {
     public ModelAndView positionCommentEnroll(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute EnrollPositionCommentRequest request,
-            ModelAndView modelAndView,
+            ModelAndView mav,
             HttpServletRequest servletRequest
     ) throws CommentException {
         if (userTb == null) {
@@ -41,23 +41,23 @@ public class CommentEnrollController {
             commentService.enrollBoardCommentWithLogin(request, userTb, ClientUtils.getRemoteIP(servletRequest));
         }
 
-        modelAndView.setViewName("redirect:/position/" + request.getBoardId());
-        return modelAndView;
+        mav.setViewName("redirect:/position/" + request.getBoardId());
+        return mav;
     }
 
     @Secured("ROLE_USER")
     @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
     @PostMapping("/trial/comment/enroll")
     public ModelAndView trialCommentEnroll(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @Valid @ModelAttribute EnrollCommentTrialRequest request,
-            ModelAndView modelAndView,
+            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+            @Valid @ModelAttribute EnrollTrialCommentRequest request,
+            ModelAndView mav,
             HttpServletRequest servletRequest
     ) throws CommentException {
         commentService.enrollTrialCommentWithLogin(request, userTb, ClientUtils.getRemoteIP(servletRequest));
 
-        modelAndView.setViewName("redirect:/trial/" + request.getTrialId());
-        return modelAndView;
+        mav.setViewName("redirect:/trial/" + request.getTrialId());
+        return mav;
     }
 
 }

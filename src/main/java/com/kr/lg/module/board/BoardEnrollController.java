@@ -31,7 +31,7 @@ public class BoardEnrollController {
     public ModelAndView enrollPosition(
             @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute EnrollPositionRequest request,
-            ModelAndView modelAndView,
+            ModelAndView mav,
             HttpServletRequest servletRequest
     ) throws BoardException {
         if (userTb == null) {
@@ -40,8 +40,8 @@ public class BoardEnrollController {
             boardService.enrollBoardWithLogin(request, ClientUtils.getRemoteIP(servletRequest), userTb);
         }
 
-        modelAndView.setViewName("redirect:/positions");
-        return modelAndView;
+        mav.setViewName("redirect:/positions");
+        return mav;
     }
 
 }

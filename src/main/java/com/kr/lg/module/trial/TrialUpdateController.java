@@ -36,11 +36,12 @@ public class TrialUpdateController {
 
     private final TrialService trialService;
 
+    @Secured("ROLE_USER")
     @PostMapping("/trial/recommend")
     @ApiOperation(value = "트라이얼 게시판 추천", notes = "트라이얼 게시판을 추천합니다.")
     public ResponseEntity<?> recommendTrial(
             @RequestBody @Valid RecommendTrialRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보")@AuthUser UserTb userTb
+            @ApiParam(value = "로그인 세션 유저 정보", required = true )@AuthUser UserTb userTb
     ) {
         try {
             if (userTb == null) throw new TrialException(TrialResultCode.NOT_EXIST_USER);
@@ -58,8 +59,8 @@ public class TrialUpdateController {
     @PostMapping("/trial/report")
     @ApiOperation(value = "트라이얼 게시판 신고", notes = "트라이얼 게시판을 신고합니다.")
     public ResponseEntity<?> reportTrial(
-            HttpServletRequest httpServletRequest,
-            @RequestBody @Valid ReportTrialRequest request
+            @RequestBody @Valid ReportTrialRequest request,
+            HttpServletRequest httpServletRequest
     ) {
         try {
             trialService.reportTrial(request, ClientUtils.getRemoteIP(httpServletRequest));

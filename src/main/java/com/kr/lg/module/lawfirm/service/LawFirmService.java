@@ -15,5 +15,5 @@ public interface LawFirmService {
     Page<LawFirmEntry> findLawFirms(FindLawFirmsRequest request) throws LawFirmException;
     LawFirmEntry findLawFirmWithNotLogin(long id) throws LawFirmException;
     LawFirmEntry findLawFirmWithLogin(long id, UserTb userTb) throws LawFirmException;
-    Page<LawFirmBoardEntry> findLawFirmBoard(FindLawFirmsBoardRequest request, long lawFirmId) throws LawFirmException;
+    Page<LawFirmBoardEntry> findLawFirmBoard(FindLawFirmRequest request, long lawFirmId) throws LawFirmException;
 }

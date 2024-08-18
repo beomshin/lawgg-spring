@@ -55,39 +55,6 @@ function close() {
     document.body.style.overflow = "visible";
 }
 
-function login() {
-    move('/login')
-}
-
-function join() {
-    move('/join/agree')
-}
-
-function positions() {
-    move('/positions')
-}
-
-function trials() {
-    move('/trials')
-}
-
-function lawFirms() {
-    move('/law-firms')
-}
-
-function lawFirm() {
-    move('/law-firm')
-}
-
-function lck() {
-    move('/lck')
-}
-
-function move(path) {
-    const contextPath = $('#contextPathHolder').attr('data-contextPath');// 현재 URL이 '/'인지 확인하는 스크립트
-    window.location.href = contextPath + path;
-}
-
 $(document).ready(function () {
     document.querySelectorAll('.header a').forEach(function (link) {
         // 링크의 href 경로 가져오기
@@ -102,10 +69,10 @@ $(document).ready(function () {
 })
 
 function search() {
-    var form = document.getElementById("searchTrialMobile");
+    let form = document.getElementById("searchTrialMobile");
     form.submit();
 }
 function search2() {
-    var form = document.getElementById("searchTrial");
+    let form = document.getElementById("searchTrial");
     form.submit();
 }

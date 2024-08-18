@@ -1,7 +1,7 @@
 package com.kr.lg.model.common;
 
 import com.kr.lg.model.enums.GlobalResultCode;
-import com.kr.lg.module.auth.excpetion.AuthResultCode;
+import com.kr.lg.security.exception.SecurityResultCode;
 import com.kr.lg.module.board.exception.BoardResultCode;
 import com.kr.lg.module.comment.exception.CommentResultCode;
 import com.kr.lg.module.lawfirm.exception.LawFirmResultCode;
@@ -21,7 +21,7 @@ public class ErrorResponse extends AbstractSpec {
         super(code.getCode(), code.getMsg(), isSuccess(code.getCode()));
     }
 
-    public ErrorResponse(AuthResultCode code) {
+    public ErrorResponse(SecurityResultCode code) {
         super(code.getCode(), code.getMsg(), isSuccess(code.getCode()));
     }
 

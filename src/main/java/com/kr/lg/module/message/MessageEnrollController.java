@@ -6,6 +6,7 @@ import com.kr.lg.module.message.exception.MessageException;
 import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.module.message.model.req.SendMessageRequest;
 import com.kr.lg.model.common.SuccessResponse;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,8 @@ public class MessageEnrollController {
     private final MessageService messageService;
 
     @Secured("ROLE_USER")
-
     @PostMapping("/my/send/message")
+    @ApiOperation(value = "유저 메세지 등록 조회", notes = "유저 메세지를 등록합니다.")
     public ResponseEntity<?> sendMessage(
             @RequestBody @Valid SendMessageRequest request,
             @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb

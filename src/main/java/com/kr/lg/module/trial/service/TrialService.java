@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 
 public interface TrialService {
     Page<TrialEntry> findTrials(FindTrialsRequest request) throws TrialException;
-    Page<TrialEntry> findLawFirmTrials(FindLawFirmTrialsRequest request) throws TrialException;
     TrialEntry findTrialWithNotLogin(long id) throws TrialException;
     TrialEntry findTrialWithLogin(long id, UserTb userTb) throws TrialException;
     TrialTb enrollTrialWithLogin(EnrollTrialRequest request, UserTb userTb) throws TrialException;

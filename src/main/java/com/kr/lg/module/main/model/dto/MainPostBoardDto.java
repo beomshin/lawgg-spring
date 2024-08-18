@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
-public class MainPostBoardDto implements MainPost {
+public class MainPostBoardDto {
 
     private Long boardId; // 식별자
 

@@ -1,7 +1,6 @@
 package com.kr.lg.module.lawfirm.service.impl;
 
 import com.kr.lg.common.enums.logic.LawFirmTopic;
-import com.kr.lg.common.enums.logic.TrialTopic;
 import com.kr.lg.db.entities.LawFirmTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.LawFirmApplyRepository;
@@ -29,11 +28,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -135,7 +129,7 @@ public class LawFirmServiceImpl implements LawFirmService {
     }
 
     @Override
-    public Page<LawFirmBoardEntry> findLawFirmBoard(FindLawFirmsBoardRequest request, long lawFirmId) throws LawFirmException {
+    public Page<LawFirmBoardEntry> findLawFirmBoard(FindLawFirmRequest request, long lawFirmId) throws LawFirmException {
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageNum(), getSort(request.getTopic())); // pageable 생성
         MapperParam param = FindLawFirmParamData.builder()
                 .lawFirmId(lawFirmId)

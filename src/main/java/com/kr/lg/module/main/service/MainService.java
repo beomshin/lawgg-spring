@@ -1,6 +1,8 @@
 package com.kr.lg.module.main.service;
 
-import com.kr.lg.module.main.model.dto.MainPost;
+import com.kr.lg.module.main.model.dto.HotPostTrialDto;
+import com.kr.lg.module.main.model.dto.MainPostBoardDto;
+import com.kr.lg.module.main.model.dto.MainPostTrialDto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -8,9 +10,9 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface MainService {
 
-	List<MainPost> getMainPostBoards();
+	List<MainPostBoardDto> getMainPostBoards();
 
-	List<MainPost> getMainPostTrials();
+	List<MainPostTrialDto> getMainPostTrials();
 
-	MainPost getHotPostTrial();
+	HotPostTrialDto getHotPostTrial();
 }
