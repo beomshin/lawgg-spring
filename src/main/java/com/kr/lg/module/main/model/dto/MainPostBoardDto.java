@@ -1,12 +1,13 @@
 package com.kr.lg.module.main.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kr.lg.common.utils.CommonUtils;
 import com.kr.lg.db.entities.MainBoardTb;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 /**
  * 메인 페이지 포지션 게시판 리스트 DTO
@@ -24,7 +25,8 @@ public class MainPostBoardDto implements MainPost {
 
     private String writer; // 작성자
 
-    private String writeDt; // 수정일
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private Timestamp writeDt; // 작성일
 
     private Long view; // 조회수
 
@@ -35,12 +37,11 @@ public class MainPostBoardDto implements MainPost {
     private String tag; // 게시판 태그
 
     public MainPostBoardDto(MainBoardTb mainBoardTb) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         this.boardId = mainBoardTb.getBoardId();
         this.title = CommonUtils.subString(mainBoardTb.getTitle(), 15);
         this.content = CommonUtils.subString(mainBoardTb.getContent(), 30);
         this.writer = mainBoardTb.getWriter();
-        this.writeDt = sdf.format(mainBoardTb.getWriteDt());
+        this.writeDt = mainBoardTb.getWriteDt();
         this.view = mainBoardTb.getView();
         this.recommendCount = mainBoardTb.getRecommendCount();
         this.lineType = mainBoardTb.getLineType().getCode();

@@ -31,7 +31,7 @@
                         <div>
                             <i class="uit uit-user"></i> 작성자 : [[${trial.writer}]] <span th:if="${trial.writer == 0}">([[${trial.ip}]])</span>
                             &nbsp; · &nbsp;
-                            <i class="uit uit-clock"></i> [[${trial.writeDt}]]
+                            <i class="uit uit-clock"></i> [[${#dates.format(trial.writeDt, 'yyyy-MM-dd HH:mm')}]]
                             &nbsp; · &nbsp;
                             <i class="uit uit-eye"></i> 조회수 : [[${trial.view}]]
                             &nbsp; · &nbsp;
@@ -152,7 +152,7 @@
                                             [[${comment.content}]]
                                         </div>
                                         <p>
-                                            <i class="uit uit-clock"></i> [[${comment.regDt}]]
+                                            <i class="uit uit-clock"></i> [[${#dates.format(comment.regDt, 'yyyy-MM-dd HH:mm')}]]
                                         </p>
                                     </dd>
                                 </dl>

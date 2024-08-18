@@ -46,7 +46,7 @@
                                 <h2>[[${trial.title}]]</h2>
                                 <h3>[[${trial.content}]]</h3>
                                 <dl>
-                                    <dt><i class="uil uil-clock-two"></i> [[${trial.writeDt}]]</dt>
+                                    <dt><i class="uil uil-clock-two"></i> [[${#dates.format(trial.writeDt, 'yyyy-MM-dd')}]]</dt>
                                     <dd>
                                         <th:block th:if="${trial.profile != null}">
                                             <span><img th:src="${trial.profile}" width="100%" alt="" title="" /></span>
@@ -87,7 +87,7 @@
                                         <i class="uil uil-eye"></i> [[${board.view}]]
                                     </dt>
                                     <dd>
-                                        <i class="uil uil-clock-nine"></i> [[${board.writeDt}]]
+                                        <i class="uil uil-clock-nine"></i> [[${#dates.format(board.writeDt, 'yyyy-MM-dd')}]]
                                     </dd>
                                 </dl>
                             </div>
