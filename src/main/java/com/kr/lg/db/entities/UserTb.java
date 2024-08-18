@@ -46,7 +46,7 @@ public class UserTb { // 관리자 테이블
     @JoinColumn(name = "tierId")
     private TierTb tierTb;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lawFirmId")
     private LawFirmTb lawFirmTb;
 

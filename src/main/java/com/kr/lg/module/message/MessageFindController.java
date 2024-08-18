@@ -37,7 +37,6 @@ public class MessageFindController {
         Page<MessageEntry> messages = messageService.findReceiveMessages(request, userTb);
         messages.stream().forEach(MessageEntry::additionalContent);
 
-        mav.addObject("user", userTb);
         mav.addObject("messages", messages);
         mav.addObject("query", request);
         mav.addObject("maxPage", 10);

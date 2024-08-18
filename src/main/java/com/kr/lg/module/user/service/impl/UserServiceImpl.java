@@ -38,6 +38,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +69,7 @@ public class UserServiceImpl implements UserService {
     private final NickNameRepository nickNameRepository;
 
     private final BCryptPasswordEncoder encoder;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public Page<UserBoardEntry> findUserBoards(FindUserBoardsRequest request, UserTb userTb) throws UserException {
@@ -171,6 +176,7 @@ public class UserServiceImpl implements UserService {
         if (userTb1.isPresent()) {
             if (!encoder.matches(request.getOldPassword(), userTb1.get().getPassword())) throw new UserException(UserResultCode.UN_MATCH_PASSWORD);
             userUpdateService.updateUserPassword(userTb1.get(), request.getNewPassword());
+            this.updateSessionUserTb(userTb);
         } else {
             throw new UserException(UserResultCode.NOT_EXIST_USER);
         }
@@ -205,6 +211,7 @@ public class UserServiceImpl implements UserService {
         FileDto fileDto = fileService.uploadSingle(request.getProfile()); // s3 프로필 사진 업로드
         if (fileDto == null) throw new UserException(UserResultCode.FAIL_FILE_UPLOAD); // 업로드 실패
         userUpdateService.updateUserProfile(userTb.getUserId(), fileDto.getPath());
+        this.updateSessionUserTb(userTb);
         return fileDto.getPath();
     }
 
@@ -267,6 +274,12 @@ public class UserServiceImpl implements UserService {
         if (nickNameTb.isPresent()) { // 이벤트 닉네임
             throw new UserException(UserResultCode.OVERLAP_NICK_NAME);
         }
+    }
+
+    @Override
+    public void updateSessionUserTb(UserTb userTb) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userTb.getLoginId(), userTb.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
 }

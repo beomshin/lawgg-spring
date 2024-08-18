@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserTb, Long> {
 
+    @EntityGraph(attributePaths = {"tierTb", "lawFirmTb"})
     Optional<UserTb> findByLoginId(String loginId);
     @EntityGraph(attributePaths = {"tierTb", "lawFirmTb"})
     Optional<UserTb> findByUserId(Long userId);

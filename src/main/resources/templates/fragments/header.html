@@ -60,7 +60,7 @@
                             <i class="uit uit-bell"></i>
                             <span ></span>
                         </div>
-                        <p id="myInfo">홍</p>
+                        <p id="myInfo" th:text="${user.nickName.substring(0, 1)}"></p>
                     </div>
                 </th:block>
 
@@ -165,24 +165,29 @@
                     </div>
                 </div>
 
-                <div class="header-myinfo-dropdown" style="display: none;">
+                <div class="header-myinfo-dropdown" style="display: none;" sec:authorize="authenticated">
                     <div class="v-dropdown-menu__container">
                         <div class="header-myinfo">
                             <dl>
-                                <dt><span style="background:url('https://i.pinimg.com/564x/d4/22/11/d42211cf93c61dc4d231f036c9c711c5.jpg'); background-size:cover;"></span></dt>
+                                <th:block th:if="${user.profile != null}">
+                                    <dt><span th:style="'background:url(' + ${user.profile} +  '); background-size:cover;'"></span></dt>
+                                </th:block>
+                                <th:block th:if="${user.profile == null}">
+                                    <dt><span style="background:url('https://i.pinimg.com/564x/d4/22/11/d42211cf93c61dc4d231f036c9c711c5.jpg'); background-size:cover;"></span></dt>
+                                </th:block>
                                 <dd>
-                                    <h2>홍길동 님</h2>
-                                    <h3>username1234</h3>
-                                    <div>가입일 : 2022.10.21</div>
+                                    <h2 th:text="${user.loginId}"></h2>
+                                    <h3 th:text="${user.nickName}"></h3>
+                                    <div>가입일 : [[${#dates.format(user.regDt, 'yyyy-MM-dd')}]]</div>
                                 </dd>
                             </dl>
                             <div>
                                 <h2>내 활동내역</h2>
                                 <ul>
-                                    <li><i class="uil uil-diamond"></i> 다이어 <span>2</span></li>
-                                    <li><i class="uil uil-book-open"></i> <span>00</span> 로펌</li>
-                                    <li><i class="uil uil-clipboard"></i> 글 <span>1,272</span></li>
-                                    <li><i class="uil uil-comment"></i> 댓글 <span>572</span></li>
+                                    <li th:if="${tierTb != null}"><i class="uil uil-diamond"></i> [[${tierTb.name}]] <span th:text="${tierTb.level}"></span></li>
+                                    <li th:if="${lawFirmTb != null}"><i class="uil uil-book-open"></i> <span th:text="${lawFirmTb.name}"></span> 로펌</li>
+                                    <li><i class="uil uil-clipboard"></i> 글 <span th:text="${user.boardCount + user.trialCount}"></span></li>
+                                    <li><i class="uil uil-comment"></i> 댓글 <span th:text="${user.commentCount}"></span></li>
                                 </ul>
                             </div>
                             <div>

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
-        <div class="content">
+        <div class="content" sec:authorize="authenticated">
 
 
             <dl class="mypage-layout">

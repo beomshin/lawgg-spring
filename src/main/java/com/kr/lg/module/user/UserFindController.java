@@ -51,7 +51,6 @@ public class UserFindController {
         Page<UserBoardEntry> boards = userService.findUserBoards(request, userTb);
         boards.stream().forEach(UserBoardEntry::additionalContent);
 
-        mav.addObject("user", userTb);
         mav.addObject("boards", boards);
         mav.addObject("query", request);
         mav.addObject("maxPage", 10);
@@ -71,7 +70,6 @@ public class UserFindController {
         Page<UserAlertEntry> alerts = userService.findUserAlerts(request, userTb);
         alerts.stream().forEach(UserAlertEntry::additionalContent);
 
-        mav.addObject("user", userTb);
         mav.addObject("alerts", alerts);
         mav.addObject("query", request);
         mav.addObject("maxPage", 10);
@@ -86,9 +84,7 @@ public class UserFindController {
     public ModelAndView findUserInfo(
             @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
             ModelAndView mav
-    ) throws UserException {
-        UserEntry user = userService.findUser(userTb);
-        mav.addObject("user", user);
+    )  {
         mav.setViewName("view/mypage/myInfo");
         return mav;
     }

@@ -22,6 +22,7 @@ import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.module.lawfirm.sort.LawFirmSort;
 import com.kr.lg.model.mapper.LawFirmParam;
 import com.kr.lg.model.mapper.MapperParam;
+import com.kr.lg.module.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -47,8 +48,8 @@ public class LawFirmServiceImpl implements LawFirmService {
     private final LawFirmDeleteService lawFirmDeleteService;
     private final LawFirmFindService lawFirmFindService;
     private final LawFirmApplyRepository lawFirmApplyRepository;
-    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public void applyLawFirm(ApplyLawFirmRequest request, UserTb userTb) throws LawFirmException {
@@ -76,9 +77,7 @@ public class LawFirmServiceImpl implements LawFirmService {
         }
 
         lawFirmDeleteService.quitLawFirm(userTb.getUserId());
-
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userTb.getLoginId(), userTb.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        userService.updateSessionUserTb(userTb);
     }
 
     @Override

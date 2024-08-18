@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout/default_layout" lang="en">
 
     <th:block layout:fragment="content">
-        <div class="content">
-
+        <div class="content" sec:authorize="authenticated">
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
 
             <dl class="mypage-layout">
                 <dt>
@@ -13,11 +15,12 @@
                     <div class="mypage-info">
                         <div class="mi-info">
                             <th:block th:if="${user.profile != null}">
-                                <p><img th:src="${user.profile}" width="100%" alt="" title="" /><button>편집</button></p>
+                                <p><img th:src="${user.profile}" width="100%" alt="" title=""/><button onclick="openProfile()">편집</button></p>
                             </th:block>
                             <th:block th:if="${user.profile == null}">
-                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /><button>편집</button></p>
+                                <p><img src="https://i.pinimg.com/564x/2b/97/d3/2b97d3327ddfb846d34f8e843700eda8.jpg" width="100%" alt="" title="" /><button onclick="openProfile()">편집</button></p>
                             </th:block>
+                            <input hidden type="file" id="profile" onchange="changeProfile(event)">
                             <div>
                                 <h2><i class="uil uil-user" ></i> [[${user.loginId}]] ([[${user.nickName}]])</h2>
                                 <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(user.regDt, 'yyyy.MM.dd')}]])</h3>
@@ -53,7 +56,7 @@
                             </dl>
                             <dl>
                                 <dt>로펌 <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${user.lawFirmName == null ? '' : user.lawFirmName}" disabled/></dd>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${lawFirmTb == null ? '' : lawFirmTb.name}" disabled/></dd>
                             </dl>
                             <dl>
                                 <dt>기존 비밀번호 <span>*</span></dt>
@@ -105,6 +108,7 @@
                 </dd>
             </dl>
 
+            <script th:inline="javascript" th:src="@{/static/js/mypage/myInfo.js}"></script>
 
         </div>
     </th:block>

@@ -31,4 +31,5 @@ public interface UserService {
     UserTb enrollUser(LoginDto loginDto) throws UserException;
     void checkOverLapId(String loginId) throws UserException;
     void checkOverLapNickName(String nickName) throws UserException;
+    void updateSessionUserTb(UserTb userTb);
 }
