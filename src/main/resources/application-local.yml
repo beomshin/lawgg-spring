@@ -32,14 +32,14 @@ spring:
 
 google: # 로컬은 개인 계정으로 설정
   redirect: # 구글 로그인 콜백 URL (등록 필요)
-    uri: http://localhost:19001/lawgg-spring/google/login/callback
+    uri: http://localhost:19001/lawgg/google/login/callback
   client:
     id: ENC(IGl59N1wTjN+wWRcY3iJsC4Vj5cRsVmicaIugYCFJG2M1pa0q+0dDht/hQ7as1tUrmjVNifKuUxiGwdHPmijmj+fBE+FNAY/hPhj2tDWpJ8=)
   secret: ENC(u1WyUSfdY3sqB3TfWGj1R2E8Vis3OLELOMdV1fgjH6pDtbdqZ1SQhJEfG1WqE1rvOdzHTFOTez7HKcyDIbd/QEJsXq0/sAdm004x40jrCBw=)
 
 naver: # 로컬은 개인 계정으로 설정
   redirect: # 네이버 로그인 콜백 URL (등록 필요)
-    uri: http://localhost:19001/lawgg-spring/naver/login/callback
+    uri: http://localhost:19001/lawgg/naver/login/callback
   client:
     id: ENC(C7pqR2liF675VuEbQdv/S+O4wCHY5Lgx+XuF+gAeBCCVB18ykCPdjFIfjANw/KA4nBBsAxi/uF3vWH/PimefPQ==)
   secret: ENC(71ey5lTH3IAerQwhXbyfdP6R8vb2sz+A2ypn5SysxJa+SO3ZqXt7p+LrvOqMAXnH)
@@ -47,9 +47,9 @@ naver: # 로컬은 개인 계정으로 설정
 kakao: # 로컬은 개인 계정으로 설정
   redirect:
     login: # 카카오 로그인 콜백 URL (등록 필요)
-      uri: http://localhost:19001/lawgg-spring/kakao/login/callback
+      uri: http://localhost:19001/lawgg/kakao/login/callback
     logout: # 카카오 로그아웃 콜백 URL (등록 필요)
-      uri: http://localhost:19001/lawgg-spring/api/public/kakao/logout/redirect
+      uri: http://localhost:19001/lawgg/api/public/kakao/logout/redirect
   client:
     id: ENC(nL/Dkn2NOC4bi/y2imKzGiCh7yYQD+xaktmWOcJJYUepL/xPd4JVPtluDnzLg9/zitTdNppHVFd7HFK5E3CsdpZtVOsbcUZ4/PtsFppi3h0=)
   secret: ENC(j+Jvpv9kqzIOt46Lo0VppBgUPbwkoFgO5s3fO68zA6tj3ONk8Y3uMWFPGbHJU34j0zrT8qa0UeU+bwr+jSy1RdAUOYimBRUj87urqdRCpqM=)

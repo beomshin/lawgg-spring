@@ -32,14 +32,14 @@ spring:
 
 google: # 테스트는 로우지지 계정으로 설정
   redirect: # 구글 로그인 콜백 URL (등록 필요)
-    uri: http://cground.store/lawgg-spring/google/login/callback
+    uri: http://cground.store/lawgg/google/login/callback
   client:
     id: ENC(QabZPzwFQTu5S7Agv+jJyldTB4u5HDrP+tV25ajHWkKt8uaEL7N4zj4YqPefb0r+oAnk9vCFyRjBf0JZ6LHnFUGrrfd1N3zoAfeFxDSu6pA=)
   secret: ENC(KEPMb6NhLiZr+JjJ2qqJkzv8DlRrdOVv7cpYf8lE/wegVlfgYFvwDBy+y8s2dQGq0G72ruPI0hYmK8DsRytGyy3U4siR16sQZVVbq/HYJgM=)
 
 naver: # 테스트는 로우지지 계정으로 설정
   redirect: # 네이버 로그인 콜백 URL (등록 필요)
-    uri: http://cground.store/lawgg-spring/naver/login/callback
+    uri: http://cground.store/lawgg/naver/login/callback
   client:
     id: ENC(dDIGXFoIlq0tDwtnzy2NRxszNGZ+bX9Oat+L1qLsiJfQCs24rEkZltUQdcO9DQGvLpL6rJVy3Ux4/Bks89syxw==)
   secret: ENC(+6vs2ewUgYyvFcAlvG8y2eskG6Xq3VfyaV+SzBsvy+TkrwL/125v84LI8LpZQ7yY)
@@ -48,9 +48,9 @@ naver: # 테스트는 로우지지 계정으로 설정
 kakao: # 테스트는 로우지지 계정으로 설정
   redirect:
     login: # 카카오 로그인 콜백 URL (등록 필요)
-      uri: http://cground.store/lawgg-spring/kakao/login/callback
+      uri: http://cground.store/lawgg/kakao/login/callback
     logout: # 카카오 로그아웃 콜백 URL (등록 필요)
-      uri: http://cground.store/lawgg-spring/api/public/kakao/logout/redirect
+      uri: http://cground.store/lawgg/api/public/kakao/logout/redirect
   client:
     id: ENC(B25W24lylSyzENGt7DZuZ4bf02ZoJjPONHwGyjd4BA2rF1A4a3/ZFnJQ5fIFj746LmYwsrk3q0+sMdi+a+jRm48uGFIk6o74beu+ebK/leg=)
   secret: ENC(XGwdt4ki0xT+JEDN0W6goFMY/PqnNcU/hw6XzGIYYywLVL/FAHvkDpAeoo9zS6hPO9RSUrSp2jY0anUYbriKGBtCJgasu7HYgtlNrd+86Zc=)
