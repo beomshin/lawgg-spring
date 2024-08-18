@@ -2,7 +2,7 @@ server:
   port: 19001
   shutdown: graceful
   servlet:
-    context-path: /lawgg-spring
+    context-path: /lawgg
 
 spring:
   profiles:
