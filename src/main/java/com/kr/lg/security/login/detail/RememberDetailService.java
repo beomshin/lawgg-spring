@@ -31,7 +31,7 @@ public class RememberDetailService implements  UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 
         log.info("▶ [Spring Security 로그인][UserDetailService] 2. 유저 조회 및 상태 체크: userId - [{}]", userId);
-        UserTb userTb = userRepository.findById(Long.parseLong(userId))
+        UserTb userTb = userRepository.findByUserId(Long.parseLong(userId))
                 .orElseThrow(() -> new UsernameNotFoundException("로그인 아이디 미존재", new SecurityException(SecurityResultCode.NOT_EXIST_USER)));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
         if (userTb.getJudgeFlag() == JudgeUserFlag.USE_STATUS) { // 재판 가능 권한 부여
