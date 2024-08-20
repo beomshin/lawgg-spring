@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<UserTb, Long> {
 
     @EntityGraph(attributePaths = {"tierTb", "lawFirmTb"})
     Optional<UserTb> findByLoginId(String loginId);
+    int countByLoginId(String loginId);
     @EntityGraph(attributePaths = {"tierTb", "lawFirmTb"})
     Optional<UserTb> findByUserId(Long userId);
     Optional<UserTb> findByNickName(String nickName);

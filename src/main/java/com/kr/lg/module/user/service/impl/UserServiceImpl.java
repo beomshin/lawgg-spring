@@ -134,6 +134,7 @@ public class UserServiceImpl implements UserService {
                             .password(request.getPassword())
                             .nickName(request.getNickName())
                             .personalPeriod(request.getPersonalPeriod())
+                            .email(request.getEmail())
                             .snsType(SnsType.LG_SNS_TYPE)
                             .authFlag(AuthFlag.NON_AUTH_STATUS)
                             .tierTb(tierTb)
@@ -172,6 +173,14 @@ public class UserServiceImpl implements UserService {
     public void updateSessionUserTb(UserTb userTb) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userTb.getLoginId(), userTb.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Override
+    public void checkId(String loginId) throws UserException {
+        int count = userRepository.countByLoginId(loginId);
+        if (count > 0) {
+            throw new UserException(UserResultCode.OVERLAP_LOGIN_ID);
+        }
     }
 
 }

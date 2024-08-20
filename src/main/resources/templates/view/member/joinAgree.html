@@ -69,7 +69,10 @@
                     </li>
                 </ul>
                 <p>
-                    <a th:href="@{/join/register}" class="btn-default-b bg-black w100p">동의</a>
+                    <form id="register" method="post" th:action="@{/join/register}">
+                        <input type="hidden" value="false" name="accept" id="accept">
+                    </form>
+                    <button id="agree" class="btn-default-b bg-black w100p">동의</button>
                 </p>
             </div>
             <!-- 약관동의 끝 -->
@@ -423,7 +426,7 @@
 <!--            </modal>-->
             <!-- 모달 - 이용약관 끝 -->
 
-
+            <script th:src="@{/static/js/member/joinAgree.js}"></script>
         </div>
     </th:block>
 
