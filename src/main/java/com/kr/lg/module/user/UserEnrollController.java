@@ -24,10 +24,9 @@ public class UserEnrollController {
     private final UserService userService;
 
     @GetMapping("/join/agree")
-    public String joinAgree(
-
-    ) {
-        return "view/member/joinAgree";
+    public ModelAndView joinAgree(ModelAndView mav) {
+        mav.setViewName("view/member/joinAgree");
+        return mav;
     }
 
     @RequestMapping("/join/register")
