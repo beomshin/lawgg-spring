@@ -979,37 +979,37 @@
 
 /* 회원가입  */
 .join-input {width:470px; margin:0 auto; padding:0 0 50px 0;}
-.join-input > ul {margin-top:50px;}
-.join-input > ul > li {margin-top:15px;}
-.join-input > ul > li.ji-guide {margin-top:30px; padding-top:20px; border-top:#e9e9e9 1px solid;}
-.join-input > ul > li div {display:flex;}
-.join-input > ul > li h2 {margin-top:25px; font-size:14px; line-height:14px; color:#222; letter-spacing:-1px;}
-.join-input > ul > li h3 {margin-top:8px; font-size:12px; color:#999;}
-.join-input > ul > li p {margin-top:8px;}
-.join-input > div {margin-top:35px; text-align:center;}
-.join-input > dl {display:flex; justify-content:space-between; align-items:center; margin:40px 0;}
-.join-input > dl > dt {width:35%; height:1px; background:#e5e5e5;}
-.join-input > dl > dd {font-size:20px; line-height:20px; color:#222; letter-spacing:-1px;}
+.join-input > form > ul {margin-top:50px;}
+.join-input > form > ul > li {margin-top:15px;}
+.join-input > form > ul > li.ji-guide {margin-top:30px; padding-top:20px; border-top:#e9e9e9 1px solid;}
+.join-input > form > ul > li div {display:flex;}
+.join-input > form > ul > li h2 {margin-top:25px; font-size:14px; line-height:14px; color:#222; letter-spacing:-1px;}
+.join-input > form > ul > li h3 {margin-top:8px; font-size:12px; color:#999;}
+.join-input > form > ul > li p {margin-top:8px;}
+.join-input > form > div {margin-top:35px; text-align:center;}
+.join-input > form > dl {display:flex; justify-content:space-between; align-items:center; margin:40px 0;}
+.join-input > form > dl > dt {width:35%; height:1px; background:#e5e5e5;}
+.join-input > form > dl > dd {font-size:20px; line-height:20px; color:#222; letter-spacing:-1px;}
 
 .join-input.mypage-info {width:100%; margin:0 auto; padding:0 0 50px 0;}
 
 @media all and (max-width:479px) {
   .join-input {width:90%; padding:0 0 50px 0;}
-  .join-input > ul {margin-top:40px;}
-  .join-input > ul > li div input {height:50px !important;}
-  .join-input > ul > li div button {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
-  .join-input > div {margin-top:30px;}
-  .join-input > div a {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
-  .join-input > dl > dd {font-size:18px; line-height:18px;}
+  .join-input > form > ul {margin-top:40px;}
+  .join-input > form > ul > li div input {height:50px !important;}
+  .join-input > form > ul > li div button {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
+  .join-input > form > div {margin-top:30px;}
+  .join-input > form > div a {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
+  .join-input > form > dl > dd {font-size:18px; line-height:18px;}
 }
 @media all and (min-width:480px) and (max-width:767px) {
   .join-input {width:470px; padding:0 0 50px 0;}
-  .join-input > ul {margin-top:40px;}
-  .join-input > ul > li div input {height:50px !important;}
-  .join-input > ul > li div button {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
-  .join-input > div {margin-top:30px;}
-  .join-input > div a {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
-  .join-input > dl > dd {font-size:18px; line-height:18px;}
+  .join-input > form > ul {margin-top:40px;}
+  .join-input > form > ul > li div input {height:50px !important;}
+  .join-input > form > ul > li div button {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
+  .join-input > form > div {margin-top:30px;}
+  .join-input > form > div a {height:50px !important; padding:17px; font-size:14px; line-height:14px;}
+  .join-input > form > dl > dd {font-size:18px; line-height:18px;}
 }
 @media all and (min-width:768px) and (max-width:991px) {
 

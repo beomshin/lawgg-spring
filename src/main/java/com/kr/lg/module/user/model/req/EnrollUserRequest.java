@@ -27,8 +27,8 @@ public class EnrollUserRequest {
     @ApiModelProperty(value = "닉네임")
     private String nickName;
 
-    @ApiModelProperty(value = "이름")
-    private String name;
+    @ApiModelProperty(value = "이메일")
+    private String email;
 
     @ApiModelProperty(value = "개인정보 유효기간", required = true)
     @NotNull(message = "개인정보 유효기간이 입력되어있지않습니다.")
