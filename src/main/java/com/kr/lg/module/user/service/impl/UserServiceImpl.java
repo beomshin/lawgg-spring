@@ -174,4 +174,12 @@ public class UserServiceImpl implements UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    @Override
+    public void checkId(String loginId) throws UserException {
+        int count = userRepository.countByLoginId(loginId);
+        if (count > 0) {
+            throw new UserException(UserResultCode.OVERLAP_LOGIN_ID);
+        }
+    }
+
 }

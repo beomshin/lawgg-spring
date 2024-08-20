@@ -5,7 +5,8 @@
 
     <th:block layout:fragment="content">
         <div class="content">
-
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
 
             <!-- 회원관련 - 타이틀 -->
             <div class="member-title">
@@ -33,58 +34,66 @@
 
             <!-- 회원가입 -->
             <div class="join-input">
-                <ul>
-                    <li>
-                        <div>
-                            <input type="text" name="" title="" placeholder="아이디" class="input-box w100p h60" />
-                            <button class="btn-default-b bg-black">중복확인</button>
-                        </div>
-                        <h3><i class="uil uil-exclamation-triangle color-pink"></i> 6~20자의 영문/숫자 입력</h3>
-                    </li>
-                    <li>
-                        <div><input type="password" name="" title="" placeholder="비밀번호" class="input-box w100p h60" /></div>
-                        <h3><i class="uil uil-exclamation-triangle color-pink"></i> 8~12자의 영문/숫자/특수문자 입력</h3>
-                    </li>
-                    <li>
-                        <div><input type="password" name="" title="" placeholder="비밀번호 확인" class="input-box w100p h60" /></div>
-                    </li>
-                    <li>
-                        <div><input type="text" name="" title="" placeholder="닉네임" class="input-box w100p h60" /></div>
-                    </li>
-                    <li>
-                        <div><input type="text" name="" title="" placeholder="이메일" class="input-box w100p h60" /></div>
-                    </li>
-                    <li>
-                        <h2>개인정보 유효기간</h2>
-                        <div class="mt15 mb15">
-                            <div class="radio-box">
-                                <input type="radio" name="pwRadio" id="pwRadio1" checked />
-                                <label for="pwRadio1">탈퇴시까지</label>
+                <form>
+                    <ul>
+                        <li>
+                            <div>
+                                <input type="text" name="loginId" id="loginId" title="loginId" placeholder="아이디" class="input-box w100p h60" />
+                                <button id="overlapBtn" type="button" onclick="checkId()" class="btn-default-b bg-black">중복확인</button>
+                                <button id="retryBtn" type="button" onclick="retry()" class="btn-default-b bg-black" style="display: none;">재설정</button>
                             </div>
-                            <div class="radio-box pl30">
-                                <input type="radio" name="pwRadio" id="pwRadio2" />
-                                <label for="pwRadio2">1년</label>
+                            <input type="hidden" name="verifyId" id="verifyId" value="false">
+                            <span id="overlapMsg" style="display: none">
+                                <p></p>
+                            </span>
+                            <h3><i class="uil uil-exclamation-triangle color-pink"></i> 6~20자의 영문/숫자 입력</h3>
+                        </li>
+                        <li>
+                            <div><input type="password" name="" title="" placeholder="비밀번호" class="input-box w100p h60" /></div>
+                            <h3><i class="uil uil-exclamation-triangle color-pink"></i> 8~12자의 영문/숫자/특수문자 입력</h3>
+                        </li>
+                        <li>
+                            <div><input type="password" name="" title="" placeholder="비밀번호 확인" class="input-box w100p h60" /></div>
+                        </li>
+                        <li>
+                            <div><input type="text" name="" title="" placeholder="닉네임" class="input-box w100p h60" /></div>
+                        </li>
+                        <li>
+                            <div><input type="text" name="" title="" placeholder="이메일" class="input-box w100p h60" /></div>
+                        </li>
+                        <li>
+                            <h2>개인정보 유효기간</h2>
+                            <div class="mt15 mb15">
+                                <div class="radio-box">
+                                    <input type="radio" name="pwRadio" id="pwRadio1" checked />
+                                    <label for="pwRadio1">탈퇴시까지</label>
+                                </div>
+                                <div class="radio-box pl30">
+                                    <input type="radio" name="pwRadio" id="pwRadio2" />
+                                    <label for="pwRadio2">1년</label>
+                                </div>
+                                <div class="radio-box pl30">
+                                    <input type="radio" name="pwRadio" id="pwRadio3" />
+                                    <label for="pwRadio3">3년</label>
+                                </div>
+                                <div class="radio-box pl30">
+                                    <input type="radio" name="pwRadio" id="pwRadio4" />
+                                    <label for="pwRadio4">5년</label>
+                                </div>
                             </div>
-                            <div class="radio-box pl30">
-                                <input type="radio" name="pwRadio" id="pwRadio3" />
-                                <label for="pwRadio3">3년</label>
-                            </div>
-                            <div class="radio-box pl30">
-                                <input type="radio" name="pwRadio" id="pwRadio4" />
-                                <label for="pwRadio4">5년</label>
-                            </div>
-                        </div>
-                        <h3><i class="uil uil-exclamation-triangle color-pink"></i> 개인정보 유효기간 경과 이후 파기 또는 분리저장, 관리합니다.</h3>
-                    </li>
-                </ul>
-                <div style="display: flex">
-                    <a th:href="@{/join/end}" class="btn-default-b bg-pink w49p">회원가입</a>
-                    &nbsp;
-                    <a th:href="@{/}" class="btn-default-b bg-black w49p">취소</a>
-                </div>
+                            <h3><i class="uil uil-exclamation-triangle color-pink"></i> 개인정보 유효기간 경과 이후 파기 또는 분리저장, 관리합니다.</h3>
+                        </li>
+                    </ul>
+                    <div style="display: flex">
+                        <a th:href="@{/join/end}" class="btn-default-b bg-pink w49p">회원가입</a>
+                        &nbsp;
+                        <a th:href="@{/join/agree}" class="btn-default-b bg-black w49p">취소</a>
+                    </div>
+                </form>
             </div>
             <!-- 회원가입 끝 -->
 
+            <script th:src="@{/static/js/member/joinRegister.js}"></script>
 
         </div>
     </th:block>

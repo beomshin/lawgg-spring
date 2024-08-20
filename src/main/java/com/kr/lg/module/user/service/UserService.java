@@ -20,4 +20,5 @@ public interface UserService {
     UserTb enrollUser(EnrollUserRequest request) throws UserException;
     UserTb enrollUser(LoginDto loginDto) throws UserException;
     void updateSessionUserTb(UserTb userTb);
+    void checkId(String id) throws UserException;
 }
