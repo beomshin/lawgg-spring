@@ -3,20 +3,11 @@ package com.kr.lg.module;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
 public class ViewController {
-
-    @GetMapping("/join/agree")
-    public String joinAgree() {
-        return "view/member/joinAgree";
-    }
-
-    @GetMapping("/join/register")
-    public String joinRegister() {
-        return "view/member/joinRegister";
-    }
 
     @GetMapping("/join/end")
     public String joinEnd() {
