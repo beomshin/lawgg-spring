@@ -63,13 +63,15 @@ public class UserEnrollController {
     }
 
 
-    @PostMapping("/api/public/v1/enroll/user")
+    @PostMapping("/enroll/user")
     @ApiOperation(value = "유저 등록", notes = "유저 등록 정보를 등록합니다.")
-    public ResponseEntity<?> enrollUser(
-            @RequestBody @Valid EnrollUserRequest requestDto
+    public ModelAndView enrollUser(
+            @ModelAttribute @Valid EnrollUserRequest request,
+            ModelAndView mav
     ) throws UserException {
-        UserTb userTb = userService.enrollUser(requestDto);
-        return ResponseEntity.ok(new SuccessResponse());
+        UserTb userTb = userService.enrollUser(request);
+        mav.setViewName("view/member/joinEnd");
+        return mav;
     }
 
 

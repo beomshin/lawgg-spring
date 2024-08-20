@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 public class ViewController {
 
-    @GetMapping("/join/end")
-    public String joinEnd() {
-        return "view/member/joinEnd";
-    }
-
     @GetMapping("/pw/search")
     public String pwSearch() {
         return "view/member/pwSearch";

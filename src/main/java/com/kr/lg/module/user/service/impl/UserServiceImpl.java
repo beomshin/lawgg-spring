@@ -134,6 +134,7 @@ public class UserServiceImpl implements UserService {
                             .password(request.getPassword())
                             .nickName(request.getNickName())
                             .personalPeriod(request.getPersonalPeriod())
+                            .email(request.getEmail())
                             .snsType(SnsType.LG_SNS_TYPE)
                             .authFlag(AuthFlag.NON_AUTH_STATUS)
                             .tierTb(tierTb)
