@@ -189,4 +189,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).stream().map(UserEntry::new).collect(Collectors.toList());
     }
 
+    @Override
+    public UserTb findPws(String email, String loginId) throws UserException {
+        return userRepository.findByEmailAndLoginId(email, loginId).orElse(null);
+    }
+
 }

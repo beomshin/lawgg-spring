@@ -5,33 +5,36 @@
 
     <th:block layout:fragment="content">
         <div class="content">
-
+            <meta name="_csrf_header" th:content="${_csrf.headerName}">
+            <meta name="_csrf" th:content="${_csrf.token}">
 
             <!-- 비밀번호 찾기  -->
             <div class="idpw-search">
                 <div class="member-title pt0">
                     <h2>비밀번호 찾기</h2>
-                    <h3>본인 주민등록번호로 가입된 휴대폰번호로 본인확인을 합니다.</h3>
+                    <h3>가입된 이메일을 통하여 본인확인을 합니다.</h3>
                 </div>
                 <div class="is-content">
-                    <form>
+                    <form method="post" th:action="@{/user/pws}">
                         <ul>
                             <li>
-                                <input type="text" name="" title="" placeholder="아이디" class="input-box w100p h60" />
+                                <input type="text" name="loginId" title="loginId" placeholder="아이디" class="input-box w100p h60" />
                             </li>
                             <li>
                                 <div>
-                                    <input type="number" name="" title="" placeholder="휴대폰번호" class="input-box w100p h60" />
-                                    <button class="btn-default-b bg-black">인증번호받기</button>
+                                    <input type="text" name="email" title="email" id="email" placeholder="이메일" class="input-box w100p h60" />
+                                    <button type="button" onclick="sendEmail()" class="btn-default-b bg-black">인증번호받기</button>
                                 </div>
                             </li>
                             <li>
                                 <div>
-                                    <input type="number" name="" title="" placeholder="인증번호 입력" class="input-box w100p h60" />
+                                    <input type="text" name="code" title="code" id="code" placeholder="인증번호 입력" class="input-box w100p h60" />
+                                    <input type="hidden" name="txId" title="txId" id="txId" />
+
                                 </div>
                             </li>
                         </ul>
-                        <p><a th:href="@{/pw/reset}" class="btn-default-b bg-black w100p">비밀번호 찾기</a></p>
+                        <p><button  type="submit" class="btn-default-b bg-black w100p">비밀번호 찾기</button></p>
                     </form>
                     <dl>
                         <dt><a th:href="@{/login}">로그인</a></dt>
@@ -42,7 +45,7 @@
             </div>
             <!-- 비밀번호 찾기 끝 -->
 
-
+            <script th:src="@{/static/js/member/pwSearch.js}"></script>
         </div>
     </th:block>
 

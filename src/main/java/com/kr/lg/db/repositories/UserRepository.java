@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<UserTb, Long> {
     Optional<UserTb> findByNickName(String nickName);
     Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
     List<UserTb> findByEmail(String email);
-
+    Optional<UserTb> findByEmailAndLoginId(String email, String loginId);
     @Modifying
     @Query(value = "UPDATE UserTb SET password = :password  WHERE userId = :userId")
     void updatePassword(@Param("userId") Long userId, String password);

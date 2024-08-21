@@ -80,7 +80,7 @@ public class UserFindController {
     }
 
     @RequestMapping(value = "/user/ids", method = {RequestMethod.GET, RequestMethod.POST})
-    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+    @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디를 조회합니다.")
     public ModelAndView userIds(
             @ModelAttribute FindIdsRequest request,
             ModelAndView mav
@@ -93,6 +93,24 @@ public class UserFindController {
         } catch (Exception e) {
             log.error("", e);
             mav.setViewName("view/member/idSearch");
+        }
+        return mav;
+    }
+
+    @RequestMapping(value = "/user/pws", method = {RequestMethod.GET, RequestMethod.POST})
+    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+    public ModelAndView userPws(
+            @ModelAttribute FindPwsRequest request,
+            ModelAndView mav
+    ) {
+        try {
+            emailService.verifyEmail(request.getTxId(), request.getCode());
+            UserTb userTb = userService.findPws(request.getEmail(), request.getLoginId());
+            mav.addObject("user", userTb);
+            mav.setViewName("view/member/pwSearchReset");
+        } catch (Exception e) {
+            log.error("", e);
+            mav.setViewName("view/member/pwSearch");
         }
         return mav;
     }
