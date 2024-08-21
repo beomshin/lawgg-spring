@@ -3,6 +3,7 @@ package com.kr.lg.module.user.service.impl;
 import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.common.utils.LoginUtils;
 import com.kr.lg.db.entities.AlertTb;
+import com.kr.lg.db.entities.MailTb;
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.AlertRepository;
@@ -125,19 +126,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserTb enrollUser(EnrollUserRequest request) throws UserException {
+    public void enrollUser(EnrollUserRequest request) throws UserException {
         Optional<UserTb> userTb = userRepository.findByLoginId(request.getLoginId());
         if (!userTb.isPresent()) {
             TierTb tierTb = tierRepository.findByKey("Bronze_3");
-            return userEnrollService.enrollUser(EnrollUserDto.builder()
-                            .loginId(request.getLoginId())
-                            .password(request.getPassword())
-                            .nickName(request.getNickName())
-                            .personalPeriod(request.getPersonalPeriod())
-                            .email(request.getEmail())
-                            .snsType(SnsType.LG_SNS_TYPE)
-                            .authFlag(AuthFlag.NON_AUTH_STATUS)
-                            .tierTb(tierTb)
+            userEnrollService.enrollUser(EnrollUserDto.builder()
+                    .loginId(request.getLoginId())
+                    .password(request.getPassword())
+                    .nickName(request.getNickName())
+                    .personalPeriod(request.getPersonalPeriod())
+                    .email(request.getEmail())
+                    .snsType(SnsType.LG_SNS_TYPE)
+                    .authFlag(AuthFlag.NON_AUTH_STATUS)
+                    .tierTb(tierTb)
                     .build());
         } else {
             throw new UserException(UserResultCode.ALREADY_ENROLL_USER);
@@ -181,6 +182,11 @@ public class UserServiceImpl implements UserService {
         if (count > 0) {
             throw new UserException(UserResultCode.OVERLAP_LOGIN_ID);
         }
+    }
+
+    @Override
+    public List<UserEntry> findIds(String email) throws UserException {
+        return userRepository.findByEmail(email).stream().map(UserEntry::new).collect(Collectors.toList());
     }
 
 }

@@ -11,30 +11,21 @@
             <div class="idpw-search">
                 <div class="member-title pt0">
                     <h2>아이디찾기</h2>
-                    <h3>아래의 항목은 유저님의 아이디 찾기 결과 입니다.</h3>
+                    <h3 th:if="${ids.size() > 0}">아래의 항목은 유저님의 아이디 찾기 결과 입니다.</h3>
+                    <h3 th:if="${ids.size() == 0}">입력하신 이메일로 가입된 아이디가 존재하지 않습니다.</h3>
                 </div>
                 <div class="is-content">
-                    <ol>
-                        <li>
-                            <div class="radio-box">
-                                <input type="radio" name="pwRadio" id="pwRadio1" checked />
-                                <label for="pwRadio1">lawggidsearch1 - (가입일 : 2023/12/12)</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="radio-box">
-                                <input type="radio" name="pwRadio" id="pwRadio2" />
-                                <label for="pwRadio2">lawggidsearch2 - (가입일 : 2023/12/12)</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="radio-box">
-                                <input type="radio" name="pwRadio" id="pwRadio3" />
-                                <label for="pwRadio3">lawggidsearch3 - (가입일 : 2023/12/12)</label>
-                            </div>
-                        </li>
-                    </ol>
-                    <p><aa href="/MemberPwSearch" class="btn-default-b bg-black w100p">비밀번호 재설정</aa></p>
+                    <form th:if="${ids.size() > 0}">
+                        <ol>
+                            <li th:each="id, iterStat : ${ids}">
+                                <div class="radio-box">
+                                    <input type="radio" name="pwRadio" th:id="'pwRadio' + ${iterStat.index}" th:value="${id.loginId}" th:checked="${iterStat.index == 0}" />
+                                    <label th:for="'pwRadio' + ${iterStat.index}">[[${id.loginId}]] - (가입일 : [[${#dates.format(id.regDt, 'yyyy-MM-dd')}]])</label>
+                                </div>
+                            </li>
+                        </ol>
+                        <p><button type="button" id="resetPasswordBtn" class="btn-default-b bg-black w100p">비밀번호 재설정</button></p>
+                    </form>
                     <dl>
                         <dt><a th:href="@{/login}">로그인</a></dt>
                         <dd>|</dd>
@@ -44,7 +35,7 @@
             </div>
             <!-- 아이디 찾기 끝 -->
 
-
+            <script th:src="@{/static/js/member/idSearchResult.js}"></script>
         </div>
     </th:block>
 

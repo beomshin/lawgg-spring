@@ -1,11 +1,15 @@
 package com.kr.lg.module.user;
 
 
+import com.kr.lg.db.entities.MailTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
+import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
+import com.kr.lg.module.thirdparty.service.EmailService;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
 import com.kr.lg.module.user.model.entry.UserBoardEntry;
+import com.kr.lg.module.user.model.entry.UserEntry;
 import com.kr.lg.module.user.model.req.*;
 import com.kr.lg.module.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +31,7 @@ import javax.validation.Valid;
 public class UserFindController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @Secured("ROLE_USER")
     @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
@@ -70,6 +76,24 @@ public class UserFindController {
     @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
     public ModelAndView findUserInfo(ModelAndView mav)  {
         mav.setViewName("view/mypage/myInfo");
+        return mav;
+    }
+
+    @RequestMapping(value = "/user/ids", method = {RequestMethod.GET, RequestMethod.POST})
+    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+    public ModelAndView userIds(
+            @ModelAttribute FindIdsRequest request,
+            ModelAndView mav
+    ) {
+        try {
+            emailService.verifyEmail(request.getTxId(), request.getCode());
+            List<UserEntry> ids = userService.findIds(request.getEmail());
+            mav.addObject("ids", ids);
+            mav.setViewName("view/member/idSearchResult");
+        } catch (Exception e) {
+            log.error("", e);
+            mav.setViewName("view/member/idSearch");
+        }
         return mav;
     }
 

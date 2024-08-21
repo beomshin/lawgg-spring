@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -28,7 +29,7 @@ public class EmailController {
     @PostMapping("/send/email")
     @ApiOperation(value = "이메일 인증번호 전송", notes = "이메일 인증번호를 전송합니다.")
     public ResponseEntity<?> sendEmail(
-            @RequestBody SendEmailRequest request
+            @RequestBody @Valid SendEmailRequest request
     ) throws ThirdPartyException, IOException { // 미사용
         MailTb mailTb = emailService.sendEmail(request);
         mailService.postAuthCode(request.getEmail(), mailTb.getCode(), "Law.gg 회원가입 인증번호입니다.");
@@ -36,16 +37,6 @@ public class EmailController {
                 .txId(mailTb.getTxId())
                 .build();
         return ResponseEntity.ok(spec);
-    }
-
-    @GetMapping("/verify/email/{txId}")
-    @ApiOperation(value = "이메일 인증번호 확인", notes = "이메일 인증번호를 확인합니다.")
-    public ResponseEntity<?> verifyEmail(
-            @ApiParam(value = "이메일 인증 트랜잭션 아이디", required = true) @PathVariable("txId") String txId,
-            @ApiParam(value = "이메일 인증번호", required = true) @RequestParam(name = "code") String code
-    ) throws ThirdPartyException { // 미사용
-        emailService.verifyEmail(txId, code);
-        return ResponseEntity.ok(new SuccessResponse());
     }
 
 }
