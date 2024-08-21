@@ -1,5 +1,6 @@
 package com.kr.lg.module.user.service.impl;
 
+import com.kr.lg.common.enums.entity.status.VerificationStatus;
 import com.kr.lg.common.enums.entity.type.SnsType;
 import com.kr.lg.common.utils.LoginUtils;
 import com.kr.lg.db.entities.AlertTb;
@@ -7,6 +8,7 @@ import com.kr.lg.db.entities.MailTb;
 import com.kr.lg.db.entities.TierTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.db.repositories.AlertRepository;
+import com.kr.lg.db.repositories.MailRepository;
 import com.kr.lg.db.repositories.TierRepository;
 import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.common.enums.entity.flag.AuthFlag;
@@ -40,6 +42,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +60,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AlertRepository alertRepository;
     private final TierRepository tierRepository;
+    private final MailRepository mailRepository;
 
     private final BCryptPasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
@@ -192,6 +196,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserTb findPws(String email, String loginId) throws UserException {
         return userRepository.findByEmailAndLoginId(email, loginId).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(ResetPwRequest request) throws UserException {
+        Optional<MailTb> mailTb = mailRepository.findByCodeAndTxIdAndExpiredAfterAndVerification(request.getCode(), request.getTxId(), new Date(), VerificationStatus.COMPLETE);
+        if (!mailTb.isPresent()) {
+            throw new UserException(UserResultCode.NOT_VERIFY_EMAIL);
+        }
+        Optional<UserTb> userTb = userRepository.findByEmailAndAndUserId(mailTb.get().getReceiver(), request.getUserId());
+        if (!userTb.isPresent()) {
+            throw new UserException(UserResultCode.NOT_EXIST_USER);
+        }
+        userUpdateService.updateUserPassword(userTb.get(), request.getPassword());
     }
 
 }

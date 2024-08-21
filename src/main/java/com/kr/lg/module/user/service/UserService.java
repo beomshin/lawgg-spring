@@ -27,4 +27,5 @@ public interface UserService {
     void checkId(String id) throws UserException;
     List<UserEntry> findIds(String email) throws UserException;
     UserTb findPws(String email, String loginId) throws UserException;
+    void resetPassword(ResetPwRequest request) throws UserException;
 }

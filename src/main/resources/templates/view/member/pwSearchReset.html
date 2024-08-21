@@ -18,16 +18,19 @@
                     <h3 th:if="${user == null}">입력하신 이메일로 가입된 아이디가 존재하지 않습니다.</h3>
                 </div>
                 <div class="is-content">
-                    <form th:if="${user != null}">
+                    <form th:if="${user != null}" th:action="@{/my/reset/password}" method="post">
                         <ul>
                             <li>
-                                <input type="password" name="" title="" placeholder="새 비밀번호" class="input-box w100p h60" />
+                                <input type="password" name="password" title="password" placeholder="새 비밀번호" class="input-box w100p h60" />
                             </li>
                             <li>
-                                <input type="password" name="" title="" placeholder="새 비밀번호 확인" class="input-box w100p h60" />
+                                <input type="password" name="rePassword" title="rePassword" placeholder="새 비밀번호 확인" class="input-box w100p h60" />
                             </li>
+                            <input type="hidden" name="userId" th:value="${user.userId}">
+                            <input type="hidden" name="txId" th:value="${txId}">
+                            <input type="hidden" name="code" th:value="${code}">
                         </ul>
-                        <p><a  class="btn-default-b bg-black w100p">비밀번호 변경</a></p>
+                        <p><button type="submit"  class="btn-default-b bg-black w100p">비밀번호 변경</button></p>
                     </form>
                     <dl>
                         <dt><a th:href="@{/}">로그인</a></dt>

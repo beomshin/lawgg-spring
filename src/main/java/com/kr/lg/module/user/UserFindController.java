@@ -107,6 +107,8 @@ public class UserFindController {
             emailService.verifyEmail(request.getTxId(), request.getCode());
             UserTb userTb = userService.findPws(request.getEmail(), request.getLoginId());
             mav.addObject("user", userTb);
+            mav.addObject("txId", request.getTxId());
+            mav.addObject("code", request.getCode());
             mav.setViewName("view/member/pwSearchReset");
         } catch (Exception e) {
             log.error("", e);

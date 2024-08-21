@@ -3,6 +3,7 @@ package com.kr.lg.module.user;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
 import com.kr.lg.module.user.excpetion.UserException;
+import com.kr.lg.module.user.model.req.ResetPwRequest;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.model.annotation.UserPrincipal;
 import com.kr.lg.model.annotation.UserAdapter;
@@ -53,6 +54,21 @@ public class UserUpdateController {
     ) throws  UserException {
         userService.updateUserProfile(request, userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());
+    }
+
+    @PostMapping("/my/reset/password")
+    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
+    public ModelAndView resetUserPassword(
+            @ModelAttribute @Valid ResetPwRequest request,
+            ModelAndView mav
+    ) {
+        try {
+            userService.resetPassword(request);
+            mav.setViewName("redirect:/logout");
+        } catch (Exception e) {
+            mav.setViewName("view/member/pwSearch");
+        }
+        return mav;
     }
 
 
