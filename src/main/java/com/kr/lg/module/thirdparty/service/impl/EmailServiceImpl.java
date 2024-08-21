@@ -51,6 +51,7 @@ public class EmailServiceImpl implements EmailService {
         try {
             log.info("▶ [메일] 메일 인증 내역 저장");
             mailRepository.updateCompleteVerifyEmail(mailTb.get().getMailId(), VerificationStatus.COMPLETE);
+            mailTb.get();
         } catch (Exception e) {
             throw new ThirdPartyException(ThirdPartyResultCode.FAIL_VERIFY_MAIL);
         }

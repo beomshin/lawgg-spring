@@ -14,23 +14,25 @@
                     <h3>본인 주민등록번호로 가입된 휴대폰번호로 본인확인을 합니다.</h3>
                 </div>
                 <div class="is-content">
-                    <ul>
-                        <li>
-                            <input type="text" name="" title="" placeholder="아이디" class="input-box w100p h60" />
-                        </li>
-                        <li>
-                            <div>
-                                <input type="number" name="" title="" placeholder="휴대폰번호" class="input-box w100p h60" />
-                                <button class="btn-default-b bg-black">인증번호받기</button>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <input type="number" name="" title="" placeholder="인증번호 입력" class="input-box w100p h60" />
-                            </div>
-                        </li>
-                    </ul>
-                    <p><a th:href="@{/pw/reset}" class="btn-default-b bg-black w100p">비밀번호 찾기</a></p>
+                    <form>
+                        <ul>
+                            <li>
+                                <input type="text" name="" title="" placeholder="아이디" class="input-box w100p h60" />
+                            </li>
+                            <li>
+                                <div>
+                                    <input type="number" name="" title="" placeholder="휴대폰번호" class="input-box w100p h60" />
+                                    <button class="btn-default-b bg-black">인증번호받기</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <input type="number" name="" title="" placeholder="인증번호 입력" class="input-box w100p h60" />
+                                </div>
+                            </li>
+                        </ul>
+                        <p><a th:href="@{/pw/reset}" class="btn-default-b bg-black w100p">비밀번호 찾기</a></p>
+                    </form>
                     <dl>
                         <dt><a th:href="@{/login}">로그인</a></dt>
                         <dd>|</dd>

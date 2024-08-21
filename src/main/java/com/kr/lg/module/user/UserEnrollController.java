@@ -1,9 +1,7 @@
 package com.kr.lg.module.user;
 
-import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.common.ErrorResponse;
 import com.kr.lg.model.enums.GlobalResultCode;
-import com.kr.lg.module.trial.exception.TrialResultCode;
 import com.kr.lg.module.user.model.req.CheckIdRequest;
 import com.kr.lg.module.user.model.req.EnrollUserRequest;
 import com.kr.lg.module.user.excpetion.UserException;
@@ -34,7 +32,7 @@ public class UserEnrollController {
         return mav;
     }
 
-    @RequestMapping("/join/register")
+    @RequestMapping(value = "/join/register", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView joinRegister(
             @ModelAttribute @Valid JoinRegisterRequest request,
             ModelAndView mav
@@ -44,6 +42,17 @@ public class UserEnrollController {
         } else { // 동의
             mav.setViewName("view/member/joinRegister");
         }
+        return mav;
+    }
+
+    @PostMapping("/enroll/user")
+    @ApiOperation(value = "유저 등록", notes = "유저 등록 정보를 등록합니다.")
+    public ModelAndView enrollUser(
+            @ModelAttribute @Valid EnrollUserRequest request,
+            ModelAndView mav
+    ) throws UserException {
+        userService.enrollUser(request);
+        mav.setViewName("view/member/joinEnd");
         return mav;
     }
 
@@ -61,18 +70,5 @@ public class UserEnrollController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(GlobalResultCode.SYSTEM_ERROR));
         }
     }
-
-
-    @PostMapping("/enroll/user")
-    @ApiOperation(value = "유저 등록", notes = "유저 등록 정보를 등록합니다.")
-    public ModelAndView enrollUser(
-            @ModelAttribute @Valid EnrollUserRequest request,
-            ModelAndView mav
-    ) throws UserException {
-        UserTb userTb = userService.enrollUser(request);
-        mav.setViewName("view/member/joinEnd");
-        return mav;
-    }
-
 
 }

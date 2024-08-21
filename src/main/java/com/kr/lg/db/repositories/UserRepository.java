@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserTb, Long> {
@@ -20,6 +21,7 @@ public interface UserRepository extends JpaRepository<UserTb, Long> {
     Optional<UserTb> findByUserId(Long userId);
     Optional<UserTb> findByNickName(String nickName);
     Optional<UserTb> findBySnsIdAndSnsType(@Param("snsId") String snsId, @Param("snsType") SnsType snsType);
+    List<UserTb> findByEmail(String email);
 
     @Modifying
     @Query(value = "UPDATE UserTb SET password = :password  WHERE userId = :userId")

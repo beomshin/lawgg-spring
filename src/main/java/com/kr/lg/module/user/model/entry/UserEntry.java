@@ -2,6 +2,7 @@ package com.kr.lg.module.user.model.entry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kr.lg.db.entities.UserTb;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -37,5 +38,11 @@ public class UserEntry {
     private String lawFirmName; // 로펌명
     private String tierName; // 티어명
     private String tireLevel; // 티어레벨
+
+    public UserEntry(UserTb userTb) {
+        this.userId = userTb.getUserId();
+        this.loginId = userTb.getLoginId();
+        this.regDt = userTb.getRegDt();
+    }
 
 }
