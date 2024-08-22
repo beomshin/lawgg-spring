@@ -19,8 +19,8 @@
                         <ol>
                             <li th:each="id, iterStat : ${ids}">
                                 <div class="radio-box">
-                                    <input type="radio" name="pwRadio" th:id="'pwRadio' + ${iterStat.index}" th:value="${id.loginId}" th:checked="${iterStat.index == 0}" />
-                                    <label th:for="'pwRadio' + ${iterStat.index}">[[${id.loginId}]] - (가입일 : [[${#dates.format(id.regDt, 'yyyy-MM-dd')}]])</label>
+                                    <input type="radio" name="pwRadio" th:id="'pwRadio' + ${iterStat.index}" th:value="${id.loginId}" th:disabled="${id.snsType != 0}" th:checked="${id.snsType == 0}"/>
+                                    <label th:for="'pwRadio' + ${iterStat.index}">[[${id.snsType == 0 ? id.loginId : id.snsType == 1 ? '구글' : id.snsType == 2 ? '네이버' : '카카오'}]] - (가입일 : [[${#dates.format(id.regDt, 'yyyy-MM-dd')}]])</label>
                                 </div>
                             </li>
                         </ol>

@@ -8,7 +8,7 @@
 
 
             <!-- 비주얼 영역 -->
-            <div class="main-visual">
+            <div class="main-visual" th:if="${hotTrial != null}">
                 <dl>
                     <dt>
                         <h2>당신의 티어를 제대로 한번 올리고 싶다면?</h2>
@@ -115,7 +115,7 @@
                             <li style="cursor: pointer"><a>13.7 전략적 팀 전투 패치 노트</a></li>
                             <li style="cursor: pointer"><a>리그오브레전드 13.1 패치 상점소식</a></li>
                         </ul>
-                        <p><button class="btn-line-gray-m w100">More <i class="uil uil-arrow-right"></i></button></p>
+                        <p><button  th:onclick="|window.location.href='@{/news}'|" class="btn-line-gray-m w100">More <i class="uil uil-arrow-right"></i></button></p>
                     </dd>
                 </dl>
             </div>

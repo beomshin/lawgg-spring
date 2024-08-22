@@ -1,6 +1,7 @@
 package com.kr.lg.module.main.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.kr.lg.module.main.model.dto.HotPostTrialDto;
@@ -49,7 +50,7 @@ public class MainServiceImpl implements MainService {
         log.info("▶ [메인 페에지] getHotPostTrial 메소드 실행");
 
         log.info("▶ [메인 페에지] HOT 트라이얼 조회");
-        TrialTb trialTb = trialRepository.findByMainPostType();
-        return new HotPostTrialDto(trialTb);
+        Optional<TrialTb> trialTb = trialRepository.findByMainPostType();
+        return trialTb.map(HotPostTrialDto::new).orElse(null);
     }
 }

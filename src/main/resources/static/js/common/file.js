@@ -17,13 +17,9 @@ function reloadFiles(fileContainer) { // 첨부파일 UI 다시그리기
     fileContainer.innerHTML = ''; // 첨부파일 UI 초기화
     filesList.forEach((file, index) => {
         const li = document.createElement('li'); // li 요소 생성
-
         li.appendChild(getImgIcon(file.name)); // 이미지 아이콘 추가
-
         li.appendChild(document.createTextNode(' ' + file.name)); // 파일명 텍스트 추가
-
         li.appendChild(getRemoveButton(index, li, fileContainer)); // 삭제 버튼 추가
-
         fileContainer.appendChild(li); // 컨테이너에 li 요소 추가
     });
 }
@@ -31,16 +27,13 @@ function reloadFiles(fileContainer) { // 첨부파일 UI 다시그리기
 function getImgIcon(name) { // 첨부파일 아이콘 추가
     const img = document.createElement('img');
     let ext = 'jpg';
-
     if (name.includes("jpg")) ext = 'jpg'
     else if (name.includes("png")) ext = 'png'
     else if (name.includes("xls")) ext = 'xls'
     else if (name.includes("hwp")) ext = 'hwp'
-
     img.src = `${contextPath}/static/images/fileIcn/${ext}.gif`
     img.alt = '';
     img.title = '';
-
     return img;
 }
 

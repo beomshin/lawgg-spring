@@ -34,7 +34,7 @@
 
             <!-- 회원가입 -->
             <div class="join-input">
-                <form method="post" th:action="@{/enroll/user}">
+                <form name="enrollForm" id="enrollForm" method="post" th:action="@{/enroll/user}">
                     <ul>
                         <li>
                             <div>
@@ -48,14 +48,15 @@
                         </li>
                         <li>
                             <div><input type="password" name="password" id="password" onkeyup="matchPassword()" title="password" placeholder="비밀번호" class="input-box w100p h60" /></div>
-                            <h3><i class="uil uil-exclamation-triangle color-pink"></i> 8~12자의 영문/숫자/특수문자 입력</h3>
+                            <h3><i class="uil uil-exclamation-triangle color-pink"></i> 6~15자 특수문자 한개 필수 입력</h3>
                         </li>
                         <li>
-                            <div><input type="password" id="rePassword" onkeyup="matchPassword()" title="rePassword" placeholder="비밀번호 확인" class="input-box w100p h60" /></div>
+                            <div><input type="password" name="rePassword" id="rePassword" onkeyup="matchPassword()" title="rePassword" placeholder="비밀번호 확인" class="input-box w100p h60" /></div>
                             <span id="matchMsg" style="display: none"><p></p></span>
                         </li>
                         <li>
                             <div><input type="text" name="nickName" id="nickName" title="" placeholder="닉네임" class="input-box w100p h60" /></div>
+                            <h3><i class="uil uil-exclamation-triangle color-pink"></i> 최대 10자</h3>
                         </li>
                         <li>
                             <div><input type="text" name="email" title="email" placeholder="이메일" class="input-box w100p h60" /></div>
