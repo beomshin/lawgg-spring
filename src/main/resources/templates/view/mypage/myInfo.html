@@ -22,7 +22,7 @@
                             </th:block>
                             <input hidden type="file" id="profile" onchange="changeProfile(event)">
                             <div>
-                                <h2><i class="uil uil-user" ></i> [[${userTb.loginId}]] ([[${userTb.nickName}]])</h2>
+                                <h2><i class="uil uil-user" ></i> [[${userTb.snsType == 0 ? userTb.loginId : userTb.snsType == 1 ? '구글로그인' : userTb.snsType == 2 ? '네이버로그인' : '카카오로그인'}]] ([[${userTb.nickName}]])</h2>
                                 <h3><i class="uil uil-calendar-alt"></i> 가입일 ([[${#dates.format(userTb.regDt, 'yyyy.MM.dd')}]])</h3>
                                 <h4><a th:href="@{/logout}" class="btn-default-m bg-black w100p">로그아웃</a></h4>
                             </div>
@@ -52,19 +52,21 @@
                             <!--                        </dl>-->
                             <dl>
                                 <dt>아이디 <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${userTb.loginId}" disabled /></dd>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="|'${userTb.snsType == 0 ? userTb.loginId : userTb.snsType == 1 ? '구글로그인' : userTb.snsType == 2 ? '네이버로그인' : '카카오로그인'}'|" disabled /></dd>
                             </dl>
                             <dl>
                                 <dt>로펌 <span>*</span></dt>
-                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${lawFirmTb == null ? '' : lawFirmTb.name}" disabled/></dd>
+                                <dd><input name="" type="text" class="input-box w100p" placeholder="" th:value="${lawFirmTb == null ? '미가입' : lawFirmTb.name}" disabled/></dd>
                             </dl>
                             <dl>
                                 <dt>기존 비밀번호 <span>*</span></dt>
-                                <dd><input name="oldPassword" type="password" class="input-box w100p" placeholder="" /></dd>
+                                <dd><input name="oldPassword" type="password" class="input-box w100p" onkeyup="matchPassword()" placeholder="" /></dd>
+                                <h3><i class="uil uil-exclamation-triangle color-pink"></i> 6~15자 특수문자 한개 필수 입력</h3>
                             </dl>
                             <dl>
                                 <dt>새비밀번호 <span>*</span></dt>
-                                <dd><input name="newPassword" type="password" class="input-box w100p" placeholder="" /></dd>
+                                <dd><input name="newPassword" type="password" class="input-box w100p" onkeyup="matchPassword()" placeholder="" /></dd>
+                                <span id="matchMsg" style="display: none"><p></p></span>
                             </dl>
                             <dl>
                                 <dt>닉네임 <span>*</span></dt>

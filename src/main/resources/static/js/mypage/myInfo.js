@@ -37,3 +37,37 @@ function changeProfile(e) {
         }
     })
 }
+
+document.getElementById('searchForm').addEventListener('submit', function (event){
+    event.preventDefault();
+
+    const oldPassword = document.getElementsByName("oldPassword")[0].value;
+    const newPassword = document.getElementsByName("newPassword")[0].value;
+
+    const regex = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,15}$/;
+    if (!regex.test(oldPassword)) {
+        alert('비밀번호를 알맞게 입력해주시기 바랍니다.')
+        return;
+    } else if (oldPassword !== newPassword) {
+        alert('입력한 비밀번호가 일치하지 않습니다.')
+         return;
+    }
+    const form = this;
+    form.submit();
+})
+
+function matchPassword() {
+    const oldPassword = document.getElementsByName("oldPassword")[0].value;
+    const newPassword = document.getElementsByName("newPassword")[0].value;
+    if (!oldPassword || !newPassword) {
+        document.getElementById('matchMsg').style.display = 'none';
+    } else if (oldPassword === newPassword) {
+        document.getElementById('matchMsg').style.display = 'block';
+        document.querySelector('#matchMsg p').innerHTML = '비밀번호가 일치합니다.'
+        document.querySelector('#matchMsg p').style.color = 'green'
+    } else {
+        document.getElementById('matchMsg').style.display = 'block';
+        document.querySelector('#matchMsg p').innerHTML = '비밀번호가 일치하지않습니다.'
+        document.querySelector('#matchMsg p').style.color = 'red'
+    }
+}

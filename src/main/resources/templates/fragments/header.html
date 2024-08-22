@@ -176,7 +176,7 @@
                                     <dt><span style="background:url('https://i.pinimg.com/564x/d4/22/11/d42211cf93c61dc4d231f036c9c711c5.jpg'); background-size:cover;"></span></dt>
                                 </th:block>
                                 <dd>
-                                    <h2 th:text="${userTb.loginId}"></h2>
+                                    <h2 >[[${userTb.snsType == 0 ? userTb.loginId : userTb.snsType == 1 ? '구글로그인' : userTb.snsType == 2 ? '네이버로그인' : '카카오로그인'}]]</h2>
                                     <h3 th:text="${userTb.nickName}"></h3>
                                     <div>가입일 : [[${#dates.format(userTb.regDt, 'yyyy-MM-dd')}]]</div>
                                 </dd>

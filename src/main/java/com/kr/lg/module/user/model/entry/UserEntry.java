@@ -43,6 +43,7 @@ public class UserEntry {
         this.userId = userTb.getUserId();
         this.loginId = userTb.getLoginId();
         this.regDt = userTb.getRegDt();
+        this.snsType = userTb.getSnsType().getCode();
     }
 
 }
