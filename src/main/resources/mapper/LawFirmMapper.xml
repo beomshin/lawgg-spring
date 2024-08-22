@@ -85,7 +85,8 @@
             (
                 SELECT lft.lawFirmId, lft.name, lft.introduction, lft.profile, lft.status,
                        (SELECT COUNT(*) FROM TrialTb tt WHERE tt.lawFirmId = #{lawFirmId} AND tt.status = '1' AND tt.liveType = '1') AS "trialTotalCount",
-                       (SELECT COUNT(*) FROM TrialTb tt2 WHERE tt2.lawFirmId = #{lawFirmId} AND tt2.status = '1')AS "trialCount"
+                       (SELECT COUNT(*) FROM TrialTb tt2 WHERE tt2.lawFirmId = #{lawFirmId} AND tt2.status = '1')AS "trialCount",
+                       lft.background
                 FROM LawFirmTb lft
                 LEFT JOIN UserTb ut ON(ut.userId = lft.userId)
                 <where>

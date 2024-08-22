@@ -57,7 +57,7 @@
             <div class="board-gallery-list">
                 <ul>
                     <li th:each="lawFirm : ${lawFirms}" th:onclick="|window.location.href='@{/law-firm/{lawFirmId}(lawFirmId=${lawFirm.lawFirmId})}'|">
-                        <p><img th:src="${lawFirm.profile}" width="100%" alt="" title="" /></p>
+                        <p><img th:src="${lawFirm.profile}" width="100%" alt="" title="" style="object-fit: cover; height: 100%;" /></p>
                         <h2>[[${lawFirm.name}]]</h2>
                     </li>
                 </ul>
