@@ -3,6 +3,7 @@ package com.kr.lg.module.board;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
+import com.kr.lg.model.common.SuccessResponse;
 import com.kr.lg.module.board.model.req.EnrollPositionRequest;
 import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.service.BoardService;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,4 +46,12 @@ public class BoardEnrollController {
         return mav;
     }
 
+    @GetMapping("/position/enroll/crawling")
+    public ResponseEntity<?> enrollCrawling(
+            @Valid @RequestBody EnrollPositionRequest request,
+            HttpServletRequest servletRequest
+    ) throws BoardException {
+        boardService.enrollBoardWithNotLogin(request, ClientUtils.getRemoteIP(servletRequest));
+        return ResponseEntity.ok(new SuccessResponse());
+    }
 }
