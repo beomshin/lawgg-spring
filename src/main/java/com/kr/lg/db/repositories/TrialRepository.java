@@ -21,8 +21,8 @@ public interface TrialRepository extends JpaRepository<TrialTb, Long> {
 
     Optional<TrialTb> findByTrialIdAndUserTb_UserId(@Param("trialId") long trialId, @Param("userId") long userId);
 
-    @Query(value = "SELECT * FROM TrialTb b ORDER BY b.mainPostType desc, b.view desc LIMIT 1", nativeQuery = true)
-    TrialTb findByMainPostType();
+    @Query(value = "SELECT * FROM TrialTb b WHERE b.mainPostType = 1 ORDER BY b.recommendCount desc LIMIT 1", nativeQuery = true)
+    Optional<TrialTb> findByMainPostType();
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT b FROM TrialTb b where b.trialId = :trialId")

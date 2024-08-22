@@ -117,9 +117,9 @@ public class UserFindController {
         return mav;
     }
 
-    @GetMapping("/lck")
-    public ModelAndView lck(ModelAndView mav) {
-        mav.setViewName("view/lck/list");
+    @GetMapping("/news")
+    public ModelAndView news(ModelAndView mav) {
+        mav.setViewName("view/news/list");
         return mav;
     }
 
