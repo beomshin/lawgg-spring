@@ -3,6 +3,12 @@ function sendEmail() {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     const email = document.getElementById('email').value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        alert('이메일을 알맞게 입력해주세요.')
+        return;
+    }
+
     $.ajax({
         type: 'POST',
         url: `${contextPath}/send/email `,

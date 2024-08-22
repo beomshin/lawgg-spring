@@ -3,6 +3,12 @@ function checkId() {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     const loginId = document.getElementById('loginId').value;
+    const idRegex = /^[A-Za-z\d]{6,20}$/;
+    if (!idRegex.test(loginId)) {
+        alert('아이디를 알맞게 입력해주세요.')
+        return;
+    }
+
     $.ajax({
         type: 'GET',
         url: `${contextPath}/check/id`,
@@ -58,3 +64,41 @@ function matchPassword() {
         document.querySelector('#matchMsg p').style.color = 'red'
     }
 }
+
+document.getElementById('enrollForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const loginId = document.getElementsByName("loginId")[0].value;
+    const verifyId = document.getElementsByName("verifyId")[0].value;
+    const password = document.getElementsByName("password")[0].value;
+    const rePassword = document.getElementsByName("rePassword")[0].value;
+    const nickName = document.getElementsByName("nickName")[0].value;
+    const email = document.getElementsByName("email")[0].value;
+
+    const idRegex = /^[A-Za-z\d]{6,20}$/;
+    const pwRegex = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,15}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!idRegex.test(loginId)) {
+        alert('아이디를 알맞게 입력해주세요.')
+        return;
+    } else if (verifyId === 'false') {
+        alert('아이디 중복검사를 진행해주세요.')
+        return;
+    } else if (!pwRegex.test(password)) {
+        alert('비밀번호를 알맞게 입력해주세요.')
+        return;
+    } else if (password !== rePassword) {
+        alert('입력한 비밀번호가 일치하지 않습니다.')
+        return;
+    } else if (!nickName || nickName.length > 10) {
+        alert('닉네임을 알맞게 입력해주세요.')
+        return;
+    } else if (!emailRegex.test(email)) {
+        alert('이메일을 알맞게 입력해주세요.')
+        return;
+    }
+
+    const form = this;
+    form.submit(); // 제출
+});
