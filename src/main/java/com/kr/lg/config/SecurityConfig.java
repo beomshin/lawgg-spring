@@ -69,7 +69,8 @@ public class SecurityConfig {
             RememberDetailService userDetailService
     ) throws Exception {
 
-        http.csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()));
+        http.csrf().disable();
+//        http.csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()));
 
         http.cors().configurationSource(corsConfigurationSource);
 
