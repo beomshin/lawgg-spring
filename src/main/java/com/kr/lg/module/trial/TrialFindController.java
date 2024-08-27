@@ -43,7 +43,7 @@ public class TrialFindController {
 
         mav.addObject("trials", trials);
         mav.addObject("query", request);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/trial/list");
         return mav;

@@ -43,7 +43,7 @@ public class BoardFindController {
 
         mav.addObject("positions", positions);
         mav.addObject("query", request);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/position/list");
         return mav;

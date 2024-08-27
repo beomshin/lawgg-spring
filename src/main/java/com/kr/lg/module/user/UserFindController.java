@@ -46,7 +46,7 @@ public class UserFindController {
 
         mav.addObject("boards", boards);
         mav.addObject("query", request);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/mypage/myBoard");
         return mav;
@@ -65,7 +65,7 @@ public class UserFindController {
 
         mav.addObject("alerts", alerts);
         mav.addObject("query", request);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/mypage/alerts");
         return mav;

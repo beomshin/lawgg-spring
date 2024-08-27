@@ -40,7 +40,7 @@ public class MessageFindController {
 
         mav.addObject("messages", messages);
         mav.addObject("query", request);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/mypage/message");
         return mav;

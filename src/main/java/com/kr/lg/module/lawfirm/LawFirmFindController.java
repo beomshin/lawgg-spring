@@ -39,7 +39,7 @@ public class LawFirmFindController {
 
         mav.addObject("lawFirms", lawFirms);
         mav.addObject("query", request);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/lawfirm/index");
         return mav;
@@ -60,7 +60,7 @@ public class LawFirmFindController {
         mav.addObject("trials", trials);
         mav.addObject("query", request);
         mav.addObject("lawfirmId", lawfirmId);
-        mav.addObject("maxPage", 10);
+        mav.addObject("maxPage", 5);
 
         mav.setViewName("view/lawfirm/list");
         return mav;
