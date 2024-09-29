@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: lawgg-spring
+  config:
+    import: optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
   profiles:
     active: local
     group:
@@ -15,12 +17,6 @@ spring:
       prod:
         - console-logging
         - file-logging # 파일 로깅 사용
-  config:
-    import: optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
-  servlet:
-    multipart:
-      max-file-size: 500MB # 요청 파일 하나의 사이즈
-      max-request-size: 500MB # 요청 파일 총 사이즈
   jpa:
     hibernate:
       naming:
@@ -29,6 +25,10 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 500MB # 요청 파일 하나의 사이즈
+      max-request-size: 500MB # 요청 파일 총 사이즈
   data:
     redis:
       repositories:
