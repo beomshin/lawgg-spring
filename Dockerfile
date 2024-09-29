@@ -3,8 +3,10 @@ FROM openjdk:8-alpine
 WORKDIR /
 
 ARG JAR_FILE_PATH=/target/lawgg-spring-0.0.1.jar
+ARG DATASOURCE_KEY
 
-ENV ACTIVE_PROFILE="local"
+ENV ACTIVE_PROFILE="local" \
+    DATASOURCE_KEY=${DATASOURCE_KEY}
 
 COPY /${JAR_FILE_PATH} ROOT.jar
 
