@@ -12,11 +12,11 @@
     </parent>
 
     <groupId>com.kr.lg</groupId>
-    <artifactId>lawgg-spring</artifactId>
+    <artifactId>lawgg-web-spring</artifactId>
     <version>0.0.1</version>
 
-    <name>lawgg-spring</name>
-    <description>lawgg-spring</description>
+    <name>lawgg-web-spring</name>
+    <description>lawgg-web-spring</description>
 
     <properties>
         <java.version>1.8</java.version>

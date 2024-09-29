@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: lawgg-spring
+    name: lawgg-web
   config:
     import: optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
   profiles:
