@@ -16,9 +16,7 @@ spring:
         - console-logging
         - file-logging # 파일 로깅 사용
   config:
-    import:
-      - optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
-      - optional:configserver:http://192.168.0.3:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
+    import: optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
   servlet:
     multipart:
       max-file-size: 500MB # 요청 파일 하나의 사이즈
