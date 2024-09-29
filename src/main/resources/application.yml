@@ -1,18 +1,11 @@
 server:
   port: 19001
-  shutdown: graceful
-  servlet:
-    context-path: /lawgg
 
 spring:
   application:
     name: lawgg-spring
   profiles:
     active: local
-    include:
-      - core
-      - gateway
-      - dao
     group:
       local:
         - console-logging # 콘솔 로깅만 사용
@@ -23,28 +16,25 @@ spring:
         - console-logging
         - file-logging # 파일 로깅 사용
   config:
-    import: optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
-#    import: optional:configserver:http://192.168.0.3:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
+    import:
+      - optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
+      - optional:configserver:http://192.168.0.3:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
   servlet:
     multipart:
-      max-file-size: 500MB
-      max-request-size: 500MB
+      max-file-size: 500MB # 요청 파일 하나의 사이즈
+      max-request-size: 500MB # 요청 파일 총 사이즈
   jpa:
-    generate-ddl: false
     hibernate:
-      ddl-auto: none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-    open-in-view: false
-    show-sql: true
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # java에서 선언했던 변수 이름을 테이블 매핑시
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl # java에서 선언했던 변수 이름을 테이블 매핑시에 그대로 사용한다는 뜻
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
   data:
     redis:
       repositories:
-        enabled: false
+        enabled: false # redis repositories 미사용 처리
 
 mybatis:
   type-aliases-package: com.kr.lg.mapper
