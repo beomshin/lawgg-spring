@@ -15,8 +15,7 @@ import com.kr.lg.module.trial.model.req.EndTrialRequest;
 import com.kr.lg.module.trial.model.req.StartTrialRequest;
 
 import com.kr.lg.model.common.SuccessResponse;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,10 +37,11 @@ public class TrialUpdateController {
 
     @Secured("ROLE_USER")
     @PostMapping("/trial/recommend")
-    @ApiOperation(value = "트라이얼 게시판 추천", notes = "트라이얼 게시판을 추천합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 추천", notes = "트라이얼 게시판을 추천합니다.")
     public ResponseEntity<?> recommendTrial(
             @RequestBody @Valid RecommendTrialRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true )@AuthUser UserTb userTb
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true )
+            @AuthUser UserTb userTb
     ) {
         try {
             if (userTb == null) throw new TrialException(TrialResultCode.NOT_EXIST_USER);
@@ -57,7 +57,7 @@ public class TrialUpdateController {
 
 
     @PostMapping("/trial/report")
-    @ApiOperation(value = "트라이얼 게시판 신고", notes = "트라이얼 게시판을 신고합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 신고", notes = "트라이얼 게시판을 신고합니다.")
     public ResponseEntity<?> reportTrial(
             @RequestBody @Valid ReportTrialRequest request,
             HttpServletRequest httpServletRequest
@@ -74,10 +74,11 @@ public class TrialUpdateController {
 
     @Secured("ROLE_JUDGE")
     @PostMapping("/trial/start")
-    @ApiOperation(value = "트라이얼 게시판 재판 시작", notes = "트라이얼 게시판 재판을 시작합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 재판 시작", notes = "트라이얼 게시판 재판을 시작합니다.")
     public ResponseEntity<?> startTrial(
             @RequestBody @Valid StartTrialRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb
     ) throws TrialException {
         trialService.trialStartLive(request, userTb);
         return ResponseEntity.ok(new SuccessResponse());
@@ -85,10 +86,11 @@ public class TrialUpdateController {
 
     @Secured("ROLE_JUDGE")
     @PostMapping("/trial/end")
-    @ApiOperation(value = "트라이얼 게시판 재판 종료", notes = "트라이얼 게시판 재판을 종료합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 재판 종료", notes = "트라이얼 게시판 재판을 종료합니다.")
     public ResponseEntity<?> endTrial(
             @RequestBody @Valid EndTrialRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb
     ) throws TrialException {
         trialService.trialEndLive(request, userTb);
         return ResponseEntity.ok(new SuccessResponse());

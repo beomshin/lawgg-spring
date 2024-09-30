@@ -6,8 +6,7 @@ import com.kr.lg.module.message.exception.MessageException;
 import com.kr.lg.module.message.model.entry.MessageEntry;
 import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.module.message.model.req.FindMessagesRequest;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,10 +28,11 @@ public class MessageFindController {
 
     @Secured("ROLE_USER")
     @GetMapping("/my/messages")
-    @ApiOperation(value = "유저 메세지 리스트 조회", notes = "유저 메세지 리스트 정보를 조회합니다.")
+//    @ApiOperation(value = "유저 메세지 리스트 조회", notes = "유저 메세지 리스트 정보를 조회합니다.")
     public ModelAndView findMessages(
             @Valid @ModelAttribute FindMessagesRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws MessageException { // 페이지는 궁하였으나 메시지 기능 미적용
         Page<MessageEntry> messages = messageService.findReceiveMessages(request, userTb);

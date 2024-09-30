@@ -9,8 +9,9 @@ import com.kr.lg.module.trial.service.TrialService;
 
 import com.kr.lg.module.trial.model.req.EnrollTrialRequest;
 import com.kr.lg.model.common.SuccessResponse;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,10 @@ public class TrialEnrollController {
 
     @Secured("ROLE_USER")
     @PostMapping("/trial/enroll")
-    @ApiOperation(value = "트라이얼 게시판 작성하기", notes = "트라이얼 게시판 작성합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 작성하기", notes = "트라이얼 게시판 작성합니다.")
     public ModelAndView enrollTrial(
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb,
             @Valid @ModelAttribute EnrollTrialRequest request,
             ModelAndView mav
     ) throws TrialException {
@@ -45,10 +47,10 @@ public class TrialEnrollController {
 
     @Secured("ROLE_USER")
     @PostMapping("/trial/vote")
-    @ApiOperation(value = "트라이얼 투표", notes = "트라이얼 투표를 합니다.")
+    @Operation(summary = "트라이얼 투표", description = "트라이얼 투표를 합니다.")
     public ResponseEntity<?> voteTrial(
             @RequestBody @Valid VoteTrialRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb
     ) throws TrialException {
         trialService.voteTrial(request, userTb);
         return ResponseEntity.ok().body(new SuccessResponse());

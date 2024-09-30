@@ -8,8 +8,10 @@ import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.model.entry.BoardEntry;
 import com.kr.lg.module.board.model.req.FindPositionRequest;
 import com.kr.lg.module.board.service.BoardService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -28,13 +30,14 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@Tag(name = "BoardFindController", description = "포지션 게시판 조회 컨트롤러")
 public class BoardFindController {
 
     private final BoardService boardService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @ApiOperation(value = "포지션 게시판 페이지 호출", notes = "포지션 게시판 페이지를 호출합니다.")
     @GetMapping("/positions")
+    @Operation(summary = "포지션 게시판 페이지 조회", description = "포지션 게시판 페이지를 조회합니다.")
     public ModelAndView positions(
             @Valid @ModelAttribute FindPositionRequest request, ModelAndView mav
     ) throws BoardException {
@@ -49,11 +52,11 @@ public class BoardFindController {
         return mav;
     }
 
-    @ApiOperation(value = "포지션 게시판 상세 페이지 호출", notes = "포지션 게시판 상세 페이지를 호출합니다.")
     @GetMapping("/position/{id}")
+    @Operation(summary = "포지션 게시판 상세 페이지 조회", description = "포지션 게시판 상세 페이지를 조회합니다.")
     public ModelAndView position(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long id,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @Parameter(description = "게시판 아이디", required = true) @PathVariable("id") Long id,
             ModelAndView mav,
             HttpServletRequest request
     ) throws BoardException {
@@ -65,10 +68,10 @@ public class BoardFindController {
         return mav;
     }
 
-    @ApiOperation(value = "포지션 게시판 작성 페이지 호출", notes = "포지션 게시판 작성 페이지를 호출합니다.")
     @GetMapping("/position/write")
+    @Operation(summary = "포지션 게시판 작성 페이지 조회", description = "포지션 게시판 작성 페이지를 조회합니다.")
     public ModelAndView writePosition(
-            @RequestParam(value = "type", required = false, defaultValue = "0") int type,
+            @Parameter(description = "라인 타입") @RequestParam(value = "type", required = false, defaultValue = "0") int type,
             ModelAndView mav
     ) {
         mav.addObject("type", type);
@@ -77,12 +80,12 @@ public class BoardFindController {
     }
 
     @Secured("ROLE_USER")
-    @ApiOperation(value = "포지션 게시판 수정 페이지 호출", notes = "포지션 게시판 수정 페이지를 호출합니다.")
+    @Operation(summary = "포지션 게시판 수정 페이지 호출", description = "포지션 게시판 수정 페이지를 호출합니다.")
     @GetMapping("/position/modify/{id}")
     public ModelAndView modifyPosition(
             ModelAndView mav,
-            @ApiParam(value = "게시판 아이디", required = true) @PathVariable("id") Long boardId,
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb
+            @Parameter(description = "게시판 아이디") @PathVariable("id") Long boardId,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb
     ) throws BoardException {
         mav.addObject("position", boardService.findBoard(boardId, userTb));
         mav.setViewName("view/position/update");

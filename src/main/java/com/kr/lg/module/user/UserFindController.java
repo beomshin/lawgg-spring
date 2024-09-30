@@ -1,10 +1,8 @@
 package com.kr.lg.module.user;
 
 
-import com.kr.lg.db.entities.MailTb;
 import com.kr.lg.db.entities.UserTb;
 import com.kr.lg.model.annotation.AuthUser;
-import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
 import com.kr.lg.module.thirdparty.service.EmailService;
 import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.entry.UserAlertEntry;
@@ -12,8 +10,7 @@ import com.kr.lg.module.user.model.entry.UserBoardEntry;
 import com.kr.lg.module.user.model.entry.UserEntry;
 import com.kr.lg.module.user.model.req.*;
 import com.kr.lg.module.user.service.UserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,11 +31,12 @@ public class UserFindController {
     private final EmailService emailService;
 
     @Secured("ROLE_USER")
-    @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
+//    @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
     @GetMapping("/my/boards")
     public ModelAndView findMyBoards(
             @Valid FindMyBoardsRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws  UserException { // 미사용 기능
         Page<UserBoardEntry> boards = userService.findUserBoards(request, userTb);
@@ -53,11 +51,12 @@ public class UserFindController {
     }
 
     @Secured("ROLE_USER")
-    @ApiOperation(value = "나의 알림 조회", notes = "나의 알림을 조회합니다.")
+//    @ApiOperation(value = "나의 알림 조회", notes = "나의 알림을 조회합니다.")
     @GetMapping("/my/alerts")
     public ModelAndView findMyAlert(
             @Valid FindMyAlertRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws UserException {
         Page<UserAlertEntry> alerts = userService.findUserAlerts(request, userTb);
@@ -73,14 +72,14 @@ public class UserFindController {
 
     @Secured("ROLE_USER")
     @GetMapping("/my/info")
-    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+//    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
     public ModelAndView findUserInfo(ModelAndView mav)  {
         mav.setViewName("view/mypage/myInfo");
         return mav;
     }
 
     @RequestMapping(value = "/user/ids", method = {RequestMethod.GET, RequestMethod.POST})
-    @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디를 조회합니다.")
+//    @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디를 조회합니다.")
     public ModelAndView userIds(
             @ModelAttribute FindIdsRequest request,
             ModelAndView mav
@@ -98,7 +97,7 @@ public class UserFindController {
     }
 
     @RequestMapping(value = "/user/pws", method = {RequestMethod.GET, RequestMethod.POST})
-    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+//    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
     public ModelAndView userPws(
             @ModelAttribute FindPwsRequest request,
             ModelAndView mav

@@ -1,7 +1,7 @@
 package com.kr.lg.module.board.model.req;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -11,14 +11,14 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ApiModel(value = "비로그인 포지션 게시판 삭제 요청 Body")
+@Schema(description = "비로그인 포지션 게시판 삭제 요청 Body")
 public class DeletePositionRequest {
 
-    @ApiModelProperty(value = "게시판 아이디", required = true)
+    @Schema(description = "게시판 아이디")
     @NotNull(message = "게시판 아이디가 누락 되었습니다.")
     private Long boardId;
 
-    @ApiModelProperty(value = "게시판 비밀번호", required = true)
+    @Schema(description = "게시판 비밀번호")
     private String password;
 
 }

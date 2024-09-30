@@ -8,8 +8,7 @@ import com.kr.lg.module.lawfirm.model.entry.LawFirmEntry;
 import com.kr.lg.module.lawfirm.model.req.FindLawFirmRequest;
 import com.kr.lg.module.lawfirm.service.LawFirmService;
 import com.kr.lg.module.lawfirm.model.req.FindLawFirmsRequest;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,7 +28,7 @@ public class LawFirmFindController {
     private final LawFirmService lawFirmService;
 
     @GetMapping("/law-firms")
-    @ApiOperation(value = "로펌 리스트 페이지 호출", notes = "로펌 리스트 페이지를 호출합니다.")
+//    @ApiOperation(value = "로펌 리스트 ?이지 호출", notes = "로펌 리스트 페이지를 호출합니다.")
     public ModelAndView lawFirms(
             @Valid @ModelAttribute FindLawFirmsRequest request,
             ModelAndView mav
@@ -47,8 +46,10 @@ public class LawFirmFindController {
 
     @GetMapping("/law-firm/{id}")
     public ModelAndView lawFirm(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @ApiParam(value = "로펌 아이디", required = true) @PathVariable("id") Long lawfirmId,
+//            @ApiParam(value = "로그인 세션 유저 정보")
+            @AuthUser UserTb userTb,
+//            @ApiParam(value = "로펌 아이디", required = true)
+            @PathVariable("id") Long lawfirmId,
             @Valid @ModelAttribute FindLawFirmRequest request,
             ModelAndView mav
     ) throws LawFirmException {

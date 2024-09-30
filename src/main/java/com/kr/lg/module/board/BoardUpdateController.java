@@ -12,7 +12,9 @@ import com.kr.lg.module.board.exception.BoardException;
 import com.kr.lg.module.board.service.BoardService;
 import com.kr.lg.module.board.model.req.UpdatePositionRequest;
 import com.kr.lg.model.common.SuccessResponse;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,18 +29,19 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "BoardUpdateController", description = "포지션 게시판 업데이트 컨트롤러")
 public class BoardUpdateController {
 
     private final BoardService boardService;
 
     @PostMapping("/position/recommend")
-    @ApiOperation(value = "포지션 게시판 추천", notes = "포지션 게시판을 추천합니다.")
+    @Operation(summary = "포지션 게시판 추천", description = "포지션 게시판을 추천합니다.")
     public ResponseEntity<?> recommendBoard(
             @RequestBody @Valid RecommendPositionRequest request,
-            @AuthUser UserTb userTb
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb
     ) {
         try {
             if (userTb == null) throw new BoardException(BoardResultCode.NOT_EXIST_USER);
@@ -53,7 +56,7 @@ public class BoardUpdateController {
     }
 
     @PostMapping("/position/report")
-    @ApiOperation(value = "포지션 게시판 신고", notes = "포지션 게시판을 신고합니다.")
+    @Operation(summary = "포지션 게시판 신고", description = "포지션 게시판을 신고합니다.")
     public ResponseEntity<?> reportBoard(
             HttpServletRequest httpServletRequest,
             @RequestBody @Valid ReportPositionRequest request
@@ -70,10 +73,10 @@ public class BoardUpdateController {
 
     @Secured("ROLE_USER")
     @PostMapping("/position/update")
-    @ApiOperation(value = "포지션 게시판 수정", notes = "포지션 게시판을 수정합니다.")
+    @Operation(summary = "포지션 게시판 수정", description = "포지션 게시판을 수정합니다.")
     public ModelAndView updateBoard(
             @ModelAttribute @Valid UpdatePositionRequest request,
-            @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws BoardException {
         boardService.updateBoardWithLogin(request, userTb);

@@ -8,8 +8,7 @@ import com.kr.lg.module.trial.model.entry.TrialEntry;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -33,7 +32,7 @@ public class TrialFindController {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @GetMapping("/trials")
-    @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
     public ModelAndView trials(
             @Valid @ModelAttribute FindTrialsRequest request,
             ModelAndView mav
@@ -49,11 +48,13 @@ public class TrialFindController {
         return mav;
     }
 
-    @ApiOperation(value = "트라이얼 게시판 상세 페이지 호출", notes = "트라이얼 게시판 상세 페이지를 호출합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 상세 페이지 호출", notes = "트라이얼 게시판 상세 페이지를 호출합니다.")
     @GetMapping("/trial/{id}")
     public ModelAndView trial(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @ApiParam(value = "트라이얼 아이디", required = true) @PathVariable("id") Long id,
+//            @ApiParam(value = "로그인 세션 유저 정보")
+            @AuthUser UserTb userTb,
+//            @ApiParam(value = "트라이얼 아이디", required = true)
+            @PathVariable("id") Long id,
             ModelAndView mav,
             HttpServletRequest request
     ) throws TrialException {
@@ -68,7 +69,7 @@ public class TrialFindController {
 
     @Secured("ROLE_USER")
     @GetMapping("/trial/write")
-    @ApiOperation(value = "트라이얼 게시판 작성 페이지 호출", notes = "트라이얼 게시판 작성 페이지를 호출합니다.")
+//    @ApiOperation(value = "트라이얼 게시판 작성 페이지 호출", notes = "트라이얼 게시판 작성 페이지를 호출합니다.")
     public ModelAndView trialWrite(ModelAndView mav) {
         mav.setViewName("view/trial/write");
         return mav;

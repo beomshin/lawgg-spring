@@ -1,6 +1,5 @@
 package com.kr.lg.module.message.model.req;
 
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-@ApiModel(value = "수신 메세지 리스트 조회 요청 Body")
+//@ApiModel(value = "수신 메세지 리스트 조회 요청 Body")
 public class FindMessagesRequest {
 
     @NotNull(message = "페이지가 입력되어있지않습니다.")

@@ -1,7 +1,7 @@
 package com.kr.lg.module.board.model.req;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ApiModel(value = "포지션 게시판 추천 요청 Body")
+@Schema(description = "포지션 게시판 추천 요청 Body")
 public class RecommendPositionRequest {
 
-    @ApiModelProperty(value = "게시판 아이디", required = true)
+    @Schema(description = "게시판 아이디")
     @NotNull(message = "게시판 아이디가 입력되어있지않습니다.")
     private Long boardId;
 }

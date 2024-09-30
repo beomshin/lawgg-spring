@@ -8,7 +8,6 @@ import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.req.JoinRegisterRequest;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.model.common.SuccessResponse;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -46,7 +45,7 @@ public class UserEnrollController {
     }
 
     @PostMapping("/enroll/user")
-    @ApiOperation(value = "유저 등록", notes = "유저 등록 정보를 등록합니다.")
+//    @ApiOperation(value = "유저 등록", notes = "유저 등록 정보를 등록합니다.")
     public ModelAndView enrollUser(
             @ModelAttribute @Valid EnrollUserRequest request,
             ModelAndView mav
@@ -57,7 +56,7 @@ public class UserEnrollController {
     }
 
     @GetMapping("/check/id")
-    @ApiOperation(value = "아이디 중복 체크", notes = "아이디 중복을 체크합니다.")
+//    @ApiOperation(value = "아이디 중복 체크", notes = "아이디 중복을 체크합니다.")
     public ResponseEntity<?> checkId(
             @ModelAttribute @Valid CheckIdRequest request
     ) {

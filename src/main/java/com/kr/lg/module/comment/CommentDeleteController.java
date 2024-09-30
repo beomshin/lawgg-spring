@@ -6,8 +6,9 @@ import com.kr.lg.module.comment.model.req.DeleteTrialCommentRequest;
 import com.kr.lg.module.comment.model.req.DeletePositionCommentRequest;
 import com.kr.lg.module.comment.exception.CommentException;
 import com.kr.lg.module.comment.service.CommentService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
@@ -22,14 +23,15 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@Tag(name = "CommentDeleteController", description = "댓글 삭제 컨트롤러")
 public class CommentDeleteController {
 
     private final CommentService commentService;
 
-    @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
     @PostMapping("/position/comment/delete")
+    @Operation(summary = "포지션 게시판 댓글 삭제하기", description = "포지션 게시판 댓글 삭제합니다.")
     public ModelAndView positionCommentDelete(
-            @ApiParam(value = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute DeletePositionCommentRequest request,
             ModelAndView mav
     ) throws CommentException {
@@ -45,9 +47,9 @@ public class CommentDeleteController {
 
     @Secured("ROLE_USER")
     @PostMapping("/trial/comment/delete")
-    @ApiOperation(value = "포지션 게시판 댓글 작성하기", notes = "포지션 게시판 댓글 작성합니다.")
+    @Operation(summary = "트라이얼 댓글 삭제하기", description = "트라이얼 댓글 삭제합니다.")
     public ModelAndView trialCommentDelete(
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute DeleteTrialCommentRequest request,
             ModelAndView mav
     ) throws CommentException {

@@ -11,8 +11,6 @@ import com.kr.lg.module.user.model.req.UpdateUserAlertRequest;
 import com.kr.lg.module.user.model.req.UpdateUserPasswordRequest;
 import com.kr.lg.module.user.model.req.UpdateUserProfileRequest;
 import com.kr.lg.model.common.SuccessResponse;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +32,11 @@ public class UserUpdateController {
 
     @Secured("ROLE_USER")
     @PostMapping("/my/update/password")
-    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
+//    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
     public ModelAndView updatePassword(
             @ModelAttribute @Valid UpdateUserPasswordRequest request,
-            @ApiParam(value = "로그인 세션 유저 정보", required = true) @AuthUser UserTb userTb,
+//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
+            @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws UserException {
         userService.updateUserPassword(request, userTb);
@@ -47,17 +46,18 @@ public class UserUpdateController {
 
     @Secured("ROLE_USER")
     @PostMapping("/my/update/profile")
-    @ApiOperation(value = "회원 프로필 업데이트", notes = "회원 프로필 업데이트합니다.")
+//    @ApiOperation(value = "회원 프로필 업데이트", notes = "회원 프로필 업데이트합니다.")
     public ResponseEntity<?> updateUserProfile(
             @ModelAttribute @Valid UpdateUserProfileRequest request,
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+//            @ApiParam(value = "유저 토큰", required = true)
+            @UserPrincipal UserAdapter userAdapter
     ) throws  UserException {
         userService.updateUserProfile(request, userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());
     }
 
     @PostMapping("/my/reset/password")
-    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
+//    @ApiOperation(value = "회원 비밀번호 업데이트", notes = "회원 비밀번호 업데이트합니다.")
     public ModelAndView resetUserPassword(
             @ModelAttribute @Valid ResetPwRequest request,
             ModelAndView mav
@@ -73,9 +73,10 @@ public class UserUpdateController {
 
 
     @PostMapping("/api/v1/update/read/user/alerts")
-    @ApiOperation(value = "회원 알림 리스트 업데이트", notes = "회원 알림 리스트를 업데이트합니다.")
+//    @ApiOperation(value = "회원 알림 리스트 업데이트", notes = "회원 알림 리스트를 업데이트합니다.")
     public ResponseEntity<?> updateUserAlertAll(
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+//            @ApiParam(value = "유저 토큰", required = true)
+            @UserPrincipal UserAdapter userAdapter
     ) throws UserException {
         userService.updateReadUserAlerts(userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());
@@ -84,7 +85,8 @@ public class UserUpdateController {
     @PostMapping("/api/v1/update/user/alert")
     public ResponseEntity<?> updateUserAlert(
             @RequestBody @Valid UpdateUserAlertRequest request,
-            @ApiParam(value = "유저 토큰", required = true) @UserPrincipal UserAdapter userAdapter
+//            @ApiParam(value = "유저 토큰", required = true)
+            @UserPrincipal UserAdapter userAdapter
     ) throws UserException {
         userService.updateReadUserAlert(request, userAdapter.getUserTb());
         return ResponseEntity.ok(new SuccessResponse());

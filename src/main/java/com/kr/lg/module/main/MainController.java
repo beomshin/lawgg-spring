@@ -1,7 +1,6 @@
 package com.kr.lg.module.main;
 
 import com.kr.lg.module.main.service.MainService;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,7 @@ public class MainController {
 
     private final MainService mainService; // 메인 페이지 서비스
 
-    @ApiOperation(value = "메인 페이지 호출", notes = "메인 페이지를 호출합니다.")
+//    @ApiOperation(value = "메인 페이지 호출", notes = "메인 페이지를 호출합니다.")
     @GetMapping("/")
     public ModelAndView home(ModelAndView mav) {
         mav.addObject("boards", mainService.getMainPostBoards());
