@@ -6,6 +6,9 @@ import com.kr.lg.module.trial.exception.TrialException;
 import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.module.trial.model.req.DeleteTrialRequest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
@@ -16,19 +19,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "TrialDeleteController", description = "트라이얼 삭제 컨트롤러")
 public class TrialDeleteController {
 
     private final TrialService trialService;
 
     @Secured("ROLE_USER")
     @PostMapping("/trial/delete")
-//    @ApiOperation(value = "트라이얼 게시판 삭제하기", notes = "트라이얼 게시판 삭제합니다.")
+    @Operation(summary = "트라이얼 삭제하기", description = "트라이얼 삭제합니다.")
     public ModelAndView deletePosition(
-//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
-            @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             @Valid @ModelAttribute DeleteTrialRequest request,
             ModelAndView mav
     ) throws TrialException {

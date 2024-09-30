@@ -7,6 +7,9 @@ import com.kr.lg.module.message.service.MessageService;
 import com.kr.lg.module.message.model.req.SendMessageRequest;
 import com.kr.lg.model.common.SuccessResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,20 +20,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "MessageEnrollController", description = "메세지 등록 컨트롤러")
 public class MessageEnrollController {
 
     private final MessageService messageService;
 
     @Secured("ROLE_USER")
     @PostMapping("/my/send/message")
-//    @ApiOperation(value = "유저 메세지 등록 조회", notes = "유저 메세지를 등록합니다.")
+    @Operation(summary = "유저 메세지 등록 조회", description = "유저 메세지를 등록합니다.")
     public ResponseEntity<?> sendMessage(
             @RequestBody @Valid SendMessageRequest request,
-//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
-            @AuthUser UserTb userTb
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb
     ) throws MessageException { // 페이지는 궁하였으나 메시지 기능 미적용
         messageService.sendMessage(request, userTb);
         return ResponseEntity.ok(new SuccessResponse());

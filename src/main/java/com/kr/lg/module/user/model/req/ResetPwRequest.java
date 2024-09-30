@@ -1,6 +1,7 @@
 package com.kr.lg.module.user.model.req;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,16 +12,16 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-//@ApiModel(value = "회원 아이디 조회 요청 Body")
+@Schema(description = "회원 아이디 조회 요청 Body")
 public class ResetPwRequest {
 
-//    @ApiModelProperty(value = "txId", required = true)
+    @Schema(description = "txId")
     private String txId;
 
-//    @ApiModelProperty(value = "인증번호", required = true)
+    @Schema(description = "인증번호")
     private String code;
 
-//    @ApiModelProperty(value = "패스워드", required = true)
+    @Schema(description = "패스워드")
     private String password;
 
     private Long userId;

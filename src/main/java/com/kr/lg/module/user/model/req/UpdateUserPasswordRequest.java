@@ -1,6 +1,7 @@
 package com.kr.lg.module.user.model.req;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -10,14 +11,14 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-//@ApiModel(value = "회원 비밀번호 업데이트 요청 Body")
+@Schema(description = "회원 비밀번호 업데이트 요청 Body")
 public class UpdateUserPasswordRequest {
 
-//    @ApiModelProperty(value = "로그인 아이디", required = true)
+    @Schema(description = "로그인 아이디")
     @NotBlank(message = "loginId 값이 입력되어있지않습니다.")
     private String oldPassword;
 
-//    @ApiModelProperty(value = "패스워드", required = true)
+    @Schema(description = "패스워드")
     @NotBlank(message = "패스워드 값이 입력되어있지않습니다.")
     private String newPassword;
 

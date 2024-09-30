@@ -9,6 +9,9 @@ import com.kr.lg.module.trial.service.TrialService;
 import com.kr.lg.common.utils.ClientUtils;
 import com.kr.lg.module.trial.model.req.FindTrialsRequest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,16 +26,17 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "TrialFindController", description = "트라이얼 조회 컨트롤러")
 public class TrialFindController {
 
     private final TrialService trialService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @GetMapping("/trials")
-//    @ApiOperation(value = "트라이얼 게시판 페이지 호출", notes = "트라이얼 게시판 페이지를 호출합니다.")
+    @Operation(summary = "트라이얼 게시판 페이지 조회", description = "트라이얼 게시판 페이지를 조회합니다.")
     public ModelAndView trials(
             @Valid @ModelAttribute FindTrialsRequest request,
             ModelAndView mav
@@ -48,13 +52,11 @@ public class TrialFindController {
         return mav;
     }
 
-//    @ApiOperation(value = "트라이얼 게시판 상세 페이지 호출", notes = "트라이얼 게시판 상세 페이지를 호출합니다.")
     @GetMapping("/trial/{id}")
+    @Operation(summary = "트라이얼 게시판 상세 페이지 조회", description = "트라이얼 게시판 상세 페이지를 조회합니다.")
     public ModelAndView trial(
-//            @ApiParam(value = "로그인 세션 유저 정보")
-            @AuthUser UserTb userTb,
-//            @ApiParam(value = "트라이얼 아이디", required = true)
-            @PathVariable("id") Long id,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
+            @Parameter(description = "트라이얼 아이디") @PathVariable("id") Long id,
             ModelAndView mav,
             HttpServletRequest request
     ) throws TrialException {
@@ -69,7 +71,7 @@ public class TrialFindController {
 
     @Secured("ROLE_USER")
     @GetMapping("/trial/write")
-//    @ApiOperation(value = "트라이얼 게시판 작성 페이지 호출", notes = "트라이얼 게시판 작성 페이지를 호출합니다.")
+    @Operation(summary = "트라이얼 게시판 작성 페이지 호출", description = "트라이얼 게시판 작성 페이지를 호출합니다.")
     public ModelAndView trialWrite(ModelAndView mav) {
         mav.setViewName("view/trial/write");
         return mav;

@@ -8,7 +8,7 @@ import com.kr.lg.db.repositories.UserRepository;
 import com.kr.lg.common.enums.entity.flag.AuthFlag;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyException;
 import com.kr.lg.module.thirdparty.exception.ThirdPartyResultCode;
-import com.kr.lg.module.thirdparty.model.req.CertificationsDanalRequest;
+import com.kr.lg.module.thirdparty.model.dto.CertificationsDanalDto;
 import com.kr.lg.module.thirdparty.service.DanalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class DanalServiceImpl implements DanalService {
 
     @Override
     @Transactional
-    public void certificationsDanal(CertificationsDanalRequest request, UserTb userTb) throws ThirdPartyException {
+    public void certificationsDanal(CertificationsDanalDto request, UserTb userTb) throws ThirdPartyException {
         if (!request.getSuccess()) {
             throw new ThirdPartyException(ThirdPartyResultCode.FAIL_CERTIFICATION);
         }
@@ -59,7 +59,7 @@ public class DanalServiceImpl implements DanalService {
 
     @Override
     @Transactional
-    public String certificationsDanal(CertificationsDanalRequest request) throws Exception {
+    public String certificationsDanal(CertificationsDanalDto request) throws Exception {
         if (!request.getSuccess()) {
             throw new ThirdPartyException(ThirdPartyResultCode.FAIL_CERTIFICATION);
         }

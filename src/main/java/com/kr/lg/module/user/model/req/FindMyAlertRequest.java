@@ -1,5 +1,6 @@
 package com.kr.lg.module.user.model.req;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -8,18 +9,18 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-//@ApiModel(value = "회원 알림 리스트 조회 요청 Body")
+@Schema(description = "회원 알림 리스트 조회 요청 Body")
 public class FindMyAlertRequest {
 
-//    @ApiModelProperty(value = "페이지", required = true)
+    @Schema(description = "페이지")
     @NotNull(message = "페이지가 입력되어있지않습니다.")
     private Integer page;
 
-//    @ApiModelProperty(value = "페이지개수", required = true)
+    @Schema(description = "페이지개수")
     @NotNull(message = "페이지개수가 입력되어있지않습니다.")
     private Integer pageNum;
 
-//    @ApiModelProperty(value = "키워드")
+    @Schema(description = "키워드")
     private String keyword;
 
     public FindMyAlertRequest() {

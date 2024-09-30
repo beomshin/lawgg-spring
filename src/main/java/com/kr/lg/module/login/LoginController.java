@@ -15,11 +15,14 @@ import com.kr.lg.module.login.model.naver.NaverProp;
 import com.kr.lg.module.login.service.*;
 import com.kr.lg.module.user.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +30,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "LoginController", description = "로그인 컨트롤러")
 public class LoginController {
 
     private final NaverProp naverProp;
@@ -40,12 +44,12 @@ public class LoginController {
     private final OAuthService oAuthService;
 
     @GetMapping("/login")
+    @Operation(summary = "로그인 하기", description = "로그인 합니다.")
     public ModelAndView login(
-            @RequestParam(value = "error", required = false) Boolean error, // 로그인 실패
-            @RequestParam(value = "message", required = false) String message, // 로그인 실패 메세지
-            @CookieValue(value = "savedLoginId", required = false) String savedLoginId, // 아이디 저장
-//            @ApiParam(value = "로그인 세션 유저 정보")
-            @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 실패 플래그") @RequestParam(value = "error", required = false) Boolean error, // 로그인 실패
+            @Parameter(description = "로그인 실패 메세지") @RequestParam(value = "message", required = false) String message, // 로그인 실패 메세지
+            @Parameter(description = "아이디 저장정보") @CookieValue(value = "savedLoginId", required = false) String savedLoginId, // 아이디 저장
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             ModelAndView mav
     ) {
         mav.addObject("savedLoginId", savedLoginId);
@@ -60,7 +64,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/google/login")
-//    @ApiOperation(value = "로우지지 구글 로그인", notes = "로우지지 구글 로그인을 합니다.")
+    @Operation(summary = "로우지지 구글 로그인", description = "로우지지 구글 로그인을 합니다.")
     public RedirectView googleLogin() {
         RedirectView redirectView = new RedirectView();
         redirectView.setStatusCode(HttpStatus.SEE_OTHER);
@@ -69,7 +73,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/kakao/login")
-//    @ApiOperation(value = "로우지지 카카오 로그인", notes = "로우지지 카카오 로그인을 합니다.")
+    @Operation(summary = "로우지지 카카오 로그인", description = "로우지지 카카오 로그인을 합니다.")
     public RedirectView kakaoLogin() {
         RedirectView redirectView = new RedirectView();
         redirectView.setStatusCode(HttpStatus.SEE_OTHER);
@@ -78,7 +82,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/naver/login")
-//    @ApiOperation(value = "로우지지 네이버 로그인", notes = "로우지지 네이버 로그인을 합니다.")
+    @Operation(summary = "로우지지 네이버 로그인", description = "로우지지 네이버 로그인을 합니다.")
     public RedirectView naverLogin() {
         RedirectView redirectView = new RedirectView();
         redirectView.setStatusCode(HttpStatus.SEE_OTHER);
@@ -87,9 +91,9 @@ public class LoginController {
     }
 
     @GetMapping(value = "/google/login/callback")
-//    @ApiOperation(value = "구글 로그인 결과 콜백", notes = "구글 로그인 결과를 콜백합니다.")
+    @Operation(summary = "구글 로그인 결과 콜백", description = "구글 로그인 결과를 콜백합니다.")
     public ModelAndView redirectGoogleLogin(
-            @RequestParam(value = "code") String code,
+            @Parameter(description = "구글 로그인 콜백 코드") @RequestParam(value = "code") String code,
             ModelAndView mav
     ) throws Exception{
         GoogleLoginDto googleLoginDto = oAuthService.googleOAuth(new GoogleLoginRequestDto(googleProp, code));
@@ -100,9 +104,9 @@ public class LoginController {
     }
 
     @GetMapping(value = "/kakao/login/callback")
-//    @ApiOperation(value = "카카오 결과 콜백", notes = "카카오 로그인 결과를 콜백합니다.")
+    @Operation(summary = "카카오 결과 콜백", description = "카카오 로그인 결과를 콜백합니다.")
     public ModelAndView redirectKakaoLogin(
-            @RequestParam(value = "code") String code,
+            @Parameter(description = "카카오 로그인 콜백 코드") @RequestParam(value = "code") String code,
             ModelAndView mav
     ) throws Exception {
         KakaoLoginDto kakaoLoginDto = oAuthService.kakaoOAuth(new KakaoLoginRequestDto(kakaoProp, code));
@@ -113,10 +117,10 @@ public class LoginController {
     }
 
     @GetMapping(value = "/naver/login/callback")
-//    @ApiOperation(value = "네이버 로그인 결과 콜백", notes = "네이버 로그인 결과를 콜백합니다.")
+    @Operation(summary = "네이버 로그인 결과 콜백", description = "네이버 로그인 결과를 콜백합니다.")
     public ModelAndView redirectNaverLogin(
-            @RequestParam(value = "code") String code,
-            @RequestParam(value = "state") String state,
+            @Parameter(description = "네이버 로그인 콜백 코드") @RequestParam(value = "code") String code,
+            @Parameter(description = "네이버 로그인 콜백 상태") @RequestParam(value = "state") String state,
             ModelAndView mav
     ) throws Exception {
         NaverLoginDto naverLoginDto = oAuthService.naverOAuth(new NaverLoginRequestDto(naverProp, code, state));

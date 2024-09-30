@@ -56,7 +56,7 @@ public class BoardFindController {
     @Operation(summary = "포지션 게시판 상세 페이지 조회", description = "포지션 게시판 상세 페이지를 조회합니다.")
     public ModelAndView position(
             @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
-            @Parameter(description = "게시판 아이디", required = true) @PathVariable("id") Long id,
+            @Parameter(description = "게시판 아이디") @PathVariable("id") Long id,
             ModelAndView mav,
             HttpServletRequest request
     ) throws BoardException {

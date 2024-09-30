@@ -1,6 +1,7 @@
 package com.kr.lg.module.user.model.req;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -9,25 +10,25 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @AllArgsConstructor
-//@ApiModel(value = "유저 게시판 리스트 조회 Body")
+@Schema(description = "유저 게시판 리스트 조회 Body")
 public class FindMyBoardsRequest {
 
-//    @ApiModelProperty(value = "페이지", required = true)
+    @Schema(description = "페이지")
     @NotNull(message = "페이지가 입력되어있지않습니다.")
     private Integer page;
 
-//    @ApiModelProperty(value = "페이지개수", required = true)
+    @Schema(description = "페이지개수")
     @NotNull(message = "페이지개수가 입력되어있지않습니다.")
     private Integer pageNum;
 
-//    @ApiModelProperty(value = "토픽", required = true)
+    @Schema(description = "토픽")
     @NotNull(message = "토픽이 입력되어있지않습니다.")
     private Integer topic;
 
-//    @ApiModelProperty(value = "검색조건")
+    @Schema(description = "검색조건")
     private Integer subject;
 
-//    @ApiModelProperty(value = "키워드")
+    @Schema(description = "키워드")
     private String keyword;
 
     public FindMyBoardsRequest() {

@@ -1,6 +1,7 @@
 package com.kr.lg.module.user.model.req;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 
@@ -10,10 +11,10 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-//@ApiModel(value = "회원가입 페이지 이동 Body")
+@Schema(description = "회원가입 페이지 이동 Body")
 public class JoinRegisterRequest {
 
-//    @ApiModelProperty(value = "유저 아이디")
+    @Schema(description = "유저 아이디")
     private Boolean accept;
 
 }

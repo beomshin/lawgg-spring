@@ -1,6 +1,7 @@
 package com.kr.lg.module.user.model.req;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -10,10 +11,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-//@ApiModel(value = "회원 알림 읽기 업데이트 요청 Body")
+@Schema(description = "회원 알림 읽기 업데이트 요청 Body")
 public class UpdateUserAlertRequest {
 
-//    @ApiModelProperty(value = "알림 아이디", required = true)
+    @Schema(description = "알림 아이디")
     @NotNull(message = "알림 아이디가 없습니다.")
     private Long id;
 }

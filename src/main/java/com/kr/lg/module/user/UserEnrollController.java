@@ -8,6 +8,8 @@ import com.kr.lg.module.user.excpetion.UserException;
 import com.kr.lg.module.user.model.req.JoinRegisterRequest;
 import com.kr.lg.module.user.service.UserService;
 import com.kr.lg.model.common.SuccessResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,20 +20,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "UserEnrollController", description = "유저 등록 컨트롤러")
 public class UserEnrollController {
 
     private final UserService userService;
 
     @GetMapping("/join/agree")
+    @Operation(summary = "약관 동의 페이지 조회", description = "약관동의 페이지를 조회합니다.")
     public ModelAndView joinAgree(ModelAndView mav) {
         mav.setViewName("view/member/joinAgree");
         return mav;
     }
 
     @RequestMapping(value = "/join/register", method = {RequestMethod.POST, RequestMethod.GET})
+    @Operation(summary = "회원가입 페이지 조회", description = "회원 가입 페이지를 조회합니다.")
     public ModelAndView joinRegister(
             @ModelAttribute @Valid JoinRegisterRequest request,
             ModelAndView mav
@@ -45,7 +50,7 @@ public class UserEnrollController {
     }
 
     @PostMapping("/enroll/user")
-//    @ApiOperation(value = "유저 등록", notes = "유저 등록 정보를 등록합니다.")
+    @Operation(summary = "유저 등록", description = "유저 등록 정보를 등록합니다.")
     public ModelAndView enrollUser(
             @ModelAttribute @Valid EnrollUserRequest request,
             ModelAndView mav
@@ -56,7 +61,7 @@ public class UserEnrollController {
     }
 
     @GetMapping("/check/id")
-//    @ApiOperation(value = "아이디 중복 체크", notes = "아이디 중복을 체크합니다.")
+    @Operation(summary = "아이디 중복 체크", description = "아이디 중복을 체크합니다.")
     public ResponseEntity<?> checkId(
             @ModelAttribute @Valid CheckIdRequest request
     ) {

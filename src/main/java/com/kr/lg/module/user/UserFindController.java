@@ -11,6 +11,9 @@ import com.kr.lg.module.user.model.entry.UserEntry;
 import com.kr.lg.module.user.model.req.*;
 import com.kr.lg.module.user.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,21 +25,21 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "UserFindController", description = "유저 조회 컨트롤러")
 public class UserFindController {
 
     private final UserService userService;
     private final EmailService emailService;
 
     @Secured("ROLE_USER")
-//    @ApiOperation(value = "나의 포지션 게시판 조회", notes = "나의 포지션 게시판을 조회합니다.")
     @GetMapping("/my/boards")
+    @Operation(summary = "나의 포지션 게시판 조회", description = "나의 포지션 게시판을 조회합니다.")
     public ModelAndView findMyBoards(
             @Valid FindMyBoardsRequest request,
-//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
-            @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws  UserException { // 미사용 기능
         Page<UserBoardEntry> boards = userService.findUserBoards(request, userTb);
@@ -51,12 +54,11 @@ public class UserFindController {
     }
 
     @Secured("ROLE_USER")
-//    @ApiOperation(value = "나의 알림 조회", notes = "나의 알림을 조회합니다.")
     @GetMapping("/my/alerts")
+    @Operation(summary = "나의 알림 조회", description = "나의 알림을 조회합니다.")
     public ModelAndView findMyAlert(
             @Valid FindMyAlertRequest request,
-//            @ApiParam(value = "로그인 세션 유저 정보", required = true)
-            @AuthUser UserTb userTb,
+            @Parameter(description = "로그인 세션 유저 정보") @AuthUser UserTb userTb,
             ModelAndView mav
     ) throws UserException {
         Page<UserAlertEntry> alerts = userService.findUserAlerts(request, userTb);
@@ -72,14 +74,14 @@ public class UserFindController {
 
     @Secured("ROLE_USER")
     @GetMapping("/my/info")
-//    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+    @Operation(summary = "회원 정보 조회", description = "회원 정보를 조회합니다.")
     public ModelAndView findUserInfo(ModelAndView mav)  {
         mav.setViewName("view/mypage/myInfo");
         return mav;
     }
 
     @RequestMapping(value = "/user/ids", method = {RequestMethod.GET, RequestMethod.POST})
-//    @ApiOperation(value = "회원 아이디 조회", notes = "회원 아이디를 조회합니다.")
+    @Operation(summary = "회원 아이디 조회", description = "회원 아이디를 조회합니다.")
     public ModelAndView userIds(
             @ModelAttribute FindIdsRequest request,
             ModelAndView mav
@@ -97,7 +99,7 @@ public class UserFindController {
     }
 
     @RequestMapping(value = "/user/pws", method = {RequestMethod.GET, RequestMethod.POST})
-//    @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 조회합니다.")
+    @Operation(summary = "회원 정보 조회", description = "회원 정보를 조회합니다.")
     public ModelAndView userPws(
             @ModelAttribute FindPwsRequest request,
             ModelAndView mav
@@ -117,6 +119,7 @@ public class UserFindController {
     }
 
     @GetMapping("/news")
+    @Operation(summary = "new 소식 페이지 조회", description = "new 소식 페이지를 조회합니다.")
     public ModelAndView news(ModelAndView mav) {
         mav.setViewName("view/news/list");
         return mav;
