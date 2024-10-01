@@ -6,7 +6,7 @@ spring:
     name: lawgg-web
   config:
     import: optional:configserver:http://spring-cloud-config:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
-#    import: optional:configserver:http://192.168.0.3:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
+#    import: optional:configserver:http://localhost:8888/ # spring cloud config 정보 조회 (서버 종료 option 처리)
   profiles:
     active: local
     group:
@@ -38,23 +38,3 @@ spring:
 mybatis:
   type-aliases-package: com.kr.lg.mapper
   mapper-locations: classpath:mapper/*.xml
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    disable-swagger-default-url: true
-    display-request-duration: true
-    operations-sorter: alpha
-  model-and-view-allowed: true
-
-#eureka:
-#  instance:
-#    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
-#    leaseRenewalIntervalInSeconds: 10
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
