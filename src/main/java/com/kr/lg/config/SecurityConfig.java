@@ -3,6 +3,7 @@ package com.kr.lg.config;
 
 import com.kr.lg.security.login.detail.RememberDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +46,10 @@ public class SecurityConfig {
     };
 
     private static final int DAY_7 = 604800; // 7일
+
+    @Value("${lg.redirect.url.login}")
+    String lgRedirectLoginUrl;
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationProvider logAuthenticationProvider) { // security manager 등록
@@ -97,7 +102,7 @@ public class SecurityConfig {
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .invalidateHttpSession(true) // 세션 무효화
-                .logoutSuccessUrl("/") // 로그아웃 성공 핸들러
+                .logoutSuccessUrl(lgRedirectLoginUrl) // 로그아웃 성공 핸들러
                 .deleteCookies("JSESSIONID", "remember-me");     // 로그아웃 후 쿠키 삭제
 
         String[] paths = {"/my/info", "/my/alerts", "/my/messages", "/my/boards", "/trial/write", "/law-firm/write"};

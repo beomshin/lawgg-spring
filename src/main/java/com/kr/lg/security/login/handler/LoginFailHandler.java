@@ -3,6 +3,7 @@ package com.kr.lg.security.login.handler;
 import com.kr.lg.security.exception.SecurityResultCode;
 import com.kr.lg.security.exception.SecurityException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,9 @@ import java.net.URLEncoder;
 @Component
 public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    @Value("${lg.redirect.url.login}")
+    String lgRedirectLoginUrl;
+
     /**
      * 로그인 실패 핸들러
      * @param request the request during which the authentication attempt occurred.
@@ -32,7 +36,7 @@ public class LoginFailHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws ServletException, IOException {
         log.error("▶ [Spring Security 로그인][LoginFailHandler] 로그인 실패");
-        setDefaultFailureUrl("/login?error=true&message=" + getFailMessage(getFailCode(exception)));
+        setDefaultFailureUrl(lgRedirectLoginUrl + "?error=true&message=" + getFailMessage(getFailCode(exception)));
         super.onAuthenticationFailure(request, response, exception);
     }
 
