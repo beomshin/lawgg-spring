@@ -154,6 +154,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserTb enrollUser(LoginDto loginDto) throws UserException {
+        log.info("[enrollUser]");
         Optional<UserTb> userTb = userRepository.findBySnsIdAndSnsType(loginDto.getSnsId(), loginDto.getSnsType());
         if (!userTb.isPresent()) {
             TierTb tierTb = tierRepository.findByKey("Bronze_3");
@@ -176,6 +177,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateSessionUserTb(UserTb userTb) {
+        log.info("[updateSessionUserTb]");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userTb.getLoginId(), userTb.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

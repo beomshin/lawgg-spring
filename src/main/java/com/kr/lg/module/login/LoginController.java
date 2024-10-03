@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
@@ -42,6 +43,9 @@ public class LoginController {
 
     private final UserService userService;
     private final OAuthService oAuthService;
+
+    @Value("${lg.redirect.url.main}")
+    String lgRedirectMainUrl;
 
     @GetMapping("/login")
     @Operation(summary = "로그인 하기", description = "로그인 합니다.")
@@ -99,7 +103,7 @@ public class LoginController {
         GoogleLoginDto googleLoginDto = oAuthService.googleOAuth(new GoogleLoginRequestDto(googleProp, code));
         UserTb userTb = userService.enrollUser(new LoginDto(googleLoginDto));
         userService.updateSessionUserTb(userTb);
-        mav.setViewName("redirect:/");
+        mav.setViewName("redirect:" + lgRedirectMainUrl);
         return mav;
     }
 
@@ -112,7 +116,7 @@ public class LoginController {
         KakaoLoginDto kakaoLoginDto = oAuthService.kakaoOAuth(new KakaoLoginRequestDto(kakaoProp, code));
         UserTb userTb = userService.enrollUser(new LoginDto(kakaoLoginDto));
         userService.updateSessionUserTb(userTb);
-        mav.setViewName("redirect:/");
+        mav.setViewName("redirect:" + lgRedirectMainUrl);
         return mav;
     }
 
@@ -126,7 +130,7 @@ public class LoginController {
         NaverLoginDto naverLoginDto = oAuthService.naverOAuth(new NaverLoginRequestDto(naverProp, code, state));
         UserTb userTb = userService.enrollUser(new LoginDto(naverLoginDto));
         userService.updateSessionUserTb(userTb);
-        mav.setViewName("redirect:/");
+        mav.setViewName("redirect:" + lgRedirectMainUrl);
         return mav;
     }
 
