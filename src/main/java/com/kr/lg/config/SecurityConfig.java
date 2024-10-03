@@ -70,7 +70,7 @@ public class SecurityConfig {
     ) throws Exception {
 
         http.csrf().disable();
-//        http.csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()));
+        http.csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()));
 
         http.cors().configurationSource(corsConfigurationSource);
 
