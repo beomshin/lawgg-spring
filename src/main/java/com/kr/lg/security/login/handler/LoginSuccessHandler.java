@@ -26,7 +26,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.debug("▶ [Spring Security 로그인][LoginSuccessHandler] 4. 로그인 성공 핸들러 ==========> ");
 
-        setDefaultTargetUrl("/");
+        setDefaultTargetUrl("https://cgroud.store/lawgg/");
 
         super.clearAuthenticationAttributes(request);
 
